@@ -1,4 +1,4 @@
-package com.alpha.servicce;
+package com.alpha.service;
 
 public interface ContentService {
 
