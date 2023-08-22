@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.service.TeacherService;
+import com.alpha.vo.Criteria;
+import com.alpha.vo.PageDto;
 
 @RestController
 @RequestMapping("/alpha/*")
@@ -16,13 +18,19 @@ public class TeacherController {
 	TeacherService service;
 	
 	@GetMapping("/teacher") //페이지 연결
-	public ModelAndView teacher() {
+	public ModelAndView teacher(Criteria cri) {
 		
-		//model.addAttribute("contentList", service.getContentList());
 
+		int totalCnt = service.totalCnt(cri);
+		PageDto pageDto = new PageDto(cri, totalCnt);
+		
+		System.out.println("연결");
+		System.out.println(pageDto);
 		System.out.println("연결");
 		ModelAndView mav = new ModelAndView("/teacher/teacher");
-		mav.addObject("contentList", service.getContentList());
+		mav.addObject("pageDto", pageDto);
+		mav.addObject("totalCnt", totalCnt);
+		mav.addObject("contentList", service.getContentList(cri));
 	
 		return mav;
 	}

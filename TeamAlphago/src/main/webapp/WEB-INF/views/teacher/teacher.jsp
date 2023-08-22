@@ -11,7 +11,7 @@
 <style>
 .main-box {
     display: flex;
-    width: 80%;
+    width: 60%;
     height: 100%;
     background-color: #fff;
     border: 1px solid #d8dfe6;
@@ -27,6 +27,10 @@ div .InfoBox {
 
 div .InfoBox .info {
 	text-align: center;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+
 }
 
 </style>
@@ -37,8 +41,8 @@ div .InfoBox .info {
 <hr>
 <div class="serachForm">
      <!-- 검색폼 -->
-     <form name="searchForm" action="#">
-     <input type="text" name="pageNo" value="1">
+     <form name="searchForm" action="/alpha/teacher">
+     <input type="text" name="pageNo" value="${pageDto.cri.pageNo}">
      <div class="form-inline text-center"> 
      <p></p>
    <div class="form-group">
@@ -57,49 +61,81 @@ div .InfoBox .info {
       <!-- 검색폼끝 -->
 </div>
 <hr>
+${pageDto }
+
+총 ${totalCnt } 건
+
+
+
+	<c:set var="i" value="0" />
+	<c:set var="j" value="3" />
 	
-	<div class="main-box">
 	
-<c:forEach  var="con" items="${contentList }" varStatus="status">
-		<c:if test="${fn:length(contentList )==0}">
-				콘텐츠가 없습니다
-		</c:if>
-	
-	
-		<div class="InfoBox">
-			<input type="text" class="index" id="c_level" data-clevel="${status.index}" value="${con.c_level }"readonly><br>
+<c:choose>
+<c:when test="${contentList != null && fn:length(contentList) > 0 }">
+	  <c:forEach  var="con" items="${contentList }" varStatus="status">
+
+	  
+	  
+	    <c:if test="${i%j == 0 }">
+	    <div class="main-box">
+	    </c:if>
+	       		<div class="InfoBox">
+			<input type="text" class="index" id="c_level" data-clevel="${status.index}" value="${con.c_level }"readonly>
+			<input type="text" class="index" id="c_id" data-cid="${status.index}" value="${con.c_id }"readonly><br>
+			<hr>
 			<div class="imgBox">
 				<img src="" alt="이미지">		
 			</div><hr>
 			<div class="info">
 			<h2>${con.c_name }</h2>
 			<input type="text" class="index" id="c_sellprice" data-csellprice="${status.index}" value="${con.c_sellprice }"readonly><br>
-			</div>		
-		</div>
-		</c:forEach>
-		</div>
+			</div>
+				<div class="goDetail">
+					<button onclick="godetail(${status.index})">자세히보기</button>
+				</div>
 	
-	<%--
-		<form name='getContent' onsubmit="return false">
+				</div>
+	       <hr>
+	    <c:if test="${i%j == j-1 }">
+	    </div>
+	    </c:if>
+	    <c:set var="i" value="${i+1 }" />
+	  </c:forEach>
+	     </c:when>
+  <c:otherwise>
+   <tr>
+    <td>존재하지 않습니다.</td>
+   </tr>
+  </c:otherwise>
+  </c:choose>
 
 
-			<tr>
-				<td><input type="hidden" value="${status.index}" id="index"></td>
-				
-				<td><input type="hidden" class="index" id="c_id" data-cid="${status.index}" value="${con.c_id }" readonly></td>		
-				<td><input type="hidden" class="index" id="c_name" data-cname="${status.index}" value="${con.c_name }"readonly></td>
-				<td><input type="hidden" class="index" id="c_level" data-clevel="${status.index}" value="${con.c_level }"readonly></td>
-				<td><input type="hidden" class="index" id="c_able" data-cable="${status.index}" value="${con.c_able }"readonly></td>
-				<td><input type="hidden" class="index" id="c_price" data-cprice="${status.index}" value="${con.c_price }"readonly></td>
-				<td><input type="hidden" class="index" id="c_discount" data-cdiscount="${status.index}" value="${con.c_discount }"readonly></td>
-				<td><input type="hidden" class="index" id="c_sellprice" data-csellprice="${status.index}" value="${con.c_sellprice }"readonly></td>
-				<td><input type="hidden" class="index" id="c_content" data-ccontent="${status.index}" value="${con.c_content }"readonly></td>
-				<td style="border: none;"><button onclick="goSub(${status.index})">신청하러가기</button></td> 
-				</tr>
 
-
-			</form>--%>
+<script>
+function godetail(index) {
 	
+	var i = index;
+	console.log(i);
+
+	var c_id= $('input[data-cid="'+index+'"]').val();
+	alert(c_id);
+
+	console.log(c_id);
+	//window.location.replace("/alpha/detail?c_id="+c_id);
+	
+	
+}
+
+function go(page){
+	//alert(page);
+	document.searchForm.pageNo.value=page;
+	document.searchForm.action = "/alpha/teacher";
+	document.searchForm.submit();
+}
+</script>
+	
+<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
 <%@ include file="../common/footer.jsp" %>
 
 

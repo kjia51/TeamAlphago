@@ -4,8 +4,18 @@
 <mapper namespace="com.alpha.mapper.TeacherMapper">
 
 	<select id="getContentList" resultType="com.alpha.vo.ContentVO">
-		select * from content
+
+		select *
+		from ( select rownum rn, t.*
+        from ( select *
+            from content
+            order by c_id asc) t)
+            where rn between #{startNo} and #{endNo}
 	</select>
+	
+	<select id="totalCnt" resultType="int">
+	select count(*) from content
+	</select>	
 	
 	
 

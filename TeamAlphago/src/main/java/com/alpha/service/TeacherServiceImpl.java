@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.alpha.mapper.TeacherMapper;
 import com.alpha.vo.ContentVO;
+import com.alpha.vo.Criteria;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -14,10 +15,16 @@ public class TeacherServiceImpl implements TeacherService {
 	
 	@Autowired 
 	private TeacherMapper mapper;
-	
+
 	@Override
-	public List<ContentVO> getContentList() {
-		return mapper.getContentList();
+	public List<ContentVO> getContentList(Criteria cri) {
+		return mapper.getContentList(cri);
 	}
+
+	@Override
+	public int totalCnt(Criteria cri) {
+		return mapper.totalCnt(cri);
+	}
+	
 
 }
