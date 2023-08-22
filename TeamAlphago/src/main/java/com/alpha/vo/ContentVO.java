@@ -4,13 +4,14 @@ import lombok.Data;
 
 @Data
 public class ContentVO {
-	String c_id;
-	String c_name;
-	String c_level;
-	int c_able;
-	int c_price;
-	int c_discount;
-	int c_sellprice;
-	String c_content;
 	
+	private String c_id; 
+	private String c_name; 
+	private String c_level; 
+	private String c_able; 
+	private String c_price; 
+	private String c_discount; 
+	private String c_sellprice; 
+	private String c_content; 
+
 }

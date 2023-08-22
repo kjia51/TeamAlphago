@@ -1,13 +1,13 @@
-package com.alpha.service;
+package com.alpha.mapper;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.apache.ibatis.annotations.Mapper;
 
 import com.alpha.vo.ContentVO;
 
-@Service
-public interface TeacherService {
+@Mapper
+public interface TeacherMapper {
 	
 	public List<ContentVO> getContentList(); //콘텐츠 리스트 조회
 
