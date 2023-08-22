@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<%@ include file="../common/header.jsp" %>
+	
+	<h1>메인페이지</h1>
+	
+	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>
