@@ -3,5 +3,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alpha.mapper.MemberMapper">
 
+<insert id="insert">
+	Insert into ALPHAGO.MEMBER (M_ID,M_NAME,M_PASWORD,M_DIVISION,M_PHONE,M_EMAIL,M_ADDRESS,M_BIRTH)
+	values (#{m_id}, #{m_name}, #{m_password}, #{m_division}, #{m_phone}, #{m_email}, #{m_address}, #{m_birth})
+</insert>
 
 </mapper>
