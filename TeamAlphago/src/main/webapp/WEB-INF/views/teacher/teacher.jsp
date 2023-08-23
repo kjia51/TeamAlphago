@@ -6,8 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>콘텐츠 조회</title>
 </head>
+
+
 <style>
 .main-box {
     display: flex;
@@ -39,23 +41,22 @@ div .InfoBox .info {
 <%@ include file="../common/header.jsp" %>
 
 <hr>
-<div class="serachForm">
+<div class="serachForm" style="text-align: center;">
      <!-- 검색폼 -->
-     <form name="searchForm" action="/alpha/teacher">
+     <form name="searchForm" action="/alpha/teacher" >
      <input type="text" name="pageNo" value="${pageDto.cri.pageNo}">
      <div class="form-inline text-center"> 
      <p></p>
-   <div class="form-group">
-       <select class="form-control" name='searchField'>
-           <option value='1'>초급</option>
-           <option value='2'>중급</option>
-           <option value='3'>고급</option>
-       </select>
+   <div class="form-group" style="display: flex;">
+		<input type="radio" name="level" value="전체" checked>전체
+		<input type="radio" name="level" value="초급">초급
+		<input type="radio" name="level" value="중급">중급
+		<input type="radio" name="level" value="고급">고급
    </div>
    <div class="form-group">
-       <input class="form-control" name='searchWord' value="${pageDto.cri.searchWord }">
-    </div>
-    <button type="submit" class="btn btn-default">검색</button>
+       <input class="form-control" name='searchWord' value="${pageDto.cri.searchWord }" style="border-bottom: 1px solid black" >
+    
+    <button type="submit" class="btn btn-default">검색</button> </div>
 </div>
       </form>
       <!-- 검색폼끝 -->
@@ -64,8 +65,6 @@ div .InfoBox .info {
 ${pageDto }
 
 총 ${totalCnt } 건
-
-
 
 	<c:set var="i" value="0" />
 	<c:set var="j" value="3" />
@@ -89,7 +88,6 @@ ${pageDto }
 			</div><hr>
 			<div class="info">
 			<h2>${con.c_name }</h2>
-			<input type="text" class="index" id="c_sellprice" data-csellprice="${status.index}" value="${con.c_sellprice }"readonly><br>
 			</div>
 				<div class="goDetail">
 					<button onclick="godetail(${status.index})">자세히보기</button>
@@ -122,7 +120,7 @@ function godetail(index) {
 	alert(c_id);
 
 	console.log(c_id);
-	//window.location.replace("/alpha/detail?c_id="+c_id);
+	window.location.replace("/alpha/teacher/detail?c_id="+c_id);
 	
 	
 }

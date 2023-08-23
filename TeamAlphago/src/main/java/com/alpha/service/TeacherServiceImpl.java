@@ -25,6 +25,12 @@ public class TeacherServiceImpl implements TeacherService {
 	public int totalCnt(Criteria cri) {
 		return mapper.totalCnt(cri);
 	}
+
+	@Override
+	public List<ContentVO> getContentDetail(String c_id) {
+		return mapper.getContentDetail(c_id);
+	}
+
 	
 
 }

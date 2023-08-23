@@ -7,16 +7,22 @@
 <meta charset="UTF-8">
 <title>페이징</title>
 <style>
-.other-games ul {
-    position:relative; 
-    right: 0;
-    top: 15px;
+.disabled {
+display: none;
 }
 
+ul, ol, li {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+ul > li {
+margin-left: 10px;
+}
 </style>
 </head>
 <body>
-
 
 <!-- 페이지 블럭 생성 -->
 <nav aria-label="Page navigation example">
@@ -24,30 +30,31 @@
   	
   	<!-- 첫 페이지 -->
   	<li>
-      <a class="page-link" onclick='go(1)'>처음</a>
+      <a class="page-link" onclick='go(1)'>&lt;&lt;</a>
     </li>
   	
-<!-- 이전 페이지 -->
-<li class="page-item ${!pageDto.prev ? 'disabled' : ''}">
-  <a class="page-link" onclick="go(${pageDto.startNo - 1})">이전</a>
-</li>
+  	<!-- 이전 페이지 -->
+    <li class="page-item ${pageDto.prev?'':'disabled' }">
+      <a class="page-link" onclick='go(${pageDto.startNo-1})'>&lt;</a>
+    </li>
     
     <!-- 페이지목록 -->
     <c:forEach begin="${pageDto.startNo }" end="${pageDto.endNo }" var="i">
 	<li ${param.pageNo eq i ? "class='page-item active' aria-current='page'" : "class='page-item' " }><a class="page-link" onclick='go(${i})'>${i }</a></li>
 	</c:forEach>
 	  
-<!-- 다음 페이지 -->
-<li class="page-item ${!pageDto.next ? 'disabled' : ''}">
-  <a class="page-link" onclick="go(${pageDto.endNo + 1})">다음</a>
-</li>
+    <!-- 다음페이지 -->
+    <li class="page-item ${pageDto.next? '' : 'disabled' }">
+      <a class="page-link" onclick='go(${pageDto.endNo+1})'>&gt;</a>
+    </li>
     
     <!-- 끝 페이지 -->
     <li class="page-item ">
-      <a class="page-link" onclick='go(${pageDto.realEnd })'>끝</a>
+      <a class="page-link" onclick='go(${pageDto.realEnd })'>&gt;&gt;</a>
     </li>
     
   </ul>
 </nav>
+
 </body>
 </html>

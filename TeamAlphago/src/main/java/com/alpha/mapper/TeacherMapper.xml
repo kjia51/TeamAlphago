@@ -9,13 +9,18 @@
 		from ( select rownum rn, t.*
         from ( select *
             from content
-            order by c_id asc) t)
+            order by c_id desc) t)
             where rn between #{startNo} and #{endNo}
 	</select>
 	
 	<select id="totalCnt" resultType="int">
 	select count(*) from content
 	</select>	
+	
+	<select id="getContentDetail" resultType="com.alpha.vo.ContentVO">
+	select * from content where c_id = #{c_id}
+	
+	</select>
 	
 	
 
