@@ -22,6 +22,10 @@
 <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon' />
 <meta name="kbaduk_csrf" content="16896db39db66de029a7ada8839c2b3e" id="csrf">
 <link rel='canonical' href='www.kbaduk.or.kr' />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -115,7 +119,7 @@
                 <!-- // location -->
     </div>
     <!-- // header -->
-    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="../resources/js/main.js"></script>
     <script type="text/javascript" src="../resources/js/basic.js"></script>
 </body>
 </html>
