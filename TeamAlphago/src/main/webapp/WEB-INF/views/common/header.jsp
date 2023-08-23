@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src='/resources/js/jquery-1.12.4.min.js'></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <link rel="stylesheet" href="/resources/css/common.css">
     <meta http-equiv='X-UA-Compatible' content='IE=edge, chrome=1' />
 <meta http-equiv='Content-Language' content='ko' />
@@ -82,7 +83,7 @@
                         <div class="gnb_sub gnb_sub_2">
                             <h3 class="blind">협회소식</h3>
                             <ul>
-                                <li><a href="https://www.kbaduk.or.kr/bbs/read/basic/notice/"> 콘텐츠 검색 </a></li>
+                                <li><a href="/alpha/teacher"> 콘텐츠 검색 </a></li>
                                 <li><a href="https://www.kbaduk.or.kr/tidings/businessSchedule/"> 구독 내역 </a></li>
                             </ul>
                         </div>
@@ -106,7 +107,7 @@
                             <ul>
                                 <li><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/"> 공지사항 </a></li>
                                 <li><a href="https://www.kbaduk.or.kr/bbs/read/thum/movie/"> Q&A </a></li>
-                                <li><a href="https://www.kbaduk.or.kr/bbs/read/basic/baduk/"> 학습패키지 등록 </a></li>
+                                <li><a href="/alpha/content"> 학습패키지 등록 </a></li>
                                 <li><a href="https://www.kbaduk.or.kr/one/read/gibo/"> 매출 조회 </a></li>
                             </ul>
                         </div>

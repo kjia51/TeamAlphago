@@ -55,7 +55,7 @@
 	<h3>- 수강가능인원 : ${con.c_able }명</h3>
 	<h3>- 정가 : ${con.c_price }원</h3>
 	
-	<input type="text" value="${con.c_id }">
+	<input type="text" value="${con.c_id }" id="c_id">
 	<input type="text" value="${con.c_discount }">
 	<input type="text" value="${con.c_sellprice }">
 	
@@ -70,6 +70,7 @@
 	<div class="btn">
 	<button id="payment">결제</button>
 	<button id="goback" onclick="location.href='/alpha/teacher'">뒤로가기</button>
+	<button id="contentEdit">수정</button>
 	</div>
 
 <script>
@@ -77,7 +78,7 @@
 function getSysdate() {
 
 	var date = new Date();
-	return date.
+	return date;
 	
 }
 
@@ -170,9 +171,8 @@ $('#payment').click(function () { //결제버튼
 	                   	        	}     		
 	                   	        });
 	                           });  
-	                    	} 
+	                    	}); 
                     	
-});//결제버튼 끝
 
 </script>
 
@@ -208,4 +208,5 @@ $('#payment').click(function () { //결제버튼
 
 
 </body>
+<script src="/resources/js/content/contentEdit.js"></script>
 </html>
