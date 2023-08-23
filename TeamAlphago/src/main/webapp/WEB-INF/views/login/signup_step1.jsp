@@ -259,11 +259,11 @@
                 });
                 $('#step1_btn').on('click', function() {
                     if (!$service.is(':checked')) {
-                        dialogs.alert('이용약관에 동의해주세요.');
+                        window.alert('이용약관에 동의해주세요.');
                         return;
                     }
                     if (!$privacy.is(':checked')) {
-                        dialogs.alert('개인정보처리방침에 동의해주세요.');
+                    	window.alert('개인정보처리방침에 동의해주세요.');
                         return;
                     }
                     this.form.submit();

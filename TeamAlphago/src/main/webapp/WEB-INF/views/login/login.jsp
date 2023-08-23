@@ -68,13 +68,19 @@
             	success : function(result){
             		alert('로그인이 완료되었습니다.');
             	    location.href = '/alpha/main';
-            	}
+            	},
+            	error: function(xhr, status, error) {
+            		var errorMessage = xhr.responseText; // 서버에서 전달한 오류 메시지를 가져옴
+                    alert('로그인에 실패했습니다. 아이디 및 비밀번호를 확인해주세요.');
+                    console.error('로그인 실패:', status, error);
+                }
             });
         });
 
         $('#signinForm').on('keydown', function (e) {
             if(e.keyCode == 13) {
-                $btn.trigger('click');
+            	e.preventDefault();
+                btn.trigger('click');
             }
         });
         

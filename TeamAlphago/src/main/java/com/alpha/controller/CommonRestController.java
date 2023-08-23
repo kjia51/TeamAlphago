@@ -1,6 +1,5 @@
 package com.alpha.controller;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,29 +8,29 @@ import java.util.Map;
 
 public class CommonRestController {
 	
-	private final String REST_WRITE = "µî·Ï";
-	private final String REST_EDIT = "¼öÁ¤";
-	private final String REST_DELETE = "»èÁ¦";
-	private final String REST_SELECT = "Á¶È¸";
+	private final String REST_WRITE = "ë“±ë¡";
+	private final String REST_EDIT = "ìˆ˜ì •";
+	private final String REST_DELETE = "ì‚­ì œ";
+	private final String REST_SELECT = "ì¡°íšŒ";
 	protected final String REST_SUCCESS = "success";
 	protected final String REST_FAIL = "fail";
 	
 	
 	/**
-	 * ÀÔ·Â, ¼öÁ¤, »èÁ¦ÀÇ °æ¿ì int °ªÀ» ¹İÈ¯ÇÕ´Ï´Ù.
-	 * °á°ú¸¦ ¹Ş¾Æ¼­ MapÀ» »ı¼ºÈÄ ¹İÈ¯ ÇÕ´Ï´Ù.
+	 * ì…ë ¥, ìˆ˜ì •, ì‚­ì œì˜ ê²½ìš° int ê°’ì„ ë°˜í™˜í•©ë‹ˆë‹¤.
+	 * ê²°ê³¼ë¥¼ ë°›ì•„ì„œ Mapì„ ìƒì„±í›„ ë°˜í™˜ í•©ë‹ˆë‹¤.
 	 * @return
 	 */
-	// mapÀ» »ı¼ºÈÄ result, msg¼¼ÆÃ
+	// mapì„ ìƒì„±í›„ result, msgì„¸íŒ…
 	public Map<String, Object> responseMap(int res, String msg){
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		if(res > 0) {
 			map.put("result", REST_SUCCESS);
-			map.put("msg", msg+" µÇ¾ú½À´Ï´Ù.");
+			map.put("msg", msg+" ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		}else {
 			map.put("result", REST_FAIL);
-			map.put("msg", msg+"Áß ¿¹¿Ü°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù");
+			map.put("msg", msg+"ì¤‘ ì˜ˆì™¸ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤");
 
 		}
 		
@@ -65,21 +64,22 @@ public class CommonRestController {
 		return map;
 	}
 
-		//¾î¶² list¸¦ ¹ŞÀ»Áö ¸ğ¸£±â¶§¹®¿¡ ? ·Î ÀúÀå
-	public Map<String, Object> responseListMap(List<?> list){
+		//ì–´ë–¤ listë¥¼ ë°›ì„ì§€ ëª¨ë¥´ê¸°ë•Œë¬¸ì— ? ë¡œ ì €ì¥
+
+	public Map<String, Object> responseList(List<?> list){
+		
+		int res = list != null ? 1 : 0 ;
+		Map<String, Object> map = responseMap(res, REST_SELECT);
+		map.put("list",list);
+		return map;
+		}
 	
-	int res = list != null ? 1 : 0 ;
-	Map<String, Object> map = responseMap(res, REST_SELECT);
-	map.put("list",list);
-	return map;
+	public Map<String, Object> responseVo(Object vo) {
+	    int res = vo != null ? 1 : 0;
+	    Map<String, Object> map = responseMap(res, REST_SELECT);
+	    map.put("vo", vo);
+	    return map;
 	}
-	
-
-	
-
-	
-
-
 	
 	
 	

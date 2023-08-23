@@ -21,14 +21,13 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberVO login(MemberVO paramMemberVO) {
 		MemberVO memberVO = memberMapper.login(paramMemberVO);
-		
-		System.out.println(paramMemberVO.getM_password() + " ============== " + memberVO);
-		
+				
 		if (memberVO != null) {
 			boolean res = memberVO.getM_password().equals(paramMemberVO.getM_password());	
-			         // 비밀번호가 일치하면 로그인 성공
 	    	if(res) {
 	    		return memberVO;
+	        } else {
+	        	return null;
 	        }
 		}
 		

@@ -39,11 +39,11 @@ public class memberTest {
 		MemberVO memberVO = new MemberVO();
 		memberVO.setM_id("test1");
 		memberVO.setM_password("1234");
-		memberVO.setM_name("Å×½ºÆ®1");
+		memberVO.setM_name("í…ŒìŠ¤íŠ¸1");
 		memberVO.setM_division(1);
 		memberVO.setM_phone("010-9876-5432");
 		memberVO.setM_email("test1@a.com");
-		memberVO.setM_address("¼­¿ï½Ã ¸¶Æ÷±¸");
+		memberVO.setM_address("ì„œìš¸ì‹œ ë§ˆí¬êµ¬");
 		memberVO.setM_birth("2000-01-01");
 		
 		log.info(memberVO);

@@ -96,5 +96,5 @@
 
 	<%@ include file="../common/footer.jsp" %>
 </body>
-<script src="/resources/js/contentWrite.js"></script>
+<script src="/resources/js/content/contentWrite.js"></script>
 </html>

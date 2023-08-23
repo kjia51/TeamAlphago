@@ -26,5 +26,17 @@ public class ContentServiceImpl implements ContentService {
 		return contentMapper.insertContent(contentVO);
 	}
 
+	@Override
+	public ContentVO getContentOne(String c_id) {
+		// TODO Auto-generated method stub
+		return contentMapper.getContentOne(c_id);
+	}
+
+	@Override
+	public int updateContent(String c_id) {
+		// TODO Auto-generated method stub
+		return contentMapper.updateContent(c_id);
+	}
+
 
 }

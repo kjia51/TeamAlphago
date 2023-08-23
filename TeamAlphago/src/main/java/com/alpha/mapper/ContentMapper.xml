@@ -9,6 +9,18 @@
 	<insert id="insertContent">
 	insert into content values 
 	('C'||LPAD(SEQ_CONTENT.nextval,4,0), #{c_name},#{c_level},#{c_able},#{c_price},#{c_discount},#{c_sellprice},#{c_content} )
-	
 	</insert>
+	
+	<select id="getContentOne" resultType="com.alpha.vo.ContentVO">
+		select * from content where c_id=#{c_id}
+	</select>
+	
+	<update id="updateContent">
+		update content set c_name=#{c_name}, c_level=#{c_level}, 
+		c_able=#{c_able}, c_price=#{c_price}, c_discount=#{c_discount}, 
+		c_sellprice=#{c_sellprice}, c_content=#{c_content}
+		where c_id=#{c_id}
+	</update>
+	
+	
 </mapper>

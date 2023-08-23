@@ -21,14 +21,16 @@ function fetchPost(url,obj,callback){
 	
 }
 
+
+
 //컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
 function result(map){
 	console.log(map);
 	if(map.result == 'success'){
-		alert("성공");
+		alert(map.msg);
 		location.href = map.url;
 	} else {
-		alert("실패");
+		alert(map.msg);
 	}
 		
 }
@@ -54,7 +56,7 @@ $('#registerBtn').click(function () {
 			, c_content : c_content
 			}
 	
-	fetchPost('/alpha/container/insert', obj, result)
+	fetchPost('/alpha/content/insert', obj, result)
 
 })
 

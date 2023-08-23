@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alpha.service.PaymentService;
+import com.alpha.vo.SubscribeVO;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -22,52 +23,52 @@ import com.siot.IamportRestClient.response.Payment;
 @Controller
 public class PaymentController{
 
-//    private final IamportClient iamportClient;
-//
-//    public PaymentController() {
-//        this.iamportClient = new IamportClient("6615746551637850",
-//                "BEQuNfVBtZKdkZL9uGiNGIxvMNLQ6ADoK77fAD3zlk4neySuRGc6n7YuYGlb1z8q5gtLewOuTUDQgGzX");
-//    }
-//
-//    @ResponseBody
-//    @RequestMapping("/payment/verifyIamport/{imp_uid}")
-//    public IamportResponse<Payment> paymentByImpUid(@PathVariable("imp_uid") String imp_uid)
-//            throws IamportResponseException, IOException {
-//        return iamportClient.paymentByImpUid(imp_uid);
-//
-//    }
-//    
-//    @Autowired
-//    private PaymentService paymentService;
-//    
-//    @PostMapping("peco/payment/complete")
-//    public ResponseEntity<String> paymentComplete(HttpSession session, P_RESVO p_resvo) throws IOException {
-//     
-//    	String token = paymentService.getToken();
-//    	System.out.println("≈‰≈´ : " + token);
-//
-//      return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//    
-//    @PostMapping("peco/payment/cancel")
-//    public ResponseEntity<String> delete(HttpSession session, @RequestParam("imp_uid") String imp_uid
-//    					,@RequestParam("amount") String amount) {
-//    	    	
-//		try {
-//			String access_token = paymentService.getToken();	
-//			
-//			System.out.println("≈‰≈´ : " + access_token);
-//			System.out.println("imp_uid : " + imp_uid);
-//			System.out.println("amount : " + amount);
-//
-//			
-//			paymentService.payMentCancle(access_token, imp_uid, amount);
-//			
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		 return new ResponseEntity<String>("√Îº“∞° øœ∑·µ«æ˙Ω¿¥œ¥Ÿ", HttpStatus.OK);
-//    }
+    private final IamportClient iamportClient;
+
+    public PaymentController() {
+        this.iamportClient = new IamportClient("6615746551637850",
+                "BEQuNfVBtZKdkZL9uGiNGIxvMNLQ6ADoK77fAD3zlk4neySuRGc6n7YuYGlb1z8q5gtLewOuTUDQgGzX");
+    }
+
+    @ResponseBody
+    @RequestMapping("/payment/verifyIamport/{imp_uid}")
+    public IamportResponse<Payment> paymentByImpUid(@PathVariable("imp_uid") String imp_uid)
+            throws IamportResponseException, IOException {
+        return iamportClient.paymentByImpUid(imp_uid);
+
+    }
+    
+    @Autowired
+    private PaymentService paymentService;
+    
+    @PostMapping("/payment/complete")
+    public ResponseEntity<String> paymentComplete(HttpSession session, SubscribeVO subVO) throws IOException {
+     
+    	String token = paymentService.getToken();
+    	System.out.println("ÌÜ†ÌÅ∞ : " + token);
+
+      return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
+    @PostMapping("/payment/cancel")
+    public ResponseEntity<String> delete(HttpSession session, @RequestParam("imp_uid") String imp_uid
+    					,@RequestParam("amount") String amount) {
+    	    	
+		try {
+			String access_token = paymentService.getToken();	
+			
+			System.out.println("ÌÜ†ÌÅ∞ : " + access_token);
+			System.out.println("imp_uid : " + imp_uid);
+			System.out.println("amount : " + amount);
+
+			
+			paymentService.payMentCancle(access_token, imp_uid, amount);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		 return new ResponseEntity<String>("Ï∑®ÏÜåÍ∞Ä ÏôÑÎ£åÎêòÏóàÏäµÎãàÎã§", HttpStatus.OK);
+    }
 
 }

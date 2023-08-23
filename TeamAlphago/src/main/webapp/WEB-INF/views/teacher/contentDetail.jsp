@@ -8,6 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <title>상세페이지</title>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
 <style>
 .main-box {
@@ -41,10 +44,10 @@
 
 <div class="main-box">
 
-
+<input id="m_id" type="text" value="${memberVO.m_id }">
 <div class="content-box">
 <c:forEach items="${contentList }" var="con">
-	<h2>${con.c_name }</h2>
+	<input id="c_name" type="text" value="${con.c_name }">
 	<div class="imgBox"><img src="" alt="이미지"></div>
 	<div class="infoBox"><h3>${con.c_content }</h3></div>
 	<hr>
@@ -57,11 +60,10 @@
 	
 	<input type="text" value="${con.c_id }" id="c_id">
 	<input type="text" value="${con.c_discount }">
-	<input type="text" value="${con.c_sellprice }">
+	<input id="c_sellpice" type="text" value="${con.c_sellprice }">
 	
 	
 	<fmt:formatNumber var="num" value="${con.c_able/10 }" type="number" />
-	
 	<select id="pCnt" name="pCnt">
 		<c:forEach var="i" begin="1" end="${num }">
 		<option>${i*10 }명</option>
@@ -79,22 +81,104 @@ function getSysdate() {
 
 	var date = new Date();
 	return date;
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth() + 1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2);
+
+	var dateString = year + '-' + month  + '-' + day;
+
+	return dateString;
 	
 }
 
-$('#payment').click(function () { //결제버튼
 
-			var IMP = window.IMP;
-			IMP.init('imp07586387');
+$('#payment1').click(function () { 
+	alert('aa');
+	var sub_able = $("#pCnt option:selected").val();
+
+	console.log(sub_able.substr(0, (able.length)-1));
+	
+})
+
+
+$('#payment').click(function () { //결제버튼
+	
+	alert('a');
+
+	var IMP = window.IMP;
+	IMP.init('imp07586387');
+	
+	var able =  $("#pCnt option:selected").val();
                      
-             //DOM객체들에서 사용할 데이터 뽑기
-             var sub_c_id = $('#c_id').val();
-             var t_m_id = $('#m_id').val();
-             var sub_name = $('#c_name').val();
-             var sub_date = $('#c_date').val();
-             var sub_price = $('#c_sellpice').val();
-             var sub_able = $('#able').val();
-             var sub_current = 0;
+    //DOM객체들에서 사용할 데이터 뽑기
+    var c_id = $('#c_id').val();
+    var m_id = $('#m_id').val();
+    var c_name = $('#c_name').val();
+    var today = getSysdate();
+    var price = $('#c_sellpice').val();
+    var sub_able = able.substr(0, (able.length)-1);
+    var sub_current = 0;
+    
+    console.log(c_id);
+    console.log(m_id);
+    console.log(c_name);
+    console.log(today);
+    console.log(price);
+    console.log(sub_able.substr());
+    console.log(sub_current);
+                  
+    IMP.request_pay({
+        //카카오페이 결제시 사용할 정보 입력
+       pg: 'kakaopay',
+       pay_method: "card",
+       name: c_name,
+       amount: price,
+   }, function (rsp) {
+                 
+   		console.log(rsp);
+		// 결제검증
+		$.ajax({
+        	type : "POST",
+        	url : "/payment/verifyIamport/" + rsp.imp_uid 
+        }).done(function(data) {
+    	        	
+    		console.log(data);
+    	        	
+	       	// 결제 유효성 검증
+	       	// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
+	       	if(rsp.paid_amount == data.response.amount){
+	       		var msg = "결제 및 결제검증완료";
+	        	msg += '\n고유ID : ' + rsp.imp_uid;
+               	msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+               	msg += '\n결제 금액 : ' + rsp.paid_amount+'원';
+                     
+                if(rsp.apply_num === null || rsp.apply_num === undefined || rsp.apply_num === '') {
+                	rsp.apply_num = '카카오페이머니';
+                }
+                msg += '\n카드 승인번호 : ' + rsp.apply_num;                                    	
+    		        	
+                     $.ajax({
+                         url: "/alpha/teacher/insertContent",
+                         type: 'post',
+                         data: {
+                        	sub_id: rsp.imp_uid, //거래번호(구독ID)
+                        	sub_c_id: c_id, //콘텐츠id
+                           	t_m_id: m_id, //회원id
+                            sub_name: c_name, //콘텐츠명
+                            sub_date: today, //구독날짜
+                            sub_price: price, //구독료
+                            sub_able: sub_able, //수강가능인원
+                            sub_current: sub_current, //콘텐츠id
+                         }    
+                       });
+                     
+                     console.log('토큰생성');
+                     $.ajax({
+                     	type : "POST",
+            	        url : "/payment/complete"
+                     })
+                     console.log('토큰생성완료');
              
              if(!user_id.length || !user_email.length || !user_tel.length) {
              	alert('예약자 정보를 입력해주세요');
@@ -173,6 +257,19 @@ $('#payment').click(function () { //결제버튼
 	                           });  
 	                    	}); 
                     	
+           			alert(msg);
+       				console.log(m_id);
+           			window.location.replace("/alpha/teacher");
+            			
+    	        	} else {
+    	        		var msg = '결제에 실패하였습니다.';
+                     	msg += '에러내용 : ' + rsp.error_msg;
+            			alert(msg);
+    	        	}     		
+    	    });
+    })
+ 
+});  
 
 </script>
 
