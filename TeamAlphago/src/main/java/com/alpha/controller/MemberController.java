@@ -47,7 +47,7 @@ public class MemberController {
 		return mav;
 	}
 	
-	@PostMapping("/resister")
+	@PostMapping("/register")
 	public Map<String, Object> register(@RequestBody MemberVO memberVO) {
 	    try {
 	    	

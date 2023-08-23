@@ -21,7 +21,7 @@
                             <strong>회원가입 전 이용약관 및 개인정보 처리방침을 반드시 확인하여 주시기 바랍니다.</strong>
                         </p>
                     </div>
-                    <form class="entry" method="get" action="https://www.kbaduk.or.kr/member/signup_step2/">
+                    <form class="entry" method="get" action="/alpha/signup_step2/">
                         <div class="memberBox memberBox_ref">
                             <div class="joinWrap">
                                 <fieldset class="terms">
