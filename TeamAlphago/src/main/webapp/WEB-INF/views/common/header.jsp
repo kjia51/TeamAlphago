@@ -35,7 +35,7 @@
         <div class="topHead">
             <div class="top_wrap">
                 <div class='logo_top'>
-                    <a href="https://www.kbaduk.or.kr/main/"><img src="../resources/images/logo_top.png" alt="대한바둑협회" /></a>
+                    <a href="https://www.kbaduk.or.kr/main/"><img src="/resources/images/logo_top.png" alt="대한바둑협회" /></a>
                 </div>
                 <div class='subject'>
                     <a href='/alpha/main'>게임으로 배우는 바둑 교실</a>
@@ -125,7 +125,7 @@
                 <!-- // location -->
     </div>
     <!-- // header -->
-    <script type="text/javascript" src="../resources/js/main.js"></script>
-    <script type="text/javascript" src="../resources/js/basic.js"></script>
+    <script type="text/javascript" src="/resources/js/main.js"></script>
+    <script type="text/javascript" src="/resources/js/basic.js"></script>
 </body>
 </html>
