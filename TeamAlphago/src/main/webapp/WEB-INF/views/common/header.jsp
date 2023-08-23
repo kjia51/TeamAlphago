@@ -89,7 +89,7 @@
                             <h3 class="blind">협회소식</h3>
                             <ul>
                                 <li><a href="/alpha/teacher"> 콘텐츠 검색 </a></li>
-                                <li><a href="https://www.kbaduk.or.kr/tidings/businessSchedule/"> 구독 내역 </a></li>
+                                <li><a href="/alpha/mysubList"> 구독 내역 </a></li>
                             </ul>
                         </div>
                         <div class="gnb_sub gnb_sub_3">

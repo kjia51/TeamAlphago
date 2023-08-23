@@ -37,6 +37,18 @@ public class TeacherServiceImpl implements TeacherService {
 		return mapper.insertPayAction(subVO);
 	}
 
+	@Override
+	public List<SubscribeVO> mySubList(Criteria cri) {
+		return mapper.mySubList(cri);
+	}
+
+	@Override
+	public int cancelPay(String imp_uid) {
+		
+		String sub_id = imp_uid;
+		return mapper.cancelPay(sub_id);
+	}
+
 	
 
 }

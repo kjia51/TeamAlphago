@@ -11,14 +11,15 @@
 display: none;
 }
 
-ul, ol, li {
+nav > ul {
     list-style: none;
     display: flex;
     justify-content: center;
 }
 
-ul > li {
+nav > ul > li {
 margin-left: 10px;
+list-style: none;
 }
 </style>
 </head>

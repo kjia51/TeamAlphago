@@ -28,6 +28,12 @@
              , #{sub_able}, #{sub_current})
    </insert>
 	
+	<select id="mySubList" resultType="com.alpha.vo.SubscribeVO">
+	select * from subscribe
+	</select>
 	
+	<delete id="cancelPay">
+		delete subscribe where sub_id=#{sub_id}
+	</delete>
 
 </mapper>
