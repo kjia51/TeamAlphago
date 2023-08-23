@@ -1,5 +1,9 @@
 package com.alpha.mapper;
 
-public interface ContentMapper {
+import java.util.List;
 
+import com.alpha.vo.ContentVO;
+
+public interface ContentMapper {
+	public List<ContentVO> getContentList();
 }
