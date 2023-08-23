@@ -6,4 +6,9 @@
 		select * from content
 	</select>
 
+	<insert id="insertContent">
+	insert into content values 
+	('C'||LPAD(SEQ_CONTENT.nextval,4,0), #{c_name},#{c_level},#{c_able},#{c_price},#{c_discount},#{c_sellprice},#{c_content} )
+	
+	</insert>
 </mapper>

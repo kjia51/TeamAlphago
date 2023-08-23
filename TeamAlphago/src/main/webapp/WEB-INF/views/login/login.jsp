@@ -32,7 +32,7 @@
                         </div>
                         <ul class="list_info">
                             <li> 아이디&amp;비밀번호를 잊어버렸나요? <a href="https://www.kbaduk.or.kr/member/find/" class="link_info">아이디&amp;비밀번호 찾기</a> </li>
-                            <li> 회원이 아니신가요? <a href="https://www.kbaduk.or.kr/member/signup_step1/" class="link_info">회원가입 하기</a> </li>
+                            <li> 회원이 아니신가요? <a href="/alpha/signup_step1/" class="link_info">회원가입 하기</a> </li>
                         </ul>
                     </div>
                 </div>

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src='../resources/js/jquery-1.12.4.min.js'></script>
+<script src='/resources/js/jquery-1.12.4.min.js'></script>
     <link rel="stylesheet" href="/resources/css/common.css">
     <meta http-equiv='X-UA-Compatible' content='IE=edge, chrome=1' />
 <meta http-equiv='Content-Language' content='ko' />

@@ -20,5 +20,11 @@ public class ContentServiceImpl implements ContentService {
 		return contentMapper.getContentList();
 	}
 
+	@Override
+	public int insertContent(ContentVO contentVO) {
+		// TODO Auto-generated method stub
+		return contentMapper.insertContent(contentVO);
+	}
+
 
 }

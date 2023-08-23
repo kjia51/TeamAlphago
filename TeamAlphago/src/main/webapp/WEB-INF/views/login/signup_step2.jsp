@@ -80,9 +80,27 @@
                                 </tr>
 
                                 <tr>
+                                    <th scope="row">이메일 주소<span class="t_red">&#42;</span></th>
+                                    <td>
+                                        <input type="text" class="input-default" id="email" />
+                                    </td>
+                                </tr>
+
+                                <tr>
                                     <th scope="row">휴대폰 번호 <span class="t_red">&#42;</span></th>
                                     <td>
                                         <input type="text" class="input-default" id="phone" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">회원 구분 <span class="t_red">&#42;</span></th>
+                                    <td>
+                                        <select id="division">
+                                        	<option value="1">학습관리자</option>
+                                        	<option value="2">학습자</option>
+                                        	<option value="3">운영관리자</option>
+                                        </select>
                                     </td>
                                 </tr>
 
@@ -108,6 +126,18 @@
 <!-- <script type="text/javascript" src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> -->
 <script type="text/javascript" src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
+
+var signupBtn = document.getElementById('signupBtn');
+signupBtn.addEventListener('click', function(e) {
+	  // 이벤트 초기화
+	  e.preventDefault();
+	  
+	  register();
+});
+
+
+function register(){
+	
 	let id = document.getElementById('id').value;
 	let pwd = document.getElementById('pwd').value;
 	let pwdChk = document.getElementById('pwdChk').value;
@@ -115,21 +145,25 @@
 	let birth = document.getElementById('birth').value;
 	let addr1 = document.getElementById('addr1').value;
 	let phone = document.getElementById('phone').value;
+	let email = document.getElementById('email').value;
+	let division = document.getElementById('division').value;
 	
 	
 	
 	let data = {
 	    m_id: id,
-	    m_pw: pwd,
+	    m_password: pwd,
 	    m_name: name,
 	    m_birth: birth,
 	    m_address: addr1,
-	    m_phone: phone
+	    m_phone: phone,
+	    m_email: email,
+	    m_division: division
 	};
 
 
 	//회원가입 요청
-	fetch('/register', {
+	fetch('/alpha/register', {
 	    method: 'POST',
 	    headers: {
 	        'Content-Type': 'application/json'
@@ -137,18 +171,14 @@
 	    body: JSON.stringify(data)
 	})
 	.then((response) => response.json())
-	.then((result) => {
-	    if (result.result === 'success') {
-	  	  // 회원가입이 성공한 경우 알림창 띄우기
-	  	  showAlert('회원가입이 완료되었습니다.');
-	        location.href = '/login';
-	    } else {
-	        signupMsg.innerHTML = result.msg;
-	    }
-	})
-	.catch((error) => {
-	    console.error('Error : ', error);
-	});
+	.then((result) => {showAlert('회원가입이 완료되었습니다.');
+    location.href = '/alpha/login';})
+}
+
+//서버로부터 받은 메시지를 이용하여 알림창을 띄우는 함수
+function showAlert(message) {
+  alert(message);
+}
 </script>
 	
 	<%@ include file="../common/footer.jsp" %>
