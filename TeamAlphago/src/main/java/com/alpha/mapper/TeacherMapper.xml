@@ -19,8 +19,14 @@
 	
 	<select id="getContentDetail" resultType="com.alpha.vo.ContentVO">
 	select * from content where c_id = #{c_id}
-	
 	</select>
+	
+	<insert id="insertPayAction">
+   	insert into subscribe (SUB_ID, SUB_C_ID, T_M_ID, SUB_NAME, SUB_DATE, SUB_PRICE,
+                  SUB_ABLE, SUB_CURRENT)
+             values (#{sub_id}, #{sub_c_id}, #{t_m_id}, #{sub_name}, #{sub_date}, #{sub_price}
+             , #{sub_able}, #{sub_current})
+   </insert>
 	
 	
 
