@@ -9,4 +9,6 @@ import com.alpha.vo.ContentVO;
 @Service
 public interface ContentService {
 	public List<ContentVO> getContentList();
+	
+	public int insertContent(ContentVO contentVO);
 }

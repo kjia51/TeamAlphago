@@ -6,4 +6,6 @@ import com.alpha.vo.ContentVO;
 
 public interface ContentMapper {
 	public List<ContentVO> getContentList();
+	
+	public int insertContent(ContentVO contentVO);
 }
