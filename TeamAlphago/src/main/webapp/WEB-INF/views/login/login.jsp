@@ -24,10 +24,10 @@
                         <h3 class="tit_register">회원 로그인</h3>
                         <div class="input_area">
                             <div class="inp_wrap">
-                                <input type="text" class="input-default" title="아이디를 입력해주세요." placeholder="아이디를 입력해주세요." name="signin_id"/>
+                                <input type="text" class="input-default" title="아이디를 입력해주세요." placeholder="아이디를 입력해주세요." name="signin_id" id="signin_id"/>
                             </div>
                             <div class="inp_wrap">
-                                <input type="password" class="input-default" title="비밀번호를 입력해주세요." placeholder="비밀번호를 입력해주세요." name="signin_pwd"/>
+                                <input type="password" class="input-default" title="비밀번호를 입력해주세요." placeholder="비밀번호를 입력해주세요." name="signin_pwd" id="signin_pwd"/>
                             </div>
                         </div>
                         <ul class="list_info">
@@ -48,19 +48,27 @@
 
 
 <script type="text/javascript">
-	function($, fs) {
-        var $btn = $('#signinBtn');
-        $btn.on('click', function(){
-            fs.ajax({
-                data : {
-                    bbs : 'sign' ,
-                    function : 'in'
-                } ,
-                form : $(this.form) ,
-                action: 'process' ,
-                success : function( data, b ){
-                    location.href = data.route;
-                }
+        $(function(){
+        	
+        
+        var btn = $('#signinBtn');
+        btn.on('click', function(){
+            var signin_id = document.querySelector('#signin_id').value;
+            var signin_pwd = document.querySelector('#signin_pwd').value;
+            
+            var loginData = {"m_id" : signin_id, "m_password" : signin_pwd}
+            
+            console.log(loginData);
+            
+            $.ajax({
+            	type : "post",
+            	url : "/alpha/loginAction",
+            	contentType : 'application/json',
+            	data : JSON.stringify(loginData),
+            	success : function(result){
+            		alert('로그인이 완료되었습니다.');
+            	    location.href = '/alpha/main';
+            	}
             });
         });
 
@@ -69,6 +77,10 @@
                 $btn.trigger('click');
             }
         });
+        
+        })
+        
+     
 </script>
 
 <%@ include file="../common/footer.jsp" %>

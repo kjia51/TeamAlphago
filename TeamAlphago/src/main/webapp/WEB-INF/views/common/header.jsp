@@ -37,16 +37,16 @@
                     <a href="https://www.kbaduk.or.kr/main/"><img src="../resources/images/logo_top.png" alt="대한바둑협회" /></a>
                 </div>
                 <div class='subject'>
-                    <a href='#'>게임으로 배우는 바둑 교실</a>
+                    <a href='/alpha/main'>게임으로 배우는 바둑 교실</a>
                 </div>
                 <div class="topMenuBar">
                     <h2 class="blind">서비스 바로가기</h2>
                     <div class="util">
                         <div class="service">
                             <ul>
-                                <li><a href="https://www.kbaduk.or.kr/" ><em>홈</em></a></li>
-                                <li><a href="https://www.kbaduk.or.kr/member/signin/"><em>로그인</em></a></li>
-                                <li><a href="https://www.kbaduk.or.kr/member/signup_step1/"><em>회원가입</em></a></li>
+                                <li><a href="/alpha/main" ><em>홈</em></a></li>
+                                <li><a href="/alpha/login"><em>로그인</em></a></li>
+                                <li><a href="/alpha/signup_step1/"><em>회원가입</em></a></li>
                             </ul>
                         </div><!-- // service -->
                     </div><!-- // util -->

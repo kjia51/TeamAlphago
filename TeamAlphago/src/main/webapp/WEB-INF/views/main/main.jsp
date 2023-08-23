@@ -11,6 +11,8 @@
 	
 	<h1>메인페이지</h1>
 	
+	${memberVO }
+	
 	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>

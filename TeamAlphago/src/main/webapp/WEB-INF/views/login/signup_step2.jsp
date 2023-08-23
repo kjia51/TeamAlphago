@@ -15,14 +15,7 @@
         <div class="content_wrap">
 
             <div class="titleBox">
-                <div class="joinStep">
-                    <ol>
-                        <li class="s1"><span class="blind">약관동의</span></li>
-                        <li class="s2"><span class="blind">본인인증</span></li>
-                        <li class="s3 on"><span class="blind">정보입력</span></li>
-                        <li class="s4"><span class="blind">가입완료</span></li>
-                    </ol>
-                </div><!--// joinStep-->
+               
                 <h2 class="t_title">정보 입력</h2>
                 <p>입력하신 정보는 본인 확인용으로 사용되며, 회원 가입이 완료되면 사용자 확인을 위해 회원정보에 저장됩니다.</p>
             </div>

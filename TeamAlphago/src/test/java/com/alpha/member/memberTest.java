@@ -1,6 +1,7 @@
 package com.alpha.member;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +21,18 @@ public class memberTest {
 
 	@Autowired
 	MemberMapper memberMapper;
+	
+	@Test
+	public void login() {
+		MemberVO memberVO = new MemberVO();
+		memberVO.setM_id("test1");
+		memberVO.setM_password("1234");
+		
+		memberVO = memberMapper.login(memberVO);
+		
+		log.info(memberVO);
+		assertNotNull(memberVO);
+	}
 	
 	@Test
 	public void signup() {

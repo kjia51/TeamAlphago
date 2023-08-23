@@ -8,5 +8,7 @@ import com.alpha.vo.MemberVO;
 public interface MemberService {
 
 	public int insert(MemberVO memberVO);
+
+	public MemberVO login(MemberVO paramMemberVO);
 	
 }
