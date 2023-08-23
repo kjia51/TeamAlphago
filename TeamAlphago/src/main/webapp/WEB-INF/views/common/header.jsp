@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +46,12 @@
                         <div class="service">
                             <ul>
                                 <li><a href="/alpha/main" ><em>홈</em></a></li>
-                                <li><a href="/alpha/login"><em>로그인</em></a></li>
+                                <c:if test="${memberVO == null }">
+	                                <li><a href="/alpha/login"><em>로그인</em></a></li>
+                                </c:if>
+                                <c:if test="${memberVO != null }">
+	                                <li><a href="/alpha/logout"><em>로그아웃</em></a></li>
+                                </c:if>
                                 <li><a href="/alpha/signup_step1/"><em>회원가입</em></a></li>
                             </ul>
                         </div><!-- // service -->
@@ -82,14 +88,14 @@
                         <div class="gnb_sub gnb_sub_2">
                             <h3 class="blind">협회소식</h3>
                             <ul>
-                                <li><a href="https://www.kbaduk.or.kr/bbs/read/basic/notice/"> 콘텐츠 검색 </a></li>
+                                <li><a href="/alpha/teacher"> 콘텐츠 검색 </a></li>
                                 <li><a href="https://www.kbaduk.or.kr/tidings/businessSchedule/"> 구독 내역 </a></li>
                             </ul>
                         </div>
                         <div class="gnb_sub gnb_sub_3">
                             <h3 class="blind">대회정보</h3>
                             <ul>
-                                <li><a href="https://www.kbaduk.or.kr/competition/annualSchedule/"> 그룹 가입 신청</a></li>
+                                <li><a href="/alpha/joinGroup"> 그룹 가입 신청</a></li>
                                 <li><a href="https://www.kbaduk.or.kr/bbs/read/competition/domestic/"> 숙제 제출 </a></li>
                             </ul>
                         </div>

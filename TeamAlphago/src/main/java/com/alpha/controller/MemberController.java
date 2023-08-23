@@ -3,9 +3,11 @@ package com.alpha.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,41 +30,43 @@ public class MemberController {
 
 	@GetMapping("/login")
 	public ModelAndView login() {
-		System.out.println("·Î±×ÀÎÆäÀÌÁö ¿¬°á");
-		
 		ModelAndView mav = new ModelAndView("/login/login");
 		return mav;
 	}
 	
 	@PostMapping("/loginAction")
-	public String loginAction(@RequestBody MemberVO memberVO,
-	                           Model model,
-	                           HttpSession session) {
+	public ResponseEntity<String> loginAction(@RequestBody MemberVO memberVO,
+	                                          HttpSession session) {
 
-		
-		System.out.println("m_id  : " + memberVO.getM_id());
-		System.out.println("m_password  : " + memberVO.getM_password());
-    // »ç¿ëÀÚ°¡ ÀÔ·ÂÇÑ ¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£¸¦ °ËÁõÇÏ±â À§ÇØ MemberServiceÀÇ ¸Ş¼­µå¸¦ È£ÃâÇÕ´Ï´Ù.
-	    memberVO = memberService.login(memberVO);
-	     
-	    if (memberVO != null) {
-	       	// ÀÎÁõ ¼º°ø: ¼¼¼Ç¿¡ »ç¿ëÀÚ Á¤º¸¸¦ ÀúÀåÇÏ°í home ÆäÀÌÁö·Î ¸®´ÙÀÌ·ºÆ®ÇÕ´Ï´Ù.
-	        
-	        // ·Î±×ÀÎ ¼º°ø
-	    	    
-	       session.setAttribute("memberVO", memberVO);
-	              
-	        return "redirect:/main";
-	    } else {
-	        // ·Î±×ÀÎ ½ÇÆĞ
-	        model.addAttribute("errorMSG", "Àß¸øµÈ ¾ÆÀÌµğ ¶Ç´Â ºñ¹Ğ¹øÈ£ ÀÔ´Ï´Ù.");
-	        return "/login";
+	    try {
+	        memberVO = memberService.login(memberVO);
+
+	        if (memberVO != null) {
+	            session.setAttribute("memberVO", memberVO);
+	            return ResponseEntity.ok("ë¡œê·¸ì¸ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
+	        } else {
+	            return ResponseEntity.badRequest().body("ë¡œê·¸ì¸ ì •ë³´ê°€ ì˜¬ë°”ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.badRequest().body("ë¡œê·¸ì¸ ì¤‘ ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
 	    }
 	}
+
+	@GetMapping("/logout")
+	 public ModelAndView logoutMainGET(HttpServletRequest request) throws Exception{
+	        
+       HttpSession session = request.getSession();
+       session.invalidate();
+       
+       ModelAndView mav = new ModelAndView("redirect:/alpha/main");
+	   return mav;
+       
+	    }
+	
 	
 	@GetMapping("/signup_step1")
 	public ModelAndView signup_step1() {
-		System.out.println("È¸¿ø°¡ÀÔ1 ¿¬°á");
 		
 		ModelAndView mav = new ModelAndView("/login/signup_step1");
 		return mav;
@@ -71,7 +75,6 @@ public class MemberController {
 	
 	@GetMapping("/signup_step2")
 	public ModelAndView signup_step2() {
-		System.out.println("È¸¿ø°¡ÀÔ2 ¿¬°á");
 		
 		ModelAndView mav = new ModelAndView("/login/signup_step2");
 		return mav;
@@ -82,18 +85,15 @@ public class MemberController {
 	    try {
 	    	
 	    	System.out.println("memberVO : " + memberVO);
-	        // È¸¿ø°¡ÀÔ ¼­ºñ½º È£Ãâ
 	        int res = memberService.insert(memberVO);
 	        if (res > 0) {
-	            // È¸¿ø°¡ÀÔ ¼º°ø ½Ã success ¸Ş½ÃÁö¸¦ ¹İÈ¯
-	            return responseMapMessage("success", "È¸¿ø°¡ÀÔÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+	            return responseMapMessage("success", "íšŒì›ê°€ì…ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤..");
 	        } else {
-	            // È¸¿ø°¡ÀÔ ½ÇÆĞ ½Ã fail ¸Ş½ÃÁö¸¦ ¹İÈ¯
-	            return responseMapMessage("fail", "È¸¿ø°¡ÀÔ¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù. ´Ù½Ã È®ÀÎÇÏ¼¼¿ä.");
+	            return responseMapMessage("fail", "íšŒì›ê°€ì…ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤. ë‹¤ì‹œ í™•ì¸í•˜ì„¸ìš”.");
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        return responseMapMessage("fail", "µî·Ï Áß ¿¹¿Ü»çÇ×ÀÌ ¹ß»ıÇÏ¿´½À´Ï´Ù.");
+	        return responseMapMessage("fail", "ë“±ë¡ ì¤‘ ì˜ˆì™¸ì‚¬í•­ì´ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.");
 	    }
 	}
 
