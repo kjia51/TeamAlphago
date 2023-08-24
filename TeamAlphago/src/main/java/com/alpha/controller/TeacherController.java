@@ -1,5 +1,6 @@
 package com.alpha.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,24 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.service.TeacherService;
+import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
-import com.alpha.vo.GroupVO;
-import com.alpha.vo.MemberVO;
 import com.alpha.vo.PageDto;
 import com.alpha.vo.SubscribeVO;
 
 @RestController
 @RequestMapping("/alpha/*")
-public class TeacherController {
+public class TeacherController extends CommonRestController {
 	
 	@Autowired 
 	TeacherService service;
@@ -132,10 +129,25 @@ public class TeacherController {
 		}
 	   
 	   @GetMapping("/group/getSubOne/{sub_id}")
-	   public void GetSubOne(@PathVariable("sub_id") String sub_id) {
+	   public Map<String, Object> GetSubOne(@PathVariable("sub_id") String sub_id) {
 		   
 		   System.out.println("==============");
 		   System.out.println(sub_id);
+		   
+		   try {
+				SubscribeVO subscribeVO = service.getSubOne(sub_id);
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("subscribeVO", subscribeVO);
+				System.out.println(subscribeVO);
+				
+				
+				return map;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "등록 중 오류 발생");
+			}
+		   
 		   
 	   }
 	   

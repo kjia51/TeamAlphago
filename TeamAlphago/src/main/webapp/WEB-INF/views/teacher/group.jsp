@@ -22,6 +22,7 @@
 #my_modal {
     display: none;
     width: 750px;
+    height: 700px;
     padding: 20px 60px;
     background-color: #fefefe;
     border: 1px solid #888;
@@ -84,6 +85,7 @@
 
 <%-- 모달창 --%>
 <div id="my_modal">
+	<hr>
 	그룹명<input type="text" value=""><br>
 	학습콘텐츠
 		<select name="group_content" id="conSelect">
@@ -93,13 +95,15 @@
 		    </c:forEach>
 		</select>
 		<br>
-		<input type="text" value="">
+		<div id="getSub">
+		</div>
+		<hr>
 		<div class="btn">
 		    <button><a class="modal_close_btn" onclick="groupinsert()">생성하기</a></button>
 		    <button><a class="modal_close_btn">닫기</a></button>
     	</div>
 </div>
-<%--     --%>
+<%-- --------------------------------------------------------------  --%>
 
 <div class="entry">
 	<table class="table table-bordered">
@@ -204,27 +208,85 @@ $('#popup_open_btn').on('click', function() {
     modal('my_modal');
 });
 
-$("#conSelect").change(function(){
-    var con =  $(this).val();
-    console.log(con);
-    
-   
-  	const data = {
-	   sub_id : con		  
-  }
+////////////////////////////////////////////////////////////////////
+//get방식 요청
+function fetchGet(url,callback){
+	console.log(url);
+	console.log(callback);
+	
+	try {
+	//url 요청
+	fetch(url)
+		//요청 결과json 문자열을 javascript 객체로 반환
+		.then(response => response.json())
+		//매개로 받은 콜백함수 실행
+		.then(map => callback(map));
+		
+	} catch (e) {
+		console.log(e);
+	}
+	
+	
+}
 
-    
-   fetch('/group/getSubOne', {
-	    method: 'GET',
-	  })
-	  .then(response => {
-	    return response.json();
-	  })
-	  .then(data => {
-	    console.log(data);
-	  });
-    
+var main = document.getElementById('getSub');
+
+$("#conSelect").change(function(){
+	
+    var sub_id =  $(this).val();
+    console.log(sub_id);
+	main.innerHTML = '';
+	fetchGet('/alpha/group/getSubOne/'+sub_id, resultList)
+
 })
+
+function resultList(map){
+		let vo = map.subscribeVO;
+		console.log(vo);
+		console.log(vo.sub_id);
+		
+		var a = vo.sub_id;
+		console.log(a);
+		
+		main.innerHTML += ''
+			+ '<table class="table table-bordered">'
+			+ '<colgroup>'
+			+ '<col width="20%" />'
+			+ '<col width="40%" />'
+			+ '<col width="20%" />'
+		    + '<col width="20%" />'
+			+ '</colgroup>'
+			+ '<thead>'
+		    + 	'<tr>'
+			+ 		'<th>구독ID</th>'
+			+ 		'<th>콘텐츠명</th>'
+			+ 		'<th>학습가능일</th>'
+			+ 		'<th>수강가능인원</th>'
+		    + 	'</tr>'
+			+ '</thead>'
+			+	'<tbody>'
+			+		'<tr>'
+		    +			'<th align="left" class="row"><input type="text" class="index" id="sub_price" value="'
+		    +			sub_id
+		    +			'" readonly></td>'
+            +			'<td align="center"><input type="text" class="index" id="sub_price" value="'
+            +			sub_name
+            +			'" readonly></td>'
+            +			'<td align="center"><input type="text" class="index" id="sub_price" value="'
+            +			sub_end
+            +			'" readonly></td>'
+            +			'<td align="center"><input type="text" class="index" id="sub_price" value="'
+            +			sub_able
+            +			'" readonly></td>'
+			+ 		'</tr>'
+			+'</tbody>
+		        </table> 
+			+a
+			+'</h1>'
+			+'    </div>'
+
+
+    	    }
 
 
 function groupinsert() { //그룹생성
