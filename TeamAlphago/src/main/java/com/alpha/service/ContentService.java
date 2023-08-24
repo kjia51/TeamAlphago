@@ -15,4 +15,6 @@ public interface ContentService {
 	public ContentVO getContentOne(String c_id);
 	
 	public int updateContent(ContentVO contentVO);
+	
+	public int deleteContent(String c_id);
 }

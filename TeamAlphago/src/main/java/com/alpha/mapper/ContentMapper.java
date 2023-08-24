@@ -13,5 +13,5 @@ public interface ContentMapper {
 
 	public int updateContent(ContentVO contentVO);
 	
-	
+	public int deleteContent(String c_id);
 }

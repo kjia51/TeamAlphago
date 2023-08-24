@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.service.ContentService;
 import com.alpha.vo.ContentVO;
+import com.alpha.vo.Criteria;
 
 @RestController
 @RequestMapping("/alpha/*")
@@ -23,15 +25,16 @@ public class ContentController extends CommonRestController {
 	   @Autowired
 	   ContentService contentService;
 	   
-	   @GetMapping("/content")
-	   public ModelAndView content() {
-	      
-	      ModelAndView mav = new ModelAndView("/content/content");
-	      mav.addObject("list",contentService.getContentList());
-	      return mav;
-	   }
+		
+	   @GetMapping("/content") //콘텐츠 조회 페이지(아직 검색x)
+		public ModelAndView teacher(Criteria cri) {
+
+			ModelAndView mav = new ModelAndView("/content/content");
+		
+			return mav;
+		}
 	   
-	   
+	   //등록
 		@PostMapping("/content/insert")
 		public Map<String, Object> register(@RequestBody ContentVO contentVO) {
 
@@ -48,7 +51,7 @@ public class ContentController extends CommonRestController {
 		}
 		
 		
-		
+		// 수정 시 조회
 		   @GetMapping("/content/edit/{c_id}")
 		   public Map<String, Object> contentEdit(@PathVariable("c_id") String c_id) {
 		      
@@ -60,10 +63,11 @@ public class ContentController extends CommonRestController {
 	
 				} catch (Exception e) {
 					e.printStackTrace();
-					return responseMap(REST_FAIL, "등록 중 오류 발생");
+					return responseMap(REST_FAIL, "수정 중 오류 발생");
 				}
 		   }
 		   
+		   //조회
 		   @GetMapping("/content/list/{c_id}")
 		   public Map<String, Object> contentList(@PathVariable("c_id") String c_id) {
 		      
@@ -75,33 +79,39 @@ public class ContentController extends CommonRestController {
 	
 				} catch (Exception e) {
 					e.printStackTrace();
-					return responseMap(REST_FAIL, "등록 중 오류 발생");
+					return responseMap(REST_FAIL, "조회 중 오류 발생");
 				}
 		   }
 		   
-		   @GetMapping("/content/contentEdit")
-		   public ModelAndView contentEdit() {
-		      
-		      ModelAndView mav = new ModelAndView("/content/contentEdit");
-		      return mav;
-		   }
-		   
-		   
-		   
+		   //수정 action
 		   @PutMapping("/content/EditAction")
 			public Map<String, Object> update(@RequestBody ContentVO contentVO) {
 
 				try {
 					int res = contentService.updateContent(contentVO);
-					
 					Map<String, Object> map = responseEditMap(res);
 					return map;
 
 				} catch (Exception e) {
 					e.printStackTrace();
-					return responseMap(REST_FAIL, "등록 중 오류 발생");
+					return responseMap(REST_FAIL, "삭제 중 오류 발생");
 				}
 			}
+		   
+		   //삭제 action
+		   @DeleteMapping("/content/DeleteAction/{c_id}")
+		   public Map<String, Object> delete(@PathVariable("c_id") String c_id) {
+			   
+			   try {
+				   int res = contentService.deleteContent(c_id);
+				   Map<String, Object> map = responseDeleteMap(res);
+				   return map;
+				   
+			   } catch (Exception e) {
+				   e.printStackTrace();
+				   return responseMap(REST_FAIL, "삭제 중 오류 발생");
+			   }
+		   }
 		
 
 }

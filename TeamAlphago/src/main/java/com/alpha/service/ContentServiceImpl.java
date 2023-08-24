@@ -38,5 +38,11 @@ public class ContentServiceImpl implements ContentService {
 		return contentMapper.updateContent(contentVO);
 	}
 
+	@Override
+	public int deleteContent(String c_id) {
+		// TODO Auto-generated method stub
+		return contentMapper.deleteContent(c_id);
+	}
+
 
 }

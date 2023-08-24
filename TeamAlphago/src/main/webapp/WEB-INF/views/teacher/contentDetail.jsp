@@ -13,11 +13,9 @@
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
 <style>
-.main-box {
+#main {
     width: 60%;
     height: 100%;
-    background-color: #fff;
-    border: 1px solid #d8dfe6;
     margin: 0 auto;
     justify-content: center;
 }
@@ -42,7 +40,7 @@
 
 <%@ include file="../common/header.jsp" %>
 
-<div class="main-box">
+<div id="main">
 
 <input id="m_id" type="text" value="${memberVO.m_id }">
 <div class="content-box">
@@ -73,6 +71,7 @@
 	<button id="payment">결제</button>
 	<button id="goback" onclick="location.href='/alpha/teacher'">뒤로가기</button>
 	<button id="contentEdit">수정</button>
+	<button id="contentDelete">삭제</button>
 	</div>
 
 <script>
@@ -305,5 +304,5 @@ $('#payment').click(function () { //결제버튼
 
 
 </body>
-<%--<script src="/resources/js/content/contentEdit.js"></script> --%>
+<script src="/resources/js/content/contentEdit.js"></script>
 </html>

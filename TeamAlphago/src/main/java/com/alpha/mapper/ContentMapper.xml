@@ -22,5 +22,8 @@
 		where c_id=#{c_id}
 	</update>
 	
+	<delete id="deleteContent">
+		delete from content where c_id=#{c_id}
+	</delete>
 	
 </mapper>

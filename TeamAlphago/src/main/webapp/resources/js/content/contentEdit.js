@@ -41,7 +41,7 @@ function fetchPost(url,obj,callback){
 	
 }
 
-//post방식 요청
+//put방식 요청
 function fetchPut(url,obj,callback){
 	console.log(url);
 	console.log(callback);
@@ -63,6 +63,24 @@ function fetchPut(url,obj,callback){
 	}
 	
 }
+//DELETE 방식 요청
+function fetchDelete(url, callback) {
+    console.log(url);
+    console.log(callback);
+
+    try {
+        // URL 요청
+        fetch(url, {
+            method: "DELETE"
+        })
+        // 요청 결과 JSON 문자열을 JavaScript 객체로 반환
+        .then(response => response.json())
+        // 매개로 받은 콜백 함수 실행
+        .then(data => callback(data));
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 
 
@@ -81,9 +99,14 @@ function result(map){
 
 
 $('#contentEdit').click(function () {
-	let c_id = $('#c_id').val();
 	getContentList()
 
+})
+
+$('#contentDelete').click(function () {
+	let c_id = $('#c_id').val();
+	fetchDelete('/alpha/content/DeleteAction/'+c_id, result)
+	
 })
     
     
@@ -279,6 +302,33 @@ function resultList(map){
 			fetchPut('/alpha/content/EditAction', obj, result)
 		
 		})
+		$('#editBtn').click(function () {
+			let c_name = $('#c_name').val();
+			let c_level = $('#c_level').val();
+			let c_able = $('#c_able').val();
+			let c_price = $('#c_price').val();
+			let c_discount = $('#c_discount').val();
+			let c_sellprice = $('#c_sellprice').val();
+			let c_content = $('#c_content').val();
+			let c_id = $('#c_id').val();
+
+			//전달할 객체로 생성
+			let obj = {
+					c_name : c_name
+					,  c_level : c_level
+					,  c_able : c_able
+					, c_price: c_price
+					, c_discount : c_discount
+					, c_sellprice : c_sellprice
+					, c_content : c_content
+					, c_id : c_id
+			}
+			
+			fetchPut('/alpha/content/EditAction', obj, result)
+			
+		})
+	
+		
 }
     
 
