@@ -77,32 +77,37 @@
 
 <script>
 
-function getSysdate() {
+function getsys() {
 
-	var date = new Date();
-	return date;
 	var today = new Date();
 	var year = today.getFullYear();
 	var month = ('0' + (today.getMonth() + 1)).slice(-2);
 	var day = ('0' + today.getDate()).slice(-2);
 
 	var dateString = year + '-' + month  + '-' + day;
+	
+	console.log(dateString);
 
 	return dateString;
 	
 }
 
 
-$('#payment1').click(function () { 
-	alert('aa');
-	var sub_able = $("#pCnt option:selected").val();
-
-	console.log(sub_able.substr(0, (able.length)-1));
+function checkLogin() {
 	
-})
+	var m_id = $('#m_id').val();
+	
+	if(m_id === '') { //세션변수에 값이 없으면
+		alert('로그인 후 이용가능합니다');
+		window.location.replace("/alpha/login");
+	}
+	
+}
 
 
 $('#payment').click(function () { //결제버튼
+	
+	checkLogin(); //로그인 체크
 	
 	alert('a');
 
@@ -115,7 +120,7 @@ $('#payment').click(function () { //결제버튼
     var c_id = $('#c_id').val();
     var m_id = $('#m_id').val();
     var c_name = $('#c_name').val();
-    var today = getSysdate();
+    var today = getsys();
     var price = $('#c_sellpice').val();
     var sub_able = able.substr(0, (able.length)-1);
     var sub_current = 0;
@@ -179,11 +184,6 @@ $('#payment').click(function () { //결제버튼
             	        url : "/payment/complete"
                      })
                      console.log('토큰생성완료');
-             
-             if(!user_id.length || !user_email.length || !user_tel.length) {
-             	alert('예약자 정보를 입력해주세요');
-             	return false;
-             }
 
 
 	                           IMP.request_pay({
@@ -254,8 +254,8 @@ $('#payment').click(function () { //결제버튼
 	                           			alert(msg);
 	                   	        	}     		
 	                   	        });
-	                           });  
 	                    	}); 
+	                           
                     	
            			alert(msg);
        				console.log(m_id);
@@ -305,5 +305,5 @@ $('#payment').click(function () { //결제버튼
 
 
 </body>
-<script src="/resources/js/content/contentEdit.js"></script>
+<%--<script src="/resources/js/content/contentEdit.js"></script> --%>
 </html>

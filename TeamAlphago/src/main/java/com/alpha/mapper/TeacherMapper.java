@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
+import com.alpha.vo.GroupVO;
 import com.alpha.vo.SubscribeVO;
 
 @Mapper
@@ -15,6 +16,10 @@ public interface TeacherMapper {
 	public int totalCnt(Criteria cri); //콘텐츠 총 건수 조회
 	public List<ContentVO> getContentDetail(String c_id); //콘텐츠 상세리스트
 	public int insertPayAction(SubscribeVO subVO); //콘텐츠 구매
-	public List<SubscribeVO> mySubList(Criteria cri); //구독내역 조회
+	public List<SubscribeVO> mySubList(String t_m_id); //구독내역 조회
 	public int cancelPay(String sub_id); //구독 환불&삭제
+	public List<GroupVO> getmyGroupList(String t_m_id); //그룹 조회
+	public int insertGroups(GroupVO groupVO); //그룹 등록
+	public SubscribeVO getSubOne(String sub_id); //선택된 패키지 구독 정보 출력
+	
 }

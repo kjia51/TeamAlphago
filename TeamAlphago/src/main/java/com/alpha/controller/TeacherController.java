@@ -1,9 +1,14 @@
 package com.alpha.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.service.TeacherService;
 import com.alpha.vo.Criteria;
+import com.alpha.vo.GroupVO;
+import com.alpha.vo.MemberVO;
 import com.alpha.vo.PageDto;
 import com.alpha.vo.SubscribeVO;
 
@@ -80,25 +87,20 @@ public class TeacherController {
 	}
 	
 	@GetMapping("/mysubList") //구독내역 페이지
-	public ModelAndView mysubList(Criteria cri) {
+	public ModelAndView mysubList(String t_m_id) {
 		
-		int totalCnt = service.totalCnt(cri);
-		PageDto pageDto = new PageDto(cri, totalCnt);
-		
+		System.out.println(t_m_id);
 		System.out.println("연결");
-		System.out.println(pageDto);
+		
 		
 		
 		ModelAndView mav = new ModelAndView("/teacher/subList");
-		mav.addObject("pageDto", pageDto);
-		mav.addObject("totalCnt", totalCnt);
-		mav.addObject("subList", service.mySubList(cri));
+		mav.addObject("subList", service.mySubList(t_m_id));
 
 	
 		return mav;
 	}
 	
-	   @ResponseBody
 	   @RequestMapping(value="/delete", method=RequestMethod.POST)
 	   public void cancelPay(HttpServletRequest request) {
 		   
@@ -115,5 +117,28 @@ public class TeacherController {
 
 		   
 	   }
+	   
+	   @GetMapping("/group") //그룹관리 페이지
+		public ModelAndView group(String t_m_id) {
+		   
+		   
+			System.out.println("연결");
+			System.out.println(t_m_id);
+
+			ModelAndView mav = new ModelAndView("/teacher/group");
+			mav.addObject("groupList", service.getmyGroupList(t_m_id));
+			mav.addObject("subList", service.mySubList(t_m_id));
+			return mav;
+		}
+	   
+	   @GetMapping("/group/getSubOne/{sub_id}")
+	   public void GetSubOne(@PathVariable("sub_id") String sub_id) {
+		   
+		   System.out.println("==============");
+		   System.out.println(sub_id);
+		   
+	   }
+	   
+	   
 
 }

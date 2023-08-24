@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.alpha.mapper.TeacherMapper;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
+import com.alpha.vo.GroupVO;
 import com.alpha.vo.SubscribeVO;
 
 @Service
@@ -38,8 +39,8 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public List<SubscribeVO> mySubList(Criteria cri) {
-		return mapper.mySubList(cri);
+	public List<SubscribeVO> mySubList(String t_m_id) {
+		return mapper.mySubList(t_m_id);
 	}
 
 	@Override
@@ -47,6 +48,21 @@ public class TeacherServiceImpl implements TeacherService {
 		
 		String sub_id = imp_uid;
 		return mapper.cancelPay(sub_id);
+	}
+
+	@Override
+	public List<GroupVO> getmyGroupList(String t_m_id) {
+		return mapper.getmyGroupList(t_m_id);
+	}
+
+	@Override
+	public int insertGroups(GroupVO groupVO) {
+		return mapper.insertGroups(groupVO);
+	}
+
+	@Override
+	public SubscribeVO getSubOne(String sub_id) {
+		return mapper.getSubOne(sub_id);
 	}
 
 	

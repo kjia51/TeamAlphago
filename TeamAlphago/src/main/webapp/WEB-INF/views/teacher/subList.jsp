@@ -23,6 +23,7 @@
 <%@ include file="../common/header.jsp" %>
 
 <div class="main-box">
+<input id="m_id" type="text" value="${memberVO.m_id }">
 
 <div id="container">
     <div class="wrap">
@@ -104,7 +105,6 @@
 		</colgroup>
 			<thead>
     			<tr>
-    				<th></th>
 			        <th>구독ID</th>
 			        <th>패키지명</th>
 			        <th>구독일</th>
