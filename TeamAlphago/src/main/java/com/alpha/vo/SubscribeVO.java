@@ -13,6 +13,7 @@ public class SubscribeVO {
 	private String sub_price;
 	private String sub_able;
 	private String sub_current;
+	private String c_level;
 	
 
 }

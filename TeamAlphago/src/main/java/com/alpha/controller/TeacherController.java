@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alpha.service.TeacherService;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
+import com.alpha.vo.GroupsVO;
 import com.alpha.vo.PageDto;
 import com.alpha.vo.SubscribeVO;
 
@@ -128,7 +131,7 @@ public class TeacherController extends CommonRestController {
 			return mav;
 		}
 	   
-	   @GetMapping("/group/getSubOne/{sub_id}")
+	   @GetMapping("/group/getSubOne/{sub_id}") //그룹에 콘텐츠 연결
 	   public Map<String, Object> GetSubOne(@PathVariable("sub_id") String sub_id) {
 		   
 		   System.out.println("==============");
@@ -150,6 +153,24 @@ public class TeacherController extends CommonRestController {
 		   
 		   
 	   }
+	   
+	   @PostMapping("/group/insert/{t_m_id}")
+		public Map<String, Object> register(@RequestBody GroupsVO groupVO) {
+		   
+		   System.out.println("==============넘어옴");
+
+			try {
+				int res = service.insertGroups(groupVO);
+				
+				Map<String, Object> map = responseWriteMap(res);
+				System.out.println(groupVO);
+				return map;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "등록 중 오류 발생");
+			}
+		}
 	   
 	   
 

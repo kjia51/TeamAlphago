@@ -37,6 +37,16 @@
 	border: 1px solid black;
 
 }
+
+#my_modal {
+    display: none;
+    width: 780px;
+    padding: 20px 60px;
+    background-color: #fefefe;
+    border: 1px solid #888;
+    border-radius: 3px;
+}
+
 </style>
 <body>
 
@@ -75,7 +85,85 @@
 	<button id="contentEdit">수정</button>
 	</div>
 
+
+</div>
+<br>
+<hr>
+<div class="discountInfo">
+<p>할인율 안내</p>
+
+</div>
+<div class="cancleInfo">
+<p>취소 및 환불규정</p>
+
+</div>
+
+
+</c:forEach>
+
+</div>
+
+
+<%-- 모달창 --%>
+<div id="my_modal">
+	<hr>
+	<h2>결제 완료</h2>
+
+		<div class="btn">
+		    <button><a class="modal_close_btn" onClick="location.href='/alpha/mysubList?t_m_id=${memberVO.m_id }'">구독내역으로 가기</a></button>
+		    <button><a class="modal_close_btn" onClick="location.href='/alpha/teacher'">리스트로 돌아가기</a></button>
+    	</div>
+    	
+    	
+</div>
+<%-- --------------------------------------------------------------  --%>
+
+
+
 <script>
+
+function modal(id) { //모달창 띄우기
+    var zIndex = 9999;
+    var modal = $('#' + id);
+
+    // 모달 div 뒤에 희끄무레한 레이어
+    var bg = $('<div>')
+        .css({
+            position: 'fixed',
+            zIndex: zIndex,
+            left: '0px',
+            top: '0px',
+            width: '100%',
+            height: '100%',
+            overflow: 'auto',
+            // 레이어 색갈은 여기서 바꾸면 됨
+            backgroundColor: 'rgba(0,0,0,0.4)'
+        })
+        .appendTo('body');
+
+    modal
+        .css({
+            position: 'fixed',
+            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+            // 시꺼먼 레이어 보다 한칸 위에 보이기
+            zIndex: zIndex + 1,
+
+            // div center 정렬
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            msTransform: 'translate(-50%, -50%)',
+            webkitTransform: 'translate(-50%, -50%)'
+        })
+        .show()
+        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+        .find('.modal_close_btn')
+        .on('click', function() {
+            bg.remove();
+            modal.hide();
+        });
+}
 
 function getsys() {
 
@@ -185,119 +273,22 @@ $('#payment').click(function () { //결제버튼
                      })
                      console.log('토큰생성완료');
 
-
-	                           IMP.request_pay({
-	                                //카카오페이 결제시 사용할 정보 입력
-	                               pg: 'kakaopay',
-	                               pay_method: "card",
-	                               name: pname,
-	                               amount: pay,
-	                           }, function (rsp) {
-	                                
-	                        	   console.log(rsp);
-	                   			// 결제검증
-	                   			$.ajax({
-	                   	        	type : "POST",
-	                   	        	url : "/payment/verifyIamport/" + rsp.imp_uid 
-	                   	        }).done(function(data) {
-	                   	        	
-	                   	        	console.log(data);
-	                   	        	
-	                   	        	// 결제 유효성 검증
-	                   	        	// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
-	                   	        	if(rsp.paid_amount == data.response.amount){
-	                   	        		var msg = "결제 및 결제검증완료";
-	                   		        	msg += '\n고유ID : ' + rsp.imp_uid;
-	                                    msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-	                                    msg += '\n결제 금액 : ' + rsp.paid_amount+'원';
-	                                    
-	                                    if(rsp.apply_num === null || rsp.apply_num === undefined || rsp.apply_num === '') {
-	                                    	rsp.apply_num = '카카오페이머니';
-	                                    }
-	                                    msg += '\n카드 승인번호 : ' + rsp.apply_num;                                    	
-	                   		        	
-	                                    $.ajax({
-	                                        url: "/peco/insert",
-	                                        type: 'post',
-	                                        data: {
-	                                           p_id: p_id,//펜션아이디   
-		                                       period: period,//기간
-		                                       pricecnt: pay,//결제할 가격
-		                                       startdate : startdate, //입실일
-		                                       enddate : enddate, //퇴실일
-		                                       pr_name: user_id,//예약자명
-		                                       pr_email: user_email,//예약자 이메일
-		                                       pr_tel: user_tel,//예약자 전화번호
-		                                       imp_uid: rsp.imp_uid, //거래고유번호
-		                                       pr_id: rsp.merchant_uid, //주문고유번호=펜션예약번호
-										 	   pr_pay: rsp.apply_num, //카드승인번호
-										 	   m_id : m_id,//회원번호 -예약자명 직접입력 경우 다를 경우
-										 	   pname : pname, //펜션명
-										 	   roomname : roomname,//객실명
-										 	   room_no : room_no, //객실번호
-	                                        }                               
-	                                      });
-	                                    console.log('토큰생성');
-	                                    $.ajax({
-	                                    	type : "POST",
-	                           	        	url : "/payment/complete"
-	                                    })
-	                                    console.log('토큰생성완료');
-	                                    
 	                                    $('#resForm').submit(); 
 	                           			alert(msg);
 	                       				console.log(m_id);
-	                           			window.location.replace("/peco/profile?m_id=${member.m_id}");
+	                       			 	modal('my_modal');
 	                   	        	} else {
 	                   	        		var msg = '결제에 실패하였습니다.';
 	                                    msg += '에러내용 : ' + rsp.error_msg;
 	                           			alert(msg);
 	                   	        	}     		
 	                   	        });
-	                    	}); 
-	                           
-                    	
-           			alert(msg);
-       				console.log(m_id);
-           			window.location.replace("/alpha/teacher");
-            			
-    	        	} else {
-    	        		var msg = '결제에 실패하였습니다.';
-                     	msg += '에러내용 : ' + rsp.error_msg;
-            			alert(msg);
-    	        	}     		
-    	    });
+
     })
  
 });  
 
 </script>
-
-
-
-
-
-</div>
-<br>
-<hr>
-<div class="discountInfo">
-<p>할인율 안내</p>
-
-</div>
-<div class="cancleInfo">
-<p>취소 및 환불규정</p>
-
-</div>
-
-
-
-
-
-
-</c:forEach>
-
-</div>
-
 
 
 <%@ include file="../common/footer.jsp" %>

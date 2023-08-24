@@ -51,14 +51,17 @@
 	
 	<!-- 그룹 등록  -->
 	<insert id="insertGroups">
-	insert into groups (g_id, t_m_id, g_c_id, g_cnt, g_start, g_end) values 
-		('G' || LPAD(SEQ_GROUPS.NEXTVAL, 4, '0'), #{t_m_id}, #{g_c_id}, #{g_cnt}
-		, to_date(#{g_start},'RR/MM/DD'), to_date(to_date(#{g_start})+90,'RR/MM/DD'));
+	insert into groups (g_id, t_m_id, g_c_id, g_name, g_cnt, g_start, g_end) values 
+		('G' || LPAD(SEQ_GROUPS.NEXTVAL, 4, '0'), #{t_m_id}, #{g_c_id}, #{g_name}, #{g_cnt}
+		, to_date(#{g_start},'RR/MM/DD'), to_date(to_date(#{g_start})+90,'RR/MM/DD'))
 	</insert>
 	
 	<!-- 해당 구독 정보 가져오기 / sub_id-->
 	<select id="getSubOne"  resultType="com.alpha.vo.SubscribeVO">
-	select * from subscribe where sub_id = #{sub_id}
+	select s.* , c_level
+	from subscribe s, content 
+	where s.sub_c_id = content.c_id
+	and sub_id = #{sub_id}
 	</select>
 
 </mapper>
