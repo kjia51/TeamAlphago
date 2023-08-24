@@ -11,7 +11,7 @@ public interface ContentMapper {
 	
 	public ContentVO getContentOne(String c_id);
 
-	public int updateContent(String c_id);
+	public int updateContent(ContentVO contentVO);
 	
 	
 }

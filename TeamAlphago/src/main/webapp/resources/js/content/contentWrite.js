@@ -28,11 +28,30 @@ function result(map){
 	console.log(map);
 	if(map.result == 'success'){
 		alert(map.msg);
-		location.href = map.url;
 	} else {
 		alert(map.msg);
 	}
 		
+}
+
+//get방식 요청
+function fetchGet(url,callback){
+	console.log(url);
+	console.log(callback);
+	
+	try {
+	//url 요청
+	fetch(url)
+		//요청 결과json 문자열을 javascript 객체로 반환
+		.then(response => response.json())
+		//매개로 받은 콜백함수 실행
+		.then(map => callback(map));
+		
+	} catch (e) {
+		console.log(e);
+	}
+	
+	
 }
 
 $('#registerBtn').click(function () {
@@ -123,4 +142,71 @@ window.addEventListener('load', function(){
     		signContent.innerHTML = '';	  		  
     	}
     })
+    
+    
+    
+//덧글 조회 및 출력
+function getContentList(){
+
+	let c_id = $('#c_id').val();
+	fetchGet('/alpha/content/list/${c_id}', resultList)
+}
+
+
+
+function resultList(map){
+		let vo = map.contentVO;
+		console.log(vo);
+		titleInfo.innerHTML += ''
+    		+'             <table class="table table-bordered table-form">'
+    		+'                 <caption>글쓰기</caption>'
+    		+'                 <colgroup>'
+    		+'                     <col width="25%">'
+    		+'                     <col width="75%">'
+    		+'                 </colgroup>'
+    		+'                 <tbody>'
+    		+'                     <tr>'
+    		+'                         <th scope="row">패키지명</th>'
+    		+'                         <td>'
+    		+'                         <div id="signCname" style="color:red"></div>'
+    		+'                         <input type="text" class="input-default" id="c_name" style="width: 97%" maxlength="100" name="title" value="'+vo.c_name+'">'
+    		+'                         </td>'
+    		+'                     </tr>'
+    		+'                     <tr>'
+    		+'                         <th scope="row">학습난이도</th>'
+    		+'                         <td>'
+    		+'                               <select title="검색 분류" name="c_level" id="c_level" value="'+vo.c_level+'" }>'
+    		+'                                                <option value="1"> 초급 </option>'
+    		+'                                                <option value="2"> 중급 </option>'
+    		+'                                                <option value="3"> 고급 </option>'
+    		+'                               </select> '
+    		+'							</td>'
+    		+'                     </tr>'
+    		+'                     <tr>'
+    		+'                         <th scope="row">학습가능인원</th>'
+    		+'                         <td>'
+    		+'		                        <select name="selAmount" data-index="index" id="'+vo.c_able+'">'
+    		+'		                        </select>'
+    		+'                         </td>'
+    		+'                         '
+    		+'                     </tr>'
+    		+'                     <tr>'
+    		+'                         <th scope="row">정가</th>'
+    		+'                         <td><input type="text" class="input-default" id="c_price" style="width: 97%" maxlength="100" name="title" value="'+vo.c_price+'"></td>'
+    		+'                     </tr>'
+    		+'                     <tr>'
+    		+'                         <th scope="row">할인율</th>'
+    		+'                         <td><input type="text" class="input-default" id="c_discount" style="width: 97%" maxlength="100" name="title" value="'+vo.c_discount+'" disabled></td>'
+    		+'                     </tr>'
+    		+'                     <tr>'
+    		+'                         <th scope="row">판매가</th>'
+    		+'                         <td><input type="text" class="input-default" id="c_sellprice" style="width: 97%" maxlength="100" name="title" value="'+vo.c_sellprice+'" disabled></td>'
+    		+'                     </tr>'
+    		+'                     <tr>'
+    		+'                         <th scope="row">콘텐츠 내용</th>'
+    		+'                         <td><textarea id="c_content" placeholder="10자 이상 입력하세요" style="width:100%; height:450px; border: solid #ccc 1px;">'+vo.c_content+'</textarea></td>'
+    		+'                     </tr>'
+    		+'                 </tbody>'
+    		+'             </table>'
+    }
     

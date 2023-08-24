@@ -24,7 +24,7 @@
             <form class="content" id="content">
             
                 <div class="writeForm1">
-                   
+                    <div id="titleInfo"></div>
                     <div class="btnArea-center" style="margin-top:0" id="submitBtns">
                                                     <span class="btn btn-point btn-lg"><button type="button" id="editBtn" data-route="one/add/user/">수정</button></span>
                                                                             <span class="btn btn-grayline btn-lg"><button type="button" onclick="history.back(-1);">취소</button></span>

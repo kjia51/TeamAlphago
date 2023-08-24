@@ -23,7 +23,7 @@
 
             <form class="content" id="content">
                 <div class="writeForm1">
-                    <div class="titleInfo">
+                    <div id="titleInfo">
                         <table class="table table-bordered table-form">
                             <caption>글쓰기</caption>
                             <colgroup>

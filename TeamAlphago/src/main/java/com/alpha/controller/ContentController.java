@@ -1,5 +1,6 @@
 package com.alpha.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,6 @@ public class ContentController extends CommonRestController {
 				int res = contentService.insertContent(contentVO);
 				
 				Map<String, Object> map = responseWriteMap(res);
-				map.put("url", "/alpha/main");
 				return map;
 
 			} catch (Exception e) {
@@ -49,13 +49,27 @@ public class ContentController extends CommonRestController {
 		
 		
 		
-		   @GetMapping("/content/update/{c_id}")
+		   @GetMapping("/content/edit/{c_id}")
 		   public Map<String, Object> contentEdit(@PathVariable("c_id") String c_id) {
 		      
 				try {
 					ContentVO contentVO = contentService.getContentOne(c_id);
-					
-					Map<String, Object> map = responseVo(contentVO);
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("contentVO", contentVO);
+					return map;
+	
+				} catch (Exception e) {
+					e.printStackTrace();
+					return responseMap(REST_FAIL, "등록 중 오류 발생");
+				}
+		   }
+		   
+		   @GetMapping("/content/list/{c_id}")
+		   public Map<String, Object> contentList(@PathVariable("c_id") String c_id) {
+		      
+				try {
+					ContentVO contentVO = contentService.getContentOne(c_id);
+					Map<String, Object> map = new HashMap<String, Object>();
 					map.put("contentVO", contentVO);
 					return map;
 	
@@ -74,14 +88,13 @@ public class ContentController extends CommonRestController {
 		   
 		   
 		   
-		   @PutMapping("/content/EditAction/{c_id}")
-			public Map<String, Object> update(@PathVariable("c_id") String c_id) {
+		   @PutMapping("/content/EditAction")
+			public Map<String, Object> update(@RequestBody ContentVO contentVO) {
 
 				try {
-					int res = contentService.updateContent(c_id);
+					int res = contentService.updateContent(contentVO);
 					
 					Map<String, Object> map = responseEditMap(res);
-					map.put("url", "/alpha/main");
 					return map;
 
 				} catch (Exception e) {

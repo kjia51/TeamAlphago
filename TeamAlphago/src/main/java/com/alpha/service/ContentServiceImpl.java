@@ -33,9 +33,9 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public int updateContent(String c_id) {
+	public int updateContent(ContentVO contentVO) {
 		// TODO Auto-generated method stub
-		return contentMapper.updateContent(c_id);
+		return contentMapper.updateContent(contentVO);
 	}
 
 
