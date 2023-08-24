@@ -84,22 +84,29 @@
 
 <%-- 모달창 --%>
 <div id="my_modal">
-	그룹명<input type="text" value=""><br>
-	학습콘텐츠
-		<select name="group_content" id="conSelect">
+	<hr>
+	<h2>학습콘텐츠 선택</h2>
+		<select name="group_content" id="conSelect" style="width: 780px; border: none; border-bottom: 1px solid black;">
 		    <option value="">학습 콘텐츠 선택</option>
 		     <c:forEach var="list" items="${subList}">
 		     	<option value="${list.sub_id}">${list.sub_name}</option>
 		    </c:forEach>
 		</select>
 		<br>
-		<input type="text" value="">
+		<div id="getSub">
+		</div>
+		<hr>
+		<h2>그룹 정보</h2>
+	   	<h3>그룹명<input type="text" id="g_name"><br></h3>
+	   	
 		<div class="btn">
 		    <button><a class="modal_close_btn" onclick="groupinsert()">생성하기</a></button>
 		    <button><a class="modal_close_btn">닫기</a></button>
     	</div>
+    	
+    	
 </div>
-<%--     --%>
+<%-- --------------------------------------------------------------  --%>
 
 <div class="entry">
 	<table class="table table-bordered">
@@ -128,7 +135,7 @@
                             <th align="left" class="row"> <a href="https://www.kbaduk.or.kr/bbs/view/competition/domestic/864/">${group.g_id }</a> </th>
                             <td align="center"> <input type="text" class="index" id="sub_price" data-sub_price="${status.index}" value="${group.g_cnt }"readonly></td>
                             <td align="center">${group.g_start } ~ ${group.g_end }</td>
-                            <td align="center"><button>그룹관리</button> <button onclick="cancelPay(${status.index})">콘텐츠환불</button></td>
+                            <td align="center"><button>그룹관리</button></td>
                             
                            
                         </tr>
@@ -204,32 +211,181 @@ $('#popup_open_btn').on('click', function() {
     modal('my_modal');
 });
 
-$("#conSelect").change(function(){
-    var con =  $(this).val();
-    console.log(con);
-    
-   
-  	const data = {
-	   sub_id : con		  
-  }
+//get방식 요청
+function fetchGet(url,callback){
+	console.log(url);
+	console.log(callback);
+	
+	try {
+	//url 요청
+	fetch(url)
+		//요청 결과json 문자열을 javascript 객체로 반환
+		.then(response => response.json())
+		//매개로 받은 콜백함수 실행
+		.then(map => callback(map));
+		
+	} catch (e) {
+		console.log(e);
+	}
 
-    
-   fetch('/group/getSubOne', {
-	    method: 'GET',
-	  })
-	  .then(response => {
-	    return response.json();
-	  })
-	  .then(data => {
-	    console.log(data);
-	  });
-    
+}
+//post방식 요청
+function fetchPost(url,obj,callback){
+	console.log(url);
+	console.log(callback);
+	
+	try {
+		//url 요청
+		fetch(url,{method : 'post'
+			,headers : 
+			{'Content-Type' : 'application/json'} 
+			,body  : JSON.stringify(obj)
+			  })
+			//요청 결과json 문자열을 javascript 객체로 반환
+			.then(response => response.json())
+			//매개로 받은 콜백함수 실행
+			.then(map => callback(map))
+			
+		} catch (e) {
+			console.log(e);
+
+		}
+
+}
+
+//컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
+function result(map){
+	console.log(map);
+	if(map.result == 'success'){
+		alert(map.msg);
+		location.reload();
+	} else {
+		alert(map.msg);
+	}
+		
+}
+
+////////////모달 패키지 정보 출력////////////////////////////////////////////////////////
+var main = document.getElementById('getSub');
+
+$("#conSelect").change(function(){
+	
+    var sub_id =  $(this).val();
+    console.log(sub_id);
+	main.innerHTML = '';
+	fetchGet('/alpha/group/getSubOne/'+sub_id, resultList)
+
 })
 
+function resultList(map){
+		let vo = map.subscribeVO;
+		console.log(vo);
+		
+		var sub_id = vo.sub_id;
+		var idx = sub_id.indexOf("_"); 
+		var sid = sub_id.substring(idx+1);
+		
+		var sub_name = vo.sub_name;
+		var date = vo.sub_date;
+		var sub_date = date.substr(0,10);
+		
+		var sub_able = vo.sub_able;
+		var sub_c_id = vo.sub_c_id;
+		
+		var c_level = vo.c_level;
+		var sub_lv = "";
+		
+		if(c_level == '1') {
+			sub_lv = "초급";
+		} else if (c_level == '2') {
+			sub_lv = "중급";
+		} else if (c_level == '3') {
+			sub_lv = "고급";
+		}
+		
+		console.log(sid);
+		console.log(sub_c_id);
+		console.log(sub_name);
+		console.log(typeof(sub_date));
+		console.log(sub_able);
+		
+		main.innerHTML += ''
+			+ '<table class="table table-bordered">'
+			+ '<thead>'
+		    + 	'<tr>'
+			+ 		'<th>구독ID</th>'
+			+ 		'<th>콘텐츠명</th>'
+			+ 		'<th>수업 난이도</th>'
+			+ 		'<th>구독일</th>'
+			+ 		'<th>수강가능인원</th>'
+		    + 	'</tr>'
+			+ '</thead>'
+			+	'<tbody>'
+			+		'<tr>'
+		    +			'<td><input type="text" id="sub_c_id" value="'
+		    +			sub_c_id
+		    +			'" readonly></td>'
+		    +			'<td align="left" class="row"><input type="text" id="sid" style="width:112px" value="'
+		    +			sid
+		    +			'" readonly></td>'
+            +			'<td align="center"><input type="text" id="sub_name" style="width:290px" value="'
+            +			sub_name
+            +			'" readonly></td>'
+            +			'<td align="center"><input type="text" id="sub_lv" style="width:80px" value="'
+            +			sub_lv
+            +			'" readonly></td>'
+            +			'<td align="center"><input type="text" id="sub_date" style="width:85px" value="'
+            +			sub_date
+            +			'" readonly></td>'
+            +			'<td align="center"><input type="text" id="sub_able" style="width:35px" value="'
+            +			sub_able
+            +			'" readonly></td>'
+			+ 		'</tr>'
+			+	'</tbody>'
+		    +'</table>' 
 
-function groupinsert() { //그룹생성
+
+    	    }
+
+////////////////그룹생성///////////////////////////////////////////////////////
+function getsys() {
+
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth() + 1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2);
+
+	var dateString = year + '-' + month  + '-' + day;
+	
+	console.log(dateString);
+
+	return dateString;
 	
 }
+
+function groupinsert() { //그룹생성
+	let t_m_id = $('#m_id').val();
+	let g_name = $('#g_name').val();
+	let g_c_id = $('#sub_c_id').val();
+	let g_cnt = $('#sub_able').val();
+	let g_start = getsys();
+	
+	//전달할 객체로 생성
+	let obj = {
+			t_m_id : t_m_id
+			, g_c_id : g_c_id
+			, g_name : g_name
+			, g_cnt: g_cnt
+			, g_start : g_start
+			}
+	
+	console.log(obj);
+	
+	fetchPost('/alpha/group/insert/'+t_m_id, obj, result)
+	
+}
+
+
 
 </script>
 
