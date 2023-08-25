@@ -42,7 +42,7 @@
 	
 <!-- 그룹  -->
 	<!-- t_m_id로  가져오기 -->
-	<select id="getmyGroupList" resultType="com.alpha.vo.grpVO">
+	<select id="getmyGroupList" resultType="com.alpha.vo.GrpVO">
 	select * from grp where t_m_id = #{t_m_id}
 	</select>
 	

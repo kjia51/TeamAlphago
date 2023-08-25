@@ -148,8 +148,8 @@ window.addEventListener('load', function(){
 //덧글 조회 및 출력
 function getContentList(){
 
-	let c_id = $('#c_id').val();
-	fetchGet('/alpha/content/list/${c_id}', resultList)
+	let c_no = $('#c_no').val();
+	fetchGet('/alpha/content/list/${c_no}', resultList)
 }
 
 

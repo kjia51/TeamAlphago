@@ -104,8 +104,8 @@ $('#contentEdit').click(function () {
 })
 
 $('#contentDelete').click(function () {
-	let c_id = $('#c_id').val();
-	fetchDelete('/alpha/content/DeleteAction/'+c_id, result)
+	let c_no = $('#c_no').val();
+	fetchDelete('/alpha/content/DeleteAction/'+c_no, result)
 	
 })
     
@@ -114,9 +114,9 @@ $('#contentDelete').click(function () {
 //덧글 조회 및 출력
 function getContentList(){
 
-	let c_id = $('#c_id').val();
+	let c_no = $('#c_no').val();
 	main.innerHTML = '';
-	fetchGet('/alpha/content/list/'+c_id, resultList)
+	fetchGet('/alpha/content/list/'+c_no, resultList)
 }
 
 
@@ -133,7 +133,7 @@ function resultList(map){
 			+'                <h2 class="t_title">학습콘텐츠 수정</h2>'
 			+'            </div>'
 			+'            <form class="content" id="content">'
-    		+'             <input type="text" class="input-default" id="c_id" style="width: 97%" maxlength="100" name="c_id" value="'+vo.c_id+'">'
+    		+'             <input type="text" class="input-default" id="c_no" style="width: 97%" maxlength="100" name="c_no" value="'+vo.c_no+'">'
 			+'                <div class="writeForm1">'
 			+'			       <div id="titleInfo">'
     		+'             <table class="table table-bordered table-form">'
@@ -277,16 +277,9 @@ function resultList(map){
 			let c_discount = $('#c_discount').val();
 			let c_sellprice = $('#c_sellprice').val();
 			let c_content = $('#c_content').val();
-			let c_id = $('#c_id').val();
+			let c_no = $('c_no').val();
 			  
-			console.log('c_name',c_name);
-			console.log('c_level',c_level);
-			console.log('c_able',c_able);
-			console.log('c_price',c_price);
-			console.log('c_discount',c_discount);
-			console.log('c_sellprice',c_sellprice);
-			console.log('c_content',c_content);
-			console.log('c_id',c_id);
+
 			//전달할 객체로 생성
 			let obj = {
 					c_name : c_name
@@ -296,7 +289,7 @@ function resultList(map){
 					, c_discount : c_discount
 					, c_sellprice : c_sellprice
 					, c_content : c_content
-					, c_id : c_id
+					, c_no : c_no
 					}
 			
 			fetchPut('/alpha/content/EditAction', obj, result)
@@ -310,7 +303,7 @@ function resultList(map){
 			let c_discount = $('#c_discount').val();
 			let c_sellprice = $('#c_sellprice').val();
 			let c_content = $('#c_content').val();
-			let c_id = $('#c_id').val();
+			let c_no = $('#c_no').val();
 
 			//전달할 객체로 생성
 			let obj = {
@@ -321,7 +314,7 @@ function resultList(map){
 					, c_discount : c_discount
 					, c_sellprice : c_sellprice
 					, c_content : c_content
-					, c_id : c_id
+					, c_no : c_no
 			}
 			
 			fetchPut('/alpha/content/EditAction', obj, result)
