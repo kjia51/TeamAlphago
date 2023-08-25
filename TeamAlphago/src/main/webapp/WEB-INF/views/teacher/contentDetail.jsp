@@ -60,6 +60,8 @@
 
 
 </style>
+
+
 <body>
 
 <%@ include file="../common/header.jsp" %>
@@ -85,13 +87,14 @@
 	<input id="c_sellpice" type="text" value="${con.c_sellprice }">
 	
 	
-	<fmt:formatNumber var="num" value="${con.c_able/10 }" type="number" />
-	<select id="pCnt" name="pCnt">
-		<c:forEach var="i" begin="1" end="${num }">
-		<option>${i*10 }명</option>
-		</c:forEach>
-	</select>
-	<div class="btn">
+
+	
+    <select name="selAmount" data-index="${index }" id="c_able" >
+    <option value='1'>1</option>
+    </select>
+	<div id="signDiscount"  style="color:red; border:solid 1px red; width:250px; height:30px"></div>
+	<label for="c_discount">할인율 :</label>
+	<input type="text" class="input-default" id="c_discount" style="width: 33%; border:solid 1px black" maxlength="100" name="c_discount" value="">
 	<button id="payment">결제</button>
 	<button id="goback" onclick="location.href='/alpha/teacher'">뒤로가기</button>
 	<button id="contentEdit">수정</button>
@@ -104,7 +107,6 @@
 <hr>
 <div class="discountInfo">
 <p>할인율 안내</p>
-
 </div>
 <div class="cancleInfo">
 <p>취소 및 환불규정</p>
@@ -224,7 +226,7 @@ $('#payment').click(function () { //결제버튼
     var today = getsys();
     var price = $('#c_sellpice').val();
     var sub_able = able.substr(0, (able.length)-1);
-    var sub_current = 0;
+    var sub_connection = 'N';
     
     console.log(c_no);
     console.log(m_id);
@@ -232,7 +234,7 @@ $('#payment').click(function () { //결제버튼
     console.log(today);
     console.log(price);
     console.log(sub_able.substr());
-    console.log(sub_current);
+    console.log(sub_connection);
                   
     IMP.request_pay({
         //카카오페이 결제시 사용할 정보 입력
@@ -268,14 +270,13 @@ $('#payment').click(function () { //결제버튼
                          url: "/alpha/teacher/insertContent",
                          type: 'post',
                          data: {
-                        	sub_id: rsp.imp_uid, //거래번호(구독ID)
+                        	sub_no: rsp.imp_uid, //거래번호(구독ID)
                         	sub_c_no: c_no, //콘텐츠id
                            	t_m_id: m_id, //회원id
-                            sub_name: c_name, //콘텐츠명
                             sub_date: today, //구독날짜
                             sub_price: price, //구독료
                             sub_able: sub_able, //수강가능인원
-                            sub_current: sub_current, //콘텐츠id
+                            sub_connection: sub_connection, //콘텐츠id
                          }    
                        });
                      
@@ -301,6 +302,22 @@ $('#payment').click(function () { //결제버튼
  
 });  
 
+
+	window.addEventListener('load', function(){
+	    // select박스 목록 선택
+	    let selAmountList = document.querySelectorAll("[name=selAmount]");
+	    // select 옵션
+	    let options = '';
+	    for(let i=1;i<=10;i++){
+	        options += `<option value='${i*10}'>${i*10}${i==10?'+':''}</option>`
+	    }
+	    // select박스들에 옵션 추가및 change이벤트 추가
+	    selAmountList.forEach(function(item, index){
+	        // 1. select 옵션(수량 1~10) 추가
+	        item.innerHTML = options;
+	
+	    })
+	})
 </script>
 
 

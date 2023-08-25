@@ -115,7 +115,7 @@
                                 <li><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/"> 공지사항 </a></li>
                                 <li><a href="https://www.kbaduk.or.kr/bbs/read/thum/movie/"> Q&A </a></li>
                                 <li><a href="/alpha/content"> 학습패키지 등록 </a></li>
-                                <li><a href="https://www.kbaduk.or.kr/one/read/gibo/"> 매출 조회 </a></li>
+                                <li><a href="/alpha/salesLIST"> 매출 조회 </a></li>
                             </ul>
                         </div>
                         

@@ -26,13 +26,21 @@ public class ContentController extends CommonRestController {
 	   ContentService contentService;
 	   
 		
-	   @GetMapping("/content") //콘텐츠 조회 페이지(아직 검색x)
-		public ModelAndView teacher(Criteria cri) {
+	   @GetMapping("/content")
+		public ModelAndView teacher() {
 
 			ModelAndView mav = new ModelAndView("/content/content");
 		
 			return mav;
 		}
+	   
+	   @GetMapping("/salesLIST") 
+	   public ModelAndView salesLIST() {
+		   
+		   ModelAndView mav = new ModelAndView("/content/salesLIST");
+		   
+		   return mav;
+	   }
 	   
 	   //등록
 		@PostMapping("/content/insert")

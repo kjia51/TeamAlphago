@@ -267,6 +267,18 @@ function resultList(map){
 			    		signContent.innerHTML = '';	  		  
 			    	}
 			    })
+			    
+			    	$('#c_able').blur(function () {
+						// 정규식을 이용하여 한글 숫자로만 구성되고,6자리인지를 검사
+				    	let c_able = $('#c_able').val();
+				        if(c_able>=30){
+				        	signDiscount.innerHTML = '';
+				        	$('#c_discount').val(c_able+'%');        	
+				        }else{
+				        	signDiscount.innerHTML = '학습인원이 30인 이상인 경우 할인 적용됩니다.';
+				        	$('#c_discount').val(0);
+				        }
+				    })
     
 			
 			$('#editBtn').click(function () {
