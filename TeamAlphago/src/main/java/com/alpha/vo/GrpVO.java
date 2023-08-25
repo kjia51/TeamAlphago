@@ -15,7 +15,7 @@ public class GrpVO {
    // 그룹 가입 신청
    private String m_name; // 회원 이름(학습지도자 이름)
    private String g_period; // 학습 기간
-   private String g_AppCnt; // 신청 현황(인원)
+   private String g_AppCnt; // 신청 현황(인원) 
    
    
 }        
