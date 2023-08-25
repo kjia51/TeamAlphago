@@ -226,7 +226,7 @@ $('#payment').click(function () { //결제버튼
     var today = getsys();
     var price = $('#c_sellpice').val();
     var sub_able = able.substr(0, (able.length)-1);
-    var sub_current = 0;
+    var sub_connection = 'N';
     
     console.log(c_no);
     console.log(m_id);
@@ -234,7 +234,7 @@ $('#payment').click(function () { //결제버튼
     console.log(today);
     console.log(price);
     console.log(sub_able.substr());
-    console.log(sub_current);
+    console.log(sub_connection);
                   
     IMP.request_pay({
         //카카오페이 결제시 사용할 정보 입력
@@ -270,14 +270,13 @@ $('#payment').click(function () { //결제버튼
                          url: "/alpha/teacher/insertContent",
                          type: 'post',
                          data: {
-                        	sub_id: rsp.imp_uid, //거래번호(구독ID)
+                        	sub_no: rsp.imp_uid, //거래번호(구독ID)
                         	sub_c_no: c_no, //콘텐츠id
                            	t_m_id: m_id, //회원id
-                            sub_name: c_name, //콘텐츠명
                             sub_date: today, //구독날짜
                             sub_price: price, //구독료
                             sub_able: sub_able, //수강가능인원
-                            sub_current: sub_current, //콘텐츠id
+                            sub_connection: sub_connection, //콘텐츠id
                          }    
                        });
                      

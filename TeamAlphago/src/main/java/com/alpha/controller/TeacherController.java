@@ -46,7 +46,7 @@ public class TeacherController extends CommonRestController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/teacher/detail",method = RequestMethod.GET) //c_id로 상세페이지 연결
+	@RequestMapping(value="/teacher/detail",method = RequestMethod.GET) //c_no로 상세페이지 연결
 	public ModelAndView detail(String c_no) {
 		
 		ModelAndView mav = new ModelAndView("/teacher/contentDetail");
@@ -59,23 +59,21 @@ public class TeacherController extends CommonRestController {
 	@RequestMapping(value = "/teacher/insertContent", method= RequestMethod.POST) //결제 후 인서트
 	public void insertPayAction(SubscribeVO subVO, HttpServletRequest request) {
 
-		String sub_id = request.getParameter("sub_id");
-		String sub_c_id = request.getParameter("sub_c_id");
+		String sub_no = request.getParameter("sub_no");
+		String sub_c_no = request.getParameter("sub_c_no");
 		String t_m_id = request.getParameter("t_m_id");
-		String sub_name = request.getParameter("sub_name");
 		String sub_date = request.getParameter("sub_date");
 		String sub_price = request.getParameter("sub_price");
 		String sub_able = request.getParameter("sub_able");
-		String sub_current = request.getParameter("sub_current");
+		String sub_connection = request.getParameter("sub_connection");
 		
-		System.out.println(sub_id);
-		System.out.println(sub_c_id);
+		System.out.println(sub_no);
+		System.out.println(sub_c_no);
 		System.out.println(t_m_id);
-		System.out.println(sub_name);
 		System.out.println(sub_date);
 		System.out.println(sub_price);
 		System.out.println(sub_able);
-		System.out.println(sub_current);
+		System.out.println(sub_connection);
 		
 		int res = service.insertPayAction(subVO);
 		
@@ -131,14 +129,14 @@ public class TeacherController extends CommonRestController {
 			return mav;
 		}
 	   
-	   @GetMapping("/group/getSubOne/{sub_id}") //그룹에 콘텐츠 연결
-	   public Map<String, Object> GetSubOne(@PathVariable("sub_id") String sub_id) {
+	   @GetMapping("/group/getSubOne/{sub_no}") //그룹에 콘텐츠 연결
+	   public Map<String, Object> GetSubOne(@PathVariable("sub_no") String sub_no) {
 		   
 		   System.out.println("==============");
-		   System.out.println(sub_id);
+		   System.out.println(sub_no);
 		   
 		   try {
-				SubscribeVO subscribeVO = service.getSubOne(sub_id);
+				SubscribeVO subscribeVO = service.getSubOne(sub_no);
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("subscribeVO", subscribeVO);
 				System.out.println(subscribeVO);

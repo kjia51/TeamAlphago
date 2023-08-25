@@ -10,7 +10,7 @@
 </head>
 <style>
 .main-box {
-    width: 60%;
+    width: 1280px;
     height: 100%;
     background-color: #fff;
     border: 1px solid #d8dfe6;
@@ -109,7 +109,8 @@
 			        <th>패키지명</th>
 			        <th>구독일</th>
 			        <th>구독료</th>
-			        <th>인원</th> <%--수강가능인원/현재수강인원 --%>
+			        <th>인원</th>
+			        <th>그룹연결여부</th>
 			        <th>그룹관리</th>
     			</tr>
 			</thead>
@@ -119,14 +120,15 @@
 						<c:forEach  var="sub" items="${subList }" varStatus="status">
 						
 						<tr>
-                            	<c:if test="${fn:length(sub.sub_id) > 1}">
-									<td><input type="text" class="index" id="sub_id" data-subuid="${status.index}" value="${fn:substring(sub.sub_id,4,16)}" readonly></td>
+                            	<c:if test="${fn:length(sub.sub_no) > 1}">
+									<td><input type="text" class="index" id="sub_no" data-subuid="${status.index}" value="${fn:substring(sub.sub_no,4,16)}" readonly></td>
 								</c:if>
                    
-                            <th align="left" class="row"> <a href="https://www.kbaduk.or.kr/bbs/view/competition/domestic/864/">${sub.sub_name }</a> </th>
+                            <th align="left" class="row"> <a href="https://www.kbaduk.or.kr/bbs/view/competition/domestic/864/">${sub.c_name }</a> </th>
                             <td align="center">${sub.sub_date }</td>
                             <td align="center"> <input type="text" class="index" id="sub_price" data-sub_price="${status.index}" value="${sub.sub_price }"readonly></td>
-                            <td align="center">${sub.sub_able } / ${sub.sub_current }</td>
+                            <td align="center">${sub.sub_able }</td>
+                            <td align="center">${sub.sub_connection }</td>
                             <td align="center"><button>그룹관리</button> <button onclick="cancelPay(${status.index})">콘텐츠환불</button></td>
                             
                            
