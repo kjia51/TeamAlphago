@@ -38,12 +38,26 @@
 
 #my_modal {
     display: none;
-    width: 780px;
+    width: 400px;
+    height: 250px;
     padding: 20px 60px;
     background-color: #fefefe;
     border: 1px solid #888;
     border-radius: 3px;
+    text-align: center;
+    line-height: 115px;
+
 }
+
+#my_modal .modal_close_btn {
+
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 20px;
+    
+}
+
 
 </style>
 <body>

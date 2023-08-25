@@ -29,8 +29,14 @@
 }
 
 #my_modal .modal_close_btn {
-
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 5px;
 }
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    border-bottom: 1px solid #dadada;
+    vertical-align: middle;
 </style>
 <body>
 
@@ -45,7 +51,7 @@
 
         <div class="content_wrap">
             <div class="titleBox">
-                <h2 class="t_title">구독 조회</h2>
+                <h2 class="t_title">학습 그룹</h2>
             </div>
 
             <!--대회검색-->
@@ -310,6 +316,9 @@ function resultList(map){
 		console.log(sub_able);
 		
 		main.innerHTML += ''
+		    +			'<input type="text" id="sub_c_id" value="'
+		    +			sub_c_id
+		    +			'" readonly>'
 			+ '<table class="table table-bordered">'
 			+ '<thead>'
 		    + 	'<tr>'
@@ -322,9 +331,6 @@ function resultList(map){
 			+ '</thead>'
 			+	'<tbody>'
 			+		'<tr>'
-		    +			'<td><input type="text" id="sub_c_id" value="'
-		    +			sub_c_id
-		    +			'" readonly></td>'
 		    +			'<td align="left" class="row"><input type="text" id="sid" style="width:112px" value="'
 		    +			sid
 		    +			'" readonly></td>'
