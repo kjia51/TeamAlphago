@@ -6,7 +6,6 @@
 <!-- 콘텐츠  -->
 	<!-- 조회  -->
 	<select id="getContentList" resultType="com.alpha.vo.ContentVO">
-
 			SELECT *
 			FROM content
 			ORDER BY c_no DESC
