@@ -41,7 +41,7 @@
 										<select title="검색 분류" name="s_cate"
 											onchange="location.href='./?s_cate='+this.value;" value="">
 											<option value="">전체</option>
-											<option value="31">g_name 받아오기</option>
+											<option value="31">${g_name}</option>
 										</select>
 									</div>
 								</td>
@@ -77,6 +77,16 @@
 								<td align="center" class="row">김첨지</td>
 								<td align="center">2023.08.26 ~ 09.02</td>
 								<td align="center">12/20</td>
+								<td align="center">
+									<button class="apply-button" id="applyButton" disabled>신청</button>
+								</td>
+							</tr>
+							<tr>
+								<th align="center"><input type="checkbox" id="checkbox"
+									name="myCheckbox" value="isChecked"></th>
+								<td align="center" class="row">${m_name}</td>
+								<td align="center">${g_period}</td>
+								<td align="center">${g_AppCnt}</td>
 								<td align="center">
 									<button class="apply-button" id="applyButton" disabled>신청</button>
 								</td>
