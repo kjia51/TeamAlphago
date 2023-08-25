@@ -26,4 +26,7 @@
 		delete from content where c_no=#{c_no}
 	</delete>
 	
+	<select id="salesContent" resultType="com.alpha.vo.ContentVO">
+	select DATE_FORMAT(sub_date,'%Y-%m-%d') sub_date, sub_price from subscribe group by  DATE_FORMAT(sub_date,'%Y-%m-%d')
+	</select>
 </mapper>
