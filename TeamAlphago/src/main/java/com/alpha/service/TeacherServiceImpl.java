@@ -61,8 +61,8 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public SubscribeVO getSubOne(String sub_id) {
-		return mapper.getSubOne(sub_id);
+	public SubscribeVO getSubOne(String sub_no) {
+		return mapper.getSubOne(sub_no);
 	}
 
 	

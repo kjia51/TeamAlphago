@@ -44,6 +44,7 @@
 
 <div class="main-box">
 <input id="m_id" type="text" value="${memberVO.m_id }">
+<button id="popup_open_btn">그룹 생성</button>
 
 <div id="container">
     <div class="wrap">
@@ -84,7 +85,7 @@
                 </table>
             </form>
 
-<button id="popup_open_btn">그룹 생성</button>
+
 
 
 
@@ -95,7 +96,7 @@
 		<select name="group_content" id="conSelect" style="width: 780px; border: none; border-bottom: 1px solid black;">
 		    <option value="">학습 콘텐츠 선택</option>
 		     <c:forEach var="list" items="${subList}">
-		     	<option value="${list.sub_id}">${list.sub_name}</option>
+		     	<option value="${list.sub_no}">${list.c_name}</option>
 		    </c:forEach>
 		</select>
 		<br>
@@ -103,8 +104,8 @@
 		</div>
 		<hr>
 		<h2>그룹 정보</h2>
-	   	<h3>그룹명<input type="text" id="g_name"><br></h3>
-	   	
+	   	<h3>그룹명<input type="text" id="g_name"></h3>
+	   	<br>
 		<div class="btn">
 		    <button><a class="modal_close_btn" onclick="groupinsert()">생성하기</a></button>
 		    <button><a class="modal_close_btn">닫기</a></button>
@@ -138,7 +139,7 @@
 						
 						<tr>
                    
-                            <th align="left" class="row"> <a href="https://www.kbaduk.or.kr/bbs/view/competition/domestic/864/">${group.g_id }</a> </th>
+                            <th align="left" class="row"> <a href="https://www.kbaduk.or.kr/bbs/view/competition/domestic/864/">${group.g_no }</a> </th>
                             <td align="center"> <input type="text" class="index" id="sub_price" data-sub_price="${status.index}" value="${group.g_cnt }"readonly></td>
                             <td align="center">${group.g_start } ~ ${group.g_end }</td>
                             <td align="center"><button>그룹관리</button></td>
@@ -291,12 +292,11 @@ function resultList(map){
 		var idx = sub_no.indexOf("_"); 
 		var sid = sub_no.substring(idx+1);
 		
-		var sub_name = vo.sub_name;
+		var sub_name = vo.c_name;
 		var date = vo.sub_date;
 		var sub_date = date.substr(0,10);
 		
 		var sub_able = vo.sub_able;
-		var sub_c_no = vo.sub_c_no;
 		
 		var c_level = vo.c_level;
 		var sub_lv = "";
@@ -310,14 +310,13 @@ function resultList(map){
 		}
 		
 		console.log(sid);
-		console.log(sub_c_no);
 		console.log(sub_name);
 		console.log(typeof(sub_date));
 		console.log(sub_able);
 		
 		main.innerHTML += ''
-		    +			'<input type="text" id="sub_c_no" value="'
-		    +			sub_c_no
+		    +			'<input type="text" id="sub_no" value="'
+		    +			sub_no
 		    +			'" readonly>'
 			+ '<table class="table table-bordered">'
 			+ '<thead>'
@@ -372,14 +371,14 @@ function getsys() {
 function groupinsert() { //그룹생성
 	let t_m_id = $('#m_id').val();
 	let g_name = $('#g_name').val();
-	let g_c_no = $('#sub_c_no').val();
+	let sub_no = $('#sub_no').val();
 	let g_cnt = $('#sub_able').val();
 	let g_start = getsys();
 	
 	//전달할 객체로 생성
 	let obj = {
 			t_m_id : t_m_id
-			, g_c_id : g_c_id
+			, sub_no : sub_no
 			, g_name : g_name
 			, g_cnt: g_cnt
 			, g_start : g_start
