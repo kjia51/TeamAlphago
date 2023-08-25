@@ -81,7 +81,7 @@ ${pageDto }
 	    </c:if>
 	       		<div class="InfoBox">
 			<input type="text" class="index" id="c_level" data-clevel="${status.index}" value="${con.c_level }"readonly>
-			<input type="text" class="index" id="c_id" data-cid="${status.index}" value="${con.c_id }"readonly><br>
+			<input type="text" class="index" id="c_no" data-cid="${status.index}" value="${con.c_no }"readonly><br>
 			<hr>
 			<div class="imgBox">
 				<img src="" alt="이미지">		
@@ -116,11 +116,11 @@ function godetail(index) {
 	var i = index;
 	console.log(i);
 
-	var c_id= $('input[data-cid="'+index+'"]').val();
-	alert(c_id);
+	var c_no= $('input[data-cid="'+index+'"]').val();
+	alert(c_no);
 
-	console.log(c_id);
-	window.location.replace("/alpha/teacher/detail?c_id="+c_id);
+	console.log(c_no);
+	window.location.replace("/alpha/teacher/detail?c_no="+c_no);
 	
 	
 }
