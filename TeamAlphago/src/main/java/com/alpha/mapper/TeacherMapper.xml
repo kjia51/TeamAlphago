@@ -19,7 +19,7 @@
 	
 	<!-- c_id로 콘텐츠 상세 내용 가져오기 -->
 	<select id="getContentDetail" resultType="com.alpha.vo.ContentVO">
-	select * from content where c_id = #{c_id}
+	select * from content where c_no = #{c_no}
 	</select>
 	
 	<!-- 결제 시 구독내역에 인서트 -->

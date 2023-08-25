@@ -47,11 +47,11 @@ public class TeacherController extends CommonRestController {
 	}
 	
 	@RequestMapping(value="/teacher/detail",method = RequestMethod.GET) //c_id로 상세페이지 연결
-	public ModelAndView detail(String c_id) {
+	public ModelAndView detail(String c_no) {
 		
 		ModelAndView mav = new ModelAndView("/teacher/contentDetail");
-		System.out.println(c_id);
-		mav.addObject("contentList", service.getContentDetail(c_id));
+		System.out.println(c_no);
+		mav.addObject("contentList", service.getContentDetail(c_no));
 		
 		return mav;
 	}

@@ -66,7 +66,7 @@
 	<h3>- 수강가능인원 : ${con.c_able }명</h3>
 	<h3>- 정가 : ${con.c_price }원</h3>
 	
-	<input type="text" value="${con.c_id }" id="c_id">
+	<input type="text" value="${con.c_no }" id="c_no">
 	<input type="text" value="${con.c_discount }">
 	<input id="c_sellpice" type="text" value="${con.c_sellprice }">
 	

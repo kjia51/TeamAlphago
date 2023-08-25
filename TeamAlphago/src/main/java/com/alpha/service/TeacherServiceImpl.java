@@ -29,8 +29,8 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public List<ContentVO> getContentDetail(String c_id) {
-		return mapper.getContentDetail(c_id);
+	public List<ContentVO> getContentDetail(String c_no) {
+		return mapper.getContentDetail(c_no);
 	}
 
 	@Override
