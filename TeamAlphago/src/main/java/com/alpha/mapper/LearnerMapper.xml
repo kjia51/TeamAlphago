@@ -3,19 +3,5 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alpha.mapper.LearnerMapper">
 
-<!-- 그룹명으로 수강콘텐츠 리스트 출력  -->
-<select id="groupList" resultType="com.alpha.vo.LearnerVO">
-	select m_name
-		, CONCAT(IFNULL(DATE_FORMAT(g_start, 'YY.%m.%d'), '') , ' ~ ' , IFNULL(DATE_FORMAT(g_end, 'YY.%m.%d'), '')) AS g_period
-		, CONCAT(IFNULL(TO_CHAR(g_cnt), ''), ' / ' ,IFNULL(TO_CHAR(c_able), '')) AS g_AppCnt
-	from grp g 
-		left join 
-		(select * from member) m on (g.t_M_ID = m.m_id)
-		left join 
-		(select * from content) c on (g.g_c_no = c.c_no)
-		left join 
-		(select * from learner) l on (g.g_no = l.l_g_no)
-	where g_name = ${g_name};
-</select> 
 
 </mapper>
