@@ -52,11 +52,11 @@ public class ContentController extends CommonRestController {
 		
 		
 		// 수정 시 조회
-		   @GetMapping("/content/edit/{c_id}")
-		   public Map<String, Object> contentEdit(@PathVariable("c_id") String c_id) {
+		   @GetMapping("/content/edit/{c_no}")
+		   public Map<String, Object> contentEdit(@PathVariable("c_no") String c_no) {
 		      
 				try {
-					ContentVO contentVO = contentService.getContentOne(c_id);
+					ContentVO contentVO = contentService.getContentOne(c_no);
 					Map<String, Object> map = new HashMap<String, Object>();
 					map.put("contentVO", contentVO);
 					return map;
@@ -68,11 +68,11 @@ public class ContentController extends CommonRestController {
 		   }
 		   
 		   //조회
-		   @GetMapping("/content/list/{c_id}")
-		   public Map<String, Object> contentList(@PathVariable("c_id") String c_id) {
+		   @GetMapping("/content/list/{c_no}")
+		   public Map<String, Object> contentList(@PathVariable("c_no") String c_no) {
 		      
 				try {
-					ContentVO contentVO = contentService.getContentOne(c_id);
+					ContentVO contentVO = contentService.getContentOne(c_no);
 					Map<String, Object> map = new HashMap<String, Object>();
 					map.put("contentVO", contentVO);
 					return map;
@@ -99,11 +99,11 @@ public class ContentController extends CommonRestController {
 			}
 		   
 		   //삭제 action
-		   @DeleteMapping("/content/DeleteAction/{c_id}")
-		   public Map<String, Object> delete(@PathVariable("c_id") String c_id) {
+		   @DeleteMapping("/content/DeleteAction/{c_no}")
+		   public Map<String, Object> delete(@PathVariable("c_no") String c_no) {
 			   
 			   try {
-				   int res = contentService.deleteContent(c_id);
+				   int res = contentService.deleteContent(c_no);
 				   Map<String, Object> map = responseDeleteMap(res);
 				   return map;
 				   
