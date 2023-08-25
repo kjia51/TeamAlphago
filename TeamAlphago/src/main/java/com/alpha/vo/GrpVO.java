@@ -3,7 +3,7 @@ package com.alpha.vo;
 import lombok.Data;
 
 @Data
-public class GroupsVO {
+public class GrpVO {
    private String g_id; // 학습그룹id
    private String t_m_id; // 학습지도자 id
    private String g_c_id; // 콘텐츠 id

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ContentVO {
 	
-	private String c_id; 
+	private String c_no; 
 	private String c_name; 
 	private String c_level; 
 	private int c_able; 

@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alpha.service.TeacherService;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
-import com.alpha.vo.GroupsVO;
+import com.alpha.vo.GrpVO;
 import com.alpha.vo.PageDto;
 import com.alpha.vo.SubscribeVO;
 
@@ -155,7 +155,7 @@ public class TeacherController extends CommonRestController {
 	   }
 	   
 	   @PostMapping("/group/insert/{t_m_id}")
-		public Map<String, Object> register(@RequestBody GroupsVO groupVO) {
+		public Map<String, Object> register(@RequestBody GrpVO groupVO) {
 		   
 		   System.out.println("==============넘어옴");
 

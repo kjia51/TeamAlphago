@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.alpha.mapper.TeacherMapper;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
-import com.alpha.vo.GroupsVO;
+import com.alpha.vo.GrpVO;
 import com.alpha.vo.SubscribeVO;
 
 @Service
@@ -51,12 +51,12 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public List<GroupsVO> getmyGroupList(String t_m_id) {
+	public List<GrpVO> getmyGroupList(String t_m_id) {
 		return mapper.getmyGroupList(t_m_id);
 	}
 
 	@Override
-	public int insertGroups(GroupsVO groupVO) {
+	public int insertGroups(GrpVO groupVO) {
 		return mapper.insertGroups(groupVO);
 	}
 
