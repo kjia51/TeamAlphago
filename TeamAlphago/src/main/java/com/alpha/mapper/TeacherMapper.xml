@@ -7,12 +7,10 @@
 	<!-- 조회  -->
 	<select id="getContentList" resultType="com.alpha.vo.ContentVO">
 
-		select *
-		from ( select rownum rn, t.*
-        from ( select *
-            from content
-            order by c_id desc) t)
-            where rn between #{startNo} and #{endNo}
+			SELECT *
+			FROM content
+			ORDER BY c_no DESC
+			LIMIT #{amount} OFFSET #{startNo}
 	</select>
 	
 	<!-- 콘텐츠 총 갯수 -->
