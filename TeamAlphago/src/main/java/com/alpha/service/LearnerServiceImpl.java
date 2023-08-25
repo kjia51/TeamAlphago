@@ -14,18 +14,17 @@ public class LearnerServiceImpl implements LearnerService {
 	@Autowired
 	private LearnerMapper learnerMapper;
 	
-	// 그룹 이름 리스트 
+	// 그룹 이름 리스트
 	@Override
-	public List<LearnerVO> grourpName(String g_name) {
-		return learnerMapper.grourpName(g_name);
+	public List<LearnerVO> groupName(String g_name) {
+		return learnerMapper.groupName(g_name);
 	}
+
 	
 	// 그룹 정보 리스트 
-	@Override
-	public List<LearnerVO> groupInfo(LearnerVO learnerVO) {
-		return learnerMapper.groupInfo(learnerVO);
+
 		
-	}
+	
 
 
 
