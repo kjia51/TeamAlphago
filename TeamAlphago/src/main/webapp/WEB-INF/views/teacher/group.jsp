@@ -276,10 +276,10 @@ var main = document.getElementById('getSub');
 
 $("#conSelect").change(function(){
 	
-    var sub_id =  $(this).val();
-    console.log(sub_id);
+    var sub_no =  $(this).val();
+    console.log(sub_no);
 	main.innerHTML = '';
-	fetchGet('/alpha/group/getSubOne/'+sub_id, resultList)
+	fetchGet('/alpha/group/getSubOne/'+sub_no, resultList)
 
 })
 
@@ -287,16 +287,16 @@ function resultList(map){
 		let vo = map.subscribeVO;
 		console.log(vo);
 		
-		var sub_id = vo.sub_id;
-		var idx = sub_id.indexOf("_"); 
-		var sid = sub_id.substring(idx+1);
+		var sub_no = vo.sub_no;
+		var idx = sub_no.indexOf("_"); 
+		var sid = sub_no.substring(idx+1);
 		
 		var sub_name = vo.sub_name;
 		var date = vo.sub_date;
 		var sub_date = date.substr(0,10);
 		
 		var sub_able = vo.sub_able;
-		var sub_c_id = vo.sub_c_id;
+		var sub_c_no = vo.sub_c_no;
 		
 		var c_level = vo.c_level;
 		var sub_lv = "";
@@ -310,14 +310,14 @@ function resultList(map){
 		}
 		
 		console.log(sid);
-		console.log(sub_c_id);
+		console.log(sub_c_no);
 		console.log(sub_name);
 		console.log(typeof(sub_date));
 		console.log(sub_able);
 		
 		main.innerHTML += ''
-		    +			'<input type="text" id="sub_c_id" value="'
-		    +			sub_c_id
+		    +			'<input type="text" id="sub_c_no" value="'
+		    +			sub_c_no
 		    +			'" readonly>'
 			+ '<table class="table table-bordered">'
 			+ '<thead>'
@@ -372,7 +372,7 @@ function getsys() {
 function groupinsert() { //그룹생성
 	let t_m_id = $('#m_id').val();
 	let g_name = $('#g_name').val();
-	let g_c_id = $('#sub_c_id').val();
+	let g_c_no = $('#sub_c_no').val();
 	let g_cnt = $('#sub_able').val();
 	let g_start = getsys();
 	

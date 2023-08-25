@@ -218,7 +218,7 @@ $('#payment').click(function () { //결제버튼
 	var able =  $("#pCnt option:selected").val();
                      
     //DOM객체들에서 사용할 데이터 뽑기
-    var c_id = $('#c_id').val();
+    var c_no = $('#c_no').val();
     var m_id = $('#m_id').val();
     var c_name = $('#c_name').val();
     var today = getsys();
@@ -226,7 +226,7 @@ $('#payment').click(function () { //결제버튼
     var sub_able = able.substr(0, (able.length)-1);
     var sub_current = 0;
     
-    console.log(c_id);
+    console.log(c_no);
     console.log(m_id);
     console.log(c_name);
     console.log(today);
@@ -269,7 +269,7 @@ $('#payment').click(function () { //결제버튼
                          type: 'post',
                          data: {
                         	sub_id: rsp.imp_uid, //거래번호(구독ID)
-                        	sub_c_id: c_id, //콘텐츠id
+                        	sub_c_no: c_no, //콘텐츠id
                            	t_m_id: m_id, //회원id
                             sub_name: c_name, //콘텐츠명
                             sub_date: today, //구독날짜
