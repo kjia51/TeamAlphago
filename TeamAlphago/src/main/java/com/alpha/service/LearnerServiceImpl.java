@@ -1,5 +1,8 @@
 package com.alpha.service;
 
-public class LearnerServiceImpl {
+import org.springframework.stereotype.Service;
+
+@Service
+public class LearnerServiceImpl implements LearnerService {
 
 }
