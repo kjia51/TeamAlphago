@@ -13,11 +13,18 @@
 	
 			
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-		<property name="jdbcUrl" value=" jdbc:log4jdbc:oracle:thin:@localhost:1521:orcl"></property>
-		<property name="username" value="alphago"></property>
-		<property name="password" value="1234">	</property>
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+        <property name="jdbcUrl"
+            value="jdbc:mysql://localhost:3306/alphago?useSSL=false&amp;serverTimezone=UTC">
+        </property>
+        <property name="username" value="alphago"></property>
+        <property name="password" value="1234"></property>
 	</bean>
+	
+   <!-- 위에 설정한 DB정보를 데이터소스 객체에 주입 -->
+   <bean id="ds" class="com.zaxxer.hikari.HikariDataSource">
+      <constructor-arg ref="hikariConfig" />
+   </bean>
 	
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 	  <constructor-arg ref="hikariConfig"></constructor-arg>
@@ -83,3 +90,4 @@
 	
 	
 </beans>
+	
