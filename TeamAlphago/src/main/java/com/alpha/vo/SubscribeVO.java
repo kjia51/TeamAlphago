@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class SubscribeVO {
 	
-	private String sub_id;
+	private String sub_no;
 	private String sub_c_id;
 	private String t_m_id;
 	private String sub_name;

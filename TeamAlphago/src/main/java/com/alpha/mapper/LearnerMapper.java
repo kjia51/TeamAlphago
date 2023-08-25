@@ -1,9 +1,9 @@
 package com.alpha.mapper;
 
-import com.alpha.vo.GroupsVO;
+import com.alpha.vo.GrpVO;
 import com.sun.tools.javac.util.List;
 
 public interface LearnerMapper {
 
-	public List<GroupsVO> groupList();
+	public List<GrpVO> groupList();
 }

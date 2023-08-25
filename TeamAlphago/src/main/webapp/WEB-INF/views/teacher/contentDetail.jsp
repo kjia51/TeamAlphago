@@ -38,12 +38,26 @@
 
 #my_modal {
     display: none;
-    width: 780px;
+    width: 400px;
+    height: 250px;
     padding: 20px 60px;
     background-color: #fefefe;
     border: 1px solid #888;
     border-radius: 3px;
+    text-align: center;
+    line-height: 115px;
+
 }
+
+#my_modal .modal_close_btn {
+
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 20px;
+    
+}
+
 
 </style>
 <body>
@@ -66,7 +80,7 @@
 	<h3>- 수강가능인원 : ${con.c_able }명</h3>
 	<h3>- 정가 : ${con.c_price }원</h3>
 	
-	<input type="text" value="${con.c_id }" id="c_id">
+	<input type="text" value="${con.c_no }" id="c_no">
 	<input type="text" value="${con.c_discount }">
 	<input id="c_sellpice" type="text" value="${con.c_sellprice }">
 	

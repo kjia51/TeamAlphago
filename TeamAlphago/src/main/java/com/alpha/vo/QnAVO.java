@@ -6,7 +6,7 @@ import lombok.Data;
 public class QnAVO {
 
 	// question
-	private String q_id;
+	private String q_no;
 	private String q_m_id;
 	private String q_title;
 	private String q_content;
@@ -14,7 +14,7 @@ public class QnAVO {
 	private String q_answerYN;
 	
 	// answer
-	private String a_id;
+	private String a_no;
 	private String a_m_id;
 	private String a_q_id;
 	private String a_title;

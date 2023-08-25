@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alpha.service.TeacherService;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
-import com.alpha.vo.GroupsVO;
+import com.alpha.vo.GrpVO;
 import com.alpha.vo.PageDto;
 import com.alpha.vo.SubscribeVO;
 
@@ -47,11 +47,11 @@ public class TeacherController extends CommonRestController {
 	}
 	
 	@RequestMapping(value="/teacher/detail",method = RequestMethod.GET) //c_id로 상세페이지 연결
-	public ModelAndView detail(String c_id) {
+	public ModelAndView detail(String c_no) {
 		
 		ModelAndView mav = new ModelAndView("/teacher/contentDetail");
-		System.out.println(c_id);
-		mav.addObject("contentList", service.getContentDetail(c_id));
+		System.out.println(c_no);
+		mav.addObject("contentList", service.getContentDetail(c_no));
 		
 		return mav;
 	}
@@ -155,7 +155,7 @@ public class TeacherController extends CommonRestController {
 	   }
 	   
 	   @PostMapping("/group/insert/{t_m_id}")
-		public Map<String, Object> register(@RequestBody GroupsVO groupVO) {
+		public Map<String, Object> register(@RequestBody GrpVO groupVO) {
 		   
 		   System.out.println("==============넘어옴");
 

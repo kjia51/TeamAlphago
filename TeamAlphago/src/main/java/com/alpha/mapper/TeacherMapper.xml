@@ -19,7 +19,7 @@
 	
 	<!-- c_id로 콘텐츠 상세 내용 가져오기 -->
 	<select id="getContentDetail" resultType="com.alpha.vo.ContentVO">
-	select * from content where c_id = #{c_id}
+	select * from content where c_no = #{c_no}
 	</select>
 	
 	<!-- 결제 시 구독내역에 인서트 -->
@@ -42,14 +42,14 @@
 	
 <!-- 그룹  -->
 	<!-- t_m_id로  가져오기 -->
-	<select id="getmyGroupList" resultType="com.alpha.vo.GroupsVO">
-	select * from groups where t_m_id = #{t_m_id}
+	<select id="getmyGroupList" resultType="com.alpha.vo.grpVO">
+	select * from grp where t_m_id = #{t_m_id}
 	</select>
 	
 	<!-- 그룹 등록  -->
-	<insert id="insertGroups">
-	insert into groups (g_id, t_m_id, g_c_id, g_name, g_cnt, g_start, g_end) values 
-		('G' || LPAD(SEQ_GROUPS.NEXTVAL, 4, '0'), #{t_m_id}, #{g_c_id}, #{g_name}, #{g_cnt}
+	<insert id="insertgrp">
+	insert into grp (g_id, t_m_id, g_c_id, g_name, g_cnt, g_start, g_end) values 
+		(#{t_m_id}, #{g_c_id}, #{g_name}, #{g_cnt}
 		, to_date(#{g_start},'RR/MM/DD'), to_date(to_date(#{g_start})+90,'RR/MM/DD'))
 	</insert>
 	
