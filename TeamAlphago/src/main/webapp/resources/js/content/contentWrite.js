@@ -75,7 +75,7 @@ $('#registerBtn').click(function () {
 			, c_content : c_content
 			}
 	
-	fetchPost('/alpha/content/insert', obj, result)
+	fetchPost('/alpha/content/insert', obj, getContentList)
 
 })
 

@@ -49,7 +49,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">학습가능인원</th>
+                                    <th scope="row">학습최대가능인원</th>
                                     <!-- <td><input type="text" class="input-default" id="c_able"  style="width: 97%" maxlength="100" name="title" value=""></td> -->
                                     <td>
                                         <!-- 수량 선택박스 -->
@@ -63,16 +63,7 @@
                                     <th scope="row">정가</th>
                                     <td><input type="text" class="input-default" id="c_price" style="width: 97%" maxlength="100" name="title" value=""></td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">할인율</th>
-                                    <td>
-                                    <div id="signDiscount"  style="color:red"></div>
-                                    <input type="text" class="input-default" id="c_discount" style="width: 97%" maxlength="100" name="title" disabled></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">판매가</th>
-                                    <td><input type="text" class="input-default" id="c_sellprice" style="width: 97%" maxlength="100" name="title" disabled></td>
-                                </tr>
+
                                 <tr>
                                     <th scope="row">콘텐츠 내용</th>
                                     <td>
