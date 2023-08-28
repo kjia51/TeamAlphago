@@ -115,7 +115,7 @@ $('#contentDelete').click(function () {
 function getContentList(){
 
 	let c_no = $('#c_no').val();
-	main.innerHTML = '';
+	container.innerHTML = '';
 	fetchGet('/alpha/content/list/'+c_no, resultList)
 }
 
@@ -125,7 +125,7 @@ function resultList(map){
 		let vo = map.contentVO;
 		console.log(vo.c_level);
 		console.log(vo.c_able);
-		main.innerHTML += ''
+		container.innerHTML += ''
 			+'	<div id="container">'
 			+'    <div class="wrap">'
 			+'        <div class="content_wrap">'

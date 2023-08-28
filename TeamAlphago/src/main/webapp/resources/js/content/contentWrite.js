@@ -129,23 +129,20 @@ window.addEventListener('load', function(){
         
         let buttons = document.querySelectorAll("#btn");
 
-        let btnAll = '';
+        let btnAll = [];
         buttons.forEach(button => {
           button.addEventListener("click", () => {
         	  let btnValue = button.getAttribute("value");
         	  let isDisabled = button.classList.contains("disabled");
             if (isDisabled) {
               button.classList.remove("disabled");
+              btnAll.pop(btnValue*10);
               console.log(`버튼 ${btnValue} 활성화`);
+              
             } else {
               button.classList.add("disabled");
               console.log(`버튼 ${btnValue} 비활성화`);
-              if(btnAll == ""){
-
-            	  btnAll = btnValue*10;
-            	  } else {
-            	  btnAll = btnAll + ',' + btnValue*10;
-            	  }
+            	  btnAll.push(btnValue*10);
               $('#poss_able').val(btnAll);
               console.log(btnAll);
             }

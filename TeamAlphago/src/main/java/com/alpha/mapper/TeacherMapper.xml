@@ -19,7 +19,22 @@
 	
 	<!-- c_id로 콘텐츠 상세 내용 가져오기 -->
 	<select id="getContentDetail" resultType="com.alpha.vo.ContentVO">
-	select * from content where c_no = #{c_no}
+	 <![CDATA[
+	select s.c_no, s.c_able, c_name, c_level, if(s.c_able-30<=0,0,s.c_able-30) c_discount, c_price, c_price*(1-(if(s.c_able-30<=0,0,s.c_able-30)/100)) c_sellprice from content c
+	]]>
+	left join 
+	(select
+   c_no, SUBSTRING_INDEX (SUBSTRING_INDEX(content.c_able,',',numbers.n),',',-1) c_able
+	from 
+   (select  1 n union  all  select 2  
+    union  all  select  3  union  all select 4 
+    union  all  select  5  union  all  select  6
+    union  all  select  7  union  all  select  8 
+    union  all  select  9 union  all  select  10) numbers INNER  JOIN content
+    on CHAR_LENGTH ( content.c_able ) 
+      - CHAR_LENGTH ( 
+      REPLACE ( content.c_able ,  ',' ,  '' ))>= numbers . n-1) s
+      on c.c_no=s.c_no where s.c_no=#{c_no}
 	</select>
 	
 	<!-- 결제 시 구독내역에 인서트 -->
