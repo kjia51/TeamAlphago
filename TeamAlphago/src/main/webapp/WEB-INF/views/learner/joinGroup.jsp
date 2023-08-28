@@ -2,19 +2,40 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="../common/header.jsp"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
+<%@ include file="../common/header.jsp"%>
+<script src="/resources/js/common.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>그룹 가입 신청</title>
 <link rel="stylesheet" href="../resources/css/learner.css">
 </head>
+<script type="text/javascript">
+function changeGroup(selectedValue) {
+    var url = '/joinGroup?g_name=' + encodeURIComponent(selectedValue);
+    $.ajax({
+        url: url,
+        method: 'GET',
+        success: function(response) {
+            // 성공 시 작업
+        },
+        error: function(xhr, status, error) {
+            // 에러 처리
+        }
+    });  
+}
+
+</script>
 <body>
+
 	<div id="container">
 		<div class="wrap">
 			<div class="content_wrap">
 				<div class="titleBox">
 					<h2 class="t_title">그룹 가입 신청</h2>
+					<input type="hidden" value="${sessionScope.memberId}" id="m_id">
 				</div>
 
 				<!--정보수정-->
@@ -29,26 +50,27 @@
 						<caption>그룹명</caption>
 						<colgroup>
 							<col>
-							<col width="80%"/>
+							<col width="80%" />
 						</colgroup>
 						<tbody>
 							<tr>
 								<th scope="col">그룹명</th>
 								<td>
-								<div class="searchBox">
-								    <select title="검색 분류" name="g_name" onchange="location.href='./?g_name='+this.value;" value="">
-								        <option value="">전체</option>
-								        <c:forEach items="${list}" var="group">
-								            <option value="${group.g_name}">${group.g_name}</option>
-								        </c:forEach>
-								    </select>
-								</div>
+									<div class="searchBox">
+										<select title="groupName" name="g_name"
+											onchange="changeGroup(this.value);" value="">
+											<option value="">전체</option>
+											<c:forEach items="${list}" var="group">
+												<option value="${group.g_name}">${group.g_name}</option>
+											</c:forEach>
+										</select>
+									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</form>
-				<div class="entry">
+				<div class="entry" id="groupInfo">
 					<table class="table table-bordered">
 						<caption>가입 정보</caption>
 						<colgroup>
@@ -68,41 +90,35 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th align="center"><input type="checkbox" id="checkbox" name="myCheckbox" value="isChecked"></th>
-								<td align="center" class="row">김첨지</td>
-								<td align="center">2023.08.26 ~ 09.02</td>
-								<td align="center">12/20</td>
-								<td align="center">
-									<button class="apply-button" id="applyButton" disabled>신청</button>
-								</td>
-							</tr>
-							<c:forEach items="${list}" var="grpInfo">
-								<tr>
-									<th align="center"><input type="checkbox" id="checkbox"
-										name="myCheckbox" value="isChecked"></th>
-									<td align="center" class="row">${grpInfo.t_m_name}</td>
-									<td align="center">${grpInfo.g_period}</td>
-									<td align="center">${grpInfo.g_AppCnt}</td>
-									<td align="center">
-										<button class="apply-button" id="applyButton" disabled>신청</button>
-									</td>
-								</tr>
-							</c:forEach>
+							<c:choose>
+								<c:when test="${grplist != null && fn:length(grplist) > 0 }">
+									<c:forEach items="${grplist}" var="grpInfo" varStatus="status">
+										<tr>
+											<th align="center"><input type="checkbox" id="checkbox"
+												name="myCheckbox" value="isChecked"></th>
+											<td align="center" class="row">${grpInfo.t_m_name}</td>
+											<td align="center">${grpInfo.g_period}</td>
+											<td align="center">${grpInfo.g_AppCnt}</td>
+											<td align="center">
+												<button class="apply-button" id="applyButton" disabled>신청</button>
+											</td>
+										</tr>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="5" style="text-align: center;">그룹을 선택하여 주세요.</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
 						</tbody>
 					</table>
-					<div class="paging">
-						<a
-							href='https://www.kbaduk.or.kr/bbs/read/competition/international/?p=1'
-							class="current">1</a> <a
-							href='https://www.kbaduk.or.kr/bbs/read/competition/international/?p=2'>2</a>
-					</div>
 				</div>
 			</div>
 			<!-- //content close -->
 		</div>
 	</div>
 	<!-- container close -->
-<%@ include file="../common/footer.jsp"%>
+	<%@ include file="../common/footer.jsp"%>
 </body>
 </html>

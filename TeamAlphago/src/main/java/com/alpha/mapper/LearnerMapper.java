@@ -11,12 +11,10 @@ import com.alpha.vo.LearnerVO;
 public interface LearnerMapper {
 
 	// 그룹 이름 리스트 
-
-
 	public List<LearnerVO> groupName(String g_name);
-	
+
 	// 그룹 정보 리스트
-	//public List<LearnerVO> groupInfo(LearnerVO learnerVO);
+	public List<LearnerVO> groupInfo(String g_name);
 	
 
 

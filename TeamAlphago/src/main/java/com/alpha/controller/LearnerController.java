@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,11 +24,7 @@ public class LearnerController extends CommonRestController {
 	@Autowired
 	private LearnerService learnerService;
 
-	// 그룹 가입 신청 페이지
-	/*
-	 * @GetMapping("/joinGroup") public ModelAndView joinGroup() { ModelAndView mav
-	 * = new ModelAndView("/learner/joinGroup"); return mav; }
-	 */
+
 	// 학습지도자 숙제 전송 페이지
 	@GetMapping("/giveHomework")
 	public ModelAndView giveHomework() {
@@ -38,36 +37,42 @@ public class LearnerController extends CommonRestController {
 		ModelAndView mav = new ModelAndView("/learner/submitHomework");
 		return mav;
 	}
-	// 그룹 이름 리스트 
-	/*
-	 * @GetMapping("/learner/joinGroup/{g_name}") public Map<String, Object>
-	 * groupName(@PathVariable("g_name") String g_name) { List<LearnerVO> groupNames
-	 * = learnerService.groupName(g_name); Map<String, Object> map = new
-	 * HashMap<String, Object>(); map.put("list", groupNames); return map; }
-	 */
+	
+	/* 그룹 가입 신청 페이지 */
+	// 그룹 이름 리스트 	 
 	@GetMapping("/joinGroup")
 	public ModelAndView groupName(String g_name) {
-
 		ModelAndView mav = new ModelAndView("/learner/joinGroup");
-		mav.addObject("list", learnerService.groupName(g_name));
-
-		return mav;
+		try {
+			mav.addObject("list", learnerService.groupName(g_name));
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+		}
+		return mav; 
+	}
+	
+	// 그룹 정보 리스트
+	@GetMapping("/joinGroup/{g_name}")
+	public Map<String, Object> groupInfo(@PathVariable("g_name") String g_name, LearnerVO vo, HttpServletRequest request){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("m_id");
+		if(id != null) {
+			vo.setL_m_id(id);
+		}else {
+			vo.setL_m_id("");
+		}
+		
+		List<LearnerVO> grplist = learnerService.groupInfo(g_name);
+		System.out.println(grplist);
+		map.put("grplist", grplist);
+		
+		return map;
 	}
 
-//	@GetMapping("/joinGroup/{g_name}")
-//	public Map<String, Object> groupInfo(@PathVariable("g_name") String g_name) {
-//
-//		System.out.println("----------------");
-//
-//		try {
-//			LearnerVO learnerVO  = learnerService.groupInfo(g_name);
-//			return ;
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return responseMap(REST_FAIL, "등록 중 오류 발생");
-//		}
-//   }
 
 
 
