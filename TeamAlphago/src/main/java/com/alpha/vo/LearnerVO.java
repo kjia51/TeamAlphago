@@ -33,6 +33,7 @@ public class LearnerVO {
 	//그룹 가입 승인
 	private String m_name;
 	private String l_g_no;
+	private String l_no;
 	   
 	
 	

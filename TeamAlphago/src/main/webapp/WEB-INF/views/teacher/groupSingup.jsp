@@ -127,9 +127,8 @@
 						<c:forEach  var="group" items="${groupList }" varStatus="status">
 						
 						<tr>
-                   
-                            <th align="left" class="row"><input type="text" class="index" value="${group.g_no }" data-g_no="${status.index}" id="g_no" readonly ></th>
-                            <td align="center"> <input type="text" id="g_name"value="${group.g_name }"readonly></td>
+                            <th align="left" class="row"><input type="text" class="index" value="${group.g_no }" data-g_no="${status.index}" id="g_no" readonly></th>
+                            <td align="center"> <input type="text" id="g_name" value="${group.g_name }"readonly></td>
                             <td align="center"> <input type="text" id="sub_price" value="${group.g_cnt }"readonly></td>
                             <td align="center">${group.g_start } ~ ${group.g_end }</td>
                             <td align="center" id="popup_open_btn" onclick="getGroupOne(${status.index})"><button>학습자 관리</button></td>
@@ -313,51 +312,34 @@ function groupMemList(g_no) {
 
 }
 
-function Groupupdate(l_g_no) {
-	var l_g_no = $('#l_g_no').val();
-	console.lgo(l_g_no);
-	
-	
+function Groupupdate() {
+   var index = $('#index').val();
+    console.log("Index:", index);
+    
+    var l_no = $('input[data-l_no="'+index+'"]').val();
+    console.log("l_no:", l_no);
+
 }
     	 
-function MemberList(map){
-	let vo = map.learnerVO;
-	console.log(vo);
-
-	var l_m_id = vo.l_m_id;
-	var l_g_no = vo.l_g_no;
-	var m_name = vo.m_name;
+function MemberList(list){
 	
-	console.log(l_m_id);
-	console.log(l_g_no);
-	console.log(m_name);
-	
-	main.innerHTML += ''
-		+ '<table class="table table-bordered">'
-		+ '<thead>'
-	    + 	'<tr>'
-		+ 		'<th>학생회원ID</th>'
-		+ 		'<th>그룹ID</th>'
-		+ 		'<th>이름</th>'
-		+ 		'<th>탈퇴</th>'
-	    + 	'</tr>'
-		+ '</thead>'
-		+	'<tbody>'
-		+		'<tr>'
-	    +			'<td align="left" class="row"><input type="text" id="l_m_id" style="width:112px" value="'
-	    +			l_m_id
-	    +			'" readonly></td>'
-        +			'<td align="center"><input type="text" id="l_g_no" style="width:290px" value="'
-        +			l_g_no
-        +			'" readonly></td>'
-        +			'<td align="center"><input type="text" id="m_name" style="width:85px" value="'
-        +			m_name
-        +			'" readonly></td>'
-        + 			'<td align="center"><button><a class="" onclick="">내보내기</a></button></td>'		
-		+ 		'</tr>'
-		+	'</tbody>'
-	    +'</table>' 
+	var tableHTML = '<table class="table table-bordered">';
+    tableHTML += '<thead><tr><th></th><th>학생ID</th><th>이름</th><th>탈퇴</th></tr></thead>';
+    tableHTML += '<tbody>';
 
+    list.forEach(function(member, index) {
+        tableHTML += '<tr>';
+        tableHTML += '<td>' + '<input type="hidden" value="'+ member.l_g_no +'" readonly>' + '</td>';
+        tableHTML += '<td>' + '<input type="text" id="index" value="'+ index +'" readonly>' + '</td>';
+        tableHTML += '<td>' + '<input type="text" data-l_no="'+index+'" value="'+ member.l_no +'" readonly>' + '</td>';
+        tableHTML += '<td>' + '<input type="text" value="'+ member.m_name +'" readonly>' + '</td>';
+        tableHTML += '<td>' + '<button onclick="Groupupdate()">내보내기</button>' + '</td>';
+        tableHTML += '</tr>';
+    });
+
+    tableHTML += '</tbody></table>';
+
+    main.innerHTML += tableHTML; // main 요소에 테이블 추가
 }
     	       	    
 //put방식 요청

@@ -23,7 +23,7 @@ public interface TeacherMapper {
 	public int insertGroups(GrpVO groupVO); //그룹 등록
 	public SubscribeVO getSubOne(String sub_no); //선택된 패키지 구독 정보 출력
 	public GrpVO getGroupOne(String g_no); //선택된 그룹 정보 출력
-	public LearnerVO getGroupLearner(String g_no); //그룹에 속한 학습자 정보 출력
+	public List<LearnerVO> getGroupLearner(String g_no); //그룹에 속한 학습자 정보 출력
 	public int updateGroupLearner(LearnerVO learnerVO); //그룹에서 학습자 탈퇴
 	
 	

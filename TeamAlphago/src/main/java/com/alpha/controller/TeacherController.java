@@ -1,11 +1,13 @@
 package com.alpha.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -210,24 +212,15 @@ public class TeacherController extends CommonRestController {
 	   }
 	   
 	   @GetMapping("/group/getGroupOne/list/{g_no}") //그룹의 학습자 정보 가져오기
-	   public Map<String, Object> GetGroupLearner(@PathVariable("g_no") String g_no) {
+	   public List<LearnerVO> GetGroupLearner(@PathVariable("g_no") String g_no, Model model) {
 		   
 		   System.out.println("==============");
 		   System.out.println(g_no);
-		   
-		   try {
-				LearnerVO learnerVO = service.getGroupLearner(g_no);
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("learnerVO", learnerVO);
-				System.out.println(learnerVO);
-				
-				
-				return map;
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				return responseMap(REST_FAIL, "등록 중 오류 발생");
-			}   
+				List<LearnerVO> list = service.getGroupLearner(g_no);
+				System.out.println(list);
+				return list;
+
 	   }
 	   
 	   @PutMapping("/group/getGroupOne/UpdateAction/{l_g_no}")  //그룹의 학습자 정보 삭제(탈퇴하기) -- 테이블에서 l_g_no = null처리
