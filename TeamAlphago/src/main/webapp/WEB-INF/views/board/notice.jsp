@@ -13,8 +13,8 @@
 
 <div id="container">
     <div class="wrap">
-        <form  method="get" class="content_wrap">
-
+        <form  method="get" name="searchForm" class="content_wrap">
+			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
             <div class="titleBox">
                 <h2 class="t_title">공지사항</h2>
             </div>
@@ -90,6 +90,14 @@
 
 
 <script type="text/javascript">
+
+function go(page){
+	//alert(page);
+	document.searchForm.pageNo.value=page;
+	document.searchForm.action = "/alpha/notice";
+	document.searchForm.submit();
+}
+
 /*
 function($, DEFAULT, dialogs){
         $('#addBtn').on('click', function(){

@@ -5,11 +5,11 @@
 
 <select id="getNoticeList" resultType="com.alpha.vo.NoticeVO">
 	SELECT N_NO, N_M_ID, N_TITLE, N_CONTENT, DATE_FORMAT(N_REGDATE, '%Y-%m-%d') AS N_REGDATE
-	FROM NOTICE ORDER BY N_NO DESC LIMIT #{startNo}, #{endNo}
+	FROM notice ORDER BY N_NO DESC LIMIT #{startNo}, #{endNo}
 </select>
 
 <select id="getTotalCnt" resultType="int">
-	SELECT COUNT(*) FROM NOTICE
+	SELECT COUNT(*) FROM notice
 </select>
 
 

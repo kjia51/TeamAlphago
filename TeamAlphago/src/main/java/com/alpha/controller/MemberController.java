@@ -174,9 +174,13 @@ public class MemberController {
 	         
 	         mailService.findPwSendMail(memberVO.getM_id(), memberVO.getM_email(), memberVO.getM_name(), temporaryPassword);
 	         
+	         memberVO.setM_password(temporaryPassword);
+	         memberService.updatePw(memberVO);
+	         
 	         System.out.println(memberVO.getM_id());
 	         System.out.println(memberVO.getM_email());
 	         System.out.println(memberVO.getM_name());
+	         System.out.println(memberVO.getM_password());
 	         System.out.println(temporaryPassword);
 	         
             response = responseMapMessage("success", "임시 비밀번호가 발송되었습니다.");

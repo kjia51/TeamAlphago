@@ -26,6 +26,11 @@
 	SELECT * FROM member WHERE M_EMAIL = #{m_email} AND M_ID = #{m_id}
 </select>
 
+<update id="updatePw">
+	update member set m_password = #{m_password}
+	where m_id = #{m_id}
+</update>
+
 <select id="checkEmail" resultType="int">
 	SELECT COUNT(*) FROM member WHERE M_EMAIL = #{m_email}
 </select>
