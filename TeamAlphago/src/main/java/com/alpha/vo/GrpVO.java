@@ -6,7 +6,7 @@ import lombok.Data;
 public class GrpVO {
    private String g_no; // 학습그룹id
    private String t_m_id; // 학습지도자 id
-   private String sub_no; // 학습지도자 id
+   private String sub_no; // 구독id
    private String g_name; // 그룹명
    private String g_cnt; // 그룹인원
    private String g_start; // 학습시작일

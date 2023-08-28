@@ -89,6 +89,7 @@ public class TeacherController extends CommonRestController {
 		
 		System.out.println(t_m_id);
 		System.out.println("연결");
+		System.out.println(service.mySubList(t_m_id));
 		
 		
 		
@@ -120,7 +121,7 @@ public class TeacherController extends CommonRestController {
 		public ModelAndView group(String t_m_id) {
 		   
 		   
-			System.out.println("연결");
+			System.out.println("그룹관리연결");
 			System.out.println(t_m_id);
 
 			ModelAndView mav = new ModelAndView("/teacher/group");
@@ -171,17 +172,41 @@ public class TeacherController extends CommonRestController {
 		}
 	   
 	   
-	   @GetMapping("/groupSingup") //그룹관리 페이지
+	   @GetMapping("/groupSingup") //가입승인 페이지
 		public ModelAndView groupSingup(String t_m_id) {
 		   
 		   
-			System.out.println("연결");
-			System.out.println(t_m_id);
+		    System.out.println(t_m_id);
+			System.out.println("그룹승인연결");
+			System.out.println(service.getmyGroupList(t_m_id));
 
 			ModelAndView mav = new ModelAndView("/teacher/groupSingup");
 			mav.addObject("groupList", service.getmyGroupList(t_m_id));
 			return mav;
 		}
+	   
+	   @GetMapping("/group/getGroupOne/{g_no}") //그룹에 콘텐츠 연결
+	   public Map<String, Object> GetGroupOne(@PathVariable("g_no") String g_no) {
+		   
+		   System.out.println("==============");
+		   System.out.println(g_no);
+		   
+		   try {
+				GrpVO grpVO = service.getGroupOne(g_no);
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("grpVO", grpVO);
+				System.out.println(grpVO);
+				
+				
+				return map;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "등록 중 오류 발생");
+			}
+		   
+		   
+	   }
 	   
 
 }

@@ -57,10 +57,15 @@
 	
 	<!-- 해당 구독 정보 가져오기 / sub_id-->
 	<select id="getSubOne"  resultType="com.alpha.vo.SubscribeVO">
-		select s.* , c_level, c_no, c_name
+	select s.* , c_level, c_no, c_name
 	from subscribe s, content 
 	where s.sub_c_no = content.c_no
 	and sub_no = #{sub_id}
+	</select>
+	
+	<!-- 해당 그룹 정보 가져오기 / sub_id-->
+	<select id="getGroupOne"  resultType="com.alpha.vo.GrpVO">
+	select * from grp where g_no= #{g_no}
 	</select>
 
 </mapper>

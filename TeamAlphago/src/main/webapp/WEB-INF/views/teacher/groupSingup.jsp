@@ -18,6 +18,7 @@
     margin: 0 auto;
     justify-content: center;
 }
+
 #my_modal {
     display: none;
     width: 750px;
@@ -27,13 +28,38 @@
     border-radius: 3px;
 }
 
+#topMenu {
+	height: 30px;
+	width: 850px;
+}
+
+#topMenu ul li {
+     list-style: none;
+     color: white;  
+     background-color: #074691;;
+     float: left;
+     line-height: 30px;
+     vertical-align: middle;
+     text-align: center;
+}
+
+#topMenu .menuLink {                              
+     text-decoration:none;  
+     color: white;      
+     display: inline-block;   
+     width: 150px;  
+     font-size: 14px;   
+     font-weight: 400;  
+}
+
+
 </style>
 <body>
 
 <%@ include file="../common/header.jsp" %>
 
 <div class="main-box">
-<input id="m_id" type="text" value="${memberVO.m_id }">
+<input id="m_id" type="text" value="teacher2">
 
 <div id="container">
     <div class="wrap">
@@ -81,30 +107,25 @@
 
 <%-- 모달창 --%>
 <div id="my_modal">
-	<nav>
-	    <ul>
-            <li><a href="#">학습자 관리</a></li>
-            <li><a href="#">그룹 신청 관리</a></li>
-            <li><a href="#">Community</a></li>
-            <li><a href="#">Locations</a></li>
-            <li><a href="#">Blog</a></li>
-	    </ul>
-     </nav>
+	<nav id="topMenu" >
+		<ul>
+			<li><a class="menuLink" href="#">그룹 멤버 관리</a></li>
+			<li><a class="menuLink" href="#">그룹 신청 승인</a></li>
 
-	<table>
-	<tr>
-	
-	</table>
+		</ul>
+	</nav>
 
-		<div class="btn">
-		    <button><a class="modal_close_btn" onclick="groupinsert()">생성하기</a></button>
-		    <button><a class="modal_close_btn">닫기</a></button>
-    	</div>
+	<div id="getgroup">
+	</div>
+
+	<div class="btn">
+	    <button><a class="modal_close_btn" onclick="">저장하기</a></button>
+	    <button><a class="modal_close_btn">닫기</a></button>
+    </div>
     	
     	
 </div>
 <%-- --------------------------------------------------------------  --%>
-
 <div class="entry">
 	<table class="table table-bordered">
 		<caption>학습자 관리</caption>
@@ -131,11 +152,11 @@
 						
 						<tr>
                    
-                            <th align="left" class="row"> <a href="https://www.kbaduk.or.kr/bbs/view/competition/domestic/864/">${group.g_no }</a> </th>
-                            <td align="center"> <input type="text" class="index" id="g_name" data-sub_price="${status.index}" value="${group.g_name }"readonly></td>
-                            <td align="center"> <input type="text" class="index" id="sub_price" data-sub_price="${status.index}" value="${group.g_cnt }"readonly></td>
+                            <th align="left" class="row"><input type="text" class="index" value="${group.g_no }" data-g_no="${status.index}" id="g_no" readonly ></th>
+                            <td align="center"> <input type="text" id="g_name"value="${group.g_name }"readonly></td>
+                            <td align="center"> <input type="text" id="sub_price" value="${group.g_cnt }"readonly></td>
                             <td align="center">${group.g_start } ~ ${group.g_end }</td>
-                            <td align="center" id="popup_open_btn"><button>학습자 관리</button></td>
+                            <td align="center" id="popup_open_btn" onclick="getGroupOne(${status.index})"><button>학습자 관리</button></td>
                             
                            
                         </tr>
@@ -204,10 +225,86 @@ function modal(id) { //모달창 띄우기
         });
 }
 
-$('#popup_open_btn').on('click', function() {
-    // 모달창 띄우기
-    modal('my_modal');
-});
+
+//get방식 요청
+function fetchGet(url,callback){
+	console.log(url);
+	console.log(callback);
+	
+	try {
+	//url 요청
+	fetch(url)
+		//요청 결과json 문자열을 javascript 객체로 반환
+		.then(response => response.json())
+		//매개로 받은 콜백함수 실행
+		.then(map => callback(map));
+		
+	} catch (e) {
+		console.log(e);
+	}
+
+}
+
+var main = document.getElementById('getgroup');
+
+function getGroupOne(index) {
+	var i = index;
+	console.log(i);
+	modal('my_modal');
+	
+    var g_no =  $('input[data-g_no="'+index+'"]').val();
+    console.log(g_no);
+	fetchGet('/alpha/group/getGroupOne/'+g_no, resultList)
+
+}
+
+
+function resultList(map){
+		let vo = map.grpVO;
+		console.log(vo);
+		
+		var g_no = vo.g_no;
+		var start = vo.g_start;
+		var end = vo.g_end;
+		var g_name = vo.g_name;
+		
+
+		main.innerHTML += ''
+		    +			'<input type="text" id="g_no" value="'
+		    +			g_no
+		    +			'" readonly>'
+			+ '<table class="table table-bordered">'
+			+ '<thead>'
+		    + 	'<tr>'
+			+ 		'<th>구독ID</th>'
+			+ 		'<th>콘텐츠명</th>'
+			+ 		'<th>수업 난이도</th>'
+			+ 		'<th>구독일</th>'
+			+ 		'<th>수강가능인원</th>'
+		    + 	'</tr>'
+			+ '</thead>'
+			+	'<tbody>'
+			+		'<tr>'
+		    +			'<td align="left" class="row"><input type="text" id="sid" style="width:112px" value="'
+		    +			sid
+		    +			'" readonly></td>'
+            +			'<td align="center"><input type="text" id="sub_name" style="width:290px" value="'
+            +			sub_name
+            +			'" readonly></td>'
+            +			'<td align="center"><input type="text" id="sub_lv" style="width:80px" value="'
+            +			sub_lv
+            +			'" readonly></td>'
+            +			'<td align="center"><input type="text" id="sub_date" style="width:85px" value="'
+            +			sub_date
+            +			'" readonly></td>'
+            +			'<td align="center"><input type="text" id="sub_able" style="width:35px" value="'
+            +			sub_able
+            +			'" readonly></td>'
+			+ 		'</tr>'
+			+	'</tbody>'
+		    +'</table>' 
+
+    	    }
 
 </script>
 
