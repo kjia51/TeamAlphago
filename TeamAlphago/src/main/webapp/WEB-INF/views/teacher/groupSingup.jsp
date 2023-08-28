@@ -28,31 +28,6 @@
     border-radius: 3px;
 }
 
-#topMenu {
-	height: 30px;
-	width: 850px;
-}
-
-#topMenu ul li {
-     list-style: none;
-     color: white;  
-     background-color: #074691;;
-     float: left;
-     line-height: 30px;
-     vertical-align: middle;
-     text-align: center;
-}
-
-#topMenu .menuLink {                              
-     text-decoration:none;  
-     color: white;      
-     display: inline-block;   
-     width: 150px;  
-     font-size: 14px;   
-     font-weight: 400;  
-}
-
-
 </style>
 <body>
 
@@ -109,8 +84,9 @@
 <div id="my_modal">
 	<nav id="topMenu" >
 		<ul>
-			<li><a class="menuLink" href="#">그룹 멤버 관리</a></li>
-			<li><a class="menuLink" href="#">그룹 신청 승인</a></li>
+			<button><a class="" onclick="">그룹 정보</a></button>
+			<button><a class="" onclick="groupMemList()">그룹 멤버 관리</a></button>
+	   		<button><a class="" onclick="">그룹 신청 승인</a></button>
 
 		</ul>
 	</nav>
@@ -119,7 +95,7 @@
 	</div>
 
 	<div class="btn">
-	    <button><a class="modal_close_btn" onclick="">저장하기</a></button>
+	    <button><a class="" onclick="">저장하기</a></button>
 	    <button><a class="modal_close_btn">닫기</a></button>
     </div>
     	
@@ -250,6 +226,7 @@ var main = document.getElementById('getgroup');
 function getGroupOne(index) {
 	var i = index;
 	console.log(i);
+	main.innerHTML = '';
 	modal('my_modal');
 	
     var g_no =  $('input[data-g_no="'+index+'"]').val();
@@ -264,47 +241,158 @@ function resultList(map){
 		console.log(vo);
 		
 		var g_no = vo.g_no;
-		var start = vo.g_start;
-		var end = vo.g_end;
-		var g_name = vo.g_name;
 		
+		var start = vo.g_start.substr(0,10);
+		var end = vo.g_end.substr(0,10);;
+		var date = start+" ~ "+end;
+		
+		var cnt = vo.g_cnt;
+		var g_name = vo.g_name;
+		var c_name = vo.c_name;
+		var m_name = vo.m_name;
+		var c_level = vo.c_level;
+		var sub_lv = "";
+		
+		if(c_level == '1') {
+			sub_lv = "초급";
+		} else if (c_level == '2') {
+			sub_lv = "중급";
+		} else if (c_level == '3') {
+			sub_lv = "고급";
+		}
 
+		console.log(start);
+		console.log(end);
+		console.log(date);
 		main.innerHTML += ''
 		    +			'<input type="text" id="g_no" value="'
 		    +			g_no
 		    +			'" readonly>'
+		    +			'<input type="text" id="g_no" value="'
+		    +			g_name
+		    +			'" readonly>'
+		    +			'<input type="text" id="g_no" value="'
+		    +			m_name
+		    +			'" readonly>'
 			+ '<table class="table table-bordered">'
 			+ '<thead>'
 		    + 	'<tr>'
-			+ 		'<th>구독ID</th>'
+			+ 		'<th>수강가능일</th>'
 			+ 		'<th>콘텐츠명</th>'
 			+ 		'<th>수업 난이도</th>'
-			+ 		'<th>구독일</th>'
 			+ 		'<th>수강가능인원</th>'
 		    + 	'</tr>'
 			+ '</thead>'
 			+	'<tbody>'
 			+		'<tr>'
-		    +			'<td align="left" class="row"><input type="text" id="sid" style="width:112px" value="'
-		    +			sid
+		    +			'<td align="left" class="row"><input type="text" id="date" style="width:112px" value="'
+		    +			date
 		    +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_name" style="width:290px" value="'
-            +			sub_name
+            +			'<td align="center"><input type="text" id="c_name" style="width:290px" value="'
+            +			c_name
             +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_lv" style="width:80px" value="'
+            +			'<td align="center"><input type="text" id="sub_lv" style="width:85px" value="'
             +			sub_lv
             +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_date" style="width:85px" value="'
-            +			sub_date
-            +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_able" style="width:35px" value="'
-            +			sub_able
+            +			'<td align="center"><input type="text" id="cnt" style="width:35px" value="'
+            +			cnt
             +			'" readonly></td>'
 			+ 		'</tr>'
 			+	'</tbody>'
 		    +'</table>' 
 
-    	    }
+}
+    	    
+/////////////////////////////////////// 그룹 학습자 관리    	    
+function groupMemList(g_no) {
+	var g_no = $('#g_no').val();
+	console.log(g_no);
+	main.innerHTML = '';
+
+	fetchGet('/alpha/group/getGroupOne/list/'+g_no, MemberList);
+
+}
+
+function Groupupdate(l_g_no) {
+	var l_g_no = $('#l_g_no').val();
+	console.lgo(l_g_no);
+	
+	
+}
+    	 
+function MemberList(map){
+	let vo = map.learnerVO;
+	console.log(vo);
+
+	var l_m_id = vo.l_m_id;
+	var l_g_no = vo.l_g_no;
+	var m_name = vo.m_name;
+	
+	console.log(l_m_id);
+	console.log(l_g_no);
+	console.log(m_name);
+	
+	main.innerHTML += ''
+		+ '<table class="table table-bordered">'
+		+ '<thead>'
+	    + 	'<tr>'
+		+ 		'<th>학생회원ID</th>'
+		+ 		'<th>그룹ID</th>'
+		+ 		'<th>이름</th>'
+		+ 		'<th>탈퇴</th>'
+	    + 	'</tr>'
+		+ '</thead>'
+		+	'<tbody>'
+		+		'<tr>'
+	    +			'<td align="left" class="row"><input type="text" id="l_m_id" style="width:112px" value="'
+	    +			l_m_id
+	    +			'" readonly></td>'
+        +			'<td align="center"><input type="text" id="l_g_no" style="width:290px" value="'
+        +			l_g_no
+        +			'" readonly></td>'
+        +			'<td align="center"><input type="text" id="m_name" style="width:85px" value="'
+        +			m_name
+        +			'" readonly></td>'
+        + 			'<td align="center"><button><a class="" onclick="">내보내기</a></button></td>'		
+		+ 		'</tr>'
+		+	'</tbody>'
+	    +'</table>' 
+
+}
+    	       	    
+//put방식 요청
+function fetchPut(url,obj,callback){
+	console.log(url);
+	console.log(callback);
+	
+	try {
+		//url 요청
+		fetch(url,{method : 'put'
+			,headers : {'Content-Type' : 'application/json'} 
+		,body  : JSON.stringify(obj)
+		})
+		//요청 결과json 문자열을 javascript 객체로 반환
+		.then(response => response.json())
+		//매개로 받은 콜백함수 실행
+		.then(map => callback(map))
+		
+	} catch (e) {
+		console.log(e);
+		
+	}
+}
+
+//컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
+function result(map){
+	console.log(map);
+	if(map.result == 'success'){
+		alert(map.msg);
+	} else {
+		alert(map.msg);
+	}
+		
+}
+
 
 </script>
 

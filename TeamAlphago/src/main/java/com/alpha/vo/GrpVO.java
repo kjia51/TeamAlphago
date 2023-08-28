@@ -17,5 +17,9 @@ public class GrpVO {
    private String g_period; // 학습 기간
    private String g_AppCnt; // 신청 현황(인원) 
    
+   //그룹 가입 승인
+   private String c_name;
+   private String c_level;
+   
    
 }        

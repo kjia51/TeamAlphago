@@ -63,9 +63,25 @@
 	and sub_no = #{sub_id}
 	</select>
 	
-	<!-- 해당 그룹 정보 가져오기 / sub_id-->
+	<!-- 해당 그룹 정보 가져오기 / g_no-->
 	<select id="getGroupOne"  resultType="com.alpha.vo.GrpVO">
-	select * from grp where g_no= #{g_no}
+	select g.*, member.m_name, content.c_name, content.c_level
+	from grp g, subscribe, member, content
+	where g.sub_no = subscribe.sub_no
+	and subscribe.sub_c_no = content.c_no
+	and g.t_m_id = member.m_id
+	and g_no = #{g_no}
 	</select>
+	
+	<!-- 해당 그룹의 학습자 정보 가져오기 / g_no -->
+	<select id="getGroupLearner" resultType="com.alpha.vo.LearnerVO">
+	SELECT l.*, member.m_name 
+	FROM learner l, grp, member
+	where grp.g_no = l.l_g_no
+	and l.l_m_id = member.m_id
+	and grp.g_no = #{g_no}
+	</select>
+	
+	
 
 </mapper>

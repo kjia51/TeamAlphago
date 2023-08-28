@@ -6,9 +6,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import com.alpha.service.TeacherService;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
 import com.alpha.vo.GrpVO;
+import com.alpha.vo.LearnerVO;
 import com.alpha.vo.PageDto;
 import com.alpha.vo.SubscribeVO;
 
@@ -185,7 +188,7 @@ public class TeacherController extends CommonRestController {
 			return mav;
 		}
 	   
-	   @GetMapping("/group/getGroupOne/{g_no}") //그룹에 콘텐츠 연결
+	   @GetMapping("/group/getGroupOne/{g_no}") //그룹 정보 가져오기
 	   public Map<String, Object> GetGroupOne(@PathVariable("g_no") String g_no) {
 		   
 		   System.out.println("==============");
@@ -203,10 +206,43 @@ public class TeacherController extends CommonRestController {
 			} catch (Exception e) {
 				e.printStackTrace();
 				return responseMap(REST_FAIL, "등록 중 오류 발생");
-			}
-		   
-		   
+			}   
 	   }
+	   
+	   @GetMapping("/group/getGroupOne/list/{g_no}") //그룹의 학습자 정보 가져오기
+	   public Map<String, Object> GetGroupLearner(@PathVariable("g_no") String g_no) {
+		   
+		   System.out.println("==============");
+		   System.out.println(g_no);
+		   
+		   try {
+				LearnerVO learnerVO = service.getGroupLearner(g_no);
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("learnerVO", learnerVO);
+				System.out.println(learnerVO);
+				
+				
+				return map;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "등록 중 오류 발생");
+			}   
+	   }
+	   
+	   @PutMapping("/group/getGroupOne/UpdateAction/{l_g_no}")  //그룹의 학습자 정보 삭제(탈퇴하기) -- 테이블에서 l_g_no = null처리
+		public Map<String, Object> Groupupdate(@RequestBody LearnerVO learnerVO) {
+
+			try {
+				int res = service.updateGroupLearner(learnerVO);
+				Map<String, Object> map = responseEditMap(res);
+				return map;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "삭제 중 오류 발생");
+			}
+		}
 	   
 
 }

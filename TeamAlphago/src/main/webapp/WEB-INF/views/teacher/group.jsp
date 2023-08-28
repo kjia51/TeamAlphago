@@ -283,6 +283,7 @@ $("#conSelect").change(function(){
     console.log(sub_no);
 	main.innerHTML = '';
 	fetchGet('/alpha/group/getSubOne/'+sub_no, resultList)
+	
 
 })
 
