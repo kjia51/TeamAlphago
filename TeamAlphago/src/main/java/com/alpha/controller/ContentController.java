@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.service.ContentService;
 import com.alpha.vo.ContentVO;
-import com.alpha.vo.Criteria;
 
 @RestController
 @RequestMapping("/alpha/*")
@@ -36,9 +35,8 @@ public class ContentController extends CommonRestController {
 	   
 	   @GetMapping("/salesLIST") 
 	   public ModelAndView salesLIST() {
-		   
 		   ModelAndView mav = new ModelAndView("/content/salesLIST");
-		   
+		   mav.addObject("list",contentService.salesContent());
 		   return mav;
 	   }
 	   

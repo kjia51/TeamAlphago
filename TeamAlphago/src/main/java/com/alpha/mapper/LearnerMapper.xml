@@ -3,5 +3,24 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alpha.mapper.LearnerMapper">
 
+<!-- 그룹 이름  -->
+<select id="groupName" resultType="com.alpha.vo.LearnerVO">
+	select g_name from grp
+</select>
 
+<!-- 그룹별 그룹 정보 -->
+<select id="groupInfo" resultType="com.alpha.vo.LearnerVO">
+	SELECT 
+	    m_name AS t_m_name,
+	    CONCAT(IFNULL(DATE_FORMAT(g.g_start, '%y.%m.%d'), ''), ' ~ ', IFNULL(DATE_FORMAT(g.g_end, '%y.%m.%d'), '')) AS g_period,
+	    CONCAT(IFNULL(CONVERT(s.sub_able, CHAR), ''), ' / ', IFNULL(CONVERT(g.g_cnt, CHAR), '')) AS g_AppCnt
+	FROM                
+	    subscribe s
+	LEFT JOIN 
+	    member m ON (s.t_m_id = m.m_id)
+	LEFT JOIN 
+	    grp g ON (s.sub_no = g.sub_no)
+	WHERE 
+	    g_name = #{g_name}
+</select>
 </mapper>
