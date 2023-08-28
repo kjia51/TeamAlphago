@@ -34,7 +34,7 @@
     on CHAR_LENGTH ( content.c_able ) 
       - CHAR_LENGTH ( 
       REPLACE ( content.c_able ,  ',' ,  '' ))>= numbers . n-1) s
-      on c.c_no=s.c_no where s.c_no=#{c_no}
+      on c.c_no=s.c_no where s.c_no=#{c_no} order by s.c_able
 	</select>
 	
 	<!-- 결제 시 구독내역에 인서트 -->
@@ -97,6 +97,23 @@
 	and grp.g_no = #{g_no}
 	</select>
 	
+		<!-- c_id로 콘텐츠 상세 내용 갯수-->
+	<select id="getContentCnt" resultType="int">
+	select count(*) from content c
+	left join 
+	(select
+	   c_no, SUBSTRING_INDEX (SUBSTRING_INDEX(content.c_able,',',numbers.n),',',-1) c_able
+		from 
+	   (select  1 n union  all  select 2  
+	    union  all  select  3  union  all select 4 
+	    union  all  select  5  union  all  select  6
+	    union  all  select  7  union  all  select  8 
+	    union  all  select  9 union  all  select  10) numbers INNER  JOIN content
+	    on CHAR_LENGTH ( content.c_able ) 
+      - CHAR_LENGTH ( 
+      REPLACE ( content.c_able ,  ',' ,  '' ))>= numbers . n-1) s
+      on c.c_no=s.c_no where s.c_no=#{c_no}
+	</select>
 	
 
 </mapper>

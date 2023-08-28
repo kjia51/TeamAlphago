@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.service.TeacherService;
-import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
 import com.alpha.vo.GrpVO;
 import com.alpha.vo.LearnerVO;
@@ -57,6 +55,7 @@ public class TeacherController extends CommonRestController {
 		ModelAndView mav = new ModelAndView("/teacher/contentDetail");
 		System.out.println(c_no);
 		mav.addObject("contentList", service.getContentDetail(c_no));
+		mav.addObject("getContentCnt", service.getContentCnt(c_no));
 		
 		return mav;
 	}

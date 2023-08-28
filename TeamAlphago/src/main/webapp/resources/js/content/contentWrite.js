@@ -137,12 +137,13 @@ window.addEventListener('load', function(){
             if (isDisabled) {
               button.classList.remove("disabled");
               btnAll.pop(btnValue*10);
+              $('#poss_able').val(btnAll);
               console.log(`버튼 ${btnValue} 활성화`);
               
             } else {
               button.classList.add("disabled");
               console.log(`버튼 ${btnValue} 비활성화`);
-            	  btnAll.push(btnValue*10);
+              btnAll.push(btnValue*10);
               $('#poss_able').val(btnAll);
               console.log(btnAll);
             }

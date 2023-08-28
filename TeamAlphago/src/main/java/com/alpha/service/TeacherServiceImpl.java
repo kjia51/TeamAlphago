@@ -84,6 +84,12 @@ public class TeacherServiceImpl implements TeacherService {
 		return mapper.updateGroupLearner(learnerVO);
 	}
 
+	@Override
+	public int getContentCnt(String c_no) {
+		// TODO Auto-generated method stub
+		return mapper.getContentCnt(c_no);
+	}
+
 	
 
 }

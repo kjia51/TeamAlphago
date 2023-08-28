@@ -13,8 +13,17 @@
 	<script src="https://kit.fontawesome.com/1028c0334c.js" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	
-	
+<script>
+$(document).ready(function() {
+$("#theBtn").click(function() {
+    $(".enoch-dialogs-contents-wrap").css("display", "block");
+});
+})
+
+
+</script>	
 </head>
+
 <style>
 body{
 color: #000;
@@ -45,6 +54,7 @@ padding: 0 20px;
 
 }
 
+
 #my_modal .modal_close_btn {
 
     border: 1px solid black;
@@ -55,25 +65,36 @@ padding: 0 20px;
 }
 
 
-</style>
 
+
+
+</style>
 
 <body>
 
 <%@ include file="../common/header.jsp" %>
+<div class="location" style="position: relative; margin: 0 auto; text-align:center; font-size:1em">
+            <ul class="locationSub" style="display:inline-block;">
+                <li style="display:inline-block; padding:20px;"><a href="">입문</a></li>
+                <li style="display:inline-block; padding:20px;"><a href="">초급</a></li>
+                <li style="display:inline-block; padding:20px;"><a href="">중급</a></li>
+                <li style="display:inline-block; padding:20px;"><a href="">고급</a></li>
 
+            </ul>
+        </div>
 <div id="container">
 <input id="m_id" type="text" value="${memberVO.m_id }">
     <div class="wrap">
         <div class="content_wrap" id="competition_wrap">
 
-<div doz_type="inside" class="inside"><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w20210714d09491b0de793"><div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N"><div class="widget padding" data-height="30" style="margin-top:px; margin-bottom:px;">
-	<div id="padding_w20210714d09491b0de793" style="width:100%; min-height:1px; height:30px; "></div>
+<div doz_type="inside" class="inside"><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12">
+
+<div doz_type="widget" id="w20210714d09491b0de793"><div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N"><div class="widget padding" data-height="30" style="margin-top:px; margin-bottom:px;">
 </div>
 </div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12">
 
 
-</div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w202107153732fa2ac5cd5">
+</div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12">
 <div class="_widget_data " data-widget-name="메뉴 타이틀" data-widget-type="menu_title" data-widget-anim="none" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N" style="text-align:right"><h1 class="widget_menu_title" style="color : #000;font-size : 20px;letter-spacing : px;text-align : left;font-weight : bold;font-style : normal;">입문반</h1>
 
 <c:choose>
@@ -86,15 +107,13 @@ padding: 0 20px;
     </c:otherwise>
 </c:choose>
 
-</div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w20210715be3c6ca598194"><div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N"><div class="widget padding" data-height="30" style="margin-top:px; margin-bottom:px;">
-	<div id="padding_w20210715be3c6ca598194" style="width:100%; min-height:1px; height:30px; "></div>
+</div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w20210715be3c6ca598194"><div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N"><div class="widget padding" data-height="30" style="margin-top:px; margin-bottom:px;">
 </div>
 </div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="4" doz_clear="Y" class="col-dz col-dz-4   col-xdz-clear"><div doz_type="widget" id="w20210715ceae24ddd84c4"><div class="_widget_data " data-widget-name="동영상" data-widget-type="video" data-widget-anim="none" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N">	<div id="video_w20210715ceae24ddd84c4" class="widget movie _video_wrap " style="position: relative">
 			</div>
 			
 					
 			</div></div></div><div doz_type="grid" doz_grid="1" doz_clear="Y" class="col-dz col-dz-1   col-xdz-clear"><div doz_type="widget" id="w20210715f41a89f6d262e"><div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N"><div class="widget padding" data-height="30" style="margin-top:px; margin-bottom:px;">
-	<div id="padding_w20210715f41a89f6d262e" style="width:100%; min-height:1px; height:30px; "></div>
 </div>
 </div></div></div><div doz_type="grid" doz_grid="7" class="col-dz col-dz-7"><div doz_type="widget" id="w20210715c9014fa59a703"><div class="_widget_data " data-widget-name="텍스트" data-widget-type="text" data-widget-anim="none" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N">
 	<div doz_type="text" class="widget _text_wrap widget_text_wrap fr-view  default_padding " id="text_w20210715c9014fa59a703">
@@ -128,7 +147,7 @@ padding: 0 20px;
 			<div class="thumb-fluid _item_container  ">
 									<div class="shop-tools clearfix" style="display: ">
 														<div class="inline-blocked float_l">
-									입문반									<span class="text-brand _unit">3</span>
+									입문반									<span class="text-brand _unit">${getContentCnt }</span>
 								</div>
 																	
 																					<div class="down-btn" style="text-align:right">
@@ -156,20 +175,20 @@ padding: 0 20px;
                 				<h2 style="display: ">
 					<a class="_fade_link" href="/23/?idx=1">입문반 - 정원 ${con.c_able }명</a>
 				</h2>
-				<div class="item-pay-detail">
-					<p class="no-margin">
-					</p><p class="pay inline-blocked" style=";;">${con.c_sellprice }</p>
+				<div class="item-pay-detail" style="font-size:1.5em; display:inline">
+				 <c:if test="${con.c_able>=30}">
+					<p class="pay inline-blocked" style="text-decoration:line-through; display:inline-block"> ${con.c_price }</p> <p class="pay inline-blocked" style="display:inline-block">→ ${con.c_sellprice }</p>
+				</c:if>
 				</div>
 					<div class="ns-icon clearfix">
 						<!--<span class="new bg-brand">NEW</span>-->
-
 						<div class="item-icon _unit_list unit-list">
 				                                        <span class="im-icon-wrap" onclick="location.href='https://kibaonline.co.kr/23/?idx=1'">
-                       <i class="fa-regular fa-comment"></i> 1</span>
+                       <i class="fa-regular fa-comment"></i> 0</span>
                     </span>
 				                    <span class="im-icon-wrap" onclick="SITE_SHOP_DETAIL.addProdWish('s20210713f943dd02f7efe', 'LzIz')">
                         <i id="wish-icon-s20210713f943dd02f7efe" class="wish-icon-s20210713f943dd02f7efe im-icon im-ico-like"></i>
-                        <i class="fa-regular fa-heart"></i> 2</span>
+                        <i class="fa-regular fa-heart"></i> 0</span>
                     </span>
 								</div>
 							</div>
@@ -178,7 +197,9 @@ padding: 0 20px;
 					</div>
 				</c:forEach>
 			</div>
-
+			<div class="comment-the">
+                        <button type="button" id="theBtn">콘텐츠 더보기<i class="ico ico-cbox-more"></i></button>
+            </div>
 	
 	
 </div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w20210714f9516606b3272"><div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N"><div class="widget padding" data-height="30" style="margin-top:px; margin-bottom:px;">
@@ -192,6 +213,12 @@ padding: 0 20px;
 </div>
 </div>
 </div>
+<div class="enoch-dialogs-contents-wrap enoch-dialogs-show" style="display: none; position:fixed; margin:0 ;transform: translate(-50%, -50%);"><div class="enoch-dialogs-contents"><div> 더 이상의 콘텐츠가 없습니다. </div>
+<input type="text" class="enoch-dialogs-input" placeholder="텍스트를 입력해주세요.">
+<div class="enoch-dialogs-btns">
+<button type="button" class="enoch-dialogs-btn enoch-dialogs-btn-cancel">닫기</button>
+<button type="button" class="enoch-dialogs-btn enoch-dialogs-btn-success" style="display: none;">확인</button>
+</div></div></div>
 <%-- 모달창 --%>
 <div id="my_modal">
 	<hr>
@@ -202,6 +229,10 @@ padding: 0 20px;
 		    <button><a class="modal_close_btn" onClick="location.href='/alpha/teacher'">리스트로 돌아가기</a></button>
     	</div>
 </div>
+</div>
+</div>
+
+
 <%@ include file="../common/footer.jsp" %>
 
 

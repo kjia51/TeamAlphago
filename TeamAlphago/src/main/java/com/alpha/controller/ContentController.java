@@ -24,7 +24,7 @@ public class ContentController extends CommonRestController {
 	   @Autowired
 	   ContentService contentService;
 	   
-		
+	   	
 	   @GetMapping("/content")
 		public ModelAndView teacher() {
 
