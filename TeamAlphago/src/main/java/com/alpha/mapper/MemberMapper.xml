@@ -4,12 +4,35 @@
 <mapper namespace="com.alpha.mapper.MemberMapper">
 
 <select id="login" resultType="com.alpha.vo.MemberVO">
-	SELECT * FROM MEMBER WHERE M_ID = #{m_id}
+	SELECT * FROM member WHERE m_id = #{m_id}
 </select>
 
+
 <insert id="insert">
-	Insert into ALPHAGO.MEMBER (M_ID,M_NAME,M_PASWORD,M_DIVISION,M_PHONE,M_EMAIL,M_ADDRESS,M_BIRTH)
+	Insert into member (M_ID,M_NAME,M_PASSWORD,M_DIVISION,M_PHONE,M_EMAIL,M_ADDRESS,M_BIRTH)
 	values (#{m_id}, #{m_name}, #{m_password}, #{m_division}, #{m_phone}, #{m_email}, #{m_address}, #{m_birth})
 </insert>
+
+<select id="checkDuplicate" resultType="int">
+	SELECT COUNT(*) FROM member WHERE M_ID = #{m_id}
+</select>
+
+
+<select id="findId" resultType="com.alpha.vo.MemberVO">
+	SELECT * FROM member WHERE M_EMAIL = #{m_email}
+</select>
+
+<select id="findPw" resultType="com.alpha.vo.MemberVO">
+	SELECT * FROM member WHERE M_EMAIL = #{m_email} AND M_ID = #{m_id}
+</select>
+
+<update id="updatePw">
+	update member set m_password = #{m_password}
+	where m_id = #{m_id}
+</update>
+
+<select id="checkEmail" resultType="int">
+	SELECT COUNT(*) FROM member WHERE M_EMAIL = #{m_email}
+</select>
 
 </mapper>

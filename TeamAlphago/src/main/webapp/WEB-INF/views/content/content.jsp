@@ -61,7 +61,7 @@
                                                                                     </select> 
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr> 
                                     <th scope="row">학습최대인원</th>
                                     
                                     <!-- <td><input type="text" class="input-default" id="c_able"  style="width: 97%" maxlength="100" name="title" value=""></td> -->
