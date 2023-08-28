@@ -20,8 +20,13 @@ public class LearnerServiceImpl implements LearnerService {
 		return learnerMapper.groupName(g_name);
 	}
 
-	
 	// 그룹 정보 리스트 
+	@Override
+	public List<LearnerVO> groupInfo(String g_name) {
+		return learnerMapper.groupInfo(g_name);
+	}
+
+	
 
 		
 	

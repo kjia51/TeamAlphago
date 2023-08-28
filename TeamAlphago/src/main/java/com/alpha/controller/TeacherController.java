@@ -1,14 +1,18 @@
 package com.alpha.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +23,7 @@ import com.alpha.service.TeacherService;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
 import com.alpha.vo.GrpVO;
+import com.alpha.vo.LearnerVO;
 import com.alpha.vo.PageDto;
 import com.alpha.vo.SubscribeVO;
 
@@ -89,6 +94,7 @@ public class TeacherController extends CommonRestController {
 		
 		System.out.println(t_m_id);
 		System.out.println("연결");
+		System.out.println(service.mySubList(t_m_id));
 		
 		
 		
@@ -120,7 +126,7 @@ public class TeacherController extends CommonRestController {
 		public ModelAndView group(String t_m_id) {
 		   
 		   
-			System.out.println("연결");
+			System.out.println("그룹관리연결");
 			System.out.println(t_m_id);
 
 			ModelAndView mav = new ModelAndView("/teacher/group");
@@ -152,7 +158,7 @@ public class TeacherController extends CommonRestController {
 		   
 	   }
 	   
-	   @PostMapping("/group/insert/{t_m_id}")
+	   @PostMapping("/group/insert/{t_m_id}") //그룹 생성
 		public Map<String, Object> register(@RequestBody GrpVO groupVO) {
 		   
 		   System.out.println("==============넘어옴");
@@ -170,6 +176,66 @@ public class TeacherController extends CommonRestController {
 			}
 		}
 	   
+	   
+	   @GetMapping("/groupSingup") //가입승인 페이지
+		public ModelAndView groupSingup(String t_m_id) {
+		   
+		   
+		    System.out.println(t_m_id);
+			System.out.println("그룹승인연결");
+			System.out.println(service.getmyGroupList(t_m_id));
+
+			ModelAndView mav = new ModelAndView("/teacher/groupSingup");
+			mav.addObject("groupList", service.getmyGroupList(t_m_id));
+			return mav;
+		}
+	   
+	   @GetMapping("/group/getGroupOne/{g_no}") //그룹 정보 가져오기
+	   public Map<String, Object> GetGroupOne(@PathVariable("g_no") String g_no) {
+		   
+		   System.out.println("==============");
+		   System.out.println(g_no);
+		   
+		   try {
+				GrpVO grpVO = service.getGroupOne(g_no);
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("grpVO", grpVO);
+				System.out.println(grpVO);
+				
+				
+				return map;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "등록 중 오류 발생");
+			}   
+	   }
+	   
+	   @GetMapping("/group/getGroupOne/list/{g_no}") //그룹의 학습자 정보 가져오기
+	   public List<LearnerVO> GetGroupLearner(@PathVariable("g_no") String g_no, Model model) {
+		   
+		   System.out.println("==============");
+		   System.out.println(g_no);
+
+				List<LearnerVO> list = service.getGroupLearner(g_no);
+				System.out.println(list);
+				return list;
+
+	   }
+	   
+	   @PutMapping("/group/getGroupOne/UpdateAction/{l_g_no}")  //그룹의 학습자 정보 삭제(탈퇴하기) -- 테이블에서 l_g_no = null처리
+		public Map<String, Object> Groupupdate(@RequestBody LearnerVO learnerVO) {
+
+			try {
+				int res = service.updateGroupLearner(learnerVO);
+				Map<String, Object> map = responseEditMap(res);
+				return map;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "삭제 중 오류 발생");
+			}
+		}
 	   
 
 }
