@@ -28,7 +28,7 @@ public class LearnerVO {
 	// 그룹 가입 신청
 	private String t_m_name; // 회원 이름(학습지도자 이름)
 	private String g_period; // 학습 기간
-	private int g_AppCnt; // 신청 현황(인원)
+	private String g_AppCnt; // 신청 현황(인원)
 	
 	//그룹 가입 승인
 	private String m_name;
