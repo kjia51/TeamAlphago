@@ -60,6 +60,8 @@
 
 
 </style>
+
+
 <body>
 
 <%@ include file="../common/header.jsp" %>
@@ -85,13 +87,14 @@
 	<input id="c_sellpice" type="text" value="${con.c_sellprice }">
 	
 	
-	<fmt:formatNumber var="num" value="${con.c_able/10 }" type="number" />
-	<select id="pCnt" name="pCnt">
-		<c:forEach var="i" begin="1" end="${num }">
-		<option>${i*10 }명</option>
-		</c:forEach>
-	</select>
-	<div class="btn">
+
+	
+    <select name="selAmount" data-index="${index }" id="c_able" >
+    <option value='1'>1</option>
+    </select>
+	<div id="signDiscount"  style="color:red; border:solid 1px red; width:250px; height:30px"></div>
+	<label for="c_discount">할인율 :</label>
+	<input type="text" class="input-default" id="c_discount" style="width: 33%; border:solid 1px black" maxlength="100" name="c_discount" value="">
 	<button id="payment">결제</button>
 	<button id="goback" onclick="location.href='/alpha/teacher'">뒤로가기</button>
 	<button id="contentEdit">수정</button>
@@ -104,7 +107,6 @@
 <hr>
 <div class="discountInfo">
 <p>할인율 안내</p>
-
 </div>
 <div class="cancleInfo">
 <p>취소 및 환불규정</p>
@@ -300,6 +302,22 @@ $('#payment').click(function () { //결제버튼
  
 });  
 
+
+	window.addEventListener('load', function(){
+	    // select박스 목록 선택
+	    let selAmountList = document.querySelectorAll("[name=selAmount]");
+	    // select 옵션
+	    let options = '';
+	    for(let i=1;i<=10;i++){
+	        options += `<option value='${i*10}'>${i*10}${i==10?'+':''}</option>`
+	    }
+	    // select박스들에 옵션 추가및 change이벤트 추가
+	    selAmountList.forEach(function(item, index){
+	        // 1. select 옵션(수량 1~10) 추가
+	        item.innerHTML = options;
+	
+	    })
+	})
 </script>
 
 

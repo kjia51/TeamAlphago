@@ -3,5 +3,15 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alpha.mapper.NoticeMapper">
 
+<select id="getNoticeList" resultType="com.alpha.vo.NoticeVO">
+	SELECT N_NO, N_M_ID, N_TITLE, N_CONTENT, DATE_FORMAT(N_REGDATE, '%Y-%m-%d') AS N_REGDATE
+	FROM NOTICE ORDER BY N_NO DESC LIMIT #{startNo}, #{endNo}
+</select>
+
+<select id="getTotalCnt" resultType="int">
+	SELECT COUNT(*) FROM NOTICE
+</select>
+
+
 
 </mapper>
