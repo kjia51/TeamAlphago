@@ -152,7 +152,7 @@ public class TeacherController extends CommonRestController {
 		   
 	   }
 	   
-	   @PostMapping("/group/insert/{t_m_id}")
+	   @PostMapping("/group/insert/{t_m_id}") //그룹 생성
 		public Map<String, Object> register(@RequestBody GrpVO groupVO) {
 		   
 		   System.out.println("==============넘어옴");
@@ -170,6 +170,18 @@ public class TeacherController extends CommonRestController {
 			}
 		}
 	   
+	   
+	   @GetMapping("/groupSingup") //그룹관리 페이지
+		public ModelAndView groupSingup(String t_m_id) {
+		   
+		   
+			System.out.println("연결");
+			System.out.println(t_m_id);
+
+			ModelAndView mav = new ModelAndView("/teacher/groupSingup");
+			mav.addObject("groupList", service.getmyGroupList(t_m_id));
+			return mav;
+		}
 	   
 
 }
