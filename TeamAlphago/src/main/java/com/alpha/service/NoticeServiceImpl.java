@@ -38,4 +38,13 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeMapper.getTotalCnt();
 	}
 
+	@Override
+	public NoticeVO getNoticeOne(String n_no, Model model) {
+		NoticeVO noticeVO = noticeMapper.getNoticeOne(n_no);
+		
+		model.addAttribute("noticeVO", noticeVO);
+		
+		return null;
+	}
+
 }
