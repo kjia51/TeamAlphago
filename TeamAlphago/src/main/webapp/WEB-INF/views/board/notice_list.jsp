@@ -34,9 +34,11 @@
                             <input type="submit" class="btn btn-primary" value="검색" />
                         </fieldset>
                     </div>
+                <c:if test="${memberVO.m_division == 3}">
                 <div class="btnArea topbtnWrap">
                     <span class="btn btn-point btn-mg"><button type="button" id="addBtn" data-route="">글쓰기</button></span>
                 </div>
+                </c:if>
             </div>
 
 
@@ -67,7 +69,7 @@
                         <tr>
                             <th align="center" scope="row">${noticeVO.n_no }</th>
                             <td class="subject">
-                                <a href="https://www.kbaduk.or.kr/one/view/user/274/">${noticeVO.n_title }</a>
+                                <a href="/alpha/notice/view?n_no=${noticeVO.n_no }">${noticeVO.n_title }</a>
                                                             </td>
                             <td align="center">${noticeVO.n_m_id }</td>
                             <td align="center">${noticeVO.n_regdate }</td>

@@ -112,7 +112,7 @@
                         <div class="gnb_sub gnb_sub_5">
                             <h3 class="blind">자료실</h3>
                             <ul>
-                                <li><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/"> 공지사항 </a></li>
+                                <li><a href="/alpha/notice"> 공지사항 </a></li>
                                 <li><a href="https://www.kbaduk.or.kr/bbs/read/thum/movie/"> Q&A </a></li>
                                 <li><a href="/alpha/content"> 학습패키지 등록 </a></li>
                                 <li><a href="/alpha/salesLIST"> 매출 조회 </a></li>

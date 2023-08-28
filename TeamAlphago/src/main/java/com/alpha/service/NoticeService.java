@@ -15,4 +15,6 @@ public interface NoticeService {
 	
 	public int getTotalCnt();
 	
+	public NoticeVO getNoticeOne(String n_no, Model model);
+	
 }
