@@ -31,7 +31,11 @@ public class MailService {
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.port", "587");
         
-        Authenticator auth = new MailAuth();
+        
+        String mail_id = "alphagoTemp@gmail.com";
+        String mail_pw = "lhmaboostpxberxj";
+        
+        Authenticator auth = new MailAuth(mail_id, mail_pw);
         
         Session session = Session.getDefaultInstance(prop, auth);
         
@@ -43,10 +47,13 @@ public class MailService {
             msg.setSentDate(new Date());
             
             msg.setFrom(new InternetAddress("alphagoTemp@gmail.com", "alphago"));
-            InternetAddress to = new InternetAddress("userEmail");         
+            InternetAddress to = new InternetAddress(userEmail);         
             msg.setRecipient(Message.RecipientType.TO, to);            
-            msg.setSubject("제목", "UTF-8");            
-            msg.setText("안녕하세요 테스트 메일입니다.", "UTF-8");            
+
+	         // 메일 제목
+			msg.setSubject(userName + " 님 임시 비밀번호를 알려드립니다.", "UTF-8");
+			// 메일 내용
+			msg.setText(userName + " 님의 임시 비밀번호는 " + temporaryPassword + " 입니다.", "UTF-8");           
             
             Transport.send(msg);
             
@@ -73,12 +80,10 @@ class MailAuth extends Authenticator{
     
     PasswordAuthentication pa;
     
-    public MailAuth() {
-        String mail_id = "alphagoTemp";
-        String mail_pw = "lhmaboostpxberxj";
-        
-        pa = new PasswordAuthentication(mail_id, mail_pw);
-    }
+    public MailAuth(String mail_id, String mail_pw) {
+		// 사용자 인증 정보를 담아서 반환
+		pa = new PasswordAuthentication(mail_id, mail_pw);
+	}
     
     public PasswordAuthentication getPasswordAuthentication() {
         return pa;

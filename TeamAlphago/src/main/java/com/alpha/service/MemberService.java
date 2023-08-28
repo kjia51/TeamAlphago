@@ -22,6 +22,8 @@ public interface MemberService {
 	
 	public void sendTemporaryPasswordByEmail(String m_email, String m_name, String temporaryPassword);
 	
+	public int updatePw(MemberVO memberVO);
+	
 	public int checkEmail(MemberVO memberVO);
 	
 }

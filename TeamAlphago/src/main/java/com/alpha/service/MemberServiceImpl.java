@@ -81,4 +81,10 @@ public class MemberServiceImpl implements MemberService {
         mailSender.send(message);		
 	}
 
+
+	@Override
+	public int updatePw(MemberVO memberVO) {
+		return memberMapper.updatePw(memberVO);
+	}
+
 }
