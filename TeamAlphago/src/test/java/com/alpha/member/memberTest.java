@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.alpha.mapper.ContentMapper;
 import com.alpha.mapper.MemberMapper;
+import com.alpha.vo.ContentVO;
 import com.alpha.vo.MemberVO;
 
 import lombok.extern.log4j.Log4j;
@@ -51,5 +53,23 @@ public class memberTest {
 		int res = memberMapper.insert(memberVO);
 		assertEquals(1, res);
 	}
+	
+	@Autowired
+	ContentMapper contentMapper;
+	
+	@Test
+	public void content() {
+		ContentVO contentVO = new ContentVO();
+		contentVO.setC_name("name1");
+		contentVO.setC_level("1");
+		contentVO.setC_price(20000);
+		contentVO.setC_content("contentㅇfddfdd");
+		
+		log.info(contentVO);
+		
+		int res = contentMapper.insertContent(contentVO);
+		assertEquals(1, res);
+	}
+	
 	
 }

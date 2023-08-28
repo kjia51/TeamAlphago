@@ -7,6 +7,19 @@
 <meta charset=UTF-8>
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<style>
+.blue{
+    background-color: #f6f7f9;
+    border: 1px black solid;
+    color: black;
+    
+    }
+  #btn.disabled {
+    background-color: #074691;
+    color : white;
+    cursor: not-allowed;
+  }
+</style>
 </head>
 <body>
 	<%@ include file="../common/header.jsp" %>
@@ -35,7 +48,7 @@
                                     <th scope="row">패키지명</th>
                                     <td>
                                     <div id="signCname" style="color:red"></div>
-                                    <input type="text" class="input-default" id="c_name" placeholder="공백없이 한글/숫자 6자" style="width: 97%" maxlength="100" name="title" value="">
+                                    <input type="text" class="input-default" id="c_name" placeholder="공백없이 한글/숫자 6자" style="width: 97%" maxlength="100" name="c_name" value="">
                                     </td>
                                 </tr>
                                 <tr>
@@ -49,9 +62,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">학습최대가능인원</th>
+                                    <th scope="row">학습최대인원</th>
+                                    
                                     <!-- <td><input type="text" class="input-default" id="c_able"  style="width: 97%" maxlength="100" name="title" value=""></td> -->
                                     <td>
+                                    <div id="signDiscount"  style="color:red"></div>
                                         <!-- 수량 선택박스 -->
 				                        <select name='selAmount' data-index='${index}' id="c_able" >
 				                        </select>
@@ -60,10 +75,27 @@
                                     
                                 </tr>
                                 <tr>
-                                    <th scope="row">정가</th>
-                                    <td><input type="text" class="input-default" id="c_price" style="width: 97%" maxlength="100" name="title" value=""></td>
+                                    <th scope="row">수강인원</th>
+                                    <!-- <td><input type="text" class="input-default" id="c_able"  style="width: 97%" maxlength="100" name="title" value=""></td> -->
+                                    <td>
+                                    <div id="p_able"></div>
+                                    <input type="text" class="input-default" id="poss_able" style="width: 97%" maxlength="100" name="poss_able" value="">
+                                    </td>
+                                    
                                 </tr>
-
+                                <tr>
+                                    <th scope="row">정가</th>
+                                    <td><input type="text" class="input-default" id="c_price" style="width: 97%" maxlength="100" name="c_price" value=""></td>
+                                </tr>
+    		                     <tr>
+    		                         <th scope="row">할인율</th>
+    		                         <td>
+    		                         <input type="text" class="input-default" id="c_discount" style="width: 97%" maxlength="100" name="c_discount" value="" disabled></td>
+    		                     </tr>
+    		                     <tr>
+    		                         <th scope="row">판매가</th>
+    		                        <td><input type="text" class="input-default" id="c_sellprice" style="width: 97%" maxlength="100" name="c_sellprice" value="" disabled></td>
+    		                     </tr>
                                 <tr>
                                     <th scope="row">콘텐츠 내용</th>
                                     <td>

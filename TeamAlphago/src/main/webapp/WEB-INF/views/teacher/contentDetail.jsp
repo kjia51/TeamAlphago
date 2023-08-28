@@ -13,23 +13,16 @@
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
 <style>
-#main {
-    width: 60%;
-    height: 100%;
-    margin: 0 auto;
-    justify-content: center;
+body{
+color: #000;
+font-size: 15px;
+line-height: 26px;
+letter-spacing: -0.5px;
+font-family: Nanum Gothic,"나눔고딕",NanumGothic,'Roboto','noto sans kr','noto sans', 'Droid Sans','Helvetica',"AppleGothicNeoSD","Apple SD 산돌고딕 Neo",'Apple-Gothic','애플고딕',"Microsoft NeoGothic",'Malgun Gothic',"맑은 고딕",'dotum','돋움','gulim','굴림',sans-serif;
+-webkit-text-size-adjust: none;
+margin: 0;
+padding: 0 20px;
 }
-.content-box {
-    padding: 20px;
-}
-
-.imgBox {
-	border: 1px solid black;
-    width: 40%;
-    height: 230px;
-    float: left;
-        margin-right: 20px;
-    }
     
 .discountInfo, .cancleInfo {
 	border: 1px solid black;
@@ -66,261 +59,172 @@
 
 <%@ include file="../common/header.jsp" %>
 
-<div id="main">
+<div id="container">
+    <div class="wrap">
+        <div class="content_wrap" id="competition_wrap">
 
-<input id="m_id" type="text" value="${memberVO.m_id }">
-<div class="content-box">
-<c:forEach items="${contentList }" var="con">
-	<input id="c_name" type="text" value="${con.c_name }">
-	<div class="imgBox"><img src="" alt="이미지"></div>
-	<div class="infoBox"><h3>${con.c_content }</h3></div>
-	<hr>
-	<h3>- 
-	<c:if test="${con.c_level eq 1 }">초급</c:if>
-	<c:if test="${con.c_level eq 2 }">중급</c:if>
-	<c:if test="${con.c_level eq 3 }">고급</c:if></h3>
-	<h3>- 수강가능인원 : ${con.c_able }명</h3>
-	<h3>- 정가 : ${con.c_price }원</h3>
+<div doz_type="inside" class="inside"><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w20210714d09491b0de793"><div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N"><div class="widget padding" data-height="30" style="margin-top:px; margin-bottom:px;">
+	<div id="padding_w20210714d09491b0de793" style="width:100%; min-height:1px; height:30px; "></div>
+</div>
+</div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w20210714e8469939b2ea9"><div class="_widget_data " data-widget-name="메뉴/카테고리" data-widget-type="sub_menu" data-widget-anim="none" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N"><div class="widget">
+	<div class="nav sub-menu sub_menu_hide  h-menu-type2 menu-horizontal row-cnt-3 row-cnt-mobile-3">
+		<ul class="">
 	
-	<input type="text" value="${con.c_no }" id="c_no">
-	<input type="text" value="${con.c_discount }">
-	<input id="c_sellpice" type="text" value="${con.c_sellprice }">
+	<li style="" class="depth-01    " data-code="m202107131b65631b8ec6b">
+		<a href="/23" data-url="23" data-has_child="N" data-is_folder_menu="N" class=" _fade_link   ">
+			<span class="plain_name" data-hover="">체험수업</span>
+		</a>
+		
+	</li>
 	
+	<li style="" class="depth-01  active   active-real   " data-code="m20210713c6b1f64c8f069">
+		<a href="/24" data-url="24" data-has_child="N" data-is_folder_menu="N" class=" _fade_link   active   active-real ">
+			<span class="plain_name" data-hover="">입문반</span>
+		</a>
+		
+	</li>
 	
+	<li style="" class="depth-01    " data-code="m202107138ffa571de48c4">
+		<a href="/25" data-url="25" data-has_child="N" data-is_folder_menu="N" class=" _fade_link   ">
+			<span class="plain_name" data-hover="">입문심화반</span>
+		</a>
+		
+	</li>
+	
+	<li style="" class="depth-01    " data-code="m20210713e3b6e8472f75d">
+		<a href="/27" data-url="27" data-has_child="N" data-is_folder_menu="N" class=" _fade_link   ">
+			<span class="plain_name" data-hover="">초급반</span>
+		</a>
+		
+	</li>
+	
+	<li style="" class="depth-01    " data-code="m20211209de133b619501c">
+		<a href="/47" data-url="47" data-has_child="N" data-is_folder_menu="N" class=" _fade_link   ">
+			<span class="plain_name" data-hover="">중급반</span>
+		</a>
+		
+	</li>
+	
+	<li style="" class="depth-01    " data-code="m2021071318a14583d2b21">
+		<a href="/28" data-url="28" data-has_child="N" data-is_folder_menu="N" class=" _fade_link   ">
+			<span class="plain_name" data-hover="">개인결제창</span>
+		</a>
+		
+	</li>
+	
+	</ul>	</div>
+</div>
 
+</div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w202107153732fa2ac5cd5"><div class="_widget_data " data-widget-name="메뉴 타이틀" data-widget-type="menu_title" data-widget-anim="none" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N"><h1 class="widget_menu_title" style="color : #000;font-size : 20px;letter-spacing : px;text-align : left;font-weight : bold;font-style : normal;">입문반</h1>
+
+
+</div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w20210715be3c6ca598194"><div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N"><div class="widget padding" data-height="30" style="margin-top:px; margin-bottom:px;">
+	<div id="padding_w20210715be3c6ca598194" style="width:100%; min-height:1px; height:30px; "></div>
+</div>
+</div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="4" doz_clear="Y" class="col-dz col-dz-4   col-xdz-clear"><div doz_type="widget" id="w20210715ceae24ddd84c4"><div class="_widget_data " data-widget-name="동영상" data-widget-type="video" data-widget-anim="none" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N">	<div id="video_w20210715ceae24ddd84c4" class="widget movie _video_wrap " style="position: relative">
+			</div>
+			
+					
+			</div></div></div><div doz_type="grid" doz_grid="1" doz_clear="Y" class="col-dz col-dz-1   col-xdz-clear"><div doz_type="widget" id="w20210715f41a89f6d262e"><div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N"><div class="widget padding" data-height="30" style="margin-top:px; margin-bottom:px;">
+	<div id="padding_w20210715f41a89f6d262e" style="width:100%; min-height:1px; height:30px; "></div>
+</div>
+</div></div></div><div doz_type="grid" doz_grid="7" class="col-dz col-dz-7"><div doz_type="widget" id="w20210715c9014fa59a703"><div class="_widget_data " data-widget-name="텍스트" data-widget-type="text" data-widget-anim="none" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N">
+	<div doz_type="text" class="widget _text_wrap widget_text_wrap fr-view  default_padding " id="text_w20210715c9014fa59a703">
+		
+				<div class="text-table "><div><p style="line-height: 2;"><strong><span style="font-size: 16px;">키바온라인 <span style="color: rgb(255, 108, 0);">입문반</span>은 한 판의 대국을 진행하려면 꼭 알아야 하는</span></strong></p><p style="line-height: 2;"><strong><span style="font-size: 16px;">필수적인 이론과 방법들을 재미있는 교육 컨텐츠를 통해 배우며</span></strong></p><p style="line-height: 2;"><strong><span style="font-size: 16px;">바둑을 더 쉽게 이해할 수 있는 "도전!바둑왕, 교재별학습반, 어린이대국실" 로 학습하는 단계입니다.</span></strong></p><hr style="line-height: 2;"><p style="line-height: 2;"><span style="font-size: 16px;"><strong>- 입문반 (입문 1반, 2반, 3반, 4반 운영중)</strong></span></p><p style="line-height: 2;"><span style="font-size: 16px;"><strong>- 바둑 초기 이론 수업</strong></span></p><p style="line-height: 2;"><span style="font-size: 16px;"><strong>- 9줄, 13줄, 19줄 바둑판 수업 진행</strong></span></p><p style="line-height: 2;"><span style="font-size: 16px;"><strong>- 1대4 정원 수업 진행</strong></span></p><p style="line-height: 2;"><span style="font-size: 16px;"><strong>- 1수업 : 50분 기준</strong></span></p><p style="line-height: 2;"><span style="font-size: 16px;"><strong>- 수업요일 : 월 ~ 금</strong></span></p><p style="line-height: 2;"><strong><span style="font-size: 16px;">- 수업시간 : 오후 2시 ~ 오후 9시 (시간 선택)</span></strong></p></div></div>		
+	</div>
 	
-    <select name="selAmount" data-index="${index }" id="c_able" >
-    <option value='1'>1</option>
-    </select>
-	<div id="signDiscount"  style="color:red; border:solid 1px red; width:250px; height:30px"></div>
-	<label for="c_discount">할인율 :</label>
-	<input type="text" class="input-default" id="c_discount" style="width: 33%; border:solid 1px black" maxlength="100" name="c_discount" value="">
-	<button id="payment">결제</button>
-	<button id="goback" onclick="location.href='/alpha/teacher'">뒤로가기</button>
-	<button id="contentEdit">수정</button>
-	<button id="contentDelete">삭제</button>
+</div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w202107157d792e5155a14"><div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N"><div class="widget padding" data-height="30" style="margin-top:px; margin-bottom:px;">
+	<div id="padding_w202107157d792e5155a14" style="width:100%; min-height:1px; height:30px; "></div>
+</div>
+</div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w202107145fca6702e7268"><div class="_widget_data " data-widget-name="가로선" data-widget-type="hr" data-widget-anim="none" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N"><div class="widget line type01 _hide" id="hr_w202107145fca6702e7268">
+	<div class="line_box holder" style="width:100%; ">
+		<hr style="border-top-width:1px; border-color:#ff6c00;">	</div>
+</div>
+
+</div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w202107135a7c3f268ba63"><div class="_widget_data " data-widget-name="쇼핑" data-widget-type="shopping" data-widget-anim="none" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N">	<div class="shop-content widget">
+		<div class="shop-grid">
+			<div class="thumb-fluid _item_container  ">
+									<div class="shop-tools clearfix" style="display: ">
+														<div class="inline-blocked float_l">
+									입문반									<span class="text-brand _unit">3</span>
+								</div>
+																	
+																					<div class="down-btn" style="display: ">
+							<select class="form-control" name="deliv_option_type" onchange="document.location.href = encodeURI('/24/?sort='+$(this).val())" title="정렬 바꾸기">
+								<option value="recent">등록순</option>
+								<option value="like">인기순</option>
+								<option value="min_price">낮은가격순</option>
+								<option value="max_price">높은가격순</option>
+								<option value="comment">상품평 많은순</option>
+								<option value="abc">이름순</option>
+								<option value="descabc">이름역순</option>
+							</select>
+						</div>
+											</div>
+										<div class="thumb-row m-list-type3 hover_none thumb-item-5 _item_wrap " id="container_w202107135a7c3f268ba63" style="visibility: visible; margin: 0px -10px;">
+							<div class="shop-item _shop_item" style="width: 204px; padding: 0px 10px; height: auto;">
+		<div class="item-wrap" style="position: relative;">
+			<a href="/24/?idx=63" class="_fade_link shop-item-thumb hover_img_none">
+				<img data-prodcode="s2023081114659ed573520" alt="" src="https://cdn.imweb.me/thumbnail/20210713/a40bef34a9fba.png" class="_org_img org_img _lazy_img" data-original="" data-src="" style="display: inline; width:200px;height:100px;">
+								<div class="item-overlay">
+					<div class="item-pay">
+						<div>
+							<h2>입문반 - 12회차반</h2>
+							                                                            <p class="pay inline-blocked" style=";;">
+                                    300,000원                                </p>
+                            																						<div class="ns-icon clearfix">
+									<!--<span class="new bg-brand">NEW</span>-->
+									<div class="prod_icon text-danger icon_default best">BEST</div><div class="prod_icon icon_default md">MD</div>								</div>
+													</div>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="item-detail" style="">
+						<div class="item-pay">
+                				<h2 style="display: ">
+					<a class="_fade_link" href="/24/?idx=63">입문반 - 12회차반</a>
+				</h2>
+				<div class="item-pay-detail">
+					<p class="no-margin">
+												</p><p class="pay inline-blocked" style=";;">
+							300,000원						</p>
+																				<p></p>
+				</div>
+													<div class="ns-icon clearfix">
+						<!--<span class="new bg-brand">NEW</span>-->
+						<div class="prod_icon text-danger icon_default best">BEST</div><div class="prod_icon icon_default md">MD</div>					</div>
+								</div>
+						<div class="item-icon _unit_list unit-list">
+				                                        <span class="im-icon-wrap" onclick="location.href='https://kibaonline.co.kr/24/?idx=63'">
+                        <i class="im-icon im-ico-review"></i><span class="_unit" data-value="0">0</span>
+                    </span>
+				                    <span class="im-icon-wrap" onclick="SITE_SHOP_DETAIL.addProdWish('s2023081114659ed573520', 'LzI0')">
+                        <i id="wish-icon-s2023081114659ed573520" class="wish-icon-s2023081114659ed573520 im-icon im-ico-like"></i>
+                        <span class="wish-text-s2023081114659ed573520 _unit" data-value="0">0</span>
+                    </span>
+								
+			</div>
+		</div>
 	</div>
 
+					</div>
+							</div>
+		</div>
+			</div>
+	
+	
+</div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w20210714f9516606b3272"><div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N"><div class="widget padding" data-height="30" style="margin-top:px; margin-bottom:px;">
+	<div id="padding_w20210714f9516606b3272" style="width:100%; min-height:1px; height:30px; "></div>
+</div>
+</div></div></div></div></div>
+
+
 
 </div>
-<br>
-<hr>
-<div class="discountInfo">
-<p>할인율 안내</p>
 </div>
-<div class="cancleInfo">
-<p>취소 및 환불규정</p>
-
 </div>
-
-
-</c:forEach>
-
-</div>
-
-
-<%-- 모달창 --%>
-<div id="my_modal">
-	<hr>
-	<h2>결제 완료</h2>
-
-		<div class="btn">
-		    <button><a class="modal_close_btn" onClick="location.href='/alpha/mysubList?t_m_id=${memberVO.m_id }'">구독내역으로 가기</a></button>
-		    <button><a class="modal_close_btn" onClick="location.href='/alpha/teacher'">리스트로 돌아가기</a></button>
-    	</div>
-    	
-    	
-</div>
-<%-- --------------------------------------------------------------  --%>
-
-
-
-<script>
-
-function modal(id) { //모달창 띄우기
-    var zIndex = 9999;
-    var modal = $('#' + id);
-
-    // 모달 div 뒤에 희끄무레한 레이어
-    var bg = $('<div>')
-        .css({
-            position: 'fixed',
-            zIndex: zIndex,
-            left: '0px',
-            top: '0px',
-            width: '100%',
-            height: '100%',
-            overflow: 'auto',
-            // 레이어 색갈은 여기서 바꾸면 됨
-            backgroundColor: 'rgba(0,0,0,0.4)'
-        })
-        .appendTo('body');
-
-    modal
-        .css({
-            position: 'fixed',
-            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
-            // 시꺼먼 레이어 보다 한칸 위에 보이기
-            zIndex: zIndex + 1,
-
-            // div center 정렬
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            msTransform: 'translate(-50%, -50%)',
-            webkitTransform: 'translate(-50%, -50%)'
-        })
-        .show()
-        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-        .find('.modal_close_btn')
-        .on('click', function() {
-            bg.remove();
-            modal.hide();
-        });
-}
-
-function getsys() {
-
-	var today = new Date();
-	var year = today.getFullYear();
-	var month = ('0' + (today.getMonth() + 1)).slice(-2);
-	var day = ('0' + today.getDate()).slice(-2);
-
-	var dateString = year + '-' + month  + '-' + day;
-	
-	console.log(dateString);
-
-	return dateString;
-	
-}
-
-
-function checkLogin() {
-	
-	var m_id = $('#m_id').val();
-	
-	if(m_id === '') { //세션변수에 값이 없으면
-		alert('로그인 후 이용가능합니다');
-		window.location.replace("/alpha/login");
-	}
-	
-}
-
-
-$('#payment').click(function () { //결제버튼
-	
-	checkLogin(); //로그인 체크
-	
-	alert('a');
-
-	var IMP = window.IMP;
-	IMP.init('imp07586387');
-	
-	var able =  $("#pCnt option:selected").val();
-                     
-    //DOM객체들에서 사용할 데이터 뽑기
-    var c_no = $('#c_no').val();
-    var m_id = $('#m_id').val();
-    var c_name = $('#c_name').val();
-    var today = getsys();
-    var price = $('#c_sellpice').val();
-    var sub_able = able.substr(0, (able.length)-1);
-    var sub_connection = 'N';
-    
-    console.log(c_no);
-    console.log(m_id);
-    console.log(c_name);
-    console.log(today);
-    console.log(price);
-    console.log(sub_able.substr());
-    console.log(sub_connection);
-                  
-    IMP.request_pay({
-        //카카오페이 결제시 사용할 정보 입력
-       pg: 'kakaopay',
-       pay_method: "card",
-       name: c_name,
-       amount: price,
-   }, function (rsp) {
-                 
-   		console.log(rsp);
-		// 결제검증
-		$.ajax({
-        	type : "POST",
-        	url : "/payment/verifyIamport/" + rsp.imp_uid 
-        }).done(function(data) {
-    	        	
-    		console.log(data);
-    	        	
-	       	// 결제 유효성 검증
-	       	// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
-	       	if(rsp.paid_amount == data.response.amount){
-	       		var msg = "결제 및 결제검증완료";
-	        	msg += '\n고유ID : ' + rsp.imp_uid;
-               	msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-               	msg += '\n결제 금액 : ' + rsp.paid_amount+'원';
-                     
-                if(rsp.apply_num === null || rsp.apply_num === undefined || rsp.apply_num === '') {
-                	rsp.apply_num = '카카오페이머니';
-                }
-                msg += '\n카드 승인번호 : ' + rsp.apply_num;                                    	
-    		        	
-                     $.ajax({
-                         url: "/alpha/teacher/insertContent",
-                         type: 'post',
-                         data: {
-                        	sub_no: rsp.imp_uid, //거래번호(구독ID)
-                        	sub_c_no: c_no, //콘텐츠id
-                           	t_m_id: m_id, //회원id
-                            sub_date: today, //구독날짜
-                            sub_price: price, //구독료
-                            sub_able: sub_able, //수강가능인원
-                            sub_connection: sub_connection, //콘텐츠id
-                         }    
-                       });
-                     
-                     console.log('토큰생성');
-                     $.ajax({
-                     	type : "POST",
-            	        url : "/payment/complete"
-                     })
-                     console.log('토큰생성완료');
-
-	                                    $('#resForm').submit(); 
-	                           			alert(msg);
-	                       				console.log(m_id);
-	                       			 	modal('my_modal');
-	                   	        	} else {
-	                   	        		var msg = '결제에 실패하였습니다.';
-	                                    msg += '에러내용 : ' + rsp.error_msg;
-	                           			alert(msg);
-	                   	        	}     		
-	                   	        });
-
-    })
- 
-});  
-
-
-	window.addEventListener('load', function(){
-	    // select박스 목록 선택
-	    let selAmountList = document.querySelectorAll("[name=selAmount]");
-	    // select 옵션
-	    let options = '';
-	    for(let i=1;i<=10;i++){
-	        options += `<option value='${i*10}'>${i*10}${i==10?'+':''}</option>`
-	    }
-	    // select박스들에 옵션 추가및 change이벤트 추가
-	    selAmountList.forEach(function(item, index){
-	        // 1. select 옵션(수량 1~10) 추가
-	        item.innerHTML = options;
-	
-	    })
-	})
-</script>
-
-
 <%@ include file="../common/footer.jsp" %>
 
 

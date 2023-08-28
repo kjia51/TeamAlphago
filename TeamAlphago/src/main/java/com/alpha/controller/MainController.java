@@ -11,7 +11,7 @@ public class MainController {
 
 	@GetMapping("main")
 	public ModelAndView main() {
-		System.out.println("¸ÞÀÎÆäÀÌÁö ¿¬°á");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		
 		ModelAndView mav = new ModelAndView("/main/main");
 		return mav;

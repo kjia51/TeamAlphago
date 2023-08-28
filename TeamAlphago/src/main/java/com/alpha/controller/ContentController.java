@@ -33,10 +33,9 @@ public class ContentController extends CommonRestController {
 			return mav;
 		}
 	   
-	   @GetMapping("/salesLIST") 
+	   @GetMapping("/salesList") 
 	   public ModelAndView salesLIST() {
-		   ModelAndView mav = new ModelAndView("/content/salesLIST");
-		   mav.addObject("list",contentService.salesContent());
+		   ModelAndView mav = new ModelAndView("/content/salesList");
 		   return mav;
 	   }
 	   
@@ -46,7 +45,7 @@ public class ContentController extends CommonRestController {
 
 			try {
 				int res = contentService.insertContent(contentVO);
-				
+				System.out.println(res);
 				Map<String, Object> map = responseWriteMap(res);
 				return map;
 
