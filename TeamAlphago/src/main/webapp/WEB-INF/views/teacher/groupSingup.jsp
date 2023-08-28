@@ -312,18 +312,15 @@ function groupMemList(g_no) {
 
 }
 
-function Groupupdate() {
-   var index = $('#index').val();
-    console.log("Index:", index);
-    
+function Groupupdate(index) {
     var l_no = $('input[data-l_no="'+index+'"]').val();
+    console.log("Index:", index);
     console.log("l_no:", l_no);
-
 }
     	 
 function MemberList(list){
 	
-	var tableHTML = '<table class="table table-bordered">';
+    var tableHTML = '<table class="table table-bordered">';
     tableHTML += '<thead><tr><th></th><th>학생ID</th><th>이름</th><th>탈퇴</th></tr></thead>';
     tableHTML += '<tbody>';
 
@@ -333,7 +330,7 @@ function MemberList(list){
         tableHTML += '<td>' + '<input type="text" id="index" value="'+ index +'" readonly>' + '</td>';
         tableHTML += '<td>' + '<input type="text" data-l_no="'+index+'" value="'+ member.l_no +'" readonly>' + '</td>';
         tableHTML += '<td>' + '<input type="text" value="'+ member.m_name +'" readonly>' + '</td>';
-        tableHTML += '<td>' + '<button onclick="Groupupdate()">내보내기</button>' + '</td>';
+        tableHTML += '<td>' + '<button onclick="Groupupdate(' + index + ')">내보내기</button>' + '</td>';
         tableHTML += '</tr>';
     });
 
