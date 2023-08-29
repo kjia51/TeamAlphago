@@ -1,6 +1,7 @@
 package com.alpha.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.service.ContentService;
+import com.alpha.vo.CartVO;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.MemberVO;
 
@@ -28,6 +31,14 @@ public class ContentController extends CommonRestController {
 	   ContentService contentService;
 	   
 	   	
+	   @GetMapping("/")
+	   public ModelAndView main() {
+		   
+		   ModelAndView mav = new ModelAndView("/main/main");
+		   
+		   return mav;
+	   }
+	   
 	   @GetMapping("/content")
 		public ModelAndView teacher() {
 
@@ -39,6 +50,12 @@ public class ContentController extends CommonRestController {
 	   @GetMapping("/salesList") 
 	   public ModelAndView salesLIST() {
 		   ModelAndView mav = new ModelAndView("/content/salesList");
+		   return mav;
+	   }
+	   
+	   @GetMapping("/myContentPage") 
+	   public ModelAndView myContentPage() {
+		   ModelAndView mav = new ModelAndView("/content/myContentPage");
 		   return mav;
 	   }
 	   
@@ -123,21 +140,36 @@ public class ContentController extends CommonRestController {
 		   
 		   //장바구니 담기
 		   @PostMapping("/cart/insert")
-		   public Map<String, Object> cartList(@PathVariable("c_no") String c_no, HttpSession session ) {
+		   public Map<String, Object> cartList(@RequestBody CartVO cartVO ) {
 		      System.out.println("===================================================================================================================================");
 				try {
-					MemberVO member = (MemberVO) session.getAttribute("member");
-					System.out.println(member.getM_id());
-					
-					int res = contentService.addCart(member.getM_id(), c_no);
-					Map<String, Object> map = responseWriteMap(res);
-					return map;
-
+					//if(cartVO.getCr_m_no()!=null){
+						int res = contentService.addCart(cartVO);
+						Map<String, Object> map = responseWriteMap(res);
+						return map;
+					//}
 				} catch (Exception e) {
 					e.printStackTrace();
 					return responseMap(REST_FAIL, "등록 중 오류 발생");
 				}
 		   }
-		
+		   
+		   //조회
+		   @GetMapping("/cart/list/{cr_c_no}")
+		   public Map<String, Object> cartList(@PathVariable("cr_c_no") String cr_c_no) {
+		      
+				try {
+					List<CartVO> list = contentService.getCartList(cr_c_no);
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("list", list);
+					return map;
+	
+				} catch (Exception e) {
+					e.printStackTrace();
+					return responseMap(REST_FAIL, "조회 중 오류 발생");
+				}
+		   }
+		   
+
 
 }
