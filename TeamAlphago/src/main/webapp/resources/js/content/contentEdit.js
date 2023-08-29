@@ -335,6 +335,18 @@ function resultList(map){
 	
 		
 }
+$('#cartContent').click(function () {
+	let c_no = $('#c_no').val();
+
+	console.log(c_no)
+	//전달할 객체로 생성
+	let obj = {
+			c_no : c_no
+			}
+	
+	fetchPost('/alpha/cart/insert', obj, result)
+
+})
     
 
 

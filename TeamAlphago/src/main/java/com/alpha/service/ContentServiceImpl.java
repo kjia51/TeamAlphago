@@ -50,5 +50,11 @@ public class ContentServiceImpl implements ContentService {
 		return contentMapper.salesContent();
 	}
 
+	@Override
+	public int addCart(String m_id, String c_no) {
+		// TODO Auto-generated method stub
+		return contentMapper.addCart(m_id, c_no);
+	}
+
 
 }
