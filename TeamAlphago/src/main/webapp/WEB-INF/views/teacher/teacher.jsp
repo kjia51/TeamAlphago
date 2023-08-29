@@ -40,28 +40,40 @@ div .InfoBox .info {
 
 <%@ include file="../common/header.jsp" %>
 
-<hr>
-<div class="serachForm" style="text-align: center;">
-     <!-- 검색폼 -->
-     <form name="searchForm" action="/alpha/teacher" >
-     <input type="text" name="pageNo" value="${pageDto.cri.pageNo}">
-     <div class="form-inline text-center"> 
-     <p></p>
-   <div class="form-group" style="display: flex;">
-		<input type="radio" name="level" value="전체" checked>전체
-		<input type="radio" name="level" value="초급">초급
-		<input type="radio" name="level" value="중급">중급
-		<input type="radio" name="level" value="고급">고급
-   </div>
-   <div class="form-group">
-       <input class="form-control" name='searchWord' value="${pageDto.cri.searchWord }" style="border-bottom: 1px solid black" >
-    
-    <button type="submit" class="btn btn-default">검색</button> </div>
-</div>
-      </form>
-      <!-- 검색폼끝 -->
-</div>
-<hr>
+<div id="container">
+    <div class="wrap">
+
+
+        <div class="content_wrap">
+
+            <div class="titleBox">
+                <h2 class="t_title">콘텐츠 조회</h2>
+            </div>
+
+
+            <form method="get" class="searchWrap btnTopSrch">
+                <!-- 상단 검색 -->
+                <h2 class="blind">검색</h2>
+                <div class="searchBox">
+                    <fieldset>
+                        <input type="hidden" name="p" value="1">
+                        <legend>전체 검색</legend>
+                        <select title="검색 분류" name="cate" value="">
+                            <option value="title">제목</option>
+                            <option value="content">내용</option>
+                            <option value="title:content">제목 + 내용</option>
+                        </select>
+                        <input type="text" class="inputSrch" title="검색어를 입력해주세요." autofocus="autofocus" placeholder="검색어를 입력해주세요." name="word" value="" style="width:190px">
+                        <input type="submit" class="btnTopSrch btn btn-primary" value="검색">
+                    </fieldset>
+                </div>
+                <!-- // 상단 검색 -->
+            </form>
+
+
+            <div class="entry">
+                <div class="photoAtcList">
+
 ${pageDto }
 
 총 ${totalCnt } 건
@@ -74,42 +86,43 @@ ${pageDto }
 <c:when test="${contentList != null && fn:length(contentList) > 0 }">
 	  <c:forEach  var="con" items="${contentList }" varStatus="status">
 
-	  
+	  			<input type="hidden" class="index" id="c_level" data-clevel="${status.index}" value="${con.c_level }"readonly>
+			<input type="hidden" class="index" id="c_no" data-cid="${status.index}" value="${con.c_no }"readonly>
 	  
 	    <c:if test="${i%j == 0 }">
-	    <div class="main-box">
-	    </c:if>
-	       		<div class="InfoBox">
-			<input type="text" class="index" id="c_level" data-clevel="${status.index}" value="${con.c_level }"readonly>
-			<input type="text" class="index" id="c_no" data-cid="${status.index}" value="${con.c_no }"readonly><br>
-			<hr>
-			<div class="imgBox">
-				<img src="" alt="이미지">		
-			</div><hr>
-			<div class="info">
-			<h2>${con.c_name }</h2>
-			</div>
-				<div class="goDetail">
-					<button onclick="godetail(${status.index})">자세히보기</button>
-				</div>
-	
-				</div>
-	       <hr>
-	    <c:if test="${i%j == j-1 }">
-	    </div>
-	    </c:if>
-	    <c:set var="i" value="${i+1 }" />
+                    <ul class="pList">
+                         </c:if>
+                         <li>
+                            <a href="https://www.kbaduk.or.kr/bbs/view/thum/photo/95/" class="img">
+                                <img src="https://www.kbaduk.or.kr/storage/mis/2023_03/06/b78e96e66dffc3d12d10e49db1563282.jpg" alt="">
+                                <span class="text"><em>${status.index}</em></span>
+                                                            </a>
+                            <p class="desc">
+                                <a onclick="godetail(${status.index})"><strong class="tit">${con.c_name }</strong></a>
+                                <span class="date">${con.c_price}원</span><em>|</em><span class="hit">학습수준 : ${con.c_level }</span>
+                            </p>
+                       </li>
+  	    <c:if test="${i%j == j-1 }">
+                    </ul>
+                       	    </c:if>
+     <c:set var="i" value="${i+1 }" />
 	  </c:forEach>
 	     </c:when>
   <c:otherwise>
-   <tr>
-    <td>존재하지 않습니다.</td>
-   </tr>
+    <li>존재하지 않습니다.</li>
+
   </c:otherwise>
-  </c:choose>
+  </c:choose>                                               
+                </div><!-- // photoAtcList -->
+                <div class="paging">
+                    <a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=1" class="current">1</a><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=2">2</a><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=3">3</a><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=4">4</a><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=5">5</a><a class="nextPage" href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=6"> <span>다음</span> </a><a class="nextPageMore" href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=6"> <span>다다음</span> </a>                </div>
+            </div>
+        </div>
+        <!-- //content close -->
 
 
-
+    </div>
+</div>
 <script>
 function godetail(index) {
 	
@@ -132,8 +145,6 @@ function go(page){
 	document.searchForm.submit();
 }
 </script>
-	
-<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
 <%@ include file="../common/footer.jsp" %>
 
 
