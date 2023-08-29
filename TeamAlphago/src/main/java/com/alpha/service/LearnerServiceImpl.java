@@ -26,6 +26,12 @@ public class LearnerServiceImpl implements LearnerService {
 		return learnerMapper.groupInfo(g_name);
 	}
 
+	// 전체 그룹 리스트 
+	@Override
+	public List<LearnerVO> grouplistAll() {
+		return 	learnerMapper.grouplistAll();
+	}
+
 	
 
 		

@@ -31,11 +31,12 @@ public class LearnerVO {
 	private String g_AppCnt; // 신청 현황(인원)
 	
 	//그룹 가입 승인
-	private String m_name;
-	private String l_g_no;
-	private String l_no;
-	private String l_register;
-	private String l_checkyn;
+	private String m_name; // 회원이름
+	private String l_g_no; // 학습그룹 번호
+	private String l_no; // 학습자 번호
+	private String l_c_no; // 콘텐츠 번호
+	private String l_register; // 그룹가입 신청일자
+	private String l_checkyn; // 그룹가입 신청여부
 	   
 	
 	
