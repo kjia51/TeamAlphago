@@ -2,6 +2,7 @@ package com.alpha.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,11 +41,6 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public List<SubscribeVO> mySubList(String t_m_id) {
-		return mapper.mySubList(t_m_id);
-	}
-
-	@Override
 	public int cancelPay(String imp_uid) {
 		
 		String sub_id = imp_uid;
@@ -52,11 +48,9 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public List<GrpVO> getmyGroupList(String t_m_id) {
-		System.out.println("qqqqqqqqqqqqqqq");
-		System.out.println(t_m_id);
-		System.out.println(mapper.getmyGroupList(t_m_id));
-		return mapper.getmyGroupList(t_m_id);
+	public List<GrpVO> getmyGroupList(String t_m_id, Criteria cri) {
+
+		return mapper.getmyGroupList(t_m_id, cri);
 	}
 
 	@Override
@@ -107,6 +101,16 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public int insertGroupupdatesub(String sub_no) {
 		return mapper.insertGroupupdatesub(sub_no);
+	}
+
+	@Override
+	public List<SubscribeVO> mySubList(String t_m_id, Criteria cri) {
+		return mapper.mySubList(t_m_id, cri);
+	}
+
+	@Override
+	public int totalCntSub(String t_m_id, Criteria cri) {
+		return mapper.totalCntSub(t_m_id, cri);
 	}
 
 	

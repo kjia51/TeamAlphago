@@ -18,9 +18,10 @@ public interface TeacherService {
 	public int totalCnt(Criteria cri); //콘텐츠 총 건수 조회
 	public List<ContentVO> getContentDetail(String c_no); //콘텐츠 상세리스트
 	public int insertPayAction(SubscribeVO subVO); //콘텐츠 구매
-	public List<SubscribeVO> mySubList(String t_m_id); //구독내역 조회
+	public List<SubscribeVO> mySubList(@Param(value="t_m_id") String t_m_id, @Param(value="cri") Criteria cri); //구독내역 조회
+	public int totalCntSub(@Param("t_m_id") String t_m_id, @Param("cri") Criteria cri); //총 구독 건수 조회
 	public int cancelPay(String imp_uid); //구독 환불&삭제
-	public List<GrpVO> getmyGroupList(String t_m_id); //그룹 조회
+	public List<GrpVO> getmyGroupList(@Param("t_m_id") String t_m_id, @Param("cri") Criteria cri); //그룹 조회
 	public int insertGroups(GrpVO groupVO); //그룹 등록
 	public SubscribeVO getSubOne(String sub_no); //선택된 패키지 구독 정보 출력
 	public List<SubscribeVO> subContent(String t_m_id); //패키지랑 연결되지 않은 구독 리스트

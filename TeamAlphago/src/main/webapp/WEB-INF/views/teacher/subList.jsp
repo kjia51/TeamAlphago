@@ -60,73 +60,34 @@
 
 
 <div class="main-box">
-<input id="m_id" type="text" value="${memberVO.m_id }">
+총 ${totalCnt } 건
 
 <div id="container">
     <div class="wrap">
 
-
-        <div class="content_wrap">
+             <form  method="get" name="searchForm" class="content_wrap">
+			<input name="t_m_id" id="m_id" type="text" value="${memberVO.m_id }">
+			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
             <div class="titleBox">
-                <h2 class="t_title">구독 조회</h2>
+                <h2 class="t_title">콘텐츠 조회</h2>
             </div>
-
-            <!--연간일정-->
-            <div class="topbtnWrap">
-                <i class="ico ico-cal"></i><span class="btn btn-default"><a href="https://www.kbaduk.or.kr/competition/annualSchedule/">연간일정</a></span>
-            </div>
-
-
-            <!--대회검색-->
-            <form class="searchWrap searchWrap_wide">
-                <table class="table table-bordered">
-                    <caption>검색</caption>
-                    <colgroup>
-                        <col>
-                        <col width="33.5%" />
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            <th scope="col">대회보기</th>
-                            <td>
-                                <div class="searchBox">
-                                    <select title="검색 분류" name="s_cate" onchange="location.href='./?s_cate='+this.value;" value="">
-                                        <option value="">전체</option>
-                                                                                    <option value="31">전국 온라인 바둑축제</option>
-                                                                                    <option value="30">전국 동호인 디비전 바둑리그</option>
-                                                                                    <option value="29">바둑 대축제</option>
-                                                                                    <option value="26">전국 생활체육 동호인 바둑리그</option>
-                                                                                    <option value="23">대한체육회장배 전국바둑선수권대회</option>
-                                                                                    <option value="22">일요신문배 어린이</option>
-                                                                                    <option value="11">세계대회 선발전</option>
-                                                                                    <option value="10">전국 동호인바둑대회</option>
-                                                                                    <option value="9">전국(소년)체육대회</option>
-                                                                                    <option value="8">롯데백화점배 어린이 바둑대축제</option>
-                                                                                    <option value="7">문화체육관광부장관배 전국학생바둑대회</option>
-                                                                                    <option value="2">프로기전 아마선발전</option>
-                                                                                    <option value="1">내셔널바둑리그</option>
-                                                                            </select>
-                                </div>
-                            </td>
-                            <th scope="col">대회검색</th>
-                            <td>
-                                <div class="searchBox searchBox-sm">
-                                    <fieldset>
-                                        <legend>전체 검색</legend>
-                                        <select title="검색 분류" name="cate" value="">
-                                            <option value="title">제목</option>
-                                            <option value="content">내용</option>
-                                            <option value="title:content">제목 + 내용</option>
-                                        </select>
-                                        <input type="text" class="inputSrch" title="검색어를 입력해주세요." autofocus="autofocus" placeholder="검색어를 입력해주세요." name="word" value="" />
-                                        <input type="submit" class="btn btn-primary" value="검색" />
-                                    </fieldset>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
+            
+            <div class="searchWrap searchWrap_wide searchWrap_normal">
+                    <div class="searchBox searchBox-mid searchBox-center">
+                        <fieldset>
+                            <input type="hidden" name="p" value="1">
+                            <legend>전체 검색</legend>
+                            <select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }">
+                                <option value="c_name">제목</option>
+                                <option value="c_content">내용</option>
+                            </select>
+                            <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." 
+                            		name="searchWord" value="${pageDto.cri.searchWord }" />
+                            <input type="submit" class="btn btn-primary" value="검색" />
+                        </fieldset>
+                    </div>
+            </div>           
+        </form>
 
 
 <div class="entry">
@@ -156,7 +117,7 @@
 						 --%>
 						 
                    			<td><input type="text" class="index" id="sub_no" data-subuid="${status.index}" value="${sub.sub_no}" readonly></td>
-                            <th align="left"> <a href="https://www.kbaduk.or.kr/bbs/view/competition/domestic/864/">${sub.c_name }</a> </th>
+                            <th align="left"> <input type="text" id="c_name" value="${sub.c_name }"readonly></th>
                             <td align="center"><input type="text" class="index" id="sub_date" data-sub_date="${status.index}" value="${sub.sub_date }"readonly></td>
                             <td align="center"><input type="text" class="index" id="sub_price" data-sub_price="${status.index}" value="${sub.sub_price }"readonly></td>
                             <td align="center">${sub.sub_able }</td>
@@ -187,7 +148,6 @@
 </div>
 <!-- //content close -->
 
-</div>
 </div>
 </div>
 
@@ -264,7 +224,6 @@ function connection(index) {
 
   	fetchGet('/alpha/group/getSubOne/'+sub_no, resultList)
 
-
 }
 
 ////////////모달 패키지 정보 출력////////////////////////////////////////////////////////
@@ -333,10 +292,9 @@ function resultList(map){
             +			'" readonly></td>'
 			+ 		'</tr>'
 			+	'</tbody>'
-		    +'</table>' 
+		    +'</table>'; 
 
-
-    	    }
+}
 
 function cancelPay(index) {
 	///////////////////////////환불 가능 여부 검사
@@ -364,13 +322,13 @@ function cancelPay(index) {
 	} else {
 ///////////////////////////환불 실행
 
-		var imp_uid = 'imp_'+$('input[data-subuid="'+index+'"]').val();
+		var imp_uid = $('input[data-subuid="'+index+'"]').val();
 		var pay = $('input[data-sub_price="'+index+'"]').val();
 		
 		console.log(imp_uid);
 		console.log(pay);
 		
-		console.log('삭제실행');
+		alert('삭제실행');
 		
 		$.ajax({
 
@@ -380,7 +338,7 @@ function cancelPay(index) {
 		        imp_uid: imp_uid, //주문번호
 		        amount: pay, //결제금액
 		        
-	      })
+	      		})
 	    }).done(function(result) { // 환불 성공시 로직 
 	        console.log("환불 성공");
 	    
@@ -393,15 +351,14 @@ function cancelPay(index) {
 		            })
 		        })
 	    
-	        console.log("삭제완료");
+	        alert("삭제완료");
 		    location.reload();
 	    
 	    }).fail(function(error) { // 환불 실패시 로직
-	    	console.log("환불 실패");
+	    	alert("환불 실패");
 	    });
-	
-	
-	}	
+
+	}
 };
 
 </script>

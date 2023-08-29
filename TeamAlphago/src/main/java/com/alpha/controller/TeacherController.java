@@ -34,7 +34,7 @@ public class TeacherController extends CommonRestController {
 	@Autowired 
 	TeacherService service;
 	
-	@GetMapping("/teacher") //콘텐츠 조회 페이지(아직 검색x)
+	@GetMapping("/teacher") //콘텐츠 조회 페이지
 	public ModelAndView teacher(Criteria cri) {
 		
 
@@ -91,16 +91,18 @@ public class TeacherController extends CommonRestController {
 	}
 	
 	@GetMapping("/mysubList") //구독내역 페이지
-	public ModelAndView mysubList(String t_m_id) {
+	public ModelAndView mysubList(String t_m_id, Criteria cri) {
 		
 		System.out.println(t_m_id);
-		System.out.println("연결");
-		System.out.println(service.mySubList(t_m_id));
+		System.out.println("구독내역연결=================");
 		
-		
+		int totalCnt = service.totalCntSub(t_m_id, cri);
+		PageDto pageDto = new PageDto(cri, totalCnt);
 		
 		ModelAndView mav = new ModelAndView("/teacher/subList");
-		mav.addObject("subList", service.mySubList(t_m_id));
+		mav.addObject("pageDto", pageDto);
+		mav.addObject("totalCnt", totalCnt);
+		mav.addObject("subList", service.mySubList(t_m_id, cri));
 
 	
 		return mav;
@@ -124,14 +126,19 @@ public class TeacherController extends CommonRestController {
 	   }
 	   
 	   @GetMapping("/group") //그룹관리 페이지
-		public ModelAndView group(String t_m_id) {
+		public ModelAndView group(String t_m_id, Criteria cri) {
 		   
 		   
 			System.out.println("그룹관리연결");
 			System.out.println(t_m_id);
-
+			
+			int totalCnt = service.totalCntSub(t_m_id, cri);
+			PageDto pageDto = new PageDto(cri, totalCnt);
+			
 			ModelAndView mav = new ModelAndView("/teacher/group");
-			mav.addObject("groupList", service.getmyGroupList(t_m_id));
+			mav.addObject("pageDto", pageDto);
+			mav.addObject("totalCnt", totalCnt);
+			mav.addObject("groupList", service.getmyGroupList(t_m_id,cri));
 			mav.addObject("subList", service.subContent(t_m_id));
 			return mav;
 		}
@@ -186,15 +193,20 @@ public class TeacherController extends CommonRestController {
 	   
 	   
 	   @GetMapping("/groupSingup") //가입승인 페이지
-		public ModelAndView groupSingup(String t_m_id) {
+		public ModelAndView groupSingup(String t_m_id, Criteria cri) {
 		   
 		   
 		    System.out.println(t_m_id);
 			System.out.println("그룹승인연결");
-			System.out.println(service.getmyGroupList(t_m_id));
+			System.out.println(service.getmyGroupList(t_m_id,cri));
+			int totalCnt = service.totalCntSub(t_m_id, cri);
+			PageDto pageDto = new PageDto(cri, totalCnt);
 
 			ModelAndView mav = new ModelAndView("/teacher/groupSingup");
-			mav.addObject("groupList", service.getmyGroupList(t_m_id));
+			mav.addObject("groupList", service.getmyGroupList(t_m_id,cri));
+			mav.addObject("pageDto", pageDto);
+			mav.addObject("totalCnt", totalCnt);
+			
 			return mav;
 		}
 	   
@@ -222,7 +234,7 @@ public class TeacherController extends CommonRestController {
 	   @GetMapping("/group/getGroupOne/list/{g_no}") //그룹의 학습자 정보 가져오기
 	   public List<LearnerVO> GetGroupLearner(@PathVariable("g_no") String g_no) {
 		   
-		   System.out.println("==============");
+		   System.out.println("list==============");
 		   System.out.println(g_no);
 
 				List<LearnerVO> list = service.getGroupLearner(g_no);
@@ -234,7 +246,7 @@ public class TeacherController extends CommonRestController {
 	   @GetMapping("/group/getJoin/list/{g_no}") //그룹의 학습자 정보 가져오기
 	   public List<LearnerVO> JoinGrouplist(@PathVariable("g_no") String g_no) {
 		   
-		   System.out.println("==============");
+		   System.out.println("join==============");
 		   System.out.println(g_no);
 
 				List<LearnerVO> list = service.JoinGroupLearner(g_no);

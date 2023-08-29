@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,46 +33,33 @@
 <%@ include file="../common/header.jsp" %>
 
 <div class="main-box">
-<input id="m_id" type="text" value="teacher2">
-
+총 ${totalCnt } 건
 <div id="container">
     <div class="wrap">
 
-
-        <div class="content_wrap">
+            <form  method="get" name="searchForm" class="content_wrap">
+			<input name="t_m_id" id="m_id" type="text" value="${memberVO.m_id }">
+			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
             <div class="titleBox">
                 <h2 class="t_title">학습 그룹</h2>
             </div>
-
-            <!--대회검색-->
-            <form class="searchWrap searchWrap_wide">
-                <table class="table table-bordered">
-                    <caption>검색</caption>
-                    <colgroup>
-                        <col>
-                        <col width="70%" />
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            <th scope="col">그룹검색</th>
-                            <td>
-                                <div class="searchBox searchBox-sm">
-                                    <fieldset>
-                                        <legend>그룹 검색</legend>
-                                        <select title="검색 분류" name="cate" value="">
-                                            <option value="title">제목</option>
-                                            <option value="content">내용</option>
-                                            <option value="title:content">제목 + 내용</option>
-                                        </select>
-                                        <input type="text" class="inputSrch" title="검색어를 입력해주세요." autofocus="autofocus" placeholder="검색어를 입력해주세요." name="word" value="" />
-                                        <input type="submit" class="btn btn-primary" value="검색" />
-                                    </fieldset>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
+            
+            <div class="searchWrap searchWrap_wide searchWrap_normal">
+                    <div class="searchBox searchBox-mid searchBox-center">
+                        <fieldset>
+                            <input type="hidden" name="p" value="1">
+                            <legend>전체 검색</legend>
+                            <select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }">
+                                <option value="g_no">그룹ID</option>
+                                <option value="g_name">그룹이름</option>
+                            </select>
+                            <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." 
+                            		name="searchWord" value="${pageDto.cri.searchWord }" />
+                            <input type="submit" class="btn btn-primary" value="검색" />
+                        </fieldset>
+                    </div>
+            </div>           
+        </form>
 
 
 
@@ -234,6 +220,8 @@ function getGroupOne(index) {
 
 }
 
+
+
 function resultList(map){
 		main.innerHTML = '';
 		let vo = map.grpVO;
@@ -264,7 +252,7 @@ function resultList(map){
 		console.log(end);
 		console.log(date);
 		main.innerHTML += ''
-		    +			'<input type="text" id="g_no" value="'
+		    +			'<input type="text" id="l_g_no" value="'
 		    +			g_no
 		    +			'" readonly>'
 		    +			'<input type="text" id="g_no" value="'
@@ -304,9 +292,8 @@ function resultList(map){
     	    
 /////////////////////////////////////// 그룹 학습자 관리    	    
 function groupMemList(g_no) {
-	var g_no = $('#g_no').val();
+	var g_no = $('#l_g_no').val();
 	console.log(g_no);
-	main.innerHTML = '';
 
 	fetchGet('/alpha/group/getGroupOne/list/'+g_no, MemberList);
 
@@ -338,6 +325,7 @@ function MemberList(list){
 
     list.forEach(function(member, index) {
         tableHTML += '<tr>';
+        tableHTML +='<input type="text" id="l_g_no" value="'+ member.l_g_no +'" readonly>'
         tableHTML +='<input type="hidden" id="index" value="'+ index +'" readonly>'
         tableHTML += '<td>' + '<input type="text" data-l_no="'+index+'" value="'+ member.l_no +'" readonly>' + '</td>';
         tableHTML += '<td>' + '<input type="text" value="'+ member.m_name +'" readonly>' + '</td>';
@@ -381,9 +369,8 @@ function result(map){
 }
 ////////////////////그룹 가입 승인 관리
 function joinGroup() {
-	var g_no = $('#g_no').val();
+	var g_no = $('#l_g_no').val();
 	console.log(g_no);
-	main.innerHTML = '';
 
 	fetchGet('/alpha/group/getJoin/list/'+g_no, JoinList);
 }
@@ -398,7 +385,7 @@ function JoinList(list){
 
     list.forEach(function(member, index) {
         tableHTML += '<tr>';
-        tableHTML +='<input type="hidden" id="index" value="'+ index +'" readonly>'
+        tableHTML +='<input type="text" id="l_g_no" value="'+ member.l_g_no +'" readonly>'
         tableHTML +='<input type="hidden" id="index" value="'+ index +'" readonly>'
         tableHTML += '<td>' + '<input type="text" data-l_no="'+index+'" value="'+ member.l_no +'" readonly>' + '</td>';
         tableHTML += '<td>' + '<input type="text" value="'+ member.m_name +'" readonly>' + '</td>';
@@ -485,15 +472,16 @@ function RefuserMember(index) { //가입 거절
 /////////////////////그룹 정보
 function getGroup(g_no) {
 	
-    var g_no =  $('#g_no').val();
+    var g_no =  $('#l_g_no').val();
+
     console.log(g_no);
-    
-	fetchGet('/alpha/group/getGroupOne/'+g_no, resultList);
+	fetchGet('/alpha/group/getGroupOne/'+g_no, resultList)
 
 }
 
 </script>
 
+<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
 <%@ include file="../common/footer.jsp" %>
 
 </body>
