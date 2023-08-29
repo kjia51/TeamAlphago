@@ -15,6 +15,7 @@
 	<!-- 콘텐츠 총 갯수 -->
 	<select id="totalCnt" resultType="int">
 	select count(*) from content
+	<include refid="criteria"></include>	
 	</select>	
 	
 	<!-- c_id로 콘텐츠 상세 내용 가져오기 -->
@@ -49,8 +50,12 @@
 	from subscribe s, content 
 	where s.sub_c_no = content.c_no
     and t_m_id = #{t_m_id}
-    <include refid="criteria"></include>		
-		ORDER BY c_no DESC LIMIT #{startNo}, #{endNo}
+    	<choose>
+		<when test="cri.searchField == 'c_name'">
+			and c_name like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+	</choose>	
+    ORDER BY SUB_DATE DESC LIMIT  #{cri.startNo}, #{cri.endNo}
 	</select>
 		
 	<!-- 취소 시 환불&구독내역에서 삭제 -->
@@ -62,6 +67,15 @@
 	<!-- t_m_id로  가져오기 -->
 	<select id="getmyGroupList" resultType="com.alpha.vo.GrpVO">
 	select * from grp where t_m_id = #{t_m_id}
+	 <choose>
+		<when test="cri.searchField == 'g_no'">
+			and g_no like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+		<when test="cri.searchField == 'g_name'">
+			and g_name like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+	</choose>	
+	ORDER BY G_NO DESC LIMIT #{cri.startNo}, #{cri.endNo}
 	</select>
 	
 	<!-- 그룹 등록  -->
@@ -152,15 +166,37 @@
 	where sub_no=#{sub_no}
 	</update>
 	
+	<!-- 구독 총 갯수 -->
+	<select id="totalCntSub" resultType="int">
+	select count(*) from subscribe
+	where t_m_id = #{t_m_id}
+	<choose>
+		<when test="cri.searchField == 'c_name'">
+			and c_name like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+	</choose>
+	</select>	
+	
+	<!-- 그룹 총 갯수 -->
+	<select id="totalCntGrp" resultType="int">
+	select count(*) from grp
+	where t_m_id = #{t_m_id}
+		 <choose>
+		<when test="cri.searchField == 'g_no'">
+			and g_no like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+		<when test="cri.searchField == 'g_name'">
+			and g_name like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+	</choose>
+	</select>	
+	
 	<sql id="criteria">
 	<choose>
 		<when test="searchField == 'c_name'">
 			where c_name like CONCAT('%', #{searchWord}, '%')
 		</when>
-		<when test="searchField == 'c_content'">
-			where c_content like CONCAT('%', #{searchWord}, '%')
-		</when>
 	</choose>
-</sql>
+	</sql>
 
 </mapper>

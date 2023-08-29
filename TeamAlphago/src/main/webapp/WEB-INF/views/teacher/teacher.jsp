@@ -46,7 +46,7 @@ div .InfoBox .info {
 
         <div class="content_wrap">
 
-                   <form  method="get" name="searchForm" class="content_wrap">
+            <form  method="get" name="searchForm" class="content_wrap">
 			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
             <div class="titleBox">
                 <h2 class="t_title">콘텐츠 조회</h2>
@@ -59,10 +59,9 @@ div .InfoBox .info {
                             <legend>전체 검색</legend>
                             <select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }">
                                 <option value="c_name">제목</option>
-                                <option value="c_content">내용</option>
                             </select>
                             <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." 
-                            		name="searchWord", value="${pageDto.cri.searchWord }" />
+                            		name="searchWord" value="${pageDto.cri.searchWord }" />
                             <input type="submit" class="btn btn-primary" value="검색" />
                         </fieldset>
                     </div>
@@ -105,10 +104,6 @@ div .InfoBox .info {
 
   </c:otherwise>
   </c:choose>                                               
-                </div><!-- // photoAtcList -->
-                <div class="paging">
-                    <a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=1" class="current">1</a><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=2">2</a><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=3">3</a><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=4">4</a><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=5">5</a><a class="nextPage" href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=6"> <span>다음</span> </a><a class="nextPageMore" href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=6"> <span>다다음</span> </a>                </div>
-            </div>
         </div>
         <!-- //content close -->
 
@@ -137,6 +132,7 @@ function go(page){
 	document.searchForm.submit();
 }
 </script>
+<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
 <%@ include file="../common/footer.jsp" %>
 
 

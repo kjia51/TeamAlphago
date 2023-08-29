@@ -44,45 +44,38 @@
 
 <div class="main-box">
 <input id="m_id" type="text" value="${memberVO.m_id }">
-
+총 ${totalCnt } 건
 <div id="container">
     <div class="wrap">
 
 
         <div class="content_wrap">
             <div class="titleBox">
-                <h2 class="t_title">학습 그룹</h2>
             </div>
 
-            <!--대회검색-->
-            <form class="searchWrap searchWrap_wide">
-                <table class="table table-bordered">
-                    <caption>검색</caption>
-                    <colgroup>
-                        <col>
-                        <col width="70%" />
-                    </colgroup>
-                    <tbody>
-                        <tr>
-                            <th scope="col">그룹검색</th>
-                            <td>
-                                <div class="searchBox searchBox-sm">
-                                    <fieldset>
-                                        <legend>그룹 검색</legend>
-                                        <select title="검색 분류" name="cate" value="">
-                                            <option value="title">제목</option>
-                                            <option value="content">내용</option>
-                                            <option value="title:content">제목 + 내용</option>
-                                        </select>
-                                        <input type="text" class="inputSrch" title="검색어를 입력해주세요." autofocus="autofocus" placeholder="검색어를 입력해주세요." name="word" value="" />
-                                        <input type="submit" class="btn btn-primary" value="검색" />
-                                    </fieldset>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
+ 		<form  method="get" name="searchForm" class="content_wrap">
+			<input name="t_m_id" id="m_id" type="text" value="${memberVO.m_id }">
+			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
+            <div class="titleBox">
+                <h2 class="t_title">학습 그룹</h2>
+            </div>
+            
+            <div class="searchWrap searchWrap_wide searchWrap_normal">
+                    <div class="searchBox searchBox-mid searchBox-center">
+                        <fieldset>
+                            <input type="hidden" name="p" value="1">
+                            <legend>전체 검색</legend>
+                            <select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }">
+                                <option value="g_no">그룹ID</option>
+                                <option value="g_name">그룹이름</option>
+                            </select>
+                            <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." 
+                            		name="searchWord" value="${pageDto.cri.searchWord }" />
+                            <input type="submit" class="btn btn-primary" value="검색" />
+                        </fieldset>
+                    </div>
+            </div>           
+        </form>
 
 
 
@@ -397,6 +390,7 @@ function groupinsert() { //그룹생성
 
 </script>
 
+<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
 <%@ include file="../common/footer.jsp" %>
 
 </body>

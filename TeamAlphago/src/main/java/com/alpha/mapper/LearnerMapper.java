@@ -16,6 +16,9 @@ public interface LearnerMapper {
 	// 그룹 정보 리스트
 	public List<LearnerVO> groupInfo(String g_name);
 	
+	// 전체 그룹 리스트 
+	public List<LearnerVO> grouplistAll();
+	
 
 
 }

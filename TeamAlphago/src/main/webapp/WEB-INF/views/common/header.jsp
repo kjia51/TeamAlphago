@@ -30,7 +30,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-
+<input id="m_id" type="hidden" value="${memberVO.m_id }">
 
     <div id="header">
         <div class="topHead">
