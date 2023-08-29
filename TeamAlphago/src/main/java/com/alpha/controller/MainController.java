@@ -11,9 +11,40 @@ public class MainController {
 
 	@GetMapping("main")
 	public ModelAndView main() {
-		System.out.println("���������� ����");
 		
 		ModelAndView mav = new ModelAndView("/main/main");
+		return mav;
+	}
+	
+	
+	@GetMapping("policy/service")
+	public ModelAndView service() {
+		
+		ModelAndView mav = new ModelAndView("/main/service");
+		return mav;
+	}
+	
+	
+	@GetMapping("policy/privacy")
+	public ModelAndView privacy() {
+		
+		ModelAndView mav = new ModelAndView("/main/privacy");
+		return mav;
+	}
+	
+	
+	@GetMapping("policy/teamIntro")
+	public ModelAndView teamIntro() {
+		
+		ModelAndView mav = new ModelAndView("/main/teamIntro");
+		return mav;
+	}
+	
+	
+	@GetMapping("/guide")
+	public ModelAndView guide() {
+		
+		ModelAndView mav = new ModelAndView("/main/guide");
 		return mav;
 	}
 	

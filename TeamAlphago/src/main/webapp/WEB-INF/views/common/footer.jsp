@@ -24,7 +24,13 @@
 <body>
 	<div id="footer">
         <div class="copyright">
-            
+            <div class="companyInfo">
+                <ul>
+                    <li><a href="/alpha/policy/teamIntro">팀 소개</a></li>
+                    <li><a href="/alpha/policy/service">이용약관</a></li>
+					<li><a href="/alpha/policy/privacy">개인정보처리방침</a></li>
+                </ul>
+            </div>
             <div class="txtinfo">
                 <p class="corp_info">대한바둑협회 <em>|</em> 주소: 서울특별시 송파구 올림픽로 424, SK올림픽핸드볼경기장 107호 <br>전화: 02) 2282-5500  <em>|</em> 팩스: 02) 2282-5614 </p>
                 <p class="copytxt">COPYRIGHT © 대한바둑협회 ALL RIGHTS RESERVED.</p>
