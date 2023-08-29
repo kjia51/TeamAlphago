@@ -36,10 +36,10 @@
         <div class="topHead">
             <div class="top_wrap">
                 <div class='logo_top'>
-                    <a href="https://www.kbaduk.or.kr/main/"><img src="/resources/images/logo_top.png" alt="대한바둑협회" /></a>
+                    <a href="/"><img src="/resources/images/logo_top.png" alt="대한바둑협회" /></a>
                 </div>
                 <div class='subject'>
-                    <a href='/alpha/main'>게임으로 배우는 바둑 교실</a>
+                    <a href='/'>게임으로 배우는 바둑 교실</a>
                 </div>
                 <div class="topMenuBar">
                     <h2 class="blind">서비스 바로가기</h2>
@@ -82,7 +82,7 @@
                         <div class="gnb_sub gnb_sub_1">
                             <h3 class="blind">협회소개</h3>
                             <ul>
-                                <li><a href="https://www.kbaduk.or.kr/introduce/greeting/"> 사이트 소개 </a></li>
+                                <li><a href="/"> 사이트 소개 </a></li>
                                 <li><a href="/alpha/guide"> 이용가이드 </a></li>
                             </ul>
                         </div>
@@ -98,7 +98,7 @@
                             <h3 class="blind">대회정보</h3>
                             <ul>
                                 <li><a href="/alpha/joinGroup"> 그룹 가입 신청</a></li>
-                                <li><a href="https://www.kbaduk.or.kr/bbs/read/competition/domestic/"> 숙제 제출 </a></li>
+                                <li><a href="/"> 숙제 제출 </a></li>
                             </ul>
                         </div>
                         <div class="gnb_sub gnb_sub_4">
@@ -106,16 +106,16 @@
                             <ul>
                                 <li><a href="/alpha/group?t_m_id=${memberVO.m_id }"> 학습 그룹 등록 </a></li>
                                 <li><a href="/alpha/groupSingup?t_m_id=${memberVO.m_id }"> 그룹 가입 승인 </a></li> </ul>
-                                <li><a href="https://www.kbaduk.or.kr/baduk/rule/"> 숙제 전송 </a></li>
-                                <li><a href="https://www.kbaduk.or.kr/baduk/academy/"> 숙제 평가 </a></li> </ul>
+                                <li><a href="/"> 숙제 전송 </a></li>
+                                <li><a href="/"> 숙제 평가 </a></li> </ul>
                         </div>
                         <div class="gnb_sub gnb_sub_5">
                             <h3 class="blind">자료실</h3>
                             <ul>
                                 <li><a href="/alpha/notice"> 공지사항 </a></li>
-                                <li><a href="https://www.kbaduk.or.kr/bbs/read/thum/movie/"> Q&A </a></li>
+                                <li><a href="/"> Q&A </a></li>
                                 <li><a href="/alpha/content"> 학습패키지 등록 </a></li>
-                                <li><a href="/alpha/salesLIST"> 매출 조회 </a></li>
+                                <li><a href="/"> 매출 조회 </a></li>
                             </ul>
                         </div>
                         

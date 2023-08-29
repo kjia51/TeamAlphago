@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import com.alpha.vo.CartVO;
 import com.alpha.vo.ContentVO;
 
 @Service
@@ -21,5 +22,7 @@ public interface ContentService {
 	
 	public int salesContent();
 	
-	public int addCart(@Param("m_id") String m_id, @Param("c_no") String c_no);
+	public int addCart(CartVO cartVO);
+	
+	public List<CartVO> getCartList(String cr_c_no);
 }

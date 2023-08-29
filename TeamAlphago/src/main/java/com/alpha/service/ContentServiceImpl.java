@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alpha.mapper.ContentMapper;
+import com.alpha.vo.CartVO;
 import com.alpha.vo.ContentVO;
 
 @Service
@@ -51,9 +52,15 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public int addCart(String m_id, String c_no) {
+	public int addCart(CartVO cartVO) {
 		// TODO Auto-generated method stub
-		return contentMapper.addCart(m_id, c_no);
+		return contentMapper.addCart(cartVO);
+	}
+
+	@Override
+	public List<CartVO> getCartList(String cr_c_no) {
+		// TODO Auto-generated method stub
+		return contentMapper.getCartList(cr_c_no);
 	}
 
 
