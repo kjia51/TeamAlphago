@@ -84,7 +84,7 @@
 <div id="my_modal">
 	<nav id="topMenu" >
 		<ul>
-			<button><a class="" onclick="">그룹 정보</a></button>
+			<button><a class="" onclick="getGroup()">그룹 정보</a></button>
 			<button><a class="" onclick="groupMemList()">그룹 멤버 관리</a></button>
 	   		<button><a class="" onclick="joinGroup()">그룹 신청 승인</a></button>
 
@@ -234,8 +234,8 @@ function getGroupOne(index) {
 
 }
 
-
 function resultList(map){
+		main.innerHTML = '';
 		let vo = map.grpVO;
 		console.log(vo);
 		
@@ -399,12 +399,12 @@ function JoinList(list){
     list.forEach(function(member, index) {
         tableHTML += '<tr>';
         tableHTML +='<input type="hidden" id="index" value="'+ index +'" readonly>'
+        tableHTML +='<input type="hidden" id="index" value="'+ index +'" readonly>'
         tableHTML += '<td>' + '<input type="text" data-l_no="'+index+'" value="'+ member.l_no +'" readonly>' + '</td>';
         tableHTML += '<td>' + '<input type="text" value="'+ member.m_name +'" readonly>' + '</td>';
         tableHTML += '<td>' + '<input type="text" value="'+ member.l_register +'" readonly>' + '</td>';
-        tableHTML += '<input type="text" id="l_checkyn" data-l_checkyn="'+index+'" value="'+ member.l_checkyn +'" readonly>'
-        tableHTML += '<td>' + '<button onclick="JoinMember(' + index + ')">승인 | </button>';
-        tableHTML += '<button onclick="RefuserMember(' + index + ')"> 거절</button>' + '</td>';
+        tableHTML += '<td>' + '<button onclick="JoinMember(' + index + ')">승인 |</button>';
+        tableHTML += ' '+'<button onclick="RefuserMember(' + index + ')">거절</button>' + '</td>';
         tableHTML += '</tr>';
     });
 
@@ -478,6 +478,17 @@ function RefuserMember(index) { //가입 거절
         result(data);
         fetchGet('/alpha/group/getJoin/list/'+g_no, JoinList);
     });
+
+}
+
+
+/////////////////////그룹 정보
+function getGroup(g_no) {
+	
+    var g_no =  $('#g_no').val();
+    console.log(g_no);
+    
+	fetchGet('/alpha/group/getGroupOne/'+g_no, resultList);
 
 }
 

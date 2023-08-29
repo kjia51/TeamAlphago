@@ -132,7 +132,7 @@ public class TeacherController extends CommonRestController {
 
 			ModelAndView mav = new ModelAndView("/teacher/group");
 			mav.addObject("groupList", service.getmyGroupList(t_m_id));
-			mav.addObject("subList", service.mySubList(t_m_id));
+			mav.addObject("subList", service.subContent(t_m_id));
 			return mav;
 		}
 	   
@@ -146,7 +146,7 @@ public class TeacherController extends CommonRestController {
 				SubscribeVO subscribeVO = service.getSubOne(sub_no);
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("subscribeVO", subscribeVO);
-				System.out.println(subscribeVO);
+				System.out.println(map);
 				
 				
 				return map;
@@ -169,7 +169,14 @@ public class TeacherController extends CommonRestController {
 				
 				Map<String, Object> map = responseWriteMap(res);
 				System.out.println(groupVO);
-				return map;
+				
+				int res2 = service.insertGroupupdatesub(groupVO.getSub_no());
+				
+				if(res2>0) {
+					return map;					
+				}
+				
+				return responseMap(REST_FAIL, "등록 중 오류 발생"); 
 
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -107,7 +107,7 @@
 	   	<h3>그룹명<input type="text" id="g_name"></h3>
 	   	<br>
 		<div class="btn">
-		    <button><a class="modal_close_btn" onclick="groupinsert()">생성하기</a></button>
+		    <button><a onclick="groupinsert()">생성하기</a></button>
 		    <button><a class="modal_close_btn">닫기</a></button>
     	</div>
     	

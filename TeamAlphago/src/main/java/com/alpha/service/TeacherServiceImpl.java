@@ -99,6 +99,16 @@ public class TeacherServiceImpl implements TeacherService {
 		return mapper.updateGroupLearner(l_no);
 	}
 
+	@Override
+	public List<SubscribeVO> subContent(String t_m_id) {
+		return mapper.subContent(t_m_id);
+	}
+
+	@Override
+	public int insertGroupupdatesub(String sub_no) {
+		return mapper.insertGroupupdatesub(sub_no);
+	}
+
 	
 
 }
