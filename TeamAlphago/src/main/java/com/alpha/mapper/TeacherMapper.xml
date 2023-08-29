@@ -8,8 +8,8 @@
 	<select id="getContentList" resultType="com.alpha.vo.ContentVO">
 			SELECT *
 			FROM content
-			ORDER BY c_no DESC
-			LIMIT #{amount} OFFSET #{startNo}
+	<include refid="criteria"></include>		
+		ORDER BY C_NO DESC LIMIT #{startNo}, #{endNo}
 	</select>
 	
 	<!-- 콘텐츠 총 갯수 -->
@@ -49,6 +49,8 @@
 	from subscribe s, content 
 	where s.sub_c_no = content.c_no
     and t_m_id = #{t_m_id}
+    <include refid="criteria"></include>		
+		ORDER BY SUB_NO DESC LIMIT #{startNo}, #{endNo}
 	</select>
 		
 	<!-- 취소 시 환불&구독내역에서 삭제 -->
@@ -149,5 +151,16 @@
 	update subscribe set sub_connection= 'Y'
 	where sub_no=#{sub_no}
 	</update>
+	
+	<sql id="criteria">
+	<choose>
+		<when test="searchField == 'c_name'">
+			where c_name like CONCAT('%', #{searchWord}, '%')
+		</when>
+		<when test="searchField == 'c_content'">
+			where c_content like CONCAT('%', #{searchWord}, '%')
+		</when>
+	</choose>
+</sql>
 
 </mapper>

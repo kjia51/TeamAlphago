@@ -46,37 +46,28 @@ div .InfoBox .info {
 
         <div class="content_wrap">
 
+                   <form  method="get" name="searchForm" class="content_wrap">
+			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
             <div class="titleBox">
                 <h2 class="t_title">콘텐츠 조회</h2>
             </div>
-
-
-            <form class="searchWrap btnTopSrch" name="searchForm" action="/alpha/teacher">
-                <!-- 상단 검색 -->
-                <h2 class="blind">검색</h2>
-                <div class="searchBox">
-                    <fieldset>
-                        <input type="hidden" name="p" value="1">
-                        <legend>전체 검색</legend>
-                        <select title="검색 분류" name="cate" value="" class="form-group">
-                            <option value="전체">전체</option>
-                            <option value="초급">초급</option>
-                            <option value="중급">중급</option>
-                            <option value="고급">고급</option>
-                        </select>
-                        <input type="text" class="inputSrch" title="검색어를 입력해주세요." autofocus="autofocus" placeholder="검색어를 입력해주세요." name="word" value="${pageDto.cri.searchWord }" style="width:190px">
-                        <input type="submit" class="btnTopSrch btn btn-primary" value="검색">
-                    </fieldset>
-                </div>
-                <!-- // 상단 검색 -->
-            </form>
-
-
-            <div class="entry">
-                <div class="photoAtcList">
-
-${pageDto }
-
+            
+            <div class="searchWrap searchWrap_wide searchWrap_normal">
+                    <div class="searchBox searchBox-mid searchBox-center">
+                        <fieldset>
+                            <input type="hidden" name="p" value="1">
+                            <legend>전체 검색</legend>
+                            <select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }">
+                                <option value="c_name">제목</option>
+                                <option value="c_content">내용</option>
+                            </select>
+                            <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." 
+                            		name="searchWord", value="${pageDto.cri.searchWord }" />
+                            <input type="submit" class="btn btn-primary" value="검색" />
+                        </fieldset>
+                    </div>
+            </div>           
+        </form>
 총 ${totalCnt } 건
 
 	<c:set var="i" value="0" />
