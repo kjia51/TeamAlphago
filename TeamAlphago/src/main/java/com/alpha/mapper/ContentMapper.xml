@@ -31,7 +31,7 @@
 	</select>
 	
 	<insert id="addCart">
-      insert into cart(cr_no, cr_cnt, cr_regdate, cr_m_no, cr_c_no)  values (#{cr_no}, 1, now(), #{cr_m_no}, #{cr_c_no}) 
+      insert into cart(cr_no, cr_cnt, cr_regdate, cr_m_no, cr_c_no, cnt)  values (#{cr_no}, 1, now(), #{cr_m_no}, #{cr_c_no},#{cnt}) 
 	</insert>
 	
 	<select id="getCartList" resultType="com.alpha.vo.CartVO">

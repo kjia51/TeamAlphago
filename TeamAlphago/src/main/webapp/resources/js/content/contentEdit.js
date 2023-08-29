@@ -335,16 +335,64 @@ function resultList(map){
 	
 		
 }
+
+let indexAll = [];
+
+function getCart(index) {
+    // 중복 검사
+    const existingIndex = indexAll.indexOf(index);
+    
+    if (existingIndex === -1) {
+        indexAll.push(index);
+        var c_no = $('input[data-cno="'+index+'"]').val();
+        var c_name = $('input[data-cname="'+index+'"]').val();
+        var price = $('input[data-price="'+index+'"]').val();
+        var c_able =  $('input[data-cnt="'+index+'"]').val();
+        var m_id =  $('input[data-mid="'+index+'"]').val();
+    } else {
+        indexAll.splice(existingIndex, 1);
+    }
+    
+
+    let list = {
+    		c_no : c_no
+    		,c_name : c_name
+    		,price : price
+    		,c_able : c_able
+    		,m_id : m_id
+    }
+    
+    console.log('list', list);
+    
+    return list;
+
+}
 $('#cartContent').click(function () {
-	let cr_m_no = $('#m_id').val();
-	let cr_c_no = $('#c_no').val();
+	
+	var idx = -1;
+	
+	$('input:checkbox[name=chkbox]').each(function() {
+		   if(this.checked){//checked 처리된 항목의 값
+			   idx = $('input:checkbox[name=chkbox]').index(this); 		   
+			   console.log(idx);
+			   return false;
+		   }
+	});
+	
+	var list = getCart(idx);
+	console.log(list);
+	let cr_m_no = list.m_id;
+	let cr_c_no = list.c_no;
+	let cnt = list.c_able;
 
 	console.log("cr_m_no",cr_m_no)
 	console.log("cr_c_no",cr_c_no)
+	console.log("cnt",cnt)
 	//전달할 객체로 생성
 	let obj = {
 		cr_m_no : cr_m_no,
-		cr_c_no : cr_c_no
+		cr_c_no : cr_c_no,
+		cnt : cnt
 			}
 	
 	fetchPost('/alpha/cart/insert', obj, resultCart)
@@ -360,5 +408,5 @@ function resultCart(map){
 }
 
 
-	
+
     

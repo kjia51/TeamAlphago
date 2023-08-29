@@ -9,5 +9,5 @@ public class CartVO {
 	private String cr_regdate; 
 	private String cr_m_no; 
 	private String cr_c_no; 
-	
+	private int cnt;
 }
