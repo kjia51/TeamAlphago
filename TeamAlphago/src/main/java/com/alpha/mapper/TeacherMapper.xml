@@ -56,7 +56,7 @@
 		delete from subscribe where sub_no=#{sub_no}
 	</delete>
 	
-<!-- 그룹  -->
+	<!-- 그룹  -->
 	<!-- t_m_id로  가져오기 -->
 	<select id="getmyGroupList" resultType="com.alpha.vo.GrpVO">
 	select * from grp where t_m_id = #{t_m_id}
@@ -64,8 +64,8 @@
 	
 	<!-- 그룹 등록  -->
 	<insert id="insertGroups">
-	INSERT INTO grp (t_m_id, g_name, g_cnt, g_start, g_end) VALUES
-    (#{t_m_id}, #{g_name}, #{g_cnt},
+	INSERT INTO grp (g_no, sub_no, t_m_id, g_name, g_cnt, g_start, g_end) VALUES
+    (#{g_no}, #{sub_no},#{t_m_id}, #{g_name}, #{g_cnt},
     STR_TO_DATE(#{g_start}, '%Y-%m-%d'),
     DATE_ADD(STR_TO_DATE(#{g_start}, '%Y-%m-%d'), INTERVAL 90 DAY));
 	</insert>
@@ -75,7 +75,7 @@
 	select s.* , c_level, c_no, c_name
 	from subscribe s, content 
 	where s.sub_c_no = content.c_no
-	and sub_no = #{sub_id}
+	and sub_no = #{sub_no}
 	</select>
 	
 	<!-- 해당 그룹 정보 가져오기 / g_no-->
@@ -95,9 +95,10 @@
 	where grp.g_no = l.l_g_no
 	and l.l_m_id = member.m_id
 	and grp.g_no = #{g_no}
+    and l_checkyn = 'Y';
 	</select>
 	
-		<!-- c_id로 콘텐츠 상세 내용 갯수-->
+	<!-- c_id로 콘텐츠 상세 내용 갯수-->
 	<select id="getContentCnt" resultType="int">
 	select count(*) from content c
 	left join 
@@ -115,5 +116,38 @@
       on c.c_no=s.c_no where s.c_no=#{c_no}
 	</select>
 	
+	<!-- 그룹에서 멤버 내보내기 -->
+	<delete id="deleteGroupLearner">
+		delete from learner where l_no=#{l_no}
+	</delete>
+	
+	<!-- 해당 그룹 신청자 정보 가져오기 / g_no -->
+	<select id="JoinGroupLearner" resultType="com.alpha.vo.LearnerVO">
+	SELECT l.*, member.m_name 
+	FROM learner l, grp, member
+	where grp.g_no = l.l_g_no
+	and l.l_m_id = member.m_id
+	and grp.g_no = #{g_no}
+    and l_checkyn = 'N'
+	</select>
+	
+	<update id="updateGroupLearner">
+	update learner set l_checkyn= 'Y'
+	where l_no=#{l_no}
+	</update>
+	
+	<!-- 나의 구독내역 리스트 / 그룹이 연결되지 않음 -->
+	<select id="subContent" resultType="com.alpha.vo.SubscribeVO">
+	select s.* , c_name
+	from subscribe s, content 
+	where s.sub_c_no = content.c_no
+    and t_m_id = #{t_m_id}
+   	and sub_connection = 'N'
+	</select>
+	
+	<update id="insertGroupupdatesub">
+	update subscribe set sub_connection= 'Y'
+	where sub_no=#{sub_no}
+	</update>
 
 </mapper>

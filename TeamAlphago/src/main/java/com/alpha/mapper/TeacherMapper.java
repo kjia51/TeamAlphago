@@ -3,6 +3,7 @@ package com.alpha.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
@@ -21,10 +22,14 @@ public interface TeacherMapper {
 	public int cancelPay(String sub_id); //구독 환불&삭제
 	public List<GrpVO> getmyGroupList(String t_m_id); //그룹 조회
 	public int insertGroups(GrpVO groupVO); //그룹 등록
+	public List<SubscribeVO> subContent(String t_m_id); //패키지랑 연결되지 않은 구독 리스트
 	public SubscribeVO getSubOne(String sub_no); //선택된 패키지 구독 정보 출력
 	public GrpVO getGroupOne(String g_no); //선택된 그룹 정보 출력
 	public List<LearnerVO> getGroupLearner(String g_no); //그룹에 속한 학습자 정보 출력
-	public int updateGroupLearner(LearnerVO learnerVO); //그룹에서 학습자 탈퇴
+	public List<LearnerVO> JoinGroupLearner(String g_no); //그룹 가입 신청자 정보 출력
+	public int deleteGroupLearner(String l_no); //그룹에서 학습자 탈퇴
+	public int updateGroupLearner(String l_no); //그룹 가입 신청자 승인
+	public int insertGroupupdatesub(String sub_no); //그룹 연결 패키지 구독내역 연결여부 yn
 	public int getContentCnt(String c_no);//콘텐츠 상세리스트 갯수
 	
 }

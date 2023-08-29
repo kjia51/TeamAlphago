@@ -13,7 +13,7 @@
 <div id="container">
             <div class="wrap">
                 <div class="content_wrap">
-                
+                	<input type="text" name="n_no" value=${noticeVO.n_no }>
                     <div class="titleBox">
                         <h2 class="t_title">공지사항</h2>
                     </div>
@@ -30,7 +30,7 @@
                                 </div>
                         <c:if test="${memberVO.m_division == 3}">        
                         <div class="btnArea btnArea-right">
-                            <span class="btn btn-grayline btn-mg"><a href="https://www.kbaduk.or.kr/one/write/user/mod/275">수정</a></span>
+                            <span class="btn btn-grayline btn-mg"><a href="#" id="editBtn">수정</a></span>
                             <span class="btn btn-grayline btn-mg"><a href="javascript:;" id="delBtn" data-idx="275">삭제</a></span>
                         </div>
                         </c:if>
@@ -54,21 +54,35 @@
                 </div>
             </div>
         </div>
-        <div id="hiddenData">
-            <input type="hidden" name="bbsIdx" value="274">
-            <input type="hidden" name="board" value="user">
-        </div>
         <script type="text/javascript">
-                $('#delBtn').on('click', function() {
-                    fs.ajax({
-                        msg: '삭제 하시겠습니까?',
-                        action: '/one/del/user/' + $(this).data('idx'),
-                        success: function(data) {
-                            history.back(-1);
-                        }
-                    });
-                    return false;
+        
+        localStorage.setItem('n_title', "${noticeVO.n_title}");
+        localStorage.setItem('n_content', "${noticeVO.n_content}");
+        
+        $('#delBtn').on('click', function() {
+            var n_no = $('input[name="n_no"]').val(); // 삭제할 항목의 n_no
+
+            $.ajax({
+                type: "DELETE", // HTTP DELETE 요청
+                url: '/alpha/notice/delete/' + n_no, // 요청할 URL
+                success: function(data) {
+                    // 성공 처리
+                    alert('공지사항이 삭제되었습니다.');
+                    // 삭제 후 목록 페이지로 이동
+                    location.href = "/alpha/notice";
+                },
+                error: function() {
+                    // 에러 처리
+                    alert("공지사항 삭제 중 오류가 발생했습니다.");
+                }
+            });
+            return false;
+        });
+                
+                $('#editBtn').on('click', function(){
+                    location.href = "/alpha/notice/edit?n_no=${noticeVO.n_no}";
                 });
+
         </script>
 
 <%@ include file="../common/footer.jsp" %>

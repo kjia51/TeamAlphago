@@ -36,7 +36,7 @@
                     </div>
                 <c:if test="${memberVO.m_division == 3}">
                 <div class="btnArea topbtnWrap">
-                    <span class="btn btn-point btn-mg"><button type="button" id="addBtn" data-route="">글쓰기</button></span>
+                    <span class="btn btn-point btn-mg"><button type="button" id="addBtn">글쓰기</button></span>
                 </div>
                 </c:if>
             </div>
@@ -100,22 +100,11 @@ function go(page){
 	document.searchForm.submit();
 }
 
-/*
-function($, DEFAULT, dialogs){
-        $('#addBtn').on('click', function(){
-            var route = this.getAttribute('data-route');
-            if ( ! route) {
-                dialogs.confirm('로그인 후 이용 가능합니다.<br/>확인을 선택하시면 로그인 페이지로 이동합니다.', function(b){
-                        if ( b ) {
-                            location.href = DEFAULT.URL + 'member/signin/';
-                        }
-                });
-                return;
-            }
-            location.href = route;
-        });
-};
-*/
+
+$('#addBtn').on('click', function(){
+    location.href = "/alpha/notice/write";
+});
+
 </script>
 
 <%@ include file="../common/footer.jsp" %>

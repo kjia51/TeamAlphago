@@ -17,4 +17,10 @@ public interface NoticeService {
 	
 	public NoticeVO getNoticeOne(String n_no, Model model);
 	
+	public int insertNotice(NoticeVO noticeVO);
+	
+	public int editNotice(NoticeVO noticeVO);
+	
+	public int deleteNotice(String n_no);
+	
 }

@@ -15,13 +15,23 @@
 		<include refid="criteria"></include>
 	</select>
 	
-	
-		
 	<select id="getNoticeOne" resultType="com.alpha.vo.NoticeVO">
 		select * from notice where n_no=#{n_no}
 	</select>
 	
-
+	<insert id="insertNotice">
+		INSERT INTO notice (N_NO, N_M_ID, N_TITLE, N_CONTENT, N_REGDATE)
+		VALUES (#{n_no}, #{n_m_id}, #{n_title}, #{n_content}, now())
+	</insert>
+	
+	<update id="editNotice">
+		UPDATE notice SET N_TITLE = #{n_title}, N_CONTENT = #{n_content}
+		WHERE N_NO = #{n_no}
+	</update>
+	
+	<delete id="deleteNotice">
+		DELETE FROM notice WHERE N_NO = #{n_no}
+	</delete>
 
 	<sql id="criteria">
 		<choose>

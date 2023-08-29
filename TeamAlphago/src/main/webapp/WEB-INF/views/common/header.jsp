@@ -83,7 +83,7 @@
                             <h3 class="blind">협회소개</h3>
                             <ul>
                                 <li><a href="https://www.kbaduk.or.kr/introduce/greeting/"> 사이트 소개 </a></li>
-                                <li><a href="https://www.kbaduk.or.kr/introduce/history/"> 이용가이드 </a></li>
+                                <li><a href="/alpha/guide"> 이용가이드 </a></li>
                             </ul>
                         </div>
                         <div class="gnb_sub gnb_sub_2">

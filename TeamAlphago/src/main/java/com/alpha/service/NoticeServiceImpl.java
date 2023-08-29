@@ -47,4 +47,20 @@ public class NoticeServiceImpl implements NoticeService {
 		return null;
 	}
 
+	@Override
+	public int insertNotice(NoticeVO noticeVO) {
+		return noticeMapper.insertNotice(noticeVO);
+	}
+
+	@Override
+	public int editNotice(NoticeVO noticeVO) {
+		
+		return noticeMapper.editNotice(noticeVO);
+	}
+
+	@Override
+	public int deleteNotice(String n_no) {
+		return noticeMapper.deleteNotice(n_no);
+	}
+
 }

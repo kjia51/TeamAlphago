@@ -34,6 +34,8 @@ public class LearnerVO {
 	private String m_name;
 	private String l_g_no;
 	private String l_no;
+	private String l_register;
+	private String l_checkyn;
 	   
 	
 	
