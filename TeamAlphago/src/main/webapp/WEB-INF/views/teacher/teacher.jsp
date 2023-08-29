@@ -85,15 +85,16 @@ ${pageDto }
 	
 <c:choose>
 <c:when test="${contentList != null && fn:length(contentList) > 0 }">
+                    <ul class="pList">
 	  <c:forEach  var="con" items="${contentList }" varStatus="status">
 
 	  			<input type="hidden" class="index" id="c_level" data-clevel="${status.index}" value="${con.c_level }"readonly>
 			<input type="hidden" class="index" id="c_no" data-cid="${status.index}" value="${con.c_no }"readonly>
 	  
 	    <c:if test="${i%j == 0 }">
-                    <ul class="pList">
                          </c:if>
                          <li>
+                         	
                             <a href="https://www.kbaduk.or.kr/bbs/view/thum/photo/95/" class="img">
                                 <img src="https://www.kbaduk.or.kr/storage/mis/2023_03/06/b78e96e66dffc3d12d10e49db1563282.jpg" alt="">
                                 <span class="text"><em>${status.index}</em></span>
@@ -104,10 +105,9 @@ ${pageDto }
                             </p>
                        </li>
   	    <c:if test="${i%j == j-1 }">
-                    </ul>
                        	    </c:if>
-     <c:set var="i" value="${i+1 }" />
 	  </c:forEach>
+                    </ul>
 	     </c:when>
   <c:otherwise>
     <li>존재하지 않습니다.</li>

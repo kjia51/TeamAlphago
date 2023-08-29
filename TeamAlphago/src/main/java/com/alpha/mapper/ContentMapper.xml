@@ -31,4 +31,8 @@
 	<select id="salesContent" resultType="com.alpha.vo.ContentVO">
 	select DATE_FORMAT(sub_date,'%Y-%m-%d') sub_date, sub_price from subscribe group by  DATE_FORMAT(sub_date,'%Y-%m-%d')
 	</select>
+	
+	<insert id="addCart">
+      	insert into cart(cr_no, cr_cnt, cr_regdate, cr_m_no, cr_c_no)  values (#{cr_no}, 1, now(), #{cr_m_no} , #{cr_c_no})
+	</insert>
 </mapper>

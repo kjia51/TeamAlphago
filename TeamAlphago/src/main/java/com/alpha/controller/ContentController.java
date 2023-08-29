@@ -3,6 +3,8 @@ package com.alpha.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.service.ContentService;
 import com.alpha.vo.ContentVO;
+import com.alpha.vo.MemberVO;
 
 @RestController
 @RequestMapping("/alpha/*")
@@ -116,6 +119,24 @@ public class ContentController extends CommonRestController {
 				   e.printStackTrace();
 				   return responseMap(REST_FAIL, "삭제 중 오류 발생");
 			   }
+		   }
+		   
+		   //장바구니 담기
+		   @PostMapping("/cart/insert")
+		   public Map<String, Object> cartList(@PathVariable("c_no") String c_no, HttpSession session ) {
+		      System.out.println("===================================================================================================================================");
+				try {
+					MemberVO member = (MemberVO) session.getAttribute("member");
+					System.out.println(member.getM_id());
+					
+					int res = contentService.addCart(member.getM_id(), c_no);
+					Map<String, Object> map = responseWriteMap(res);
+					return map;
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					return responseMap(REST_FAIL, "등록 중 오류 발생");
+				}
 		   }
 		
 
