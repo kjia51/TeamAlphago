@@ -86,7 +86,7 @@
 		<ul>
 			<button><a class="" onclick="">그룹 정보</a></button>
 			<button><a class="" onclick="groupMemList()">그룹 멤버 관리</a></button>
-	   		<button><a class="" onclick="">그룹 신청 승인</a></button>
+	   		<button><a class="" onclick="joinGroup()">그룹 신청 승인</a></button>
 
 		</ul>
 	</nav>
@@ -312,41 +312,36 @@ function groupMemList(g_no) {
 
 }
 
-function Groupupdate(index) {
+function delMember(index) {
     var l_no = $('input[data-l_no="'+index+'"]').val();
-    var l_g_no = $('input[data-l_g_no="'+index+'"]').val();
-    var g_no = $('#g_no').val();
     console.log("Index:", index);
     console.log("l_no:", l_no);
-    console.log('gno: ', g_no);
-    console.log('lgno: ', l_g_no);
-    
-    let obj = {
-    		l_no : l_no
-			,  l_g_no : l_g_no
-			,  g_no : g_no
-			}
-	
-	fetchPut('/alpha/group/getGroupOne/UpdateAction/'+l_g_no, obj, result);
+
+	var g_no = $('#g_no').val();
+	console.log(g_no);
+
+	//삭제 성공 시 MemberList 리로드
+    fetchDelete('/alpha/group/getGroupOne/delAction/'+l_no, function(data) {
+        result(data);
+        fetchGet('/alpha/group/getGroupOne/list/'+g_no, MemberList);
+    });
+
 }
     	 
 function MemberList(list){
-	
-	var g_no = $('#g_no').val();
-	console.log('gno'+g_no);
-	
+
+	main.innerHTML = '';
+
     var tableHTML = '<table class="table table-bordered">';
     tableHTML += '<thead><tr><th>학생ID</th><th>이름</th><th></th></tr></thead>';
     tableHTML += '<tbody>';
 
     list.forEach(function(member, index) {
         tableHTML += '<tr>';
-        tableHTML += '<input type="text" value="'+ g_no +'" readonly>'
-        tableHTML += '<td>' + '<input type="text" data-l_g_no="'+index+'" value="'+ member.l_g_no +'" readonly>' + '</td>';
         tableHTML +='<input type="hidden" id="index" value="'+ index +'" readonly>'
         tableHTML += '<td>' + '<input type="text" data-l_no="'+index+'" value="'+ member.l_no +'" readonly>' + '</td>';
         tableHTML += '<td>' + '<input type="text" value="'+ member.m_name +'" readonly>' + '</td>';
-        tableHTML += '<td>' + '<button onclick="Groupupdate(' + index + ')">내보내기</button>' + '</td>';
+        tableHTML += '<td>' + '<button onclick="delMember(' + index + ')">내보내기</button>' + '</td>';
         tableHTML += '</tr>';
     });
 
@@ -355,6 +350,69 @@ function MemberList(list){
     main.innerHTML += tableHTML; // main 요소에 테이블 추가
 }
     	       	    
+//DELETE 방식 요청
+function fetchDelete(url, callback) {
+    console.log(url);
+    console.log(callback);
+
+    try {
+        // URL 요청
+        fetch(url, {
+            method: "DELETE"
+        })
+        // 요청 결과 JSON 문자열을 JavaScript 객체로 반환
+        .then(response => response.json())
+        // 매개로 받은 콜백 함수 실행
+        .then(data => callback(data));
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+//컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
+function result(map){
+	console.log(map);
+	if(map.result == 'success'){
+		alert(map.msg);
+	} else {
+		alert(map.msg);
+	}
+		
+}
+////////////////////그룹 가입 승인 관리
+function joinGroup() {
+	var g_no = $('#g_no').val();
+	console.log(g_no);
+	main.innerHTML = '';
+
+	fetchGet('/alpha/group/getJoin/list/'+g_no, JoinList);
+}
+
+function JoinList(list){
+
+	main.innerHTML = '';
+
+    var tableHTML = '<table class="table table-bordered">';
+    tableHTML += '<thead><tr><th>학생ID</th><th>이름</th><th>신청일자</th><th></th><th></th></tr></thead>';
+    tableHTML += '<tbody>';
+
+    list.forEach(function(member, index) {
+        tableHTML += '<tr>';
+        tableHTML +='<input type="hidden" id="index" value="'+ index +'" readonly>'
+        tableHTML += '<td>' + '<input type="text" data-l_no="'+index+'" value="'+ member.l_no +'" readonly>' + '</td>';
+        tableHTML += '<td>' + '<input type="text" value="'+ member.m_name +'" readonly>' + '</td>';
+        tableHTML += '<td>' + '<input type="text" value="'+ member.l_register +'" readonly>' + '</td>';
+        tableHTML += '<input type="text" id="l_checkyn" data-l_checkyn="'+index+'" value="'+ member.l_checkyn +'" readonly>'
+        tableHTML += '<td>' + '<button onclick="JoinMember(' + index + ')">승인 | </button>';
+        tableHTML += '<button onclick="RefuserMember(' + index + ')"> 거절</button>' + '</td>';
+        tableHTML += '</tr>';
+    });
+
+    tableHTML += '</tbody></table>';
+
+    main.innerHTML += tableHTML; // main 요소에 테이블 추가
+}
+
 //put방식 요청
 function fetchPut(url,obj,callback){
 	console.log(url);
@@ -375,19 +433,53 @@ function fetchPut(url,obj,callback){
 		console.log(e);
 		
 	}
+	
 }
 
-//컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
-function result(map){
-	console.log(map);
-	if(map.result == 'success'){
-		alert(map.msg);
-	} else {
-		alert(map.msg);
-	}
-		
+function JoinMember(index) { //가입 승인
+    var l_no = $('input[data-l_no="'+index+'"]').val();
+    console.log("Index:", index);
+    console.log("l_no:", l_no);
+
+	var g_no = $('#g_no').val();
+	console.log(g_no);
+	
+	let l_checkyn = $('#l_checkyn').val();
+	console.log(l_checkyn);
+
+		  
+
+	//전달할 객체로 생성
+	let obj = {
+			l_no : l_no
+	};
+	
+	console.log(obj);
+
+
+	//업데이트 성공 시 MemberList 리로드
+    fetchPut('/alpha/group/getGroupOne/updateAction/'+l_no, obj, function(data) {
+        result(data);
+        fetchGet('/alpha/group/getJoin/list/'+g_no, JoinList);
+    });
+
 }
 
+function RefuserMember(index) { //가입 거절
+    var l_no = $('input[data-l_no="'+index+'"]').val();
+    console.log("Index:", index);
+    console.log("l_no:", l_no);
+
+	var g_no = $('#g_no').val();
+	console.log(g_no);
+
+	//삭제 성공 시 MemberList 리로드
+    fetchDelete('/alpha/group/getGroupOne/delAction/'+l_no, function(data) {
+        result(data);
+        fetchGet('/alpha/group/getJoin/list/'+g_no, JoinList);
+    });
+
+}
 
 </script>
 

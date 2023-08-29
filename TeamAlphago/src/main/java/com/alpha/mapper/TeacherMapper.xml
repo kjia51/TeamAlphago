@@ -95,6 +95,7 @@
 	where grp.g_no = l.l_g_no
 	and l.l_m_id = member.m_id
 	and grp.g_no = #{g_no}
+    and l_checkyn = 'Y';
 	</select>
 	
 	<!-- c_id로 콘텐츠 상세 내용 갯수-->
@@ -115,11 +116,24 @@
       on c.c_no=s.c_no where s.c_no=#{c_no}
 	</select>
 	
-	<!-- 그룹에서 멤버 내보내기 / 멤버 그룹아이디 null 처리 -->
+	<!-- 그룹에서 멤버 내보내기 -->
+	<delete id="deleteGroupLearner">
+		delete from learner where l_no=#{l_no}
+	</delete>
+	
+	<!-- 해당 그룹 신청자 정보 가져오기 / g_no -->
+	<select id="JoinGroupLearner" resultType="com.alpha.vo.LearnerVO">
+	SELECT l.*, member.m_name 
+	FROM learner l, grp, member
+	where grp.g_no = l.l_g_no
+	and l.l_m_id = member.m_id
+	and grp.g_no = #{g_no}
+    and l_checkyn = 'N'
+	</select>
+	
 	<update id="updateGroupLearner">
-	UPDATE learner
-	SET l_g_no = 'none'
-	WHERE l_no = #{l_no} AND #{l_g_no} IN (SELECT #{g_no} FROM grp);
+	update learner set l_checkyn= 'Y'
+	where l_no=#{l_no}
 	</update>
 
 </mapper>

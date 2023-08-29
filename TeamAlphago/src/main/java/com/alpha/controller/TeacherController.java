@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -212,7 +213,7 @@ public class TeacherController extends CommonRestController {
 	   }
 	   
 	   @GetMapping("/group/getGroupOne/list/{g_no}") //그룹의 학습자 정보 가져오기
-	   public List<LearnerVO> GetGroupLearner(@PathVariable("g_no") String g_no, Model model) {
+	   public List<LearnerVO> GetGroupLearner(@PathVariable("g_no") String g_no) {
 		   
 		   System.out.println("==============");
 		   System.out.println(g_no);
@@ -223,17 +224,28 @@ public class TeacherController extends CommonRestController {
 
 	   }
 	   
-	   @PutMapping("/group/getGroupOne/UpdateAction/{l_g_no}")  //그룹의 학습자 정보 삭제(탈퇴하기) -- 테이블에서 l_g_no = null처리
-		public Map<String, Object> Groupupdate(@RequestBody LearnerVO learnerVO ) {
+	   @GetMapping("/group/getJoin/list/{g_no}") //그룹의 학습자 정보 가져오기
+	   public List<LearnerVO> JoinGrouplist(@PathVariable("g_no") String g_no) {
+		   
+		   System.out.println("==============");
+		   System.out.println(g_no);
 
-		   System.out.println("update==============");
-		   System.out.println(learnerVO);
+				List<LearnerVO> list = service.JoinGroupLearner(g_no);
+				System.out.println(list);
+				return list;
+
+	   }
+
+	   @DeleteMapping("/group/getGroupOne/delAction/{l_no}")  //그룹의 학습자 정보 삭제(내보내기)
+		public Map<String, Object> Groupupdate(@PathVariable("l_no") String l_no) {
+
+		   System.out.println("delete==============");
+		   System.out.println(l_no);
 
 		   
 			try {
-				int res =  service.updateGroupLearner(learnerVO);
+				int res =  service.deleteGroupLearner(l_no);
 				Map<String, Object> map = responseEditMap(res);
-				System.out.println("map==============="+map);
 				return map;
 
 			} catch (Exception e) {
@@ -241,6 +253,25 @@ public class TeacherController extends CommonRestController {
 				return responseMap(REST_FAIL, "삭제 중 오류 발생");
 			}
 		}
+	   
+	   @PutMapping("/group/getGroupOne/updateAction/{l_no}")  //그룹의 학습자 정보 삭제(내보내기)
+		public Map<String, Object> JoinGroup(@PathVariable("l_no") String l_no) {
+
+		   System.out.println("update==============");
+		   System.out.println(l_no);
+
+		   
+			try {
+				int res =  service.updateGroupLearner(l_no);
+				Map<String, Object> map = responseEditMap(res);
+				return map;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "삭제 중 오류 발생");
+			}
+		}
+
 
 
 }

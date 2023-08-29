@@ -80,14 +80,23 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public int updateGroupLearner(LearnerVO learnerVO) {
-		return mapper.updateGroupLearner(learnerVO);
+	public int getContentCnt(String c_no) {
+		return mapper.getContentCnt(c_no);
 	}
 
 	@Override
-	public int getContentCnt(String c_no) {
-		// TODO Auto-generated method stub
-		return mapper.getContentCnt(c_no);
+	public int deleteGroupLearner(String l_no) {
+		return mapper.deleteGroupLearner(l_no);
+	}
+
+	@Override
+	public List<LearnerVO> JoinGroupLearner(String g_no) {
+		return mapper.JoinGroupLearner(g_no);
+	}
+
+	@Override
+	public int updateGroupLearner(String l_no) {
+		return mapper.updateGroupLearner(l_no);
 	}
 
 	
