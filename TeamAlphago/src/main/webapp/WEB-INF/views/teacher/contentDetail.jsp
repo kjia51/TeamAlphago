@@ -168,10 +168,18 @@ padding: 0 20px;
 														</div>
 													<div class="thumb-row m-list-type3 hover_none thumb-item-5 _item_wrap " id="container_w202107135a7c3f268ba63" style="visibility: visible; margin: 0px -10px;">
 										<div class="shop-item _shop_item" style=" padding: 0px 10px; height: auto; display: flex; flex-wrap: wrap;">
-					<c:forEach items="${contentList}" var="con">
+					<c:forEach items="${contentList}" var="con"  varStatus="status">
+					
+					<%--결제에 필요한 값 가져오기 --%>
+					<input type="text" id="c_no" value="${con.c_no }">
+					<input type="text" id="c_name" value="${con.c_name }">
+					<input type="text" class="index" id="c_sellpice" data-price="${status.index}" value="${con.c_sellprice }">
+					<input type="text" class="index" id="cnt" data-cnt="${status.index}" value="${con.c_able }">
+					
+					
 					<div class="item-wrap" style="position: relative; padding:18px">
 			            	<input type="text" id="c_no" value=" ${con.c_no }">
-			            	<input type="checkbox" style="display:block; margin-bottom:10px" id="chk">
+			            	<input type="checkbox" name="chkbox" style="display:block; margin-bottom:10px" id="chk">
 						<a href="/24/?idx=63" class="_fade_link shop-item-thumb hover_img_none">
 							<img data-prodcode="s2023081114659ed573520" alt="" src="https://cdn.imweb.me/thumbnail/20210713/a40bef34a9fba.png" class="_org_img org_img _lazy_img" data-original="" data-src="" style="display: inline; width:200px;height:200px;">
 						</a>
@@ -181,7 +189,7 @@ padding: 0 20px;
 					<div class="item-detail">
 									<div class="item-pay" style="display:block">
 			                				<h2 style="display: ">
-								<a class="_fade_link" href="/23/?idx=1">입문반 - 정원 ${con.c_able }명</a>
+								<a class="_fade_link" href="#" onclick="getContent(${status.index})">입문반 - 정원 ${con.c_able }명</a>
 							</h2>
 							<div class="item-pay-detail" style="font-size:1.3em; display:inline">
 							 <c:if test="${con.c_able>30}">

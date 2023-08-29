@@ -50,7 +50,7 @@
 	where s.sub_c_no = content.c_no
     and t_m_id = #{t_m_id}
     <include refid="criteria"></include>		
-		ORDER BY SUB_NO DESC LIMIT #{startNo}, #{endNo}
+		ORDER BY c_no DESC LIMIT #{startNo}, #{endNo}
 	</select>
 		
 	<!-- 취소 시 환불&구독내역에서 삭제 -->
