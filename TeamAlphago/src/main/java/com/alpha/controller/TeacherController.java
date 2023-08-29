@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.service.TeacherService;
+import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
 import com.alpha.vo.GrpVO;
 import com.alpha.vo.LearnerVO;
@@ -223,11 +224,16 @@ public class TeacherController extends CommonRestController {
 	   }
 	   
 	   @PutMapping("/group/getGroupOne/UpdateAction/{l_g_no}")  //그룹의 학습자 정보 삭제(탈퇴하기) -- 테이블에서 l_g_no = null처리
-		public Map<String, Object> Groupupdate(@RequestBody LearnerVO learnerVO) {
+		public Map<String, Object> Groupupdate(@RequestBody LearnerVO learnerVO ) {
 
+		   System.out.println("update==============");
+		   System.out.println(learnerVO);
+
+		   
 			try {
-				int res = service.updateGroupLearner(learnerVO);
+				int res =  service.updateGroupLearner(learnerVO);
 				Map<String, Object> map = responseEditMap(res);
+				System.out.println("map==============="+map);
 				return map;
 
 			} catch (Exception e) {
@@ -235,6 +241,6 @@ public class TeacherController extends CommonRestController {
 				return responseMap(REST_FAIL, "삭제 중 오류 발생");
 			}
 		}
-	   
+
 
 }

@@ -97,7 +97,7 @@
 	and grp.g_no = #{g_no}
 	</select>
 	
-		<!-- c_id로 콘텐츠 상세 내용 갯수-->
+	<!-- c_id로 콘텐츠 상세 내용 갯수-->
 	<select id="getContentCnt" resultType="int">
 	select count(*) from content c
 	left join 
@@ -115,5 +115,11 @@
       on c.c_no=s.c_no where s.c_no=#{c_no}
 	</select>
 	
+	<!-- 그룹에서 멤버 내보내기 / 멤버 그룹아이디 null 처리 -->
+	<update id="updateGroupLearner">
+	UPDATE learner
+	SET l_g_no = 'none'
+	WHERE l_no = #{l_no} AND #{l_g_no} IN (SELECT #{g_no} FROM grp);
+	</update>
 
 </mapper>

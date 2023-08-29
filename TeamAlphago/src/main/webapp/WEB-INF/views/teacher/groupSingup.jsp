@@ -314,20 +314,36 @@ function groupMemList(g_no) {
 
 function Groupupdate(index) {
     var l_no = $('input[data-l_no="'+index+'"]').val();
+    var l_g_no = $('input[data-l_g_no="'+index+'"]').val();
+    var g_no = $('#g_no').val();
     console.log("Index:", index);
     console.log("l_no:", l_no);
+    console.log('gno: ', g_no);
+    console.log('lgno: ', l_g_no);
+    
+    let obj = {
+    		l_no : l_no
+			,  l_g_no : l_g_no
+			,  g_no : g_no
+			}
+	
+	fetchPut('/alpha/group/getGroupOne/UpdateAction/'+l_g_no, obj, result);
 }
     	 
 function MemberList(list){
 	
+	var g_no = $('#g_no').val();
+	console.log('gno'+g_no);
+	
     var tableHTML = '<table class="table table-bordered">';
-    tableHTML += '<thead><tr><th></th><th>학생ID</th><th>이름</th><th>탈퇴</th></tr></thead>';
+    tableHTML += '<thead><tr><th>학생ID</th><th>이름</th><th></th></tr></thead>';
     tableHTML += '<tbody>';
 
     list.forEach(function(member, index) {
         tableHTML += '<tr>';
-        tableHTML += '<td>' + '<input type="hidden" value="'+ member.l_g_no +'" readonly>' + '</td>';
-        tableHTML += '<td>' + '<input type="text" id="index" value="'+ index +'" readonly>' + '</td>';
+        tableHTML += '<input type="text" value="'+ g_no +'" readonly>'
+        tableHTML += '<td>' + '<input type="text" data-l_g_no="'+index+'" value="'+ member.l_g_no +'" readonly>' + '</td>';
+        tableHTML +='<input type="hidden" id="index" value="'+ index +'" readonly>'
         tableHTML += '<td>' + '<input type="text" data-l_no="'+index+'" value="'+ member.l_no +'" readonly>' + '</td>';
         tableHTML += '<td>' + '<input type="text" value="'+ member.m_name +'" readonly>' + '</td>';
         tableHTML += '<td>' + '<button onclick="Groupupdate(' + index + ')">내보내기</button>' + '</td>';
