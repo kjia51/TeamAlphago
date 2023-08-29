@@ -14,6 +14,6 @@ public interface LearnerService {
 
 
 	// 그룹 정보 리스트
-	//public List<LearnerVO> groupInfo();
+	public List<LearnerVO> groupInfo(String g_name);
 
 }

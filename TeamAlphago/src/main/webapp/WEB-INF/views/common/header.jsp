@@ -105,7 +105,7 @@
                             <h3 class="blind">바둑정보</h3>
                             <ul>
                                 <li><a href="/alpha/group?t_m_id=${memberVO.m_id }"> 학습 그룹 등록 </a></li>
-                                <li><a href="https://www.kbaduk.or.kr/baduk/academy/"> 그룹 가입 승인 </a></li> </ul>
+                                <li><a href="/alpha/groupSingup?t_m_id=${memberVO.m_id }"> 그룹 가입 승인 </a></li> </ul>
                                 <li><a href="https://www.kbaduk.or.kr/baduk/rule/"> 숙제 전송 </a></li>
                                 <li><a href="https://www.kbaduk.or.kr/baduk/academy/"> 숙제 평가 </a></li> </ul>
                         </div>

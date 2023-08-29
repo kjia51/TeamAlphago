@@ -19,7 +19,22 @@
 	
 	<!-- c_id로 콘텐츠 상세 내용 가져오기 -->
 	<select id="getContentDetail" resultType="com.alpha.vo.ContentVO">
-	select * from content where c_no = #{c_no}
+	 <![CDATA[
+	select s.c_no, s.c_able, c_name, c_level, if(s.c_able-30<=0,0,s.c_able-30) c_discount, c_price, c_price*(1-(if(s.c_able-30<=0,0,s.c_able-30)/100)) c_sellprice from content c
+	]]>
+	left join 
+	(select
+   c_no, SUBSTRING_INDEX (SUBSTRING_INDEX(content.c_able,',',numbers.n),',',-1) c_able
+	from 
+   (select  1 n union  all  select 2  
+    union  all  select  3  union  all select 4 
+    union  all  select  5  union  all  select  6
+    union  all  select  7  union  all  select  8 
+    union  all  select  9 union  all  select  10) numbers INNER  JOIN content
+    on CHAR_LENGTH ( content.c_able ) 
+      - CHAR_LENGTH ( 
+      REPLACE ( content.c_able ,  ',' ,  '' ))>= numbers . n-1) s
+      on c.c_no=s.c_no where s.c_no=#{c_no} order by s.c_able
 	</select>
 	
 	<!-- 결제 시 구독내역에 인서트 -->
@@ -57,10 +72,68 @@
 	
 	<!-- 해당 구독 정보 가져오기 / sub_id-->
 	<select id="getSubOne"  resultType="com.alpha.vo.SubscribeVO">
-		select s.* , c_level, c_no, c_name
+	select s.* , c_level, c_no, c_name
 	from subscribe s, content 
 	where s.sub_c_no = content.c_no
 	and sub_no = #{sub_id}
 	</select>
+	
+	<!-- 해당 그룹 정보 가져오기 / g_no-->
+	<select id="getGroupOne"  resultType="com.alpha.vo.GrpVO">
+	select g.*, member.m_name, content.c_name, content.c_level
+	from grp g, subscribe, member, content
+	where g.sub_no = subscribe.sub_no
+	and subscribe.sub_c_no = content.c_no
+	and g.t_m_id = member.m_id
+	and g_no = #{g_no}
+	</select>
+	
+	<!-- 해당 그룹의 학습자 정보 가져오기 / g_no -->
+	<select id="getGroupLearner" resultType="com.alpha.vo.LearnerVO">
+	SELECT l.*, member.m_name 
+	FROM learner l, grp, member
+	where grp.g_no = l.l_g_no
+	and l.l_m_id = member.m_id
+	and grp.g_no = #{g_no}
+    and l_checkyn = 'Y';
+	</select>
+	
+	<!-- c_id로 콘텐츠 상세 내용 갯수-->
+	<select id="getContentCnt" resultType="int">
+	select count(*) from content c
+	left join 
+	(select
+	   c_no, SUBSTRING_INDEX (SUBSTRING_INDEX(content.c_able,',',numbers.n),',',-1) c_able
+		from 
+	   (select  1 n union  all  select 2  
+	    union  all  select  3  union  all select 4 
+	    union  all  select  5  union  all  select  6
+	    union  all  select  7  union  all  select  8 
+	    union  all  select  9 union  all  select  10) numbers INNER  JOIN content
+	    on CHAR_LENGTH ( content.c_able ) 
+      - CHAR_LENGTH ( 
+      REPLACE ( content.c_able ,  ',' ,  '' ))>= numbers . n-1) s
+      on c.c_no=s.c_no where s.c_no=#{c_no}
+	</select>
+	
+	<!-- 그룹에서 멤버 내보내기 -->
+	<delete id="deleteGroupLearner">
+		delete from learner where l_no=#{l_no}
+	</delete>
+	
+	<!-- 해당 그룹 신청자 정보 가져오기 / g_no -->
+	<select id="JoinGroupLearner" resultType="com.alpha.vo.LearnerVO">
+	SELECT l.*, member.m_name 
+	FROM learner l, grp, member
+	where grp.g_no = l.l_g_no
+	and l.l_m_id = member.m_id
+	and grp.g_no = #{g_no}
+    and l_checkyn = 'N'
+	</select>
+	
+	<update id="updateGroupLearner">
+	update learner set l_checkyn= 'Y'
+	where l_no=#{l_no}
+	</update>
 
 </mapper>

@@ -44,7 +44,6 @@
 
 <div class="main-box">
 <input id="m_id" type="text" value="${memberVO.m_id }">
-<button id="popup_open_btn">그룹 생성</button>
 
 <div id="container">
     <div class="wrap">
@@ -88,6 +87,7 @@
 
 
 
+<button id="popup_open_btn">그룹 생성</button>
 
 <%-- 모달창 --%>
 <div id="my_modal">
@@ -127,6 +127,7 @@
 			<thead>
     			<tr>
 			        <th>그룹ID</th>
+			        <th>그룹이름</th>
 			        <th>그룹인원</th> <%--수강가능인원/현재수강인원 --%>
 			        <th>학습가능일</th> <%-- 구독일 ~구독일+90 --%>
 			        <th>그룹관리</th> <%-- 그룹삭제 / 학생관리 / 숙제관리 --%>
@@ -140,6 +141,7 @@
 						<tr>
                    
                             <th align="left" class="row"> <a href="https://www.kbaduk.or.kr/bbs/view/competition/domestic/864/">${group.g_no }</a> </th>
+                            <td align="center"> <input type="text" class="index" id="g_name" data-sub_price="${status.index}" value="${group.g_name }"readonly></td>
                             <td align="center"> <input type="text" class="index" id="sub_price" data-sub_price="${status.index}" value="${group.g_cnt }"readonly></td>
                             <td align="center">${group.g_start } ~ ${group.g_end }</td>
                             <td align="center"><button>그룹관리</button></td>
@@ -281,6 +283,7 @@ $("#conSelect").change(function(){
     console.log(sub_no);
 	main.innerHTML = '';
 	fetchGet('/alpha/group/getSubOne/'+sub_no, resultList)
+	
 
 })
 

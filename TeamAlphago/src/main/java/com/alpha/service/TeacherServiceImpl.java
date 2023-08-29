@@ -9,6 +9,7 @@ import com.alpha.mapper.TeacherMapper;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
 import com.alpha.vo.GrpVO;
+import com.alpha.vo.LearnerVO;
 import com.alpha.vo.SubscribeVO;
 
 @Service
@@ -52,6 +53,9 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public List<GrpVO> getmyGroupList(String t_m_id) {
+		System.out.println("qqqqqqqqqqqqqqq");
+		System.out.println(t_m_id);
+		System.out.println(mapper.getmyGroupList(t_m_id));
 		return mapper.getmyGroupList(t_m_id);
 	}
 
@@ -63,6 +67,36 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public SubscribeVO getSubOne(String sub_no) {
 		return mapper.getSubOne(sub_no);
+	}
+
+	@Override
+	public GrpVO getGroupOne(String g_no) {
+		return mapper.getGroupOne(g_no);
+	}
+
+	@Override
+	public List<LearnerVO> getGroupLearner(String g_no) {
+		return mapper.getGroupLearner(g_no);
+	}
+
+	@Override
+	public int getContentCnt(String c_no) {
+		return mapper.getContentCnt(c_no);
+	}
+
+	@Override
+	public int deleteGroupLearner(String l_no) {
+		return mapper.deleteGroupLearner(l_no);
+	}
+
+	@Override
+	public List<LearnerVO> JoinGroupLearner(String g_no) {
+		return mapper.JoinGroupLearner(g_no);
+	}
+
+	@Override
+	public int updateGroupLearner(String l_no) {
+		return mapper.updateGroupLearner(l_no);
 	}
 
 	

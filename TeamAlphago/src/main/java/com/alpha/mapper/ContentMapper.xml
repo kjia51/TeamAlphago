@@ -8,7 +8,9 @@
 
 	<insert id="insertContent">
 	insert into content(c_no, c_name, c_level, c_able, c_price, c_content)  values 
-	(#{c_no},#{c_name},#{c_level},#{c_able},#{c_price},#{c_content} )
+	(#{c_no},#{c_name},#{c_level},
+		#{c_able}
+	,#{c_price},#{c_content} )
 	</insert>
 	
 	<select id="getContentOne" resultType="com.alpha.vo.ContentVO">
