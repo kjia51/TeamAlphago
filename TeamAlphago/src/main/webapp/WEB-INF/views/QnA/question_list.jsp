@@ -15,9 +15,8 @@
     <div class="wrap">
         <form  method="get" name="searchForm" class="content_wrap">
 			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
-            <input type="hidden" name="totalCnt" value="${totalCnt}">
             <div class="titleBox">
-                <h2 class="t_title">공지사항</h2>
+                <h2 class="t_title">Q&A</h2>
             </div>
             
             <div class="searchWrap searchWrap_wide searchWrap_normal">
@@ -25,20 +24,17 @@
                         <fieldset>
                             <legend>전체 검색</legend>
                             <select title="검색 분류" name="searchField">
-                                <option value="n_title" ${pageDto.cri.searchField == 'n_title' ? 'selected' : ''}>제목</option>
-                                <option value="n_content" ${pageDto.cri.searchField == 'n_content' ? 'selected' : ''}>내용</option>
-                                <option value="n_m_id" ${pageDto.cri.searchField == 'n_m_id' ? 'selected' : ''}>작성자</option>
+                                <option value="q_title" ${pageDto.cri.searchField == 'q_title' ? 'selected' : ''}>제목</option>
+                                <option value="q_m_id" ${pageDto.cri.searchField == 'q_m_id' ? 'selected' : ''}>작성자</option>
                             </select>
                             <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." 
                             		name="searchWord" value="${pageDto.cri.searchWord }" />
                             <input type="submit" class="btn btn-primary" value="검색" />
                         </fieldset>
                     </div>
-                <c:if test="${memberVO.m_division == 3}">
                 <div class="btnArea topbtnWrap">
-                    <span class="btn btn-point btn-mg"><button type="button" id="addBtn">글쓰기</button></span>
+                    <span class="btn btn-point btn-mg"><button type="button" id="addBtn">문의하기</button></span>
                 </div>
-                </c:if>
             </div>
 
 
@@ -65,14 +61,14 @@
                     <tbody>
                         
                         
-                        <c:forEach var="noticeVO" items="${list}">
+                        <c:forEach var="QnAVO" items="${list}">
                         <tr>
-                            <th align="center" scope="row">${noticeVO.n_no }</th>
+                            <th align="center" scope="row">${QnAVO.q_no }</th>
                             <td class="subject">
-                                <a href="/alpha/notice/view?n_no=${noticeVO.n_no }">${noticeVO.n_title }</a>
+                                <a href="/alpha/QnA/view?q_no=${QnAVO.q_no }">${QnAVO.q_title }</a>
                                                             </td>
-                            <td align="center">${noticeVO.n_m_id }</td>
-                            <td align="center">${noticeVO.n_regdate }</td>
+                            <td align="center">${QnAVO.q_m_id }</td>
+                            <td align="center">${QnAVO.q_regdate }</td>
                         </tr>
 						</c:forEach>
                         
@@ -83,7 +79,7 @@
 
                 
 				<div class="paging">
-                	<%@include file="./pageNavi_notice.jsp" %>
+                	<%@include file="./pageNavi_question.jsp" %>
 				</div>
 
         </form>
@@ -96,13 +92,13 @@
 function go(page){
 	//alert(page);
 	document.searchForm.pageNo.value=page;
-	document.searchForm.action = "/alpha/notice";
+	document.searchForm.action = "/alpha/QnA";
 	document.searchForm.submit();
 }
 
 
 $('#addBtn').on('click', function(){
-    location.href = "/alpha/notice/write";
+    location.href = "/alpha/QnA/write";
 });
 
 </script>

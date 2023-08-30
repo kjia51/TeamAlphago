@@ -3,5 +3,46 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alpha.mapper.QnAMapper">
 
+	<select id="getQList" resultType="com.alpha.vo.QnAVO">
+		SELECT Q_NO, Q_M_ID, Q_TITLE, Q_CONTENT, DATE_FORMAT(Q_REGDATE, '%Y-%m-%d') AS Q_REGDATE, Q_ANSWERYN, Q_SECRET 
+		FROM question 
+		<include refid="criteria"></include>		
+		ORDER BY Q_NO DESC LIMIT #{startNo}, #{endNo}
+	</select>
+	
+	<select id="getQTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM question 
+		<include refid="criteria"></include>
+	</select>
+	
+	<select id="getQOne" resultType="com.alpha.vo.QnAVO">
+		select * from question where q_no=#{q_no}
+	</select>
+	
+<!-- 	
+	<insert id="insertQ">
+		INSERT INTO question (Q_NO, Q_M_ID, Q_TITLE, Q_CONTENT, Q_REGDATE)
+		VALUES (#{q_no}, #{q_m_id}, #{q_title}, #{q_content}, now())
+	</insert>
+	
+	<update id="editQ">
+		UPDATE question SET Q_TITLE = #{q_title}, Q_CONTENT = #{q_content}
+		WHERE Q_NO = #{q_no}
+	</update>
+	
+	<delete id="deleteQ">
+		DELETE FROM question WHERE Q_NO = #{q_no}
+	</delete>
+ -->
+	<sql id="criteria">
+		<choose>
+			<when test="searchField == 'q_title'">
+				where q_title like CONCAT('%', #{searchWord}, '%')
+			</when>
+			<when test="searchField == 'q_m_id'">
+				where q_m_id like CONCAT('%', #{searchWord}, '%')
+			</when>
+		</choose>
+	</sql>
 
 </mapper>

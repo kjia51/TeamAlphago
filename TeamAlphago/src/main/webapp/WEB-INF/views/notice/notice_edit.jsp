@@ -21,6 +21,7 @@
 
             <form class="entry" name="editForm">
                 <div class="writeForm">
+                <input type="text" id="n_no" name="n_no" value=${noticeVO.n_no }>
                     <div class="titleInfo">
                         <table class="table table-bordered table-form">
                             <caption>글쓰기</caption>
@@ -83,6 +84,7 @@ $(document).ready(function() {
             success: function(data) {
                 // 성공 처리
                 alert('공지사항이 수정되었습니다.');
+                localStorage.clear();
                 window.location.href = url;
             },
             error: function() {

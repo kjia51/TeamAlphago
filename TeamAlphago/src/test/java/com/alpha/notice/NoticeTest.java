@@ -25,8 +25,9 @@ public class NoticeTest {
 	@Test
 	public void noticeList() {
 		Criteria cri = new Criteria();
-		List<NoticeVO> noticeVO = noticeMapper.getNoticeList(cri);
-		log.info(noticeVO);
+		
+		List<NoticeVO> list = noticeMapper.getNoticeList(cri);
+		log.info(list);
 	}
 	
 }

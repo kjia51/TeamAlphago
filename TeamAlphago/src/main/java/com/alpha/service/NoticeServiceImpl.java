@@ -21,7 +21,7 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<NoticeVO> getNoticeList(Criteria cri, Model model) {
 		
 		List<NoticeVO> list = noticeMapper.getNoticeList(cri);
-		int totalCnt = noticeMapper.getTotalCnt();
+		int totalCnt = noticeMapper.getTotalCnt(cri);
 		
 		PageDto pageDto = new PageDto(cri, totalCnt);
 		
@@ -34,8 +34,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public int getTotalCnt() {
-		return noticeMapper.getTotalCnt();
+	public int getTotalCnt(Criteria cri) {
+		return noticeMapper.getTotalCnt(cri);
 	}
 
 	@Override

@@ -13,7 +13,7 @@ public interface NoticeService {
 
 	public List<NoticeVO> getNoticeList(Criteria cri, Model model);
 	
-	public int getTotalCnt();
+	public int getTotalCnt(Criteria cri);
 	
 	public NoticeVO getNoticeOne(String n_no, Model model);
 	
@@ -22,5 +22,6 @@ public interface NoticeService {
 	public int editNotice(NoticeVO noticeVO);
 	
 	public int deleteNotice(String n_no);
+
 	
 }

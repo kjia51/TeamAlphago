@@ -11,7 +11,7 @@
 	</select>
 	
 	<select id="getTotalCnt" resultType="int">
-		SELECT COUNT(*) FROM notice
+		SELECT COUNT(*) FROM notice 
 		<include refid="criteria"></include>
 	</select>
 	
