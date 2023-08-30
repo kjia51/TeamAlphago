@@ -92,8 +92,17 @@ function displayGroupList(map) {
 	                   +'<td align="center">' + group.g_period + '</td>' 
 	                   +'<td align="center">' + group.g_AppCnt + '</td>' 
 	                   +'<td align="center">' 
-	                   +'<button class="apply-button" id="applyButton" disabled>신청</button>' 
-	                   +'</td>' 
+	                   +'<button class="apply-button" id="applyButton" onclick="applyButton()">신청</button>' 
+	                   +'</td>'
+	                   +'<td style="display: none;">                                                  '
+					   +'<input type="hidden" name="t_m_id" id="teacherId" value="${grplist.t_m_id}"> '
+					   +'</td>                                                                        '
+					   +'<td style="display: none;">	                                              '
+					   +'<input type="hidden" name="l_g_no" id="groupNo" value="${grplist.l_g_no}">   '
+					   +'</td>                                                                        '
+					   +'<td style="display: none;">		                                          '
+					   +'<input type="hidden" name="l_c_no" id="contentNo" value="${grplist.l_c_no}"> '
+					   +'</td>                                                                        '
 	                   +'</tr>';
     });
     } else {
@@ -107,3 +116,71 @@ function displayGroupList(map) {
 						+'</div>';
     groupInfoDiv.innerHTML += pageBlock;
 }
+
+//'신청' 버튼 클릭 이벤트 처리
+function applyButton() {
+    var checkbox = $(event.target).closest('tr').find('input[type="checkbox"]');
+    var applyButton = $(event.target);
+
+    if (!checkbox.prop('checked')) {
+        // 체크 박스가 선택되어 있지 않은 경우 - 알림 및 버튼 비활성화
+        alert('신청하실 그룹을 선택하여 주세요.');
+        applyButton.prop('disabled', true);
+    } else {
+         // 체크 박스가 선택되어 있는 경우 - 버튼 활성화
+		 // 체크된 행
+		var checkedRow = document.querySelector('input[name="myCheckbox"]:checked').closest('tr');
+		var inputMid = document.querySelector('#menberId');
+		
+		// 각 input 요소에서 값을 가져옵니다.
+		var l_m_id = inputMid.value;
+		var t_m_id = checkedRow.querySelector('#teacherId').value;
+		var l_g_no = checkedRow.querySelector('#groupNo').value;
+		var l_c_no = checkedRow.querySelector('#contentNo').value;
+		
+		console.log(l_m_id);
+		console.log(t_m_id);
+		console.log(l_g_no);
+		console.log(l_c_no);
+		
+		// fetch 요청
+		fetch('/alpha/groupApply', {
+		    method: 'POST',
+		    headers: {
+		        'Content-Type': 'application/json'
+		    },
+		    body: JSON.stringify({
+		        l_m_id: l_m_id,
+		    	t_m_id: t_m_id,
+		        l_g_no: l_g_no,
+		        l_c_no: l_c_no
+		         
+		    })
+		})
+		.then(response => response.json())
+		.then(data => {
+		    // fetch 요청이 성공한 경우의 처리
+		    console.log("data", data);
+		    alert('신청되었습니다.');
+		})
+		.catch(error => {
+		    // fetch 요청이 실패한 경우의 처리
+		    console.error(error);
+		    alert("에러가 발생하였습니다.")
+		});
+    }
+}
+//체크 박스 클릭 이벤트 처리
+document.addEventListener('click', function(event) {
+    if (event.target && event.target.matches('input[type="checkbox"]')) {
+        var applyButton = event.target.closest('tr').querySelector('.apply-button');
+        
+        if (event.target.checked) {
+            // 체크 박스가 선택된 경우 - 버튼 활성화
+            applyButton.disabled = false;
+        } else {
+            // 체크 박스가 선택되어 있지 않은 경우 - 버튼 비활성화
+            applyButton.disabled = true;
+        }
+    }
+});
