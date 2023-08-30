@@ -14,7 +14,7 @@
 </head>
 
 <body>
-
+${memberVO }
 	<div id="container">
 		<div class="wrap">
 			<div class="content_wrap">

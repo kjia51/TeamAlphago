@@ -505,7 +505,7 @@ $('#payPopUp').on('click', function() {
 	});
 	console.log("selectedIndexes",selectedIndexes[0]);
 	console.log("selectedIndexes",selectedIndexes);
-	tbdy.innerHTML='';
+	tbdy1.innerHTML='';
 	var listArray = getCart(selectedIndexes);
 	console.log("listArray",listArray);
 	
@@ -515,49 +515,36 @@ $('#payPopUp').on('click', function() {
 		let cnt = list.c_able;
 		var row = document.createElement('tr');
 		row.innerHTML = `
-			<td><input type="checkbox" name="selectedItem" data-index="${index}" style="margin-top: 5px;" /></td>
 			<td>${index+1}</td>
 			<td>${cname}</td>
-			<td>${cnt}</td>
+			<td>${cnt}명</td>
 			<td>${cprice}</td>
-			<td>${cprice}</td>
+			<td>
+       			<select title="검색 분류" name="c_period" id="c_period" style="font-size:1em" >
+						<option value="0">기간선택</option>
+                        <option value="1">3개월</option>
+                        <option value="2">6개월</option>
+                        <option value="3">9개월</option>
+						<option value="4">12개월</option>
+                </select>
+			</td>
+			<td></td>
 			`;
-		tbdy.appendChild(row);
+		tbdy1.appendChild(row);
+	});
+	$(document).on('change', 'select[name=c_period]', function() {
+	    var rowIndex = $(this).closest('tr').index(); // 해당 행의 인덱스 가져오기
+	    var selectedPeriod = $(this).val(); // 선택한 기간 값 가져오기
+	    var cprice = listArray[rowIndex].price; // 해당 행의 원래 가격 가져오기
+
+	    var calculatedPrice = cprice * selectedPeriod; // 계산된 가격
+
+	    // 해당 행의 가격 업데이트
+	    $('td:eq(5)', $(this).closest('tr')).text(calculatedPrice);
 	});
 	// 모달창 띄우기
-	modal('cartList');
-	
-	// 선택된 아이템 체크박스 변경 이벤트 처리
-	var listIndex = [];
-	$('input[name="selectedItem"]').on('change', function() {
-		var itemIndex = parseInt($(this).attr('data-index'));
-		const existingIndex = listIndex.indexOf(itemIndex);
-		
-		if (existingIndex === -1) {
-			listIndex.push(itemIndex);
-		} else {
-			listIndex.splice(existingIndex, 1);
-		}
-		return listIndex;
-	});
-	
-	$('#cartContent').click(function () {
-		
-		
-		var listArray = getCart(listIndex);
-		
-		listArray.forEach(list => {
-			let cr_m_no = list.m_id;
-			let cr_c_no = list.c_no;
-			let cnt = list.c_able;
-			
-			let obj = {
-					cr_m_no: cr_m_no,
-					cr_c_no: cr_c_no,
-					cnt: cnt
-			};
-			
-			fetchPost('/alpha/cart/insert', obj, resultCart);
-		});
-	});
+	modal('payList');
+    console.log("listArray",listArray);
+    console.log("$('#c_period').val()",$('#c_period').val());
+    
 });

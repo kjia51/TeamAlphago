@@ -27,7 +27,7 @@ $("#theBtn").click(function() {
 <style>
 
 
-#my_modal, #cartList {
+#my_modal, #cartList, #payList {
     display: none;
     width: 600px;
     height: 300px;
@@ -40,7 +40,7 @@ $("#theBtn").click(function() {
 }
 
 
-#my_modal .modal_close_btn, #cartList .modal_close_btn {
+#my_modal .modal_close_btn, #cartList .modal_close_btn, #payPopUp .modal_close_btn {
 
     border: 1px solid black;
     padding: 10px;
@@ -86,6 +86,38 @@ $("#theBtn").click(function() {
 				<input type="submit" class="btnTopSrch btn btn-primary" value="장바구니" id="cartContent"> 
 		    	<button><a class="modal_close_btn">닫기</a></button>
 			</div>
+</div>
+<div id="payList">
+	<hr>
+	<h2 style="height:50px;">결제<i class="fa-solid fa-cart-shopping"></i> </h2>
+		<table border="1" style="width:100%;">
+			<colgroup>
+				<col style="width:7%">
+				<col style="width:30%">
+				<col style="width:20%">
+				<col style="width:20%">
+				<col style="width:15%">
+				<col style="width:20%">
+			</colgroup>
+		<thead>
+		<tr>
+			<th>No</th>
+			<th>강의명</th>
+			<th>정원</th>
+			<th>가격</th>
+			<th>기간</th>
+			<th>소계</th>
+		</tr>
+		</thead>
+		<tbody id="tbdy1">
+		</tbody>
+		</table>
+		<br>
+			<div>
+				<input type="submit" class="btnTopSrch btn btn-primary" value="결제하기" id="payment">
+		    	<button><a class="modal_close_btn">닫기</a></button>
+			</div>
+		
 </div>
 <%@ include file="../common/header.jsp" %>
 		<!-- 서브바 -->
