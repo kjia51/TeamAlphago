@@ -63,5 +63,11 @@ public class ContentServiceImpl implements ContentService {
 		return contentMapper.getCartList(cr_c_no);
 	}
 
+	@Override
+	public int addCartListCnt(CartVO cartVO) {
+		// TODO Auto-generated method stub
+		return contentMapper.addCartListCnt(cartVO);
+	}
+
 
 }

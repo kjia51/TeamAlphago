@@ -437,6 +437,10 @@ $('#cartPopUp').on('click', function() {
 	            selectedIndexes.push($('input:checkbox[name=chkbox]').index(this));
 	        }
 	    });
+	    
+		if($('input:checkbox[name=chkbox]:checked').length==0){
+			alert('장바구니에 넣을 콘텐츠를 선택하세요');
+		} else{
 	    console.log("selectedIndexes",selectedIndexes[0]);
 	    console.log("selectedIndexes",selectedIndexes);
 	    tbdy.innerHTML='';
@@ -494,7 +498,9 @@ $('#cartPopUp').on('click', function() {
             fetchPost('/alpha/cart/insert', obj, resultCart);
         });
     });
+		}
 });
+
 $('#payPopUp').on('click', function() {
 	var selectedIndexes = [];
 	
@@ -503,48 +509,57 @@ $('#payPopUp').on('click', function() {
 			selectedIndexes.push($('input:checkbox[name=chkbox]').index(this));
 		}
 	});
-	console.log("selectedIndexes",selectedIndexes[0]);
-	console.log("selectedIndexes",selectedIndexes);
-	tbdy1.innerHTML='';
-	var listArray = getCart(selectedIndexes);
-	console.log("listArray",listArray);
-	
-	listArray.forEach((list,index) => {
-		let cname = list.c_name;
-		let cprice = list.price;
-		let cnt = list.c_able;
-		var row = document.createElement('tr');
-		row.innerHTML = `
-			<td>${index+1}</td>
-			<td>${cname}</td>
-			<td>${cnt}명</td>
-			<td>${cprice}</td>
-			<td>
-       			<select title="검색 분류" name="c_period" id="c_period" style="font-size:1em" >
-						<option value="0">기간선택</option>
-                        <option value="1">3개월</option>
-                        <option value="2">6개월</option>
-                        <option value="3">9개월</option>
-						<option value="4">12개월</option>
-                </select>
-			</td>
-			<td></td>
-			`;
-		tbdy1.appendChild(row);
-	});
-	$(document).on('change', 'select[name=c_period]', function() {
-	    var rowIndex = $(this).closest('tr').index(); // 해당 행의 인덱스 가져오기
-	    var selectedPeriod = $(this).val(); // 선택한 기간 값 가져오기
-	    var cprice = listArray[rowIndex].price; // 해당 행의 원래 가격 가져오기
-
-	    var calculatedPrice = cprice * selectedPeriod; // 계산된 가격
-
-	    // 해당 행의 가격 업데이트
-	    $('td:eq(5)', $(this).closest('tr')).text(calculatedPrice);
-	});
-	// 모달창 띄우기
-	modal('payList');
-    console.log("listArray",listArray);
-    console.log("$('#c_period').val()",$('#c_period').val());
+		if($('input:checkbox[name=chkbox]:checked').length==0){
+			alert('구매하실 콘텐츠를 선택하세요');
+		} else if($('input:checkbox[name=chkbox]:checked').length>1){
+			alert('최대 1개까지 구매 가능합니다');
+		}else {
+			
+			tbdy1.innerHTML='';
+			var listArray = getCart(selectedIndexes);
+			console.log("listArray",listArray);
+			
+			listArray.forEach((list,index) => {
+				let cname = list.c_name;
+				let cprice = list.price;
+				let cnt = list.c_able;
+				var row = document.createElement('tr');
+				row.innerHTML = `
+					<td>${index+1}</td>
+					<td>${cname}</td>
+					<td>${cnt}명</td>
+					<td>${cprice}</td>
+					<td>
+		       			<select title="검색 분류" name="c_period" id="c_period" style="font-size:1em" >
+								<option value="0">기간선택</option>
+		                        <option value="1">3개월</option>
+		                        <option value="2">6개월</option>
+		                        <option value="3">9개월</option>
+								<option value="4">12개월</option>
+		                </select>
+					</td>
+					<td></td>
+					`;
+				tbdy1.appendChild(row);
+			});
+			$(document).on('change', 'select[name=c_period]', function() {
+			    var rowIndex = $(this).closest('tr').index(); // 해당 행의 인덱스 가져오기
+			    var selectedPeriod = $(this).val(); // 선택한 기간 값 가져오기
+			    var cprice = listArray[rowIndex].price; // 해당 행의 원래 가격 가져오기
+			    console.log(rowIndex);
+			    var calculatedPrice = cprice * selectedPeriod; // 계산된 가격
+		
+			    // 해당 행의 가격 업데이트
+			    $('td:eq(5)', $(this).closest('tr')).text(calculatedPrice);
+			});
+			// 모달창 띄우기
+			modal('payList');
+		    console.log("listArray",listArray);
+		    console.log("$('#c_period').val()",$('#c_period').val());
+				}
     
 });
+
+	$("#theBtn").click(function() {
+		modal('no_content');
+	});

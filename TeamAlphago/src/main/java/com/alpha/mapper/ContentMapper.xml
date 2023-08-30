@@ -38,7 +38,11 @@
 		select * from cart WHERE cr_c_no=#{cr_c_no}
 	</select>
 	
-	<select id="selectCart">
+	<select id="selectCart" resultType="com.alpha.vo.CartVO">
 	     select c_no, c_name, c_level, cnt from content a left outer join (select * from cart) b on a.c_no = b.cr_c_no
+	</select>
+	
+	<select id="addCartListCnt" resultType="int">
+	    SELECT count(*) FROM cart WHERE (cr_m_no, cr_c_no) IN (SELECT cr_m_no, cr_c_no FROM cart where cr_m_no=#{cr_m_no} and cr_c_no=#{cr_c_no} and cnt=#{cnt})
 	</select>
 </mapper>

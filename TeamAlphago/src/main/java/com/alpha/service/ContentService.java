@@ -25,4 +25,6 @@ public interface ContentService {
 	public int addCart(CartVO cartVO);
 	
 	public List<CartVO> getCartList(String cr_c_no);
+	
+	public int addCartListCnt(CartVO cartVO);
 }

@@ -144,9 +144,14 @@ public class ContentController extends CommonRestController {
 		      System.out.println("===================================================================================================================================");
 				try {
 					//if(cartVO.getCr_m_no()!=null){
-						int res = contentService.addCart(cartVO);
-						Map<String, Object> map = responseWriteMap(res);
-						return map;
+						int res = contentService.addCartListCnt(cartVO);
+						if(res<1) {
+							contentService.addCart(cartVO);
+							Map<String, Object> map = responseWriteMap(res);
+							return map;
+						} else {
+							return responseMap(REST_FAIL, "등록 중 오류 발생");
+						}
 					//}
 				} catch (Exception e) {
 					e.printStackTrace();

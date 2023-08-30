@@ -12,22 +12,9 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://kit.fontawesome.com/1028c0334c.js" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-	
-<script>
-$(document).ready(function() {
-$("#theBtn").click(function() {
-    $(".enoch-dialogs-contents-wrap").css("display", "block");
-});
-})
-
-	
-</script>	
 </head>
-
 <style>
-
-
-#my_modal, #cartList, #payList {
+#my_modal, #cartList, #payList, #no_content {
     display: none;
     width: 600px;
     height: 300px;
@@ -36,22 +23,14 @@ $("#theBtn").click(function() {
     border: 1px solid #888;
     border-radius: 3px;
     text-align: center;
-
 }
-
-
-#my_modal .modal_close_btn, #cartList .modal_close_btn, #payPopUp .modal_close_btn {
+#my_modal .modal_close_btn, #cartList .modal_close_btn, #payPopUp .modal_close_btn, #no_content .modal_close_btn{
 
     border: 1px solid black;
     padding: 10px;
     border-radius: 5px;
     margin: 20px;
-    
 }
-
-
-
-
 
 </style>
 
@@ -284,12 +263,14 @@ $("#theBtn").click(function() {
 			</div>
 			
 			
-			<div class="enoch-dialogs-contents-wrap enoch-dialogs-show" style="display: none; position:fixed; margin:0 ;transform: translate(-50%, -50%);"><div class="enoch-dialogs-contents"><div> 더 이상의 콘텐츠가 없습니다. </div>
-			<input type="text" class="enoch-dialogs-input" placeholder="텍스트를 입력해주세요.">
+			<div id="no_content" style="height:150px">
+			<div class="enoch-dialogs-contents"><div> 더 이상의 콘텐츠가 없습니다. </div>
 			<div class="enoch-dialogs-btns">
-			<button type="button" class="enoch-dialogs-btn enoch-dialogs-btn-cancel">닫기</button>
-			<button type="button" class="enoch-dialogs-btn enoch-dialogs-btn-success" style="display: none;">확인</button>
-			</div></div></div>
+			<button type="button" class="enoch-dialogs-btn enoch-dialogs-btn-cancel modal_close_btn">닫기</button>
+			</div>
+			</div>
+			</div>
+			
 			<%-- 모달창 --%>
 			<div id="my_modal">
 				<hr>
