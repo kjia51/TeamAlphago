@@ -84,8 +84,8 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public List<LearnerVO> JoinGroupLearner(String g_no) {
-		return mapper.JoinGroupLearner(g_no);
+	public List<LearnerVO> JoinGroupLearner(String g_no, Criteria cri) {
+		return mapper.JoinGroupLearner(g_no, cri);
 	}
 
 	@Override
@@ -111,6 +111,21 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public int totalCntSub(String t_m_id, Criteria cri) {
 		return mapper.totalCntSub(t_m_id, cri);
+	}
+
+	@Override
+	public int totalCntLearner(String g_no) {
+		return mapper.totalCntLearner(g_no);
+	}
+
+	@Override
+	public int totalCntJoin(String g_no) {
+		return mapper.totalCntJoin(g_no);
+	}
+
+	@Override
+	public int totalCntGrp(String t_m_id, Criteria cri) {
+		return mapper.totalCntGrp(t_m_id, cri);
 	}
 
 	
