@@ -20,43 +20,27 @@ $("#theBtn").click(function() {
 });
 })
 
-
 	
 </script>	
 </head>
 
 <style>
-body{
-color: #000;
-font-size: 15px;
-line-height: 26px;
-letter-spacing: -0.5px;
-font-family: Nanum Gothic,"나눔고딕",NanumGothic,'Roboto','noto sans kr','noto sans', 'Droid Sans','Helvetica',"AppleGothicNeoSD","Apple SD 산돌고딕 Neo",'Apple-Gothic','애플고딕',"Microsoft NeoGothic",'Malgun Gothic',"맑은 고딕",'dotum','돋움','gulim','굴림',sans-serif;
--webkit-text-size-adjust: none;
-margin: 0;
-padding: 0 20px;
-}
-    
-.discountInfo, .cancleInfo {
-	border: 1px solid black;
 
-}
 
-#my_modal {
+#my_modal, #cartList {
     display: none;
-    width: 400px;
-    height: 250px;
-    padding: 20px 60px;
+    width: 600px;
+    height: 300px;
+    padding: 30px 60px;
     background-color: #fefefe;
     border: 1px solid #888;
     border-radius: 3px;
     text-align: center;
-    line-height: 115px;
 
 }
 
 
-#my_modal .modal_close_btn {
+#my_modal .modal_close_btn, #cartList .modal_close_btn {
 
     border: 1px solid black;
     padding: 10px;
@@ -72,7 +56,37 @@ padding: 0 20px;
 </style>
 
 <body>
-
+<div id="cartList">
+	<hr>
+	<h2 style="height:50px;">장바구니<i class="fa-solid fa-cart-shopping"></i> </h2>
+		<table border="1" style="width:100%;">
+			<colgroup>
+				<col style="width:5%">
+				<col style="width:10%">
+				<col style="width:40%">
+				<col style="width:10%">
+				<col style="width:20%">
+				<col style="width:20%">
+			</colgroup>
+		<thead>
+		<tr>
+			<th></th>
+			<th>No</th>
+			<th>강의명</th>
+			<th>정원</th>
+			<th>가격</th>
+			<th>소계</th>
+		</tr>
+		</thead>
+		<tbody id="tbdy">
+		</tbody>
+		</table>
+		<br>
+			<div>
+				<input type="submit" class="btnTopSrch btn btn-primary" value="장바구니" id="cartContent"> 
+		    	<button><a class="modal_close_btn">닫기</a></button>
+			</div>
+</div>
 <%@ include file="../common/header.jsp" %>
 		<!-- 서브바 -->
 		<div class="location" style="position: relative; margin: 0 auto; text-align:center; font-size:1em">
@@ -137,8 +151,9 @@ padding: 0 20px;
 							<p style="line-height: 2;"><strong><span style="font-size: 16px;">- 수업시간 : 오후 2시 ~ 오후 9시 (시간 선택)</span></strong></p>
 							</div></div>		
 				</div>
-					<input type="submit" class="btnTopSrch btn btn-primary" value="장바구니" id="cartContent"> 
-					<input type="submit" class="btnTopSrch btn btn-primary" value="결제하기" id="payment"> 
+					<input type="submit" class="btnTopSrch btn btn-primary" value="장바구니" id="cartPopUp"> 
+					<input type="submit" class="btnTopSrch btn btn-primary" value="결제하기" id="payPopUp"> 
+
 			</div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w202107157d792e5155a14"><div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N"><div class="widget padding" data-height="30" style="margin-top:px; margin-bottom:px;">
 				<div id="padding_w202107157d792e5155a14" style="width:100%; min-height:1px; height:30px; "></div>
 			</div>
@@ -182,7 +197,7 @@ padding: 0 20px;
 					
 					<div class="item-wrap" style="position: relative; padding:18px">
 			            	<input type="hidden" id="c_no" value=" ${con.c_no }">
-			            	<input type="checkbox" name="chkbox" style="display:block; margin-bottom:10px" id="chk" onclick="checkBoxValueChanged(${status.index})" value="${status.index}">
+			            	<input type="checkbox" name="chkbox" style="display:block; margin-bottom:10px" id="chk" value="${status.index}">
 						<a href="/24/?idx=63" class="_fade_link shop-item-thumb hover_img_none">
 							<img data-prodcode="s2023081114659ed573520" alt="" src="https://cdn.imweb.me/thumbnail/20210713/a40bef34a9fba.png" class="_org_img org_img _lazy_img" data-original="" data-src="" style="display: inline; width:200px;height:200px;">
 						</a>

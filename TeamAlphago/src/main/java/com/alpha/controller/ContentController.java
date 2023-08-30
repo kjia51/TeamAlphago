@@ -98,7 +98,7 @@ public class ContentController extends CommonRestController {
 		      
 				try {
 					ContentVO contentVO = contentService.getContentOne(c_no);
-					Map<String, Object> map = new HashMap<String, Object>();
+					Map<String, Object> map = responseVo(contentVO);
 					map.put("contentVO", contentVO);
 					return map;
 	
@@ -154,13 +154,13 @@ public class ContentController extends CommonRestController {
 				}
 		   }
 		   
-		   //조회
+		   //장바구니 조회
 		   @GetMapping("/cart/list/{cr_c_no}")
 		   public Map<String, Object> cartList(@PathVariable("cr_c_no") String cr_c_no) {
 		      
 				try {
 					List<CartVO> list = contentService.getCartList(cr_c_no);
-					Map<String, Object> map = new HashMap<String, Object>();
+					Map<String, Object> map = responseCartList(list);
 					map.put("list", list);
 					return map;
 	

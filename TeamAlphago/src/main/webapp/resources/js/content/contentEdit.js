@@ -336,77 +336,228 @@ function resultList(map){
 		
 }
 
-let indexAll = [];
+
 
 function getCart(index) {
+	let indexAll = []; // 중복 제거된 인덱스들을 담는 배열
     // 중복 검사
+	console.log("getCartIndex", index)
     const existingIndex = indexAll.indexOf(index);
     
     if (existingIndex === -1) {
         indexAll.push(index);
+    } else {
+        indexAll.splice(existingIndex, 1);
+    }
+
+    let listArray = []; // 여러 선택 항목을 저장할 배열
+    console.log("getCartindexAll", indexAll)
+
+    // 모든 선택된 인덱스에 대해 데이터를 수집하여 배열에 추가
+    indexAll[0].forEach(function(index) {
+    	console.log("index", index)
         var c_no = $('input[data-cno="'+index+'"]').val();
         var c_name = $('input[data-cname="'+index+'"]').val();
         var price = $('input[data-price="'+index+'"]').val();
         var c_able =  $('input[data-cnt="'+index+'"]').val();
         var m_id =  $('input[data-mid="'+index+'"]').val();
-    } else {
-        indexAll.splice(existingIndex, 1);
-    }
-    
 
-    let list = {
-    		c_no : c_no
-    		,c_name : c_name
-    		,price : price
-    		,c_able : c_able
-    		,m_id : m_id
-    }
-    
-    console.log('list', list);
-    
-    return list;
+        console.log("c_no", c_no);
+        console.log("c_name", c_name);
+        
+        let item = {
+            c_no: c_no,
+            c_name: c_name,
+            price: price,
+            c_able: c_able,
+            m_id: m_id
+        };
 
+        listArray.push(item);
+    });
+    
+    return listArray; // 모든 선택 항목의 데이터를 배열로 반환
 }
-$('#cartContent').click(function () {
-	
-	var idx = -1;
+
+
+
+function resultCart(map) {
+    let cr_c_no = $('#c_no').val();
+    fetchGet('/alpha/cart/list/'+cr_c_no, result);
+}
+
+function modal(id) { //모달창 띄우기
+    var zIndex = 9999;
+    var modal = $('#' + id);
+
+    // 모달 div 뒤에 희끄무레한 레이어
+    var bg = $('<div>')
+        .css({
+            position: 'fixed',
+            zIndex: zIndex,
+            left: '0px',
+            top: '0px',
+            width: '100%',
+            height: '100%',
+            overflow: 'auto',
+            // 레이어 색갈은 여기서 바꾸면 됨
+            backgroundColor: 'rgba(0,0,0,0.4)'
+        })
+        .appendTo('body');
+
+    modal
+        .css({
+            position: 'fixed',
+            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+            // 시꺼먼 레이어 보다 한칸 위에 보이기
+            zIndex: zIndex + 1,
+
+            // div center 정렬
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            msTransform: 'translate(-50%, -50%)',
+            webkitTransform: 'translate(-50%, -50%)'
+        })
+        .show()
+        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+        .find('.modal_close_btn')
+        .on('click', function() {
+            bg.remove();
+            modal.hide();
+        });
+}
+
+$('#cartPopUp').on('click', function() {
+	var selectedIndexes = [];
+
+	    $('input:checkbox[name=chkbox]').each(function() {
+	        if (this.checked) {
+	            selectedIndexes.push($('input:checkbox[name=chkbox]').index(this));
+	        }
+	    });
+	    console.log("selectedIndexes",selectedIndexes[0]);
+	    console.log("selectedIndexes",selectedIndexes);
+	    tbdy.innerHTML='';
+	    var listArray = getCart(selectedIndexes);
+	    console.log("listArray",listArray);
+	    
+	    listArray.forEach((list,index) => {
+	    	let cname = list.c_name;
+	    	let cprice = list.price;
+	    	let cnt = list.c_able;
+	        var row = document.createElement('tr');
+	        row.innerHTML = `
+	            <td><input type="checkbox" name="selectedItem" data-index="${index}" style="margin-top: 5px;" /></td>
+	            <td>${index+1}</td>
+	            <td>${cname}</td>
+	            <td>${cnt}</td>
+	            <td>${cprice}</td>
+	        	<td>${cprice}</td>
+	        `;
+	        tbdy.appendChild(row);
+	    });
+    // 모달창 띄우기
+    modal('cartList');
+    
+ // 선택된 아이템 체크박스 변경 이벤트 처리
+    var listIndex = [];
+    $('input[name="selectedItem"]').on('change', function() {
+    	var itemIndex = parseInt($(this).attr('data-index'));
+        const existingIndex = listIndex.indexOf(itemIndex);
+        
+        if (existingIndex === -1) {
+        	listIndex.push(itemIndex);
+        } else {
+        	listIndex.splice(existingIndex, 1);
+        }
+        return listIndex;
+        });
+    
+    $('#cartContent').click(function () {
+
+
+        var listArray = getCart(listIndex);
+        
+        listArray.forEach(list => {
+            let cr_m_no = list.m_id;
+            let cr_c_no = list.c_no;
+            let cnt = list.c_able;
+
+            let obj = {
+                cr_m_no: cr_m_no,
+                cr_c_no: cr_c_no,
+                cnt: cnt
+            };
+
+            fetchPost('/alpha/cart/insert', obj, resultCart);
+        });
+    });
+});
+$('#payPopUp').on('click', function() {
+	var selectedIndexes = [];
 	
 	$('input:checkbox[name=chkbox]').each(function() {
-		   if(this.checked){//checked 처리된 항목의 값
-			   idx = $('input:checkbox[name=chkbox]').index(this); 		   
-			   console.log(idx);
-			   return false;
-		   }
+		if (this.checked) {
+			selectedIndexes.push($('input:checkbox[name=chkbox]').index(this));
+		}
+	});
+	console.log("selectedIndexes",selectedIndexes[0]);
+	console.log("selectedIndexes",selectedIndexes);
+	tbdy.innerHTML='';
+	var listArray = getCart(selectedIndexes);
+	console.log("listArray",listArray);
+	
+	listArray.forEach((list,index) => {
+		let cname = list.c_name;
+		let cprice = list.price;
+		let cnt = list.c_able;
+		var row = document.createElement('tr');
+		row.innerHTML = `
+			<td><input type="checkbox" name="selectedItem" data-index="${index}" style="margin-top: 5px;" /></td>
+			<td>${index+1}</td>
+			<td>${cname}</td>
+			<td>${cnt}</td>
+			<td>${cprice}</td>
+			<td>${cprice}</td>
+			`;
+		tbdy.appendChild(row);
+	});
+	// 모달창 띄우기
+	modal('cartList');
+	
+	// 선택된 아이템 체크박스 변경 이벤트 처리
+	var listIndex = [];
+	$('input[name="selectedItem"]').on('change', function() {
+		var itemIndex = parseInt($(this).attr('data-index'));
+		const existingIndex = listIndex.indexOf(itemIndex);
+		
+		if (existingIndex === -1) {
+			listIndex.push(itemIndex);
+		} else {
+			listIndex.splice(existingIndex, 1);
+		}
+		return listIndex;
 	});
 	
-	var list = getCart(idx);
-	console.log(list);
-	let cr_m_no = list.m_id;
-	let cr_c_no = list.c_no;
-	let cnt = list.c_able;
-
-	console.log("cr_m_no",cr_m_no)
-	console.log("cr_c_no",cr_c_no)
-	console.log("cnt",cnt)
-	//전달할 객체로 생성
-	let obj = {
-		cr_m_no : cr_m_no,
-		cr_c_no : cr_c_no,
-		cnt : cnt
-			}
-	
-	fetchPost('/alpha/cart/insert', obj, resultCart)
-
-})
-  
-
-function resultCart(map){
-	let cr_c_no = $('#c_no').val();
-	console.log(cr_c_no);
-	console.log()
-	fetchGet('/alpha/cart/list/'+cr_c_no, result)
-}
-
-
-
-    
+	$('#cartContent').click(function () {
+		
+		
+		var listArray = getCart(listIndex);
+		
+		listArray.forEach(list => {
+			let cr_m_no = list.m_id;
+			let cr_c_no = list.c_no;
+			let cnt = list.c_able;
+			
+			let obj = {
+					cr_m_no: cr_m_no,
+					cr_c_no: cr_c_no,
+					cnt: cnt
+			};
+			
+			fetchPost('/alpha/cart/insert', obj, resultCart);
+		});
+	});
+});

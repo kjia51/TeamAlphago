@@ -49,17 +49,11 @@ public class CommonRestController {
 		return responseMap(res,REST_DELETE);
 	}
 	
-	public Map<String, Object> responsememberDeleteMap(int res){
-		return responseMap(res,REST_DELETE);
-	}
-	
 	public Map<String, Object> responseMap(String result, String msg){
 			Map<String, Object> map = new HashMap<String, Object>();
 		
-		
 			map.put("result", result);
 			map.put("msg", msg);
-
 		
 		return map;
 	}
@@ -73,6 +67,22 @@ public class CommonRestController {
 		map.put("list",list);
 		return map;
 		}
+	
+	public Map<String, Object> responseCartList(List<?> list){
+		
+		int res = list != null ? 1 : 0 ;
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(res > 0) {
+			map.put("msg", " 상품이 장바구니에 담겼습니다\r\n" + 
+					"장바구니로 이동하시겠습니까?");
+		}else {
+			map.put("msg", "");
+
+		}
+		
+		return map;
+	}
 	
 	public Map<String, Object> responseVo(Object vo) {
 	    int res = vo != null ? 1 : 0;

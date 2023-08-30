@@ -38,4 +38,7 @@
 		select * from cart WHERE cr_c_no=#{cr_c_no}
 	</select>
 	
+	<select id="selectCart">
+	     select c_no, c_name, c_level, cnt from content a left outer join (select * from cart) b on a.c_no = b.cr_c_no
+	</select>
 </mapper>
