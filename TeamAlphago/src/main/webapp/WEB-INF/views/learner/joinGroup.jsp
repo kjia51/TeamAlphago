@@ -6,35 +6,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 
-<script src="/resources/js/joinGroup.js?v=<%=new java.util.Date().getTime()%>"></script>
+<script src="/resources/js/joinGroup.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>그룹 가입 신청</title>
 </head>
 <link rel="stylesheet" href="/resources/css/learner.css">
-<style>
-.apply-button {
-            padding: 10px 20px;
-            
-            color: #cccccc;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 40px;
-}
 
-/* 버튼에 호버 효과 추가 */
-.apply-button:hover {
-	color: black;
-	font-style: bold;
-}
-
-/* 버튼 비활성화 스타일
-.apply-button[disabled] {
-    cursor: not-allowed;
-} */
-</style>
 <body>
 <%@ include file="../common/header.jsp"%>
 ${memberVO}
@@ -61,13 +41,16 @@ ${memberVO}
 								<td>
 									<div class="searchBox">
 										<select title="groupName" name="g_name" id=""
-											onchange="changeGroup(this.value);" value="">
+											onchange="changeGroup(this.value);" value="" 
+										<c:set var="isMember" value="${memberVO.m_id}" />	
+										<c:if test="${isMember == null}">disabled="disabled"</c:if>>
 											<option value="listAll">전체</option>
 											<c:forEach items="${list}" var="group">
 												<option value="${group.g_name}">${group.g_name}</option>
 											</c:forEach>
 										</select>
 									</div>
+				                    
 								</td>
 							</tr>
 						</tbody>
@@ -97,7 +80,7 @@ ${memberVO}
 
 						<tbody>
 						<c:set var="isMember" value="${memberVO.m_id}" />
-					<c:if test="${isMember != null}">
+						<c:if test="${isMember != null}">
 							<c:forEach items="${listAll}" var="grplist" varStatus="status">
 								<tr>
 									<th align="center"><input type="checkbox" id="checkbox"

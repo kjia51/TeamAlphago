@@ -128,22 +128,23 @@ function applyButton() {
         applyButton.prop('disabled', true);
     } else {
          // 체크 박스가 선택되어 있는 경우 - 버튼 활성화
-		 // 체크된 행을 찾습니다.
+		 // 체크된 행
 		var checkedRow = document.querySelector('input[name="myCheckbox"]:checked').closest('tr');
+		var inputMid = document.querySelector('#menberId');
 		
 		// 각 input 요소에서 값을 가져옵니다.
-		var l_m_id = checkedRow.querySelector('#memberId').value;
+		var l_m_id = inputMid.value;
 		var t_m_id = checkedRow.querySelector('#teacherId').value;
 		var l_g_no = checkedRow.querySelector('#groupNo').value;
 		var l_c_no = checkedRow.querySelector('#contentNo').value;
 		
-		console.log("l_m_id");
-		console.log("t_m_id");
-		console.log("l_g_no");
-		console.log("l_c_no");
+		console.log(l_m_id);
+		console.log(t_m_id);
+		console.log(l_g_no);
+		console.log(l_c_no);
 		
-		// fetch 요청을 보냅니다.
-		fetch('/groupApply', {
+		// fetch 요청
+		fetch('/alpha/groupApply', {
 		    method: 'POST',
 		    headers: {
 		        'Content-Type': 'application/json'
@@ -165,19 +166,21 @@ function applyButton() {
 		.catch(error => {
 		    // fetch 요청이 실패한 경우의 처리
 		    console.error(error);
+		    alert("에러가 발생하였습니다.")
 		});
     }
 }
 //체크 박스 클릭 이벤트 처리
-$(document).on('click', 'input[type="checkbox"]', function() {
-    var applyButton = $(this).closest('tr').find('.apply-button');
-    
-    if ($(this).prop('checked')) {
-        // 체크 박스가 선택된 경우 - 버튼 활성화
-        applyButton.prop('disabled', false);
-    } else {
-        // 체크 박스가 선택되어 있지 않은 경우 - 버튼 비활성화
-        applyButton.prop('disabled', true);
+document.addEventListener('click', function(event) {
+    if (event.target && event.target.matches('input[type="checkbox"]')) {
+        var applyButton = event.target.closest('tr').querySelector('.apply-button');
+        
+        if (event.target.checked) {
+            // 체크 박스가 선택된 경우 - 버튼 활성화
+            applyButton.disabled = false;
+        } else {
+            // 체크 박스가 선택되어 있지 않은 경우 - 버튼 비활성화
+            applyButton.disabled = true;
+        }
     }
 });
-

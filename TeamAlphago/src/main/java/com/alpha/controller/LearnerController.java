@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.alpha.service.LearnerService;
 import com.alpha.vo.LearnerVO;
 import com.alpha.vo.MemberVO;
-import com.mysql.cj.Session;
 
 @RestController
 @RequestMapping("/alpha/*")
@@ -80,7 +76,7 @@ public class LearnerController extends CommonRestController {
 		return map;
 	}
 	// 그룹 가입 신청
-	@PostMapping("/joinGroup")
+	@PostMapping("/groupApply")
 	public String groupApply(@RequestBody LearnerVO learnerVO, RedirectAttributes redirectAttributes) {
 		learnerService.insertGrp(learnerVO);
 		return "redirect:/joinGroup"; 
