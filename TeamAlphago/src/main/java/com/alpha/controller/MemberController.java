@@ -50,6 +50,7 @@ public class MemberController {
 
 	        if (memberVO != null) {
 	            session.setAttribute("memberVO", memberVO);
+	            session.setMaxInactiveInterval(-1);
 	            return ResponseEntity.ok("로그인이 완료되었습니다.");
 	        } else {
 	            return ResponseEntity.badRequest().body("로그인 정보가 올바르지 않습니다.");

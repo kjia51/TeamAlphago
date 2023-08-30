@@ -30,10 +30,11 @@
 		WHERE Q_NO = #{q_no}
 	</update>
 	
+ -->
 	<delete id="deleteQ">
 		DELETE FROM question WHERE Q_NO = #{q_no}
 	</delete>
- -->
+
 	<sql id="criteria">
 		<choose>
 			<when test="searchField == 'q_title'">

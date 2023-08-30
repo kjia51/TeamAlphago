@@ -13,4 +13,6 @@ public interface QnAMapper {
 	
 	public QnAVO getQOne(String q_no);
 	
+	public int deleteQ(String q_no);
+	
 }

@@ -47,4 +47,9 @@ public class QnAServiceImpl implements QnAService {
 		return null;
 	}
 
+	@Override
+	public int deleteQ(String q_no) {
+		return qnAMapper.deleteQ(q_no);
+	}
+
 }

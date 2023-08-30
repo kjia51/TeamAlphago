@@ -17,4 +17,6 @@ public interface QnAService {
 	
 	public QnAVO getQOne(String q_no, Model model);
 	
+	public int deleteQ(String q_no);
+	
 }
