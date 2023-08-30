@@ -99,8 +99,8 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public int insertGroupupdatesub(String sub_no) {
-		return mapper.insertGroupupdatesub(sub_no);
+	public int insertGroupupdatesub(String sub_no, String sub_connection) {
+		return mapper.insertGroupupdatesub(sub_no, sub_connection);
 	}
 
 	@Override
@@ -126,6 +126,11 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public int totalCntGrp(String t_m_id, Criteria cri) {
 		return mapper.totalCntGrp(t_m_id, cri);
+	}
+
+	@Override
+	public List<GrpVO> conGroupList(String sub_no) {
+		return mapper.conGroupList(sub_no);
 	}
 
 	

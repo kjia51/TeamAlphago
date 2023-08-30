@@ -171,6 +171,13 @@ public class TeacherController extends CommonRestController {
 		public Map<String, Object> register(@RequestBody GrpVO groupVO) {
 		   
 		   System.out.println("==============넘어옴");
+		   
+		   System.out.println("원래:"+groupVO.getSub_connection());
+		   int sub_connection = Integer.parseInt(groupVO.getSub_connection())-1;
+		   
+		   System.out.println(sub_connection);
+		   groupVO.setSub_connection(Integer.toString(sub_connection));
+
 
 			try {
 				int res = service.insertGroups(groupVO);
@@ -178,7 +185,8 @@ public class TeacherController extends CommonRestController {
 				Map<String, Object> map = responseWriteMap(res);
 				System.out.println(groupVO);
 				
-				int res2 = service.insertGroupupdatesub(groupVO.getSub_no());
+				System.out.println("계산 후:"+groupVO.getSub_connection());
+				int res2 = service.insertGroupupdatesub(groupVO.getSub_no(), groupVO.getSub_connection());
 				
 				if(res2>0) {
 					return map;					
@@ -298,7 +306,7 @@ public class TeacherController extends CommonRestController {
 			}
 		}
 	   
-	   @PutMapping("/group/getGroupOne/updateAction/{l_no}")  //그룹의 학습자 정보 삭제(내보내기)
+	   @PutMapping("/group/getGroupOne/updateAction/{l_no}")  //그룹 학습자 승인
 		public Map<String, Object> JoinGroup(@PathVariable("l_no") String l_no) {
 
 		   System.out.println("update==============");
@@ -323,6 +331,18 @@ public class TeacherController extends CommonRestController {
 		
 			return mav;
 		}
+	   
+	   @GetMapping("/group/getGrpList/{sub_no}") //그룹 정보 가져오기
+	   public List<GrpVO> SubGroupList(@PathVariable("sub_no") String sub_no) {
+		   
+		   System.out.println("==============");
+		   System.out.println(sub_no);
+
+				List<GrpVO> list = service.conGroupList(sub_no);
+				System.out.println(list);
+				return list;
+
+	   }
 
 
 

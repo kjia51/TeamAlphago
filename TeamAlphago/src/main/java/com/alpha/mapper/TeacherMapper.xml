@@ -161,11 +161,11 @@
 	from subscribe s, content 
 	where s.sub_c_no = content.c_no
     and t_m_id = #{t_m_id}
-   	and sub_connection = 'N'
+   	AND sub_connection > 0
 	</select>
 	
 	<update id="insertGroupupdatesub">
-	update subscribe set sub_connection= 'Y'
+	update subscribe set sub_connection=#{sub_connection}
 	where sub_no=#{sub_no}
 	</update>
 	
@@ -207,6 +207,13 @@
 	where l_g_no = #{g_no}
     and l_checkyn = 'N'
 	</select>	
+	
+	<!-- t_m_id와  sub_no으로 가져오기 -->
+	<select id="conGroupList" resultType="com.alpha.vo.GrpVO">
+	select * from grp
+	where sub_no = #{sub_no}
+	</select>
+	
 	
 	<sql id="criteria">
 	<choose>

@@ -68,25 +68,14 @@ function checkLogin() {
 	
 }
 
-function getContent(index) {
-	var i = index;
-	console.log(i);
+function getContent() {
 	
 	var c_no = $('#c_no').val();
     var m_id = $('#m_id').val();
     var c_name = $('#c_name').val();
     var today = getsys();
-    var price = $('input[data-price="'+index+'"]').val();
-    var sub_able =  $('input[data-cnt="'+index+'"]').val();
-    var sub_connection = 'N';
-    
-//    console.log(c_no);
-//    console.log(m_id);
-//    console.log(c_name);
-//    console.log(today);
-//    console.log(price);
-//    console.log(sub_able.substr());
-//    console.log(sub_connection);
+    var price =  $('td:eq(5)').text();
+    var sub_connection = $('#c_period').val(); //구독개월수
     
     let list = {
     		c_no : c_no
@@ -94,7 +83,6 @@ function getContent(index) {
     		,c_name : c_name
     		,today : today
     		,price : price
-    		,sub_able : sub_able
     		,sub_connection : sub_connection
     }
     
@@ -123,7 +111,7 @@ $('#payment').click(function () { //결제버튼
 	
                      
     //DOM객체들에서 사용할 데이터 뽑기
-	var list = getContent(idx);
+	//var list = getContent(idx);
 	
 	var c_no = list.c_no;
     var m_id = list.m_id;

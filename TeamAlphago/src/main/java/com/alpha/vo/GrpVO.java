@@ -20,6 +20,7 @@ public class GrpVO {
    //그룹 가입 승인
    private String c_name;
    private String c_level;
+   private String sub_connection;
    
    
 }        

@@ -301,7 +301,9 @@ function resultList(map){
 		var sub_name = vo.c_name;
 		var date = vo.sub_date;
 		var sub_date = date.substr(0,10);
+		
 		var sub_month = vo.sub_month;
+		var sub_connection = vo.sub_connection;
 		
 		var sub_able = vo.sub_able;
 		
@@ -324,6 +326,9 @@ function resultList(map){
 		main.innerHTML += ''
 		    +			'<input type="text" id="sub_no" value="'
 		    +			sub_no
+		    +			'" readonly>'
+		    +			'<input type="text" id="sub_connection" value="'
+		    +			sub_connection
 		    +			'" readonly>'
 			+ '<table class="table table-bordered">'
 			+ '<thead>'
@@ -384,7 +389,12 @@ function groupinsert() { //그룹생성
 	let g_name = $('#g_name').val();
 	let sub_no = $('#sub_no').val();
 	let g_cnt = $('#sub_able').val();
-	let g_start = getsys();
+	let sub_connection = $('#sub_connection').val();
+	let g_start = $('#startdate').val();
+	let g_end = $('#enddate').val();
+	
+	console.log(startdate);
+	console.log(enddate);
 	
 	//전달할 객체로 생성
 	let obj = {
@@ -393,6 +403,8 @@ function groupinsert() { //그룹생성
 			, g_name : g_name
 			, g_cnt: g_cnt
 			, g_start : g_start
+			, g_end : g_end
+			, sub_connection : sub_connection
 			}
 	
 	console.log(obj);

@@ -39,17 +39,22 @@
 
 <%-- 모달창 --%>
 <div id="my_modal">
-	<hr>
-	<h2>학습콘텐츠 선택</h2>
-		<br>
+
+	<nav id="topMenu" >
+		<ul>
+			<button><a class="" onclick="getContent()">콘텐츠 정보</a></button>
+			<button><a class="" onclick="conGrp()">연결 그룹 관리</a></button>
+			<button><a class="" onclick="createGrp()">그룹 생성</a></button>
+
+		</ul>
+	</nav>
+		<hr>
+
 		<div id="getSub">
 		</div>
 		<hr>
-		<h2>그룹 정보</h2>
-	   	<h3>그룹명<input type="text" id="g_name"></h3>
 	   	<br>
 		<div class="btn">
-		    <button><a onclick="groupinsert()">생성하기</a></button>
 		    <button><a class="modal_close_btn">닫기</a></button>
     	</div>
     	
@@ -99,7 +104,6 @@
 			        <th>구독일</th>
 			        <th>구독료</th>
 			        <th>인원</th>
-			        <th>그룹연결여부</th>
 			        <th></th>
     			</tr>
 			</thead>
@@ -119,13 +123,10 @@
                             <th align="left"> <input type="text" id="c_name" value="${sub.c_name }"readonly></th>
                             <td align="center"><input type="text" class="index" id="sub_date" data-sub_date="${status.index}" value="${sub.sub_date }"readonly></td>
                             <td align="center"><input type="text" class="index" id="sub_price" data-sub_price="${status.index}" value="${sub.sub_price }"readonly></td>
-                            <td align="center">${sub.sub_able }</td>
-                            <td align="center"><input type="text" class="index" id="sub_con" data-sub_con="${status.index}" value="${sub.sub_connection }"readonly></td>
+                            <td align="center">${sub.sub_able }</td>        
                             
                             <td align="center">
-                            <c:if test="${sub.sub_connection eq 'N'}">
-                            <button onclick="connection(${status.index})">그룹생성 </button>                          
-                            </c:if>                      
+                            <button onclick="connection(${status.index})">그룹관리 </button>                                           
                             <button onclick="cancelPay(${status.index})">콘텐츠환불</button></td>
                             
                            
@@ -225,74 +226,114 @@ function connection(index) {
 
 }
 
+/////////////////////그룹 정보
+function getContent(sub_no) {
+	
+    var sub_no =  $('#sub_no').val();
+
+    console.log(sub_no);
+  	fetchGet('/alpha/group/getSubOne/'+sub_no, resultList)
+
+}
+/////////////////////연결 그룹 리스트
+function conGrp(sub_no) {
+	
+    var sub_no =  $('#sub_no').val();
+
+    console.log(sub_no);
+  	fetchGet('/alpha/group/getGrpList/'+sub_no, GrpList)
+
+}
+
 ////////////모달 패키지 정보 출력////////////////////////////////////////////////////////
 var main = document.getElementById('getSub');
 
 function resultList(map){
-		let vo = map.subscribeVO;
-		console.log(vo);
-		
-		var sub_no = vo.sub_no;
-		var idx = sub_no.indexOf("_"); 
-		var sid = sub_no.substring(idx+1);
-		
-		var sub_name = vo.c_name;
-		var date = vo.sub_date;
-		var sub_date = date.substr(0,10);
-		
-		var sub_able = vo.sub_able;
-		
-		var c_level = vo.c_level;
-		var sub_lv = "";
-		
-		if(c_level == '1') {
-			sub_lv = "초급";
-		} else if (c_level == '2') {
-			sub_lv = "중급";
-		} else if (c_level == '3') {
-			sub_lv = "고급";
-		}
-		
-		console.log(sid);
-		console.log(sub_name);
-		console.log(typeof(sub_date));
-		console.log(sub_able);
-		
-		main.innerHTML += ''
-		    +			'<input type="text" id="sub_no" value="'
-		    +			sub_no
-		    +			'" readonly>'
-			+ '<table class="table table-bordered">'
-			+ '<thead>'
-		    + 	'<tr>'
-			+ 		'<th>구독ID</th>'
-			+ 		'<th>콘텐츠명</th>'
-			+ 		'<th>수업 난이도</th>'
-			+ 		'<th>구독일</th>'
-			+ 		'<th>수강가능인원</th>'
-		    + 	'</tr>'
-			+ '</thead>'
-			+	'<tbody>'
-			+		'<tr>'
-		    +			'<td align="left" class="row"><input type="text" id="sid" style="width:112px" value="'
-		    +			sid
-		    +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_name" style="width:290px" value="'
-            +			sub_name
-            +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_lv" style="width:80px" value="'
-            +			sub_lv
-            +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_date" style="width:85px" value="'
-            +			sub_date
-            +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_able" style="width:35px" value="'
-            +			sub_able
-            +			'" readonly></td>'
-			+ 		'</tr>'
-			+	'</tbody>'
-		    +'</table>'; 
+	main.innerHTML = '';
+	let vo = map.subscribeVO;
+	console.log(vo);
+	
+	var sub_no = vo.sub_no;
+	var sub_date = vo.sub_date;
+	var sub_price = vo.sub_price;
+	var sub_able = vo.sub_able;
+	var sub_month = vo.sub_month;
+	var c_name = vo.c_name;
 
+	var c_level = vo.c_level;
+	var sub_lv = "";
+	
+	if(c_level == '1') {
+		sub_lv = "초급";
+	} else if (c_level == '2') {
+		sub_lv = "중급";
+	} else if (c_level == '3') {
+		sub_lv = "고급";
+	}
+
+	main.innerHTML += ''
+		+ '<table class="table table-bordered">'
+		+ '<h4>구독 콘텐츠 정보</h4>'
+		+ '<thead>'
+	    + 	'<tr>'
+		+ 		'<th>구독ID</th>'
+		+ 		'<th>구독일</th>'
+		+ 		'<th>구독개월수</th>'
+		+ 		'<th>구독료</th>'
+		+ 		'<th>수강가능인원</th>'
+		+ 		'<th>콘텐츠명</th>'
+		+ 		'<th>콘텐츠레벨</th>'
+	    + 	'</tr>'
+		+ '</thead>'
+		+	'<tbody>'
+		+		'<tr>'
+	    +			'<td align="left" class="row"><input type="text" id="sub_no" style="width:112px" value="'
+	    +			sub_no
+	    +			'" readonly></td>'
+        +			'<td align="center"><input type="text" id="sub_date" style="width:290px" value="'
+        +			sub_date
+        +			'" readonly></td>'
+        +			'<td align="center"><input type="text" id="sub_month" style="width:85px" value="'
+        +			sub_month
+        +			'" readonly></td>'
+        +			'<td align="center"><input type="text" id="sub_price" style="width:35px" value="'
+        +			sub_price
+        +			'" readonly></td>'
+        +			'<td align="center"><input type="text" id="sub_able" style="width:35px" value="'
+        +			sub_able
+        +			'" readonly></td>'
+        +			'<td align="center"><input type="text" id="c_name" style="width:35px" value="'
+        +			c_name
+        +			'" readonly></td>'
+        +			'<td align="center"><input type="text" id="sub_lv" style="width:35px" value="'
+        +			sub_lv
+        +			'" readonly></td>'
+		+ 		'</tr>'
+		+	'</tbody>'
+	    +'</table>' 
+}
+
+function GrpList(list){
+	main.innerHTML = '';
+
+    var tableHTML = '';
+    tableHTML += '<table class="table table-bordered">';
+    tableHTML += '<thead><tr><th>그룹ID</th><th>그룹명</th><th>학습시작일</th><th>학습종료일</th><th>학습인원</th></tr></thead>';
+    tableHTML += '<tbody>';
+
+    list.forEach(function(member) {
+        tableHTML += '<tr>';
+        tableHTML +='<input type="hidden" id="l_g_no" value="'+ member.g_no +'" readonly>'
+        tableHTML += '<td>' + member.g_name + '</td>';
+        tableHTML += '<td>' + member.g_start + '</td>';
+        tableHTML += '<td>' + member.g_end + '</td>';
+        tableHTML += '<td>' + member.g_cnt + '</td>';
+        tableHTML += '</tr>';
+    });
+
+    tableHTML += '</tbody></table>';
+
+    main.innerHTML += tableHTML; // main 요소에 테이블 추가
 }
 
 function cancelPay(index) {
