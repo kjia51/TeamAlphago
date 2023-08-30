@@ -32,11 +32,16 @@ public class LearnerServiceImpl implements LearnerService {
 		return 	learnerMapper.grouplistAll();
 	}
 
+	// 그룹 가입 신청
+	@Override
+	public int insertGrp(LearnerVO learnerVO) {
+		return learnerMapper.insertGrp(learnerVO);
+	}
 	
 
 		
 	
-
+ 
 
 
 

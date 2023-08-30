@@ -33,7 +33,7 @@ function changeGroup(g_name) {
     var url = '';
     if (g_name === 'listAll') {
         // 현재 페이지의 URL을 가져와서 리로드
-        var currentPageURL = window.location.href;
+        var currentPageURL = "'/alpha/joinGroup/' + g_name";
         window.location.href = currentPageURL;
     } else {   
 	    $.ajax({
@@ -46,6 +46,7 @@ function changeGroup(g_name) {
 	        },
 	        error: function(xhr, status, error) {
 	            // 에러 처리
+	        	console.log(error)
 	        }
 	    });
     }
@@ -118,6 +119,7 @@ function displayGroupList(map) {
 }
 
 //'신청' 버튼 클릭 이벤트 처리
+//'신청' 버튼 클릭 이벤트 처리
 function applyButton() {
     var checkbox = $(event.target).closest('tr').find('input[type="checkbox"]');
     var applyButton = $(event.target);
@@ -130,7 +132,7 @@ function applyButton() {
          // 체크 박스가 선택되어 있는 경우 - 버튼 활성화
 		 // 체크된 행
 		var checkedRow = document.querySelector('input[name="myCheckbox"]:checked').closest('tr');
-		var inputMid = document.querySelector('#menberId');
+		var inputMid = document.querySelector('#memberId');
 		
 		// 각 input 요소에서 값을 가져옵니다.
 		var l_m_id = inputMid.value;
@@ -148,7 +150,7 @@ function applyButton() {
 		    method: 'POST',
 		    headers: {
 		        'Content-Type': 'application/json'
-		    },
+		    },  
 		    body: JSON.stringify({
 		        l_m_id: l_m_id,
 		    	t_m_id: t_m_id,
@@ -157,19 +159,24 @@ function applyButton() {
 		         
 		    })
 		})
-		.then(response => response.json())
+		.then(response => response)
 		.then(data => {
 		    // fetch 요청이 성공한 경우의 처리
 		    console.log("data", data);
+	        // 현재 페이지의 URL을 가져와서 리로드
+	        var currentPageURL = "/alpha/joinGroup";
+	        window.location.href = currentPageURL;
 		    alert('신청되었습니다.');
 		})
 		.catch(error => {
 		    // fetch 요청이 실패한 경우의 처리
 		    console.error(error);
+	        var currentPageURL = "/alpha/joinGroup";
+	        window.location.href = currentPageURL;
 		    alert("에러가 발생하였습니다.")
 		});
     }
-}
+} 
 //체크 박스 클릭 이벤트 처리
 document.addEventListener('click', function(event) {
     if (event.target && event.target.matches('input[type="checkbox"]')) {
@@ -183,4 +190,4 @@ document.addEventListener('click', function(event) {
             applyButton.disabled = true;
         }
     }
-});
+});  

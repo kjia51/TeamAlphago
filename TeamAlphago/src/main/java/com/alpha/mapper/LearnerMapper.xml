@@ -10,7 +10,10 @@
 
 <!-- 그룹별 그룹 정보 -->
 <select id="groupInfo" resultType="com.alpha.vo.LearnerVO">
-	SELECT 
+	SELECT
+		s.t_m_id AS t_m_id,
+		sub_c_no AS l_c_no,
+		g_no AS l_g_no,   
 	    m_name AS t_m_name,
 	    CONCAT(IFNULL(DATE_FORMAT(g.g_start, '%y.%m.%d'), ''), ' ~ ', IFNULL(DATE_FORMAT(g.g_end, '%y.%m.%d'), '')) AS g_period,
 	    CONCAT(IFNULL(CONVERT(s.sub_able, CHAR), ''), ' / ', IFNULL(CONVERT(g.g_cnt, CHAR), '')) AS g_AppCnt
@@ -22,11 +25,15 @@
 	    grp g ON (s.sub_no = g.sub_no)
 	WHERE 
 	    g_name = #{g_name}
+	ORDER BY g_period asc     
 </select>
 
 <!-- 전체 그룹 정보 -->
 <select id="grouplistAll" resultType="com.alpha.vo.LearnerVO">
-	SELECT 
+	SELECT
+		s.t_m_id AS t_m_id,
+		sub_c_no AS l_c_no,
+		g_no AS l_g_no, 
 	    m_name AS t_m_name,
 	    CONCAT(IFNULL(DATE_FORMAT(g.g_start, '%y.%m.%d'), ''), ' ~ ', IFNULL(DATE_FORMAT(g.g_end, '%y.%m.%d'), '')) AS g_period,
 	    CONCAT(IFNULL(CONVERT(s.sub_able, CHAR), ''), ' / ', IFNULL(CONVERT(g.g_cnt, CHAR), '')) AS g_AppCnt
@@ -34,16 +41,18 @@
 	    subscribe s
 	LEFT JOIN member m ON (s.t_m_id = m.m_id)
 	LEFT JOIN grp g ON (s.sub_no = g.sub_no)
+	ORDER BY g_period asc
 </select>
 
-<!--  학습자 그룹 가입 승인 여부 확인 
-<select id="groupCk" resultType="com.alpha.vo.LearnerVO">
-	select * from learner
-</select>
-
-그룹 가입 신청
+<!-- 그룹 가입 신청  -->
 <insert id="insertGrp">
 	INSERT INTO learner (l_no ,t_m_id, l_m_id, l_c_no, l_g_no, l_register, l_checkyn)
 	values (#{l_no},#{t_m_id}, #{l_m_id}, #{l_c_no}, #{l_g_no}, now(), 'N')
-</insert> -->
+</insert>
+
+<!--  학습자 그룹 가입 승인 여부 확인  -->
+<select id="groupCk" resultType="com.alpha.vo.LearnerVO">
+	select * from learner
+</select>
+ 
 </mapper>
