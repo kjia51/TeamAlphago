@@ -18,6 +18,9 @@ public interface LearnerMapper {
 	
 	// 전체 그룹 리스트 
 	public List<LearnerVO> grouplistAll();
+
+	// 그룹 가입 신청
+	public int insertGrp(LearnerVO learnerVO);
 	
 
 

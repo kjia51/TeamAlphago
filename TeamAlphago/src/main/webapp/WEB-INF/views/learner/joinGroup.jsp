@@ -16,17 +16,17 @@
 <link rel="stylesheet" href="/resources/css/learner.css">
 
 <body>
-<%@ include file="../common/header.jsp"%>
 ${memberVO}
-
+<%@ include file="../common/header.jsp"%>
 	<div id="container">
 		<div class="wrap">
 			<div class="content_wrap">
 				<div class="titleBox">
 					<h2 class="t_title">그룹 가입 신청</h2>
-					<input name="l_m_id" id="menberId" type="hidden" value="${memberVO.m_id}"> 
+					<input name="l_m_id" id="memberId" type="hidden" value="${memberVO.m_id}"> 
 				</div>
 
+${grplist}
 				<!--그룹가입신청-->
 				<form class="searchWrap searchWrap_wide">
 					<table class="table table-bordered">
@@ -42,7 +42,7 @@ ${memberVO}
 									<div class="searchBox">
 										<select title="groupName" name="g_name" id=""
 											onchange="changeGroup(this.value);" value="" 
-										<c:set var="isMember" value="${memberVO.m_id}" />	
+										<c:set var="isMember" value="${memberVO.m_id}" />
 										<c:if test="${isMember == null}">disabled="disabled"</c:if>>
 											<option value="listAll">전체</option>
 											<c:forEach items="${list}" var="group">

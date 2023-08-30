@@ -97,7 +97,7 @@
                         <div class="gnb_sub gnb_sub_3">
                             <h3 class="blind">대회정보</h3>
                             <ul>
-                                <li><a href="/alpha/joinGroup"> 그룹 가입 신청</a></li>
+                                <li><a href="/alpha/joinGroup?l_m_id=${memberVO.m_id}"> 그룹 가입 신청</a></li>
                                 <li><a href="https://www.kbaduk.or.kr/bbs/read/competition/domestic/"> 숙제 제출 </a></li>
                             </ul>
                         </div>
