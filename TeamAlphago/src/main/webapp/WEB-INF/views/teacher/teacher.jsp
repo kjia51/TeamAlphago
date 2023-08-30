@@ -46,37 +46,27 @@ div .InfoBox .info {
 
         <div class="content_wrap">
 
+            <form  method="get" name="searchForm" class="content_wrap">
+			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
             <div class="titleBox">
                 <h2 class="t_title">콘텐츠 조회</h2>
             </div>
-
-
-            <form class="searchWrap btnTopSrch" name="searchForm" action="/alpha/teacher">
-                <!-- 상단 검색 -->
-                <h2 class="blind">검색</h2>
-                <div class="searchBox">
-                    <fieldset>
-                        <input type="hidden" name="p" value="1">
-                        <legend>전체 검색</legend>
-                        <select title="검색 분류" name="cate" value="" class="form-group">
-                            <option value="전체">전체</option>
-                            <option value="초급">초급</option>
-                            <option value="중급">중급</option>
-                            <option value="고급">고급</option>
-                        </select>
-                        <input type="text" class="inputSrch" title="검색어를 입력해주세요." autofocus="autofocus" placeholder="검색어를 입력해주세요." name="word" value="${pageDto.cri.searchWord }" style="width:190px">
-                        <input type="submit" class="btnTopSrch btn btn-primary" value="검색">
-                    </fieldset>
-                </div>
-                <!-- // 상단 검색 -->
-            </form>
-
-
-            <div class="entry">
-                <div class="photoAtcList">
-
-${pageDto }
-
+            
+            <div class="searchWrap searchWrap_wide searchWrap_normal">
+                    <div class="searchBox searchBox-mid searchBox-center">
+                        <fieldset>
+                            <input type="hidden" name="p" value="1">
+                            <legend>전체 검색</legend>
+                            <select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }">
+                                <option value="c_name">제목</option>
+                            </select>
+                            <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." 
+                            		name="searchWord" value="${pageDto.cri.searchWord }" />
+                            <input type="submit" class="btn btn-primary" value="검색" />
+                        </fieldset>
+                    </div>
+            </div>           
+        </form>
 총 ${totalCnt } 건
 
 	<c:set var="i" value="0" />
@@ -85,15 +75,16 @@ ${pageDto }
 	
 <c:choose>
 <c:when test="${contentList != null && fn:length(contentList) > 0 }">
+                    <ul class="pList">
 	  <c:forEach  var="con" items="${contentList }" varStatus="status">
 
 	  			<input type="hidden" class="index" id="c_level" data-clevel="${status.index}" value="${con.c_level }"readonly>
 			<input type="hidden" class="index" id="c_no" data-cid="${status.index}" value="${con.c_no }"readonly>
 	  
 	    <c:if test="${i%j == 0 }">
-                    <ul class="pList">
                          </c:if>
                          <li>
+                         	
                             <a href="https://www.kbaduk.or.kr/bbs/view/thum/photo/95/" class="img">
                                 <img src="https://www.kbaduk.or.kr/storage/mis/2023_03/06/b78e96e66dffc3d12d10e49db1563282.jpg" alt="">
                                 <span class="text"><em>${status.index}</em></span>
@@ -104,20 +95,15 @@ ${pageDto }
                             </p>
                        </li>
   	    <c:if test="${i%j == j-1 }">
-                    </ul>
                        	    </c:if>
-     <c:set var="i" value="${i+1 }" />
 	  </c:forEach>
+                    </ul>
 	     </c:when>
   <c:otherwise>
     <li>존재하지 않습니다.</li>
 
   </c:otherwise>
   </c:choose>                                               
-                </div><!-- // photoAtcList -->
-                <div class="paging">
-                    <a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=1" class="current">1</a><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=2">2</a><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=3">3</a><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=4">4</a><a href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=5">5</a><a class="nextPage" href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=6"> <span>다음</span> </a><a class="nextPageMore" href="https://www.kbaduk.or.kr/bbs/read/thum/photo/?p=6"> <span>다다음</span> </a>                </div>
-            </div>
         </div>
         <!-- //content close -->
 
@@ -146,6 +132,7 @@ function go(page){
 	document.searchForm.submit();
 }
 </script>
+<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
 <%@ include file="../common/footer.jsp" %>
 
 

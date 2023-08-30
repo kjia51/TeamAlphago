@@ -12,8 +12,10 @@ public interface LearnerService {
 	// 그룹 이름 리스트 
 	public List<LearnerVO> groupName(String g_name);
 
-
 	// 그룹 정보 리스트
 	public List<LearnerVO> groupInfo(String g_name);
+	
+	// 전체 그룹 리스트 
+	public List<LearnerVO> grouplistAll();
 
 }

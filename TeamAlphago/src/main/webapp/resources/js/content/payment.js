@@ -68,6 +68,39 @@ function checkLogin() {
 	
 }
 
+function getContent(index) {
+	var i = index;
+	console.log(i);
+	
+	var c_no = $('#c_no').val();
+    var m_id = $('#m_id').val();
+    var c_name = $('#c_name').val();
+    var today = getsys();
+    var price = $('input[data-price="'+index+'"]').val();
+    var sub_able =  $('input[data-cnt="'+index+'"]').val();
+    var sub_connection = 'N';
+    
+//    console.log(c_no);
+//    console.log(m_id);
+//    console.log(c_name);
+//    console.log(today);
+//    console.log(price);
+//    console.log(sub_able.substr());
+//    console.log(sub_connection);
+    
+    let list = {
+    		c_no : c_no
+    		,m_id : m_id
+    		,c_name : c_name
+    		,today : today
+    		,price : price
+    		,sub_able : sub_able
+    		,sub_connection : sub_connection
+    }
+    
+    return list;
+}
+
 
 $('#payment').click(function () { //결제버튼
 	
@@ -78,24 +111,37 @@ $('#payment').click(function () { //결제버튼
 	var IMP = window.IMP;
 	IMP.init('imp07586387');
 	
-	var able =  $("#pCnt option:selected").val();
+	var idx = -1;
+	
+	$('input:checkbox[name=chkbox]').each(function() {
+		   if(this.checked){//checked 처리된 항목의 값
+		   idx = $('input:checkbox[name=chkbox]').index(this); 		   
+		   console.log(idx);
+		   return false;;
+		   }
+	});
+	
                      
     //DOM객체들에서 사용할 데이터 뽑기
-    var c_no = $('#c_no').val();
-    var m_id = $('#m_id').val();
-    var c_name = $('#c_name').val();
-    var today = getsys();
-    var price = $('#c_sellpice').val();
-    var sub_able = able.substr(0, (able.length)-1);
-    var sub_connection = 'N';
+	var list = getContent(idx);
+	
+	var c_no = list.c_no;
+    var m_id = list.m_id;
+    var c_name = list.c_name;
+    var today = list.today;
+    var price = list.price;
+    var sub_able =  list.sub_able;
+    var sub_connection = list.sub_connection;
     
     console.log(c_no);
     console.log(m_id);
     console.log(c_name);
     console.log(today);
     console.log(price);
-    console.log(sub_able.substr());
+    console.log(sub_able);
     console.log(sub_connection);
+
+	
                   
     IMP.request_pay({
         //카카오페이 결제시 사용할 정보 입력

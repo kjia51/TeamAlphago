@@ -45,6 +45,7 @@ public class LearnerController extends CommonRestController {
 		ModelAndView mav = new ModelAndView("/learner/joinGroup");
 		try {
 			mav.addObject("list", learnerService.groupName(g_name));
+			mav.addObject("listAll", learnerService.grouplistAll());
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -55,7 +56,8 @@ public class LearnerController extends CommonRestController {
 	
 	// 그룹 정보 리스트
 	@GetMapping("/joinGroup/{g_name}")
-	public Map<String, Object> groupInfo(@PathVariable("g_name") String g_name, LearnerVO vo, HttpServletRequest request){
+	public Map<String, Object> groupInfo(@PathVariable("g_name") String g_name, LearnerVO vo, 
+																	HttpServletRequest request){
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		HttpSession session = request.getSession();
@@ -72,8 +74,6 @@ public class LearnerController extends CommonRestController {
 		
 		return map;
 	}
-
-
 
 
 }

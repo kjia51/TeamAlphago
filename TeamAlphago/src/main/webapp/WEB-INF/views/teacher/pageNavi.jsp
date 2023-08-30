@@ -20,6 +20,7 @@ nav > ul {
 nav > ul > li {
 margin-left: 10px;
 list-style: none;
+cursor: pointer;
 }
 </style>
 </head>

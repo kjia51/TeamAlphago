@@ -8,19 +8,20 @@
 	<select id="getContentList" resultType="com.alpha.vo.ContentVO">
 			SELECT *
 			FROM content
-			ORDER BY c_no DESC
-			LIMIT #{amount} OFFSET #{startNo}
+	<include refid="criteria"></include>		
+		ORDER BY C_NO DESC LIMIT #{startNo}, #{endNo}
 	</select>
 	
 	<!-- 콘텐츠 총 갯수 -->
 	<select id="totalCnt" resultType="int">
 	select count(*) from content
+	<include refid="criteria"></include>	
 	</select>	
 	
 	<!-- c_id로 콘텐츠 상세 내용 가져오기 -->
 	<select id="getContentDetail" resultType="com.alpha.vo.ContentVO">
 	 <![CDATA[
-	select s.c_no, s.c_able, c_name, c_level, if(s.c_able-30<=0,0,s.c_able-30) c_discount, c_price, c_price*(1-(if(s.c_able-30<=0,0,s.c_able-30)/100)) c_sellprice from content c
+	select s.c_no, s.c_able, c_name, c_level, if(s.c_able-30<=0,0,s.c_able-30) c_discount, (c_price*s.c_able/10) c_price, c_price*(s.c_able/10)*(1-(if(s.c_able-30<=0,0,s.c_able-30)/100)) c_sellprice,(1-(if(s.c_able-30<=0,0,s.c_able-30)/100)) from content c
 	]]>
 	left join 
 	(select
@@ -49,6 +50,12 @@
 	from subscribe s, content 
 	where s.sub_c_no = content.c_no
     and t_m_id = #{t_m_id}
+    	<choose>
+		<when test="cri.searchField == 'c_name'">
+			and c_name like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+	</choose>	
+    ORDER BY SUB_DATE DESC LIMIT  #{cri.startNo}, #{cri.endNo}
 	</select>
 		
 	<!-- 취소 시 환불&구독내역에서 삭제 -->
@@ -56,16 +63,25 @@
 		delete from subscribe where sub_no=#{sub_no}
 	</delete>
 	
-<!-- 그룹  -->
+	<!-- 그룹  -->
 	<!-- t_m_id로  가져오기 -->
 	<select id="getmyGroupList" resultType="com.alpha.vo.GrpVO">
 	select * from grp where t_m_id = #{t_m_id}
+	 <choose>
+		<when test="cri.searchField == 'g_no'">
+			and g_no like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+		<when test="cri.searchField == 'g_name'">
+			and g_name like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+	</choose>	
+	ORDER BY G_NO DESC LIMIT #{cri.startNo}, #{cri.endNo}
 	</select>
 	
 	<!-- 그룹 등록  -->
 	<insert id="insertGroups">
-	INSERT INTO grp (t_m_id, g_name, g_cnt, g_start, g_end) VALUES
-    (#{t_m_id}, #{g_name}, #{g_cnt},
+	INSERT INTO grp (g_no, sub_no, t_m_id, g_name, g_cnt, g_start, g_end) VALUES
+    (#{g_no}, #{sub_no},#{t_m_id}, #{g_name}, #{g_cnt},
     STR_TO_DATE(#{g_start}, '%Y-%m-%d'),
     DATE_ADD(STR_TO_DATE(#{g_start}, '%Y-%m-%d'), INTERVAL 90 DAY));
 	</insert>
@@ -75,7 +91,7 @@
 	select s.* , c_level, c_no, c_name
 	from subscribe s, content 
 	where s.sub_c_no = content.c_no
-	and sub_no = #{sub_id}
+	and sub_no = #{sub_no}
 	</select>
 	
 	<!-- 해당 그룹 정보 가져오기 / g_no-->
@@ -96,6 +112,15 @@
 	and l.l_m_id = member.m_id
 	and grp.g_no = #{g_no}
     and l_checkyn = 'Y';
+    <choose>
+		<when test="cri.searchField == 'l_m_id'">
+			and l_m_id like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+		<when test="cri.searchField == 'm_name'">
+			and m_name like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+	</choose>
+	ORDER BY MEMBER.M_NAME DESC LIMIT  #{cri.startNo}, #{cri.endNo}
 	</select>
 	
 	<!-- c_id로 콘텐츠 상세 내용 갯수-->
@@ -135,5 +160,52 @@
 	update learner set l_checkyn= 'Y'
 	where l_no=#{l_no}
 	</update>
+	
+	<!-- 나의 구독내역 리스트 / 그룹이 연결되지 않음 -->
+	<select id="subContent" resultType="com.alpha.vo.SubscribeVO">
+	select s.* , c_name
+	from subscribe s, content 
+	where s.sub_c_no = content.c_no
+    and t_m_id = #{t_m_id}
+   	and sub_connection = 'N'
+	</select>
+	
+	<update id="insertGroupupdatesub">
+	update subscribe set sub_connection= 'Y'
+	where sub_no=#{sub_no}
+	</update>
+	
+	<!-- 구독 총 갯수 -->
+	<select id="totalCntSub" resultType="int">
+	select count(*) from subscribe
+	where t_m_id = #{t_m_id}
+	<choose>
+		<when test="cri.searchField == 'c_name'">
+			and c_name like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+	</choose>
+	</select>	
+	
+	<!-- 그룹 총 갯수 -->
+	<select id="totalCntGrp" resultType="int">
+	select count(*) from grp
+	where t_m_id = #{t_m_id}
+		 <choose>
+		<when test="cri.searchField == 'g_no'">
+			and g_no like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+		<when test="cri.searchField == 'g_name'">
+			and g_name like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+	</choose>
+	</select>	
+	
+	<sql id="criteria">
+	<choose>
+		<when test="searchField == 'c_name'">
+			where c_name like CONCAT('%', #{searchWord}, '%')
+		</when>
+	</choose>
+	</sql>
 
 </mapper>
