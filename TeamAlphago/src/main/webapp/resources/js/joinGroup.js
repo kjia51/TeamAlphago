@@ -118,64 +118,89 @@ function displayGroupList(map) {
     groupInfoDiv.innerHTML += pageBlock;
 }
 
-//'신청' 버튼 클릭 이벤트 처리
+var checkedRow =[];
 //'신청' 버튼 클릭 이벤트 처리
 function applyButton() {
+	// 체크된 행
+	var checkedRow = document.querySelector('input[name="myCheckbox"]:checked').closest('tr');
+	var inputMid = document.querySelector('#memberId');
+	var inputDiv = document.querySelector('#division');
+	
+	// 각 input 요소에서 값을 가져옵니다.
+	var l_m_id = inputMid.value;
+	var m_division = inputDiv.value;
+	var t_m_id = checkedRow.querySelector('#teacherId').value;
+	var l_g_no = checkedRow.querySelector('#groupNo').value;
+	var l_c_no = checkedRow.querySelector('#contentNo').value;
+	
+	console.log(l_m_id);
+	console.log(t_m_id);
+	console.log(l_g_no);
+	console.log(l_c_no);
+	console.log(m_division);
+	
     var checkbox = $(event.target).closest('tr').find('input[type="checkbox"]');
     var applyButton = $(event.target);
+    
+    if(m_division == 2){
+    	if (!checkbox.prop('checked')) {
+    		// 체크 박스가 선택되어 있지 않은 경우 - 알림 및 버튼 비활성화
+    		alert('신청하실 그룹을 선택하여 주세요.');
+    		applyButton.prop('disabled', true);
+    	} else {
+    		// 체크 박스가 선택되어 있는 경우 - 버튼 활성화
+    		// 이미 가입 신청되었는지 확인
+            var isAlreadyApplied = checkedRow.classList.contains('applied');
+            
+            if (isAlreadyApplied) {
+                // 이미 가입 신청한 상태인 경우
+                alert('이미 가입 신청이 완료된 그룹입니다.');
+                applyButton.prop('disabled', true);
+            }else{
+            	
+    		// fetch 요청
+    		fetch('/alpha/groupApply', {
+    			method: 'POST',
+    			headers: {
+    				'Content-Type': 'application/json'
+    			},  
+    			body: JSON.stringify({
+    				l_m_id: l_m_id,
+    				t_m_id: t_m_id,
+    				l_g_no: l_g_no,
+    				l_c_no: l_c_no
+    				
+    			})
+    		})
+    		.then(response => response)
+    		.then(data => {
+    			// fetch 요청이 성공한 경우의 처리
+    			console.log("data", data);
+    			
+                // 이미 가입 신청한 상태 표시
+                checkedRow.classList.add('applied');
+                
+                alert('신청되었습니다.');
+                // 현재 페이지의 URL을 가져와서 리로드
+                var currentPageURL = "/alpha/joinGroup";
+                window.location.href = currentPageURL;
+    		})
+    		.catch(error => {
+    			// fetch 요청이 실패한 경우의 처리
+    			console.error(error);
+    			var currentPageURL = "/alpha/joinGroup";
+    			window.location.href = currentPageURL;
+    			alert("에러가 발생하였습니다.")
+    		});
+    	}
+    	}
 
-    if (!checkbox.prop('checked')) {
-        // 체크 박스가 선택되어 있지 않은 경우 - 알림 및 버튼 비활성화
-        alert('신청하실 그룹을 선택하여 주세요.');
-        applyButton.prop('disabled', true);
-    } else {
-         // 체크 박스가 선택되어 있는 경우 - 버튼 활성화
-		 // 체크된 행
-		var checkedRow = document.querySelector('input[name="myCheckbox"]:checked').closest('tr');
-		var inputMid = document.querySelector('#memberId');
-		
-		// 각 input 요소에서 값을 가져옵니다.
-		var l_m_id = inputMid.value;
-		var t_m_id = checkedRow.querySelector('#teacherId').value;
-		var l_g_no = checkedRow.querySelector('#groupNo').value;
-		var l_c_no = checkedRow.querySelector('#contentNo').value;
-		
-		console.log(l_m_id);
-		console.log(t_m_id);
-		console.log(l_g_no);
-		console.log(l_c_no);
-		
-		// fetch 요청
-		fetch('/alpha/groupApply', {
-		    method: 'POST',
-		    headers: {
-		        'Content-Type': 'application/json'
-		    },  
-		    body: JSON.stringify({
-		        l_m_id: l_m_id,
-		    	t_m_id: t_m_id,
-		        l_g_no: l_g_no,
-		        l_c_no: l_c_no
-		         
-		    })
-		})
-		.then(response => response)
-		.then(data => {
-		    // fetch 요청이 성공한 경우의 처리
-		    console.log("data", data);
-	        // 현재 페이지의 URL을 가져와서 리로드
-	        var currentPageURL = "/alpha/joinGroup";
-	        window.location.href = currentPageURL;
-		    alert('신청되었습니다.');
-		})
-		.catch(error => {
-		    // fetch 요청이 실패한 경우의 처리
-		    console.error(error);
-	        var currentPageURL = "/alpha/joinGroup";
-	        window.location.href = currentPageURL;
-		    alert("에러가 발생하였습니다.")
-		});
+    }else{
+   		alert('신청불가');
+		applyButton.prop('disabled', true);
+    	
     }
+    
 } 
 //체크 박스 클릭 이벤트 처리
 document.addEventListener('click', function(event) {

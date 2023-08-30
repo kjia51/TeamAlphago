@@ -62,7 +62,6 @@ public class LearnerController extends CommonRestController {
 	public Map<String, Object> groupInfo(@PathVariable("g_name") String g_name, MemberVO vo 
 																	){
 		Map<String, Object> map = new HashMap<String, Object>();
-		
 
 		try {
 			List<LearnerVO> grplist = learnerService.groupInfo(g_name);
@@ -79,6 +78,7 @@ public class LearnerController extends CommonRestController {
 	@PostMapping("/groupApply")
 	public void groupApply(@RequestBody LearnerVO learnerVO) {
 		System.out.println("그룹가입페이지 연결");
+		
 		learnerService.insertGrp(learnerVO);
 		System.out.println("learnerVO:"+learnerVO);
 	}
