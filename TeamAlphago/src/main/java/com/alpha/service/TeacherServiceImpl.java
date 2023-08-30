@@ -69,8 +69,8 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public List<LearnerVO> getGroupLearner(String g_no) {
-		return mapper.getGroupLearner(g_no);
+	public List<LearnerVO> getGroupLearner(String g_no, Criteria cri) {
+		return mapper.getGroupLearner(g_no, cri);
 	}
 
 	@Override

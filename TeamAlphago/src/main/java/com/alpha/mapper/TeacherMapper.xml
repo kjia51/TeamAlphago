@@ -112,6 +112,15 @@
 	and l.l_m_id = member.m_id
 	and grp.g_no = #{g_no}
     and l_checkyn = 'Y';
+    <choose>
+		<when test="cri.searchField == 'l_m_id'">
+			and l_m_id like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+		<when test="cri.searchField == 'm_name'">
+			and m_name like CONCAT('%', #{cri.searchWord}, '%')
+		</when>
+	</choose>
+	ORDER BY MEMBER.M_NAME DESC LIMIT  #{cri.startNo}, #{cri.endNo}
 	</select>
 	
 	<!-- c_id로 콘텐츠 상세 내용 갯수-->

@@ -80,6 +80,8 @@
 	<div id="getgroup">
 	</div>
 
+	<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
+
 	<div class="btn">
 	    <button><a class="" onclick="">저장하기</a></button>
 	    <button><a class="modal_close_btn">닫기</a></button>
@@ -117,9 +119,8 @@
                             <td align="center"> <input type="text" id="g_name" value="${group.g_name }"readonly></td>
                             <td align="center"> <input type="text" id="sub_price" value="${group.g_cnt }"readonly></td>
                             <td align="center">${group.g_start } ~ ${group.g_end }</td>
-                            <td align="center" id="popup_open_btn" onclick="getGroupOne(${status.index})"><button>학습자 관리</button></td>
-                            
-                           
+                            <td align="center"><button id="popup_open_btn" onclick="getGroupOne(${status.index})">학습자 관리</button></td>
+          
                         </tr>
 						
 						
@@ -252,10 +253,10 @@ function resultList(map){
 		console.log(end);
 		console.log(date);
 		main.innerHTML += ''
-		    +			'<input type="text" id="l_g_no" value="'
+		    +			'<input type="hidden" id="l_g_no" value="'
 		    +			g_no
 		    +			'" readonly>'
-		    +			'<input type="text" id="g_no" value="'
+		    +			'<input type="hidden" id="g_no" value="'
 		    +			g_name
 		    +			'" readonly>'
 		    +			'<input type="text" id="g_no" value="'
@@ -320,8 +321,29 @@ function MemberList(list){
 	main.innerHTML = '';
 
     var tableHTML = '<table class="table table-bordered">';
+    tableHTML += '<form  method="get" name="searchForm" class="content_wrap">'
+    tableHTML += '<input name="t_m_id" id="m_id" type="hidden" value="${memberVO.m_id }">'
+    tableHTML += '<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">'
+    tableHTML += ' <div class="searchWrap searchWrap_wide searchWrap_normal">'
+    tableHTML += '<div class="searchBox searchBox-mid searchBox-center">'
+    tableHTML += '<fieldset>'
+    tableHTML += '<input type="hidden" name="p" value="1">'
+    tableHTML += '<legend>전체 검색</legend>'
+    tableHTML += '<select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }">'
+    tableHTML += '<option value="l_m_id">학생ID</option>'
+    tableHTML += '<option value="m_name">학생이름</option>'
+    tableHTML += '</select>'
+    tableHTML += '<input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." '
+    tableHTML += 'name="searchWord" value="${pageDto.cri.searchWord }" />'
+    tableHTML += '<input type="submit" class="btn btn-primary" value="검색" />'
+   	tableHTML += '</fieldset>'
+    tableHTML += '</div>'
+    tableHTML += '</div>'
+    tableHTML += '</form>';
+    tableHTML += '<table class="table table-bordered">';
     tableHTML += '<thead><tr><th>학생ID</th><th>이름</th><th></th></tr></thead>';
     tableHTML += '<tbody>';
+    
 
     list.forEach(function(member, index) {
         tableHTML += '<tr>';

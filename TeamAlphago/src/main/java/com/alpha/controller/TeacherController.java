@@ -232,14 +232,23 @@ public class TeacherController extends CommonRestController {
 	   }
 	   
 	   @GetMapping("/group/getGroupOne/list/{g_no}") //그룹의 학습자 정보 가져오기
-	   public List<LearnerVO> GetGroupLearner(@PathVariable("g_no") String g_no) {
+	   public List<LearnerVO> GetGroupLearner(@PathVariable("g_no") String g_no, Criteria cri) {
 		   
 		   System.out.println("list==============");
 		   System.out.println(g_no);
+		   
 
-				List<LearnerVO> list = service.getGroupLearner(g_no);
-				System.out.println(list);
-				return list;
+			int totalCnt = service.totalCntSub(g_no, cri);
+			PageDto pageDto = new PageDto(cri, totalCnt);
+
+			ModelAndView mav = new ModelAndView("/teacher/getGroupOne/list/");
+			mav.addObject("pageDto", pageDto);
+			mav.addObject("totalCnt", totalCnt);
+		   
+
+			List<LearnerVO> list = service.getGroupLearner(g_no, cri);
+			System.out.println(list);
+			return list;
 
 	   }
 	   
