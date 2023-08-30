@@ -5,22 +5,46 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
-<%@ include file="../common/header.jsp"%>
-<script src="/resources/js/joinGroup.js"></script>
+
+<script src="/resources/js/joinGroup.js?v=<%=new java.util.Date().getTime()%>"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>그룹 가입 신청</title>
-<link rel="stylesheet" href="../resources/css/learner.css">
 </head>
+<link rel="stylesheet" href="/resources/css/learner.css">
+<style>
+.apply-button {
+            padding: 10px 20px;
+            
+            color: #cccccc;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 40px;
+}
 
+/* 버튼에 호버 효과 추가 */
+.apply-button:hover {
+	color: black;
+	font-style: bold;
+}
+
+/* 버튼 비활성화 스타일
+.apply-button[disabled] {
+    cursor: not-allowed;
+} */
+</style>
 <body>
+<%@ include file="../common/header.jsp"%>
+${memberVO}
 
 	<div id="container">
 		<div class="wrap">
 			<div class="content_wrap">
 				<div class="titleBox">
 					<h2 class="t_title">그룹 가입 신청</h2>
-					<!--  <input type="hidden" value="${sessionScope.memberId}" id="m_id">-->
+					<input name="l_m_id" id="menberId" type="hidden" value="${memberVO.m_id}"> 
 				</div>
 
 				<!--그룹가입신청-->
@@ -70,19 +94,38 @@
 								<th>가입신청</th>
 							</tr>
 						</thead>
+
 						<tbody>
+						<c:set var="isMember" value="${memberVO.m_id}" />
+					<c:if test="${isMember != null}">
 							<c:forEach items="${listAll}" var="grplist" varStatus="status">
 								<tr>
 									<th align="center"><input type="checkbox" id="checkbox"
 										name="myCheckbox" value="isChecked"></th>
 									<td align="center" class="row">${grplist.t_m_name}</td>
 									<td align="center">${grplist.g_period}</td>
-									<td align="center">${grplist.g_AppCnt}</td>
+									<td align="center">${grplist.g_AppCnt}
+									</td>
 									<td align="center">
-										<button class="apply-button" id="applyButton" disabled>신청</button>
+										<button class="apply-button" id="applyButton" onclick="applyButton()">신청</button>
+									</td>
+									<td style="display: none;">
+										<input type="hidden" name="t_m_id" id="teacherId" value="${grplist.t_m_id}">
+									 </td>
+									 <td style="display: none;">	
+										<input type="hidden" name="l_g_no" id="groupNo" value="${grplist.l_g_no}">
+									 </td>
+									 <td style="display: none;">		
+										<input type="hidden" name="l_c_no" id="contentNo" value="${grplist.l_c_no}">
 									</td>
 								</tr>
 							</c:forEach>
+					</c:if>
+					<c:if test="${isMember == null}">
+						<tr>
+							<td colspan="5" style="text-align: center;">로그인 후에 이용 가능합니다.</td>
+						</tr>
+					</c:if>
 						</tbody>
 					</table>
 				</div>
@@ -94,27 +137,7 @@
 	<!-- container close -->
 	<%@ include file="../common/footer.jsp"%>
 <script type="text/javascript">
-// 체크 박스 선택 여부를 감지하고 신청 버튼 활성화/비활성화하는 함수
-function handleCheckboxChange() {
-    var checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
-    
-    checkboxes.forEach(function(checkbox) {
-        var row = checkbox.closest('tr'); // 현재 체크 박스가 속한 행을 찾음
-        var applyButton = row.querySelector('.apply-button'); // 해당 행의 신청 버튼을 찾음
-        
-        if (checkbox.checked) {
-            applyButton.removeAttribute('disabled'); // 체크 박스 선택 시 신청 버튼 활성화
-        } else {
-            applyButton.setAttribute('disabled', 'disabled'); // 체크 박스 선택 해제 시 신청 버튼 비활성화
-        }
-    });
-}
 
-// 체크 박스 상태 변화 감지 이벤트 설정
-var checkboxes = document.querySelectorAll('input[name="myCheckbox"]');
-checkboxes.forEach(function(checkbox) {
-    checkbox.addEventListener('change', handleCheckboxChange);
-});
 </script>
 </body>
 </html>

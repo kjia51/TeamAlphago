@@ -10,12 +10,17 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alpha.service.LearnerService;
 import com.alpha.vo.LearnerVO;
+import com.alpha.vo.MemberVO;
+import com.mysql.cj.Session;
 
 @RestController
 @RequestMapping("/alpha/*")
@@ -41,38 +46,44 @@ public class LearnerController extends CommonRestController {
 	/* 그룹 가입 신청 페이지 */
 	// 그룹 이름 리스트 	 
 	@GetMapping("/joinGroup")
-	public ModelAndView groupName(String g_name) {
+	public ModelAndView groupName(String g_name, String l_m_id) {
+	
+		System.out.println(l_m_id);
 		ModelAndView mav = new ModelAndView("/learner/joinGroup");
+		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			mav.addObject("list", learnerService.groupName(g_name));
 			mav.addObject("listAll", learnerService.grouplistAll());
 			
 		} catch (Exception e) {
-			// TODO: handle exception
-			
+			map.put(REST_FAIL, "오류가 발생하였습니다.");
 		}
 		return mav; 
 	}
 	
 	// 그룹 정보 리스트
 	@GetMapping("/joinGroup/{g_name}")
-	public Map<String, Object> groupInfo(@PathVariable("g_name") String g_name, LearnerVO vo, 
-																	HttpServletRequest request){
+	public Map<String, Object> groupInfo(@PathVariable("g_name") String g_name, MemberVO vo 
+																	){
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("m_id");
-		if(id != null) {
-			vo.setL_m_id(id);
-		}else {
-			vo.setL_m_id("");
+
+		try {
+			List<LearnerVO> grplist = learnerService.groupInfo(g_name);
+			System.out.println(grplist);
+			map.put("grplist", grplist);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			map.put(REST_FAIL, "오류가 발생하였습니다.");
 		}
-		
-		List<LearnerVO> grplist = learnerService.groupInfo(g_name);
-		System.out.println(grplist);
-		map.put("grplist", grplist);
-		
 		return map;
+	}
+	// 그룹 가입 신청
+	@PostMapping("/joinGroup")
+	public String groupApply(@RequestBody LearnerVO learnerVO, RedirectAttributes redirectAttributes) {
+		learnerService.insertGrp(learnerVO);
+		return "redirect:/joinGroup"; 
 	}
 
 
