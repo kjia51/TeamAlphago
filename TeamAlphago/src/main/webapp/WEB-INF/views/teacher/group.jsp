@@ -37,6 +37,7 @@
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
     border-bottom: 1px solid #dadada;
     vertical-align: middle;
+}
 </style>
 <body>
 
@@ -98,6 +99,12 @@
 		<hr>
 		<h2>그룹 정보</h2>
 	   	<h3>그룹명<input type="text" id="g_name"></h3>
+	   	<%@ include file="test.jsp" %>
+	   	<div style="display: inline-block;">
+	   	학습 시작날짜<input type="text" id="startdate">
+	   	<br>
+		학습 종료날짜<input type="text" id="enddate">
+	   	</div>
 	   	<br>
 		<div class="btn">
 		    <button><a onclick="groupinsert()">생성하기</a></button>
@@ -144,6 +151,7 @@
 						
 						
 						</c:forEach>
+							    
 					</c:when>
 				<c:otherwise>
 					<tr>
@@ -164,6 +172,8 @@
 
 
 <script>
+
+
 
 function modal(id) { //모달창 띄우기
     var zIndex = 9999;
@@ -291,6 +301,7 @@ function resultList(map){
 		var sub_name = vo.c_name;
 		var date = vo.sub_date;
 		var sub_date = date.substr(0,10);
+		var sub_month = vo.sub_month;
 		
 		var sub_able = vo.sub_able;
 		
@@ -321,23 +332,27 @@ function resultList(map){
 			+ 		'<th>콘텐츠명</th>'
 			+ 		'<th>수업 난이도</th>'
 			+ 		'<th>구독일</th>'
+			+ 		'<th>구독개월</th>'
 			+ 		'<th>수강가능인원</th>'
 		    + 	'</tr>'
 			+ '</thead>'
 			+	'<tbody>'
 			+		'<tr>'
-		    +			'<td align="left" class="row"><input type="text" id="sid" style="width:112px" value="'
+		    +			'<td align="left" class="row"><input type="text" id="sid" style="width:60px" value="'
 		    +			sid
 		    +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_name" style="width:290px" value="'
+            +			'<td align="center"><input type="text" id="sub_name" style="width:275px" value="'
             +			sub_name
             +			'" readonly></td>'
             +			'<td align="center"><input type="text" id="sub_lv" style="width:80px" value="'
             +			sub_lv
             +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_date" style="width:85px" value="'
+            +			'<td align="center"><input type="text" id="sub_date" style="width:72px" value="'
             +			sub_date
             +			'" readonly></td>'
+		    +			'<td align="left" class="row"><input type="text" id="sub_month" style="width:55px" value="'
+		    +			sub_month
+		    +			'" readonly></td>'
             +			'<td align="center"><input type="text" id="sub_able" style="width:35px" value="'
             +			sub_able
             +			'" readonly></td>'

@@ -122,9 +122,7 @@ function godetail(index) {
 	console.log(c_no);
 	window.location.replace("/alpha/teacher/detail?c_no="+c_no);
 	
-	
 }
-
 function go(page){
 	//alert(page);
 	document.searchForm.pageNo.value=page;

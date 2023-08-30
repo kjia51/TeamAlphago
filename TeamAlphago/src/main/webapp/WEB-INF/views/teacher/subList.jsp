@@ -78,8 +78,7 @@
                             <input type="hidden" name="p" value="1">
                             <legend>전체 검색</legend>
                             <select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }">
-                                <option value="c_name">제목</option>
-                                <option value="c_content">내용</option>
+                                <option value="c_no">콘텐츠명</option>
                             </select>
                             <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." 
                             		name="searchWord" value="${pageDto.cri.searchWord }" />
@@ -361,6 +360,12 @@ function cancelPay(index) {
 	}
 };
 
+function go(page){
+	//alert(page);
+	document.searchForm.pageNo.value=page;
+	document.searchForm.action = "/alpha/subList";
+	document.searchForm.submit();
+}
 </script>
 
 <div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>

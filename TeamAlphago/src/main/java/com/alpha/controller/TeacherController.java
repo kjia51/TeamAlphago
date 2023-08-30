@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -132,7 +133,7 @@ public class TeacherController extends CommonRestController {
 			System.out.println("그룹관리연결");
 			System.out.println(t_m_id);
 			
-			int totalCnt = service.totalCntSub(t_m_id, cri);
+			int totalCnt = service.totalCntGrp(t_m_id, cri);
 			PageDto pageDto = new PageDto(cri, totalCnt);
 			
 			ModelAndView mav = new ModelAndView("/teacher/group");
@@ -199,7 +200,7 @@ public class TeacherController extends CommonRestController {
 		    System.out.println(t_m_id);
 			System.out.println("그룹승인연결");
 			System.out.println(service.getmyGroupList(t_m_id,cri));
-			int totalCnt = service.totalCntSub(t_m_id, cri);
+			int totalCnt = service.totalCntGrp(t_m_id, cri);
 			PageDto pageDto = new PageDto(cri, totalCnt);
 
 			ModelAndView mav = new ModelAndView("/teacher/groupSingup");
@@ -232,37 +233,52 @@ public class TeacherController extends CommonRestController {
 	   }
 	   
 	   @GetMapping("/group/getGroupOne/list/{g_no}") //그룹의 학습자 정보 가져오기
-	   public List<LearnerVO> GetGroupLearner(@PathVariable("g_no") String g_no, Criteria cri) {
+	   public ResponseEntity<Map<String, Object>> GetGroupLearner(@PathVariable("g_no") String g_no, Criteria cri, Model model) {
 		   
 		   System.out.println("list==============");
 		   System.out.println(g_no);
 		   
 
-			int totalCnt = service.totalCntSub(g_no, cri);
-			PageDto pageDto = new PageDto(cri, totalCnt);
+			int LearnerCnt = service.totalCntLearner(g_no);
+			PageDto pageDto = new PageDto(cri, LearnerCnt);
 
-			ModelAndView mav = new ModelAndView("/teacher/getGroupOne/list/");
-			mav.addObject("pageDto", pageDto);
-			mav.addObject("totalCnt", totalCnt);
-		   
+
+			model.addAttribute("LearnerCnt", LearnerCnt);
+			model.addAttribute("pageDto", pageDto);
+			
+			System.out.println(LearnerCnt);
 
 			List<LearnerVO> list = service.getGroupLearner(g_no, cri);
-			System.out.println(list);
-			return list;
 
-	   }
+		    Map<String, Object> responseData = new HashMap<>();
+		    responseData.put("LearnerCnt", LearnerCnt);
+		    responseData.put("list", list);
+
+		    return ResponseEntity.ok(responseData);
+		}
 	   
-	   @GetMapping("/group/getJoin/list/{g_no}") //그룹의 학습자 정보 가져오기
-	   public List<LearnerVO> JoinGrouplist(@PathVariable("g_no") String g_no) {
+	   @GetMapping("/group/getJoin/list/{g_no}") //그룹의 신청자 정보 가져오기
+	   public ResponseEntity<Map<String, Object>> JoinGrouplist(@PathVariable("g_no") String g_no, Criteria cri, Model model) {
 		   
 		   System.out.println("join==============");
 		   System.out.println(g_no);
+		   
+			int JoinCnt = service.totalCntJoin(g_no);
+			PageDto JoinpageDto = new PageDto(cri, JoinCnt);
+			System.out.println(JoinCnt);
 
-				List<LearnerVO> list = service.JoinGroupLearner(g_no);
-				System.out.println(list);
-				return list;
+			model.addAttribute("JoinCnt", JoinCnt);
+			model.addAttribute("JoinpageDto", JoinpageDto);
 
-	   }
+			List<LearnerVO> list = service.JoinGroupLearner(g_no, cri);
+		   
+			Map<String, Object> responseData = new HashMap<>();
+		    responseData.put("JoinCnt", JoinCnt);
+		    responseData.put("list", list);
+
+		    return ResponseEntity.ok(responseData);
+	}
+
 
 	   @DeleteMapping("/group/getGroupOne/delAction/{l_no}")  //그룹의 학습자 정보 삭제(내보내기)
 		public Map<String, Object> Groupupdate(@PathVariable("l_no") String l_no) {
@@ -298,6 +314,14 @@ public class TeacherController extends CommonRestController {
 				e.printStackTrace();
 				return responseMap(REST_FAIL, "삭제 중 오류 발생");
 			}
+		}
+	   
+	   @GetMapping("/test")
+		public ModelAndView test() {
+
+			ModelAndView mav = new ModelAndView("/teacher/test");
+		
+			return mav;
 		}
 
 

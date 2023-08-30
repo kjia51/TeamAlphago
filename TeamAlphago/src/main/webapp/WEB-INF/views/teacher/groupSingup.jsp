@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +26,11 @@
     background-color: #fefefe;
     border: 1px solid #888;
     border-radius: 3px;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 5px;
+    border-bottom: 1px solid #dadada;
+    vertical-align: middle;
 }
 
 </style>
@@ -296,7 +302,16 @@ function groupMemList(g_no) {
 	var g_no = $('#l_g_no').val();
 	console.log(g_no);
 
-	fetchGet('/alpha/group/getGroupOne/list/'+g_no, MemberList);
+	fetch('/alpha/group/getGroupOne/list/' + g_no)
+    .then(response => response.json())
+    .then(data => {
+        const LearnerCnt = data.LearnerCnt;
+        const list = data.list;
+        MemberList(list, LearnerCnt);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 
 }
 
@@ -311,43 +326,33 @@ function delMember(index) {
 	//삭제 성공 시 MemberList 리로드
     fetchDelete('/alpha/group/getGroupOne/delAction/'+l_no, function(data) {
         result(data);
-        fetchGet('/alpha/group/getGroupOne/list/'+g_no, MemberList);
+    	fetch('/alpha/group/getGroupOne/list/' + g_no)
+        .then(response => response.json())
+        .then(data => {
+            const LearnerCnt = data.LearnerCnt;
+            const list = data.list;
+            MemberList(list, LearnerCnt);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
 
 }
     	 
-function MemberList(list){
+function MemberList(list, LearnerCnt){
 
 	main.innerHTML = '';
 
-    var tableHTML = '<table class="table table-bordered">';
-    tableHTML += '<form  method="get" name="searchForm" class="content_wrap">'
-    tableHTML += '<input name="t_m_id" id="m_id" type="hidden" value="${memberVO.m_id }">'
-    tableHTML += '<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">'
-    tableHTML += ' <div class="searchWrap searchWrap_wide searchWrap_normal">'
-    tableHTML += '<div class="searchBox searchBox-mid searchBox-center">'
-    tableHTML += '<fieldset>'
-    tableHTML += '<input type="hidden" name="p" value="1">'
-    tableHTML += '<legend>전체 검색</legend>'
-    tableHTML += '<select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }">'
-    tableHTML += '<option value="l_m_id">학생ID</option>'
-    tableHTML += '<option value="m_name">학생이름</option>'
-    tableHTML += '</select>'
-    tableHTML += '<input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." '
-    tableHTML += 'name="searchWord" value="${pageDto.cri.searchWord }" />'
-    tableHTML += '<input type="submit" class="btn btn-primary" value="검색" />'
-   	tableHTML += '</fieldset>'
-    tableHTML += '</div>'
-    tableHTML += '</div>'
-    tableHTML += '</form>';
-    tableHTML += '<table class="table table-bordered">';
+    var tableHTML ='<table class="table table-bordered">';
+    tableHTML += '총 ' + LearnerCnt + ' 명'; // LearnerCnt 변수 삽입
     tableHTML += '<thead><tr><th>학생ID</th><th>이름</th><th></th></tr></thead>';
     tableHTML += '<tbody>';
     
 
     list.forEach(function(member, index) {
         tableHTML += '<tr>';
-        tableHTML +='<input type="text" id="l_g_no" value="'+ member.l_g_no +'" readonly>'
+        tableHTML +='<input type="hidden" id="l_g_no" value="'+ member.l_g_no +'" readonly>'
         tableHTML +='<input type="hidden" id="index" value="'+ index +'" readonly>'
         tableHTML += '<td>' + '<input type="text" data-l_no="'+index+'" value="'+ member.l_no +'" readonly>' + '</td>';
         tableHTML += '<td>' + '<input type="text" value="'+ member.m_name +'" readonly>' + '</td>';
@@ -394,20 +399,31 @@ function joinGroup() {
 	var g_no = $('#l_g_no').val();
 	console.log(g_no);
 
-	fetchGet('/alpha/group/getJoin/list/'+g_no, JoinList);
+	fetch('/alpha/group/getJoin/list/' + g_no)
+    .then(response => response.json())
+    .then(data => {
+        const JoinCnt = data.JoinCnt;
+        const list = data.list;
+        JoinList(list, JoinCnt);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
-function JoinList(list){
+function JoinList(list, JoinCnt){
 
 	main.innerHTML = '';
 
-    var tableHTML = '<table class="table table-bordered">';
+    var tableHTML = '';
+    tableHTML += '총 ' + JoinCnt + ' 명'; // LearnerCnt 변수 삽입
+    tableHTML += '<table class="table table-bordered">';
     tableHTML += '<thead><tr><th>학생ID</th><th>이름</th><th>신청일자</th><th></th><th></th></tr></thead>';
     tableHTML += '<tbody>';
 
     list.forEach(function(member, index) {
         tableHTML += '<tr>';
-        tableHTML +='<input type="text" id="l_g_no" value="'+ member.l_g_no +'" readonly>'
+        tableHTML +='<input type="hidden" id="l_g_no" value="'+ member.l_g_no +'" readonly>'
         tableHTML +='<input type="hidden" id="index" value="'+ index +'" readonly>'
         tableHTML += '<td>' + '<input type="text" data-l_no="'+index+'" value="'+ member.l_no +'" readonly>' + '</td>';
         tableHTML += '<td>' + '<input type="text" value="'+ member.m_name +'" readonly>' + '</td>';
@@ -469,7 +485,16 @@ function JoinMember(index) { //가입 승인
 	//업데이트 성공 시 MemberList 리로드
     fetchPut('/alpha/group/getGroupOne/updateAction/'+l_no, obj, function(data) {
         result(data);
-        fetchGet('/alpha/group/getJoin/list/'+g_no, JoinList);
+    	fetch('/alpha/group/getJoin/list/' + g_no)
+        .then(response => response.json())
+        .then(data => {
+            const JoinCnt = data.JoinCnt;
+            const list = data.list;
+            JoinList(list, JoinCnt);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
 
 }
@@ -485,7 +510,16 @@ function RefuserMember(index) { //가입 거절
 	//삭제 성공 시 MemberList 리로드
     fetchDelete('/alpha/group/getGroupOne/delAction/'+l_no, function(data) {
         result(data);
-        fetchGet('/alpha/group/getJoin/list/'+g_no, JoinList);
+    	fetch('/alpha/group/getJoin/list/' + g_no)
+        .then(response => response.json())
+        .then(data => {
+            const JoinCnt = data.JoinCnt;
+            const list = data.list;
+            JoinList(list, JoinCnt);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
 
 }
@@ -502,7 +536,6 @@ function getGroup(g_no) {
 }
 
 </script>
-
 <div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
 <%@ include file="../common/footer.jsp" %>
 

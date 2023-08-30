@@ -9,7 +9,8 @@
 			SELECT *
 			FROM content
 	<include refid="criteria"></include>		
-		ORDER BY C_NO DESC LIMIT #{startNo}, #{endNo}
+		ORDER BY C_NO DESC 
+		LIMIT #{startNo}, #{amount}
 	</select>
 	
 	<!-- 콘텐츠 총 갯수 -->
@@ -46,16 +47,16 @@
 	
 	<!-- 나의 구독내역 리스트 -->
 	<select id="mySubList" resultType="com.alpha.vo.SubscribeVO">
-	select s.* , c_name
+	select s.* , content.c_name
 	from subscribe s, content 
 	where s.sub_c_no = content.c_no
     and t_m_id = #{t_m_id}
     	<choose>
-		<when test="cri.searchField == 'c_name'">
-			and c_name like CONCAT('%', #{cri.searchWord}, '%')
+		<when test="cri.searchField == 'c_no'">
+			and c_no like CONCAT('%', #{cri.searchWord}, '%')
 		</when>
 	</choose>	
-    ORDER BY SUB_DATE DESC LIMIT  #{cri.startNo}, #{cri.endNo}
+    ORDER BY SUB_DATE LIMIT #{cri.startNo}, #{cri.amount}
 	</select>
 		
 	<!-- 취소 시 환불&구독내역에서 삭제 -->
@@ -75,7 +76,7 @@
 			and g_name like CONCAT('%', #{cri.searchWord}, '%')
 		</when>
 	</choose>	
-	ORDER BY G_NO DESC LIMIT #{cri.startNo}, #{cri.endNo}
+	ORDER BY G_NO DESC LIMIT #{cri.startNo}, #{cri.amount}
 	</select>
 	
 	<!-- 그룹 등록  -->
@@ -83,7 +84,7 @@
 	INSERT INTO grp (g_no, sub_no, t_m_id, g_name, g_cnt, g_start, g_end) VALUES
     (#{g_no}, #{sub_no},#{t_m_id}, #{g_name}, #{g_cnt},
     STR_TO_DATE(#{g_start}, '%Y-%m-%d'),
-    DATE_ADD(STR_TO_DATE(#{g_start}, '%Y-%m-%d'), INTERVAL 90 DAY));
+    DATE_ADD(STR_TO_DATE(#{g_start}, '%Y-%m-%d'), INTERVAL 90 DAY))
 	</insert>
 	
 	<!-- 해당 구독 정보 가져오기 / sub_id-->
@@ -111,16 +112,8 @@
 	where grp.g_no = l.l_g_no
 	and l.l_m_id = member.m_id
 	and grp.g_no = #{g_no}
-    and l_checkyn = 'Y';
-    <choose>
-		<when test="cri.searchField == 'l_m_id'">
-			and l_m_id like CONCAT('%', #{cri.searchWord}, '%')
-		</when>
-		<when test="cri.searchField == 'm_name'">
-			and m_name like CONCAT('%', #{cri.searchWord}, '%')
-		</when>
-	</choose>
-	ORDER BY MEMBER.M_NAME DESC LIMIT  #{cri.startNo}, #{cri.endNo}
+    and l_checkyn = 'Y'
+	ORDER BY m_name DESC LIMIT #{cri.startNo}, #{cri.amount}
 	</select>
 	
 	<!-- c_id로 콘텐츠 상세 내용 갯수-->
@@ -154,6 +147,7 @@
 	and l.l_m_id = member.m_id
 	and grp.g_no = #{g_no}
     and l_checkyn = 'N'
+    ORDER BY m_name DESC LIMIT #{cri.startNo}, #{cri.amount}
 	</select>
 	
 	<update id="updateGroupLearner">
@@ -190,7 +184,7 @@
 	<select id="totalCntGrp" resultType="int">
 	select count(*) from grp
 	where t_m_id = #{t_m_id}
-		 <choose>
+	<choose>
 		<when test="cri.searchField == 'g_no'">
 			and g_no like CONCAT('%', #{cri.searchWord}, '%')
 		</when>
@@ -198,6 +192,20 @@
 			and g_name like CONCAT('%', #{cri.searchWord}, '%')
 		</when>
 	</choose>
+	</select>	
+	
+	<!-- 그룹 학습자 총 인원 -->
+	<select id="totalCntLearner" resultType="int">
+	select count(*) from learner
+	where l_g_no = #{g_no}
+    and l_checkyn = 'Y'
+	</select>	
+	
+	<!-- 신청자 총 인원 -->
+	<select id="totalCntJoin" resultType="int">
+	select count(*) from learner
+	where l_g_no = #{g_no}
+    and l_checkyn = 'N'
 	</select>	
 	
 	<sql id="criteria">
