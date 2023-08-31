@@ -22,8 +22,8 @@ public class LearnerServiceImpl implements LearnerService {
 
 	// 그룹 정보 리스트 
 	@Override
-	public List<LearnerVO> groupInfo(String g_name) {
-		return learnerMapper.groupInfo(g_name);
+	public List<LearnerVO> groupInfo(String g_name, String l_m_id) {
+		return learnerMapper.groupInfo(g_name, l_m_id);
 	}
 
 	// 전체 그룹 리스트 
@@ -37,7 +37,7 @@ public class LearnerServiceImpl implements LearnerService {
 	public int insertGrp(LearnerVO learnerVO) {
 		return learnerMapper.insertGrp(learnerVO);
 	}
-	
+
 
 		
 	

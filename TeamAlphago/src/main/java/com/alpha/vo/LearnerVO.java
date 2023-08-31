@@ -23,6 +23,7 @@ public class LearnerVO {
 	private String g_start; // 학습시작일
 	private String g_end; // 학습종료일   
 	private int sub_able; // 학습가능인원   
+	private int dupGrpCount; // 그룹 중복 카운트  
 	
 	
 	// 그룹 가입 신청

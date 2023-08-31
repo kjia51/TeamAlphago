@@ -16,7 +16,9 @@
 		g_no AS l_g_no,   
 	    m_name AS t_m_name,
 	    CONCAT(IFNULL(DATE_FORMAT(g.g_start, '%y.%m.%d'), ''), ' ~ ', IFNULL(DATE_FORMAT(g.g_end, '%y.%m.%d'), '')) AS g_period,
-	    CONCAT(IFNULL(CONVERT(s.sub_able, CHAR), ''), ' / ', IFNULL(CONVERT(g.g_cnt, CHAR), '')) AS g_AppCnt
+	    CONCAT(IFNULL(CONVERT(s.sub_able, CHAR), ''), ' / ', IFNULL(CONVERT(g.g_cnt, CHAR), '')) AS g_AppCnt,
+	    	   (SELECT count(*) FROM learner l
+		WHERE l_m_id = #{l_m_id} and  l_g_no = g_no) dupGrpCount
 	FROM                
 	    subscribe s
 	LEFT JOIN 
@@ -36,7 +38,9 @@
 		g_no AS l_g_no, 
 	    m_name AS t_m_name,
 	    CONCAT(IFNULL(DATE_FORMAT(g.g_start, '%y.%m.%d'), ''), ' ~ ', IFNULL(DATE_FORMAT(g.g_end, '%y.%m.%d'), '')) AS g_period,
-	    CONCAT(IFNULL(CONVERT(s.sub_able, CHAR), ''), ' / ', IFNULL(CONVERT(g.g_cnt, CHAR), '')) AS g_AppCnt
+	    CONCAT(IFNULL(CONVERT(s.sub_able, CHAR), ''), ' / ', IFNULL(CONVERT(g.g_cnt, CHAR), '')) AS g_AppCnt,
+	   (SELECT count(*) FROM learner l
+		WHERE l_m_id = #{l_m_id} and  l_g_no = g_no) dupGrpCount
 	FROM                
 	    subscribe s
 	LEFT JOIN member m ON (s.t_m_id = m.m_id)
@@ -50,9 +54,5 @@
 	values (#{l_no},#{t_m_id}, #{l_m_id}, #{l_c_no}, #{l_g_no}, now(), 'N')
 </insert>
 
-<!--  학습자 그룹 가입 승인 여부 확인  -->
-<select id="groupCk" resultType="com.alpha.vo.LearnerVO">
-	select * from learner
-</select>
- 
+
 </mapper>
