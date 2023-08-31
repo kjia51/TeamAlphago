@@ -92,8 +92,11 @@
 											<td align="center">${grplist.g_AppCnt}</td>
 											<td align="center">
 											<c:choose>
-											    <c:when test="${group.dupGrpCount == 0}">
+											    <c:when test="${group.dupGrpCount == 0 || group.sub_able < group.g_cnt}">
 											        <button class="apply-button" id="applyButton" onclick="applyButton()">신청하기</button>
+											    </c:when>
+											    <c:when test="${group.sub_able == group.g_cnt}">
+											        <button class="apply-button" id="applyDuple" disabled>신청마감</button>
 											    </c:when>
 											    <c:otherwise>
 											        <button class="apply-button" id="applyDuple" disabled>신청완료</button>

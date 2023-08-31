@@ -47,6 +47,7 @@ public class LearnerController extends CommonRestController {
 		ModelAndView mav = new ModelAndView("/learner/joinGroup");
 		try {
 			mav.addObject("list", learnerService.groupName(g_name));
+			// 그룹 전체 리스트 출력
 			mav.addObject("listAll", learnerService.grouplistAll());
 			System.out.println("g_name : "+ g_name);
 			System.out.println("l_m_id :"+ l_m_id);

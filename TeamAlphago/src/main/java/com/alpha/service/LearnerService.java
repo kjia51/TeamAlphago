@@ -20,6 +20,7 @@ public interface LearnerService {
 
 	// 그룹 가입 신청
 	public int insertGrp(LearnerVO learnerVO);
+
 	
 
  

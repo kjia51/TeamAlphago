@@ -33,6 +33,7 @@
 <!-- 전체 그룹 정보 -->
 <select id="grouplistAll" resultType="com.alpha.vo.LearnerVO">
 	SELECT
+		g_name,
 		s.t_m_id AS t_m_id,
 		sub_c_no AS l_c_no,
 		g_no AS l_g_no, 
