@@ -24,9 +24,10 @@ ${memberVO}
 				<div class="titleBox">
 					<h2 class="t_title">그룹 가입 신청</h2>
 					<input name="l_m_id" id="memberId" type="hidden" value="${memberVO.m_id}"> 
+					<input name="m_division" id="division" type="hidden" value="${memberVO.m_division}"> 
 				</div>
 
-${grplist}
+
 				<!--그룹가입신청-->
 				<form class="searchWrap searchWrap_wide">
 					<table class="table table-bordered">
