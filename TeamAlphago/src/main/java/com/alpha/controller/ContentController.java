@@ -47,18 +47,13 @@ public class ContentController extends CommonRestController {
 			return mav;
 		}
 	   
-	   @GetMapping("/salesList") 
+	   @GetMapping("/saleList") 
 	   public ModelAndView salesLIST() {
-		   ModelAndView mav = new ModelAndView("/content/salesList");
+		   ModelAndView mav = new ModelAndView("/content/saleList");
 		   return mav;
 	   }
 	   
-	   @GetMapping("/myContentPage") 
-	   public ModelAndView myContentPage() {
-		   ModelAndView mav = new ModelAndView("/content/myContentPage");
-		   return mav;
-	   }
-	   
+
 	   //등록
 		@PostMapping("/content/insert")
 		public Map<String, Object> register(@RequestBody ContentVO contentVO) {
@@ -71,7 +66,7 @@ public class ContentController extends CommonRestController {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				return responseMap(REST_FAIL, "등록 중 오류 발생");
+				return responseResultMap(REST_FAIL, "등록 중 오류 발생");
 			}
 		}
 		
@@ -88,7 +83,7 @@ public class ContentController extends CommonRestController {
 	
 				} catch (Exception e) {
 					e.printStackTrace();
-					return responseMap(REST_FAIL, "수정 중 오류 발생");
+					return responseResultMap(REST_FAIL, "수정 중 오류 발생");
 				}
 		   }
 		   
@@ -104,7 +99,7 @@ public class ContentController extends CommonRestController {
 	
 				} catch (Exception e) {
 					e.printStackTrace();
-					return responseMap(REST_FAIL, "조회 중 오류 발생");
+					return responseResultMap(REST_FAIL, "조회 중 오류 발생");
 				}
 		   }
 		   
@@ -119,7 +114,7 @@ public class ContentController extends CommonRestController {
 
 				} catch (Exception e) {
 					e.printStackTrace();
-					return responseMap(REST_FAIL, "삭제 중 오류 발생");
+					return responseResultMap(REST_FAIL, "삭제 중 오류 발생");
 				}
 			}
 		   
@@ -134,7 +129,7 @@ public class ContentController extends CommonRestController {
 				   
 			   } catch (Exception e) {
 				   e.printStackTrace();
-				   return responseMap(REST_FAIL, "삭제 중 오류 발생");
+				   return responseResultMap(REST_FAIL, "삭제 중 오류 발생");
 			   }
 		   }
 		   
@@ -145,17 +140,18 @@ public class ContentController extends CommonRestController {
 				try {
 					//if(cartVO.getCr_m_no()!=null){
 						int res = contentService.addCartListCnt(cartVO);
+						System.out.println(res);
 						if(res<1) {
 							contentService.addCart(cartVO);
 							Map<String, Object> map = responseWriteMap(res);
 							return map;
 						} else {
-							return responseMap(REST_FAIL, "등록 중 오류 발생");
+							return responseResultMap(REST_FAIL, "장바구니 담기 중 오류 발생");
 						}
 					//}
 				} catch (Exception e) {
 					e.printStackTrace();
-					return responseMap(REST_FAIL, "등록 중 오류 발생");
+					return responseResultMap(REST_FAIL, "장바구니 담기 중 오류 발생");
 				}
 		   }
 		   
@@ -171,7 +167,7 @@ public class ContentController extends CommonRestController {
 	
 				} catch (Exception e) {
 					e.printStackTrace();
-					return responseMap(REST_FAIL, "조회 중 오류 발생");
+					return responseResultMap(REST_FAIL, "조회 중 오류 발생");
 				}
 		   }
 		   

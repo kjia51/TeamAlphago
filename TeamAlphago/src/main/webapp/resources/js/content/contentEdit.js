@@ -496,6 +496,8 @@ $('#cartPopUp').on('click', function() {
             };
 
             fetchPost('/alpha/cart/insert', obj, resultCart);
+        		alert(map.msg);
+
         });
     });
 		}

@@ -27,11 +27,11 @@
 	</delete>
 	
 	<select id="salesContent" resultType="com.alpha.vo.ContentVO">
-	select DATE_FORMAT(sub_date,'%Y-%m-%d') sub_date, sub_price from subscribe group by  DATE_FORMAT(sub_date,'%Y-%m-%d')
+	select DATE_FORMAT(s_date,'%Y-%m-%d') s_date, s_sales from sales group by  DATE_FORMAT(s_date,'%Y-%m-%d')
 	</select>
 	
 	<insert id="addCart">
-      insert into cart(cr_no, cr_cnt, cr_regdate, cr_m_no, cr_c_no, cnt)  values (#{cr_no}, 1, now(), #{cr_m_no}, #{cr_c_no},#{cnt}) 
+      insert into cart(cr_no, cr_m_no, cr_c_no, cnt)  values (#{cr_no}, #{cr_m_no}, #{cr_c_no},#{cnt}) 
 	</insert>
 	
 	<select id="getCartList" resultType="com.alpha.vo.CartVO">
@@ -45,4 +45,7 @@
 	<select id="addCartListCnt" resultType="int">
 	    SELECT count(*) FROM cart WHERE (cr_m_no, cr_c_no) IN (SELECT cr_m_no, cr_c_no FROM cart where cr_m_no=#{cr_m_no} and cr_c_no=#{cr_c_no} and cnt=#{cnt})
 	</select>
+	
+	
+
 </mapper>
