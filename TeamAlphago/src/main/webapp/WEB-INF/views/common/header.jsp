@@ -115,7 +115,7 @@
                                 <li><a href="/alpha/notice"> 공지사항 </a></li>
                                 <li><a href="/alpha/QnA"> Q&A </a></li>
                                 <li><a href="/alpha/content"> 학습패키지 등록 </a></li>
-                                <li><a href="/"> 매출 조회 </a></li>
+                                <li><a href="/alpha/saleList"> 매출 조회 </a></li>
                             </ul>
                         </div>
                         
