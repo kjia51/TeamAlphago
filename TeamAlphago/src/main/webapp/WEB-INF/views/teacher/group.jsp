@@ -84,7 +84,7 @@
 <button id="popup_open_btn">그룹 생성</button>
 
 <%-- 모달창 --%>
-<div id="my_modal">
+<div id="assign_modal">
 	<hr>
 	<h2>학습콘텐츠 선택</h2>
 		<select name="group_content" id="conSelect" style="width: 780px; border: none; border-bottom: 1px solid black;">

@@ -5,7 +5,20 @@
 
 <!-- 그룹 이름  -->
 <select id="groupName" resultType="com.alpha.vo.LearnerVO">
-	select g_name from grp
+	select * from grp
+</select>
+
+<!-- 학습지도자 별 그룹 이름  -->
+<select id="groupNameForT" resultType="com.alpha.vo.LearnerVO">
+	select 
+		g_name,
+		g_no
+    from 
+    	learner l
+    left join grp g on (l.l_g_no = g.g_no)
+    left join member m on (l.t_m_id = m.m_id)
+    where 
+    	m_id = #{t_m_id}
 </select>
 
 <!-- 그룹별 그룹 정보 -->
@@ -51,7 +64,8 @@
 	    subscribe s
 	LEFT JOIN member m ON (s.t_m_id = m.m_id)
 	LEFT JOIN grp g ON (s.sub_no = g.sub_no)
-	ORDER BY g_period asc
+	ORDER BY 
+		g_period asc
 </select>
 
 <!-- 그룹 가입 신청  -->
@@ -60,11 +74,22 @@
 	values (#{l_no},#{t_m_id}, #{l_m_id}, #{l_c_no}, #{l_g_no}, now(), 'N')
 </insert>
 
-<!-- 그룹별 학습자 리스트 조회 -->
+<!-- 그룹별 학습자 리스트 조회 (숙제 요청) -->
 <select id= "grpLearnerList" resultType="com.alpha.vo.LearnerVO">
-	SELECT * FROM learner l
-    LEFT join grp g ON (l.l_g_no = g.g_no)
-    WHERE l.t_m_id = #{t_m_id};
+    select
+    	l_no,
+    	g_no, 
+		m_name,
+        c_name,
+        g_start,
+        g_end
+    from 
+    	learner 
+    left join member on(l_m_id = m_id)
+    left join grp on(l_g_no = g_no)
+    left join content on(l_c_no = c_no)
+    where 
+    	l_g_no = #{g_no}
 </select>
 
 <!-- 학습자 숙제 요청 -->

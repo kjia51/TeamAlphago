@@ -22,9 +22,8 @@
 			<div class="content_wrap">
 				<div class="titleBox">
 					<h2 class="t_title">그룹 가입 신청</h2>
-					<input name="l_m_id" id="memberId" type="hidden"
-						value="${memberVO.m_id}"> <input name="m_division"
-						id="division" type="hidden" value="${memberVO.m_division}">
+					<input name="l_m_id" id="memberId" type="hidden" value="${memberVO.m_id}"> 
+					<input name="m_division" id="division" type="hidden" value="${memberVO.m_division}">
 				</div>
 
 				<!--그룹가입신청-->
@@ -266,6 +265,27 @@ function displayGroupList(map) {
     groupInfoDiv.innerHTML += pageBlock;
 }
 
+
+
+document.addEventListener('click', function() {
+    if (event.target && event.target.type === 'checkbox') {
+        var applyButton = event.target.closest('tr').querySelector('.apply-button');
+        
+        if (event.target.checked) {
+            // 체크 박스가 선택된 경우 - 버튼 활성화
+            applyButton.disabled = false;
+        } else {
+            // 체크 박스가 선택되어 있지 않은 경우 - 버튼 비활성화
+            applyButton.disabled = true;
+            alert('신청하실 그룹을 선택하여 주세요.');
+        }
+    }
+});
+
+
+
+
+
 //'신청' 버튼 클릭 이벤트 처리
 function applyButton() {
 	// 체크된 행
@@ -294,10 +314,11 @@ function applyButton() {
 	console.log(g_cnt);
 
 		if(m_division == 2){
+			
 	    	// 학습자인 경우 신청 활성화
 	    	if (!checkbox.prop('checked')) {
 	    		// 체크 박스가 선택되어 있지 않은 경우
-	    		alert('신청하실 그룹을 선택하여 주세요.'); //안나옴
+	    		alert('신청하실 그룹을 선택하여 주세요.'); 
 	    		//  -> 신청 비활성화
 	    		applyButton.prop('disabled', true);
 	    	} else if(g_cnt === sub_able){
@@ -346,22 +367,12 @@ function applyButton() {
 	    }
 	
 } 
+
+
+
     
 
-//체크 박스 클릭 이벤트 처리
-document.addEventListener('click', function(event) {
-    if (event.target && event.target.matches('input[type="checkbox"]')) {
-        var applyButton = event.target.closest('tr').querySelector('.apply-button');
-        
-        if (event.target.checked) {
-            // 체크 박스가 선택된 경우 - 버튼 활성화
-            applyButton.disabled = false;
-        } else {
-            // 체크 박스가 선택되어 있지 않은 경우 - 버튼 비활성화
-            applyButton.disabled = true;
-        }
-    }
-});  
+ 
 
 </script>
 </body>

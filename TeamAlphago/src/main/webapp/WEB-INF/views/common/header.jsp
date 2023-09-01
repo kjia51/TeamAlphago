@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게임으로 배우는 바둑 교실</title>
 <script src='/resources/js/jquery-1.12.4.min.js'></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <link rel="stylesheet" href="/resources/css/common.css">
