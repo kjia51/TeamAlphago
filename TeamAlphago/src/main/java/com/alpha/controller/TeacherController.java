@@ -337,6 +337,7 @@ public class TeacherController extends CommonRestController {
 		   
 		   System.out.println("==============");
 		   System.out.println(sub_no);
+		   
 
 				List<GrpVO> list = service.conGroupList(sub_no);
 				System.out.println(list);

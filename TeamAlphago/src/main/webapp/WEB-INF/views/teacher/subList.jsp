@@ -32,6 +32,8 @@
     padding: 10px;
     border-radius: 5px;
 }
+
+
 </style>
 <body>
 
@@ -48,7 +50,6 @@
 
 		</ul>
 	</nav>
-		<hr>
 
 		<div id="getSub">
 		</div>
@@ -255,6 +256,9 @@ function resultList(map){
 	
 	var sub_no = vo.sub_no;
 	var sub_date = vo.sub_date;
+	
+	var date = sub_date.substr(0,10);
+	
 	var sub_price = vo.sub_price;
 	var sub_able = vo.sub_able;
 	var sub_month = vo.sub_month;
@@ -272,62 +276,70 @@ function resultList(map){
 	}
 
 	main.innerHTML += ''
+		+ '<input type="text"'
+		+ 'style="text-align: center; background-color: #ececec; border-bottom: 1px solid #dadada;' 
+		+ 'border-top: 1px solid #074691; color: black;'
+		+ 'width: 100%; padding: 10px; font-size: 16px;"'
+		+ 'value="구독 콘텐츠 정보">'
 		+ '<table class="table table-bordered">'
-		+ '<h4>구독 콘텐츠 정보</h4>'
 		+ '<thead>'
 	    + 	'<tr>'
-		+ 		'<th>구독ID</th>'
-		+ 		'<th>구독일</th>'
-		+ 		'<th>구독개월수</th>'
-		+ 		'<th>구독료</th>'
-		+ 		'<th>수강가능인원</th>'
-		+ 		'<th>콘텐츠명</th>'
-		+ 		'<th>콘텐츠레벨</th>'
+		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독ID</th>'
+	    +			'<td align="left" class="row"><input type="text" id="sub_no" style="width:100%" value="'
+	    +			sub_no
+	    +			'" readonly></td>'
+		+ 		'<th style="padding: 10px 5px; width: 60px; background-color: #f6f7f9;">구독일</th>'
+        +			'<td align="center"><input type="text" id="sub_date" style="width:100%" value="'
+        +			date
+        +			'" readonly></td>'
+		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독료</th>'
+        +			'<td align="center"><input type="text" id="sub_price" style="width:100%" value="'
+        +			sub_price
+        +			' 원" readonly></td>'
 	    + 	'</tr>'
 		+ '</thead>'
 		+	'<tbody>'
-		+		'<tr>'
-	    +			'<td align="left" class="row"><input type="text" id="sub_no" style="width:112px" value="'
-	    +			sub_no
-	    +			'" readonly></td>'
-        +			'<td align="center"><input type="text" id="sub_date" style="width:290px" value="'
-        +			sub_date
-        +			'" readonly></td>'
-        +			'<td align="center"><input type="text" id="sub_month" style="width:85px" value="'
-        +			sub_month
-        +			'" readonly></td>'
-        +			'<td align="center"><input type="text" id="sub_price" style="width:35px" value="'
-        +			sub_price
-        +			'" readonly></td>'
-        +			'<td align="center"><input type="text" id="sub_able" style="width:35px" value="'
-        +			sub_able
-        +			'" readonly></td>'
-        +			'<td align="center"><input type="text" id="c_name" style="width:35px" value="'
+	    + 	'<tr>'
+		+ 		'<th style="padding: 10px 5px; width: 70px; background-color: #f6f7f9;" >콘텐츠명</th>'
+        +			'<td align="center" colspan="5" ><input type="text" id="c_name" style="width:100%" value="'
         +			c_name
         +			'" readonly></td>'
-        +			'<td align="center"><input type="text" id="sub_lv" style="width:35px" value="'
+	    + 	'</tr>'
+	    +	'<tr>'
+		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독개월</th>'
+        +			'<td align="center"><input type="text" id="sub_month" style="width:100%" value="'
+        +			sub_month
+        +			' 개월" readonly></td>'
+		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">정원</th>'
+        +			'<td align="center"><input type="text" id="sub_able" style="width:100%" value="'
+        +			sub_able
+        +			' 명" readonly></td>'
+		+ 		'<th style="padding: 10px 5px; width: 80px; background-color: #f6f7f9;">콘텐츠레벨</th>'
+        +			'<td align="center"><input type="text" id="sub_lv" style="width:100%" value="'
         +			sub_lv
         +			'" readonly></td>'
-		+ 		'</tr>'
+	    +	'</tr>'
 		+	'</tbody>'
 	    +'</table>' 
 }
 
 function GrpList(list){
+	
 	main.innerHTML = '';
 
     var tableHTML = '';
     tableHTML += '<table class="table table-bordered">';
-    tableHTML += '<thead><tr><th>그룹ID</th><th>그룹명</th><th>학습시작일</th><th>학습종료일</th><th>학습인원</th></tr></thead>';
+    tableHTML += '<thead><th>그룹ID</th><th>그룹명</th><th>학습시작일</th><th>학습종료일</th><th>정원</th><th>학습인원</th></thead>';
     tableHTML += '<tbody>';
 
     list.forEach(function(member) {
         tableHTML += '<tr>';
-        tableHTML +='<input type="hidden" id="l_g_no" value="'+ member.g_no +'" readonly>'
+        tableHTML += '<td>' + member.g_no + '</td>';
         tableHTML += '<td>' + member.g_name + '</td>';
-        tableHTML += '<td>' + member.g_start + '</td>';
-        tableHTML += '<td>' + member.g_end + '</td>';
-        tableHTML += '<td>' + member.g_cnt + '</td>';
+        tableHTML += '<td>' + member.g_start.substr(0,10); + '</td>';
+        tableHTML += '<td>' + member.g_end.substr(0,10); + '</td>';
+        tableHTML += '<td>' + member.sub_able + '명</td>';
+        tableHTML += '<td>' + member.g_cnt + '명</td>';
         tableHTML += '</tr>';
     });
 

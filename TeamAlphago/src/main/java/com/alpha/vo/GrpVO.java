@@ -21,6 +21,7 @@ public class GrpVO {
    private String c_name;
    private String c_level;
    private String sub_connection;
+   private String sub_able;
    
    
 }        

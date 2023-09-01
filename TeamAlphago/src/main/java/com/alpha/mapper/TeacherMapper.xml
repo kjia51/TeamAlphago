@@ -210,8 +210,10 @@
 	
 	<!-- t_m_id와  sub_no으로 가져오기 -->
 	<select id="conGroupList" resultType="com.alpha.vo.GrpVO">
-	select * from grp
-	where sub_no = #{sub_no}
+	select  grp.g_no, grp.g_name, grp.g_start , grp.g_end, sub_able, grp.g_cnt
+	from grp, subscribe
+	where grp.sub_no=subscribe.sub_no
+	and grp.sub_no = #{sub_no}
 	</select>
 	
 	
