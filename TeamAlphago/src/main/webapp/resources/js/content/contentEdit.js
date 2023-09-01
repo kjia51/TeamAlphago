@@ -441,11 +441,8 @@ $('#cartPopUp').on('click', function() {
 		if($('input:checkbox[name=chkbox]:checked').length==0){
 			alert('장바구니에 넣을 콘텐츠를 선택하세요');
 		} else{
-	    console.log("selectedIndexes",selectedIndexes[0]);
-	    console.log("selectedIndexes",selectedIndexes);
 	    tbdy.innerHTML='';
 	    var listArray = getCart(selectedIndexes);
-	    console.log("listArray",listArray);
 	    
 	    listArray.forEach((list,index) => {
 	    	let cname = list.c_name;

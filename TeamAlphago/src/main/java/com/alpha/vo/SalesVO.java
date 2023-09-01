@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class SalesVO {
 	String s_date;
-	String s_c_no;
-
+	String sub_c_no;
+	int s_count;
+	int s_sales;
+	String c_name;
 }

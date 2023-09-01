@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.alpha.mapper.ContentMapper;
 import com.alpha.vo.CartVO;
 import com.alpha.vo.ContentVO;
+import com.alpha.vo.SalesVO;
 
 @Service
 public class ContentServiceImpl implements ContentService {
@@ -46,7 +47,7 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public int salesContent() {
+	public List<SalesVO> salesContent() {
 		// TODO Auto-generated method stub
 		return contentMapper.salesContent();
 	}
@@ -67,6 +68,12 @@ public class ContentServiceImpl implements ContentService {
 	public int addCartListCnt(CartVO cartVO) {
 		// TODO Auto-generated method stub
 		return contentMapper.addCartListCnt(cartVO);
+	}
+
+	@Override
+	public List<SalesVO> salesDate() {
+		// TODO Auto-generated method stub
+		return contentMapper.salesDate();
 	}
 
 
