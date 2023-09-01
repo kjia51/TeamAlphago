@@ -41,8 +41,8 @@
 	
 	<!-- 결제 시 구독내역에 인서트 -->
 	<insert id="insertPayAction">
-   	INSERT INTO subscribe (SUB_NO, SUB_C_NO, T_M_ID, SUB_DATE, SUB_PRICE, SUB_ABLE, SUB_CONNECTION)
-	VALUES (#{sub_no}, #{sub_c_no}, #{t_m_id}, #{sub_date}, #{sub_price}, #{sub_able}, #{sub_connection})
+   	INSERT INTO subscribe (SUB_NO, SUB_C_NO, T_M_ID, SUB_DATE, SUB_PRICE, SUB_ABLE, SUB_CONNECTION, SUB_MONTH)
+	VALUES (#{sub_no}, #{sub_c_no}, #{t_m_id}, #{sub_date}, #{sub_price}, #{sub_able}, (#{sub_month}/3), #{sub_month})
    </insert>
 	
 	<!-- 나의 구독내역 리스트 -->
@@ -210,8 +210,10 @@
 	
 	<!-- t_m_id와  sub_no으로 가져오기 -->
 	<select id="conGroupList" resultType="com.alpha.vo.GrpVO">
-	select * from grp
-	where sub_no = #{sub_no}
+	select  grp.g_no, grp.g_name, grp.g_start , grp.g_end, sub_able, grp.g_cnt
+	from grp, subscribe
+	where grp.sub_no=subscribe.sub_no
+	and grp.sub_no = #{sub_no}
 	</select>
 	
 	

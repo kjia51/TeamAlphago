@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.alpha.vo.CartVO;
 import com.alpha.vo.ContentVO;
+import com.alpha.vo.SalesVO;
 
 public interface ContentMapper {
 	public List<ContentVO> getContentList();
@@ -16,7 +17,9 @@ public interface ContentMapper {
 	
 	public int deleteContent(String c_id);
 	
-	public int salesContent();
+	public List<SalesVO> salesContent();
+
+	public List<SalesVO> salesDate();
 	
 	public int addCart(CartVO cartVO);
 	

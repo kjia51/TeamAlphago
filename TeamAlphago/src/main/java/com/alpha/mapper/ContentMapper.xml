@@ -26,8 +26,14 @@
 		delete from content where c_no=#{c_no}
 	</delete>
 	
-	<select id="salesContent" resultType="com.alpha.vo.ContentVO">
-	select DATE_FORMAT(s_date,'%Y-%m-%d') s_date, s_sales from sales group by  DATE_FORMAT(s_date,'%Y-%m-%d')
+	<select id="salesContent" resultType="com.alpha.vo.SalesVO">
+    	    select sub_c_no, count(*) s_count, ROUND(AVG(sub_price),0) s_sales, c_name  from subscribe s
+			left join (select * from content) c on sub_c_no = c_no
+		    group by sub_c_no
+	</select>
+	
+	<select id="salesDate" resultType="com.alpha.vo.SalesVO">
+    	select DATE_FORMAT(sub_date,'%Y-%m-%d') s_date, COUNT(*) s_count, ROUND(AVG(sub_price),0) s_sales from subscribe group by DATE_FORMAT(sub_date,'%Y-%m-%d') 
 	</select>
 	
 	<insert id="addCart">

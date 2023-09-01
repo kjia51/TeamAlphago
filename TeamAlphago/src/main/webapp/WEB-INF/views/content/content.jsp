@@ -14,11 +14,11 @@
     color: black;
     
     }
-  #btn.disabled {
-    background-color: #074691;
-    color : white;
-    cursor: not-allowed;
-  }
+#btn.disabled {
+  background-color: #074691;
+  color : white;
+  cursor: not-allowed;
+}
 </style>
 </head>
 <body>

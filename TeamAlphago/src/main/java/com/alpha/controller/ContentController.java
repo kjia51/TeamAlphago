@@ -22,6 +22,7 @@ import com.alpha.service.ContentService;
 import com.alpha.vo.CartVO;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.MemberVO;
+import com.alpha.vo.SalesVO;
 
 @RestController
 @RequestMapping("/alpha/*")
@@ -68,6 +69,7 @@ public class ContentController extends CommonRestController {
 				e.printStackTrace();
 				return responseResultMap(REST_FAIL, "등록 중 오류 발생");
 			}
+			
 		}
 		
 		
@@ -170,6 +172,34 @@ public class ContentController extends CommonRestController {
 					return responseResultMap(REST_FAIL, "조회 중 오류 발생");
 				}
 		   }
+		   
+		   @GetMapping("/content/chartDate") 
+		   public Map<String, Object> chartDView() {
+				try {
+					Map<String, Object> map = new HashMap<String, Object>();
+					List<SalesVO> dateList = contentService.salesDate();
+					map.put("dateList", dateList);
+					return map;
+	
+				} catch (Exception e) {
+					e.printStackTrace();
+					return responseResultMap(REST_FAIL, "조회 중 오류 발생");
+				}
+		   }
+		   @GetMapping("/content/chartContent") 
+		   public Map<String, Object> chartCView() {
+			   try {
+				   Map<String, Object> map = new HashMap<String, Object>();
+				   List<SalesVO> contentList = contentService.salesContent();
+				   map.put("contentList", contentList);
+				   return map;
+				   
+			   } catch (Exception e) {
+				   e.printStackTrace();
+				   return responseResultMap(REST_FAIL, "조회 중 오류 발생");
+			   }
+		   }
+
 		   
 
 
