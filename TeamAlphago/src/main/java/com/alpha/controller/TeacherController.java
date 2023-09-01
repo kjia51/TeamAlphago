@@ -344,6 +344,39 @@ public class TeacherController extends CommonRestController {
 				return list;
 
 	   }
+	   
+	   @PostMapping("/group/insert/{sub_no}") //그룹 생성(구독리스트에서)
+		public Map<String, Object> Listregister(@RequestBody GrpVO groupVO) {
+		   
+		   System.out.println("==============넘어옴");
+		   
+		   System.out.println("원래:"+groupVO.getSub_connection());
+		   int sub_connection = Integer.parseInt(groupVO.getSub_connection())-1;
+		   
+		   System.out.println(sub_connection);
+		   groupVO.setSub_connection(Integer.toString(sub_connection));
+
+
+			try {
+				int res = service.insertGroups(groupVO);
+				
+				Map<String, Object> map = responseWriteMap(res);
+				System.out.println(groupVO);
+				
+				System.out.println("계산 후:"+groupVO.getSub_connection());
+				int res2 = service.insertGroupupdatesub(groupVO.getSub_no(), groupVO.getSub_connection());
+				
+				if(res2>0) {
+					return map;					
+				}
+				
+				return responseMap(REST_FAIL, "등록 중 오류 발생"); 
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return responseMap(REST_FAIL, "등록 중 오류 발생");
+			}
+		}
 
 
 

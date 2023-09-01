@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>구독 내역</title>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <style>
 .main-box {
@@ -33,7 +34,6 @@
     border-radius: 5px;
 }
 
-
 </style>
 <body>
 
@@ -51,8 +51,7 @@
 		</ul>
 	</nav>
 
-		<div id="getSub">
-		</div>
+		<div id="getSub"></div>
 		<hr>
 	   	<br>
 		<div class="btn">
@@ -129,7 +128,6 @@
                             <td align="center">
                             <button onclick="connection(${status.index})">그룹관리 </button>                                           
                             <button onclick="cancelPay(${status.index})">콘텐츠환불</button></td>
-                            
                            
                         </tr>
 						
@@ -145,6 +143,8 @@
 
          	</tbody>
         </table> 
+        
+        
     </div>
 </div>
 <!-- //content close -->
@@ -153,6 +153,44 @@
 </div>
 
 <script>
+
+
+function getCalendal(){
+    $('#test').html('<div class="my-datepicker"></div>');
+    
+    let datepickerDiv = $(".my-datepicker");
+    console.log(datepickerDiv);
+        datepickerDiv.datepicker({
+            showOtherMonths: true,
+            showMonthAfterYear: true,
+            selectOtherMonths: true,
+            buttonText: "선택",
+            yearSuffix: "년",
+            monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            dayNamesMin: ['일','월','화','수','목','금','토'],
+            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+            minDate: "0",
+            maxDate: "+1y",
+            dateFormat: 'yy-mm-dd',
+            onSelect: function(selectedDate) {
+                var startDate = new Date(selectedDate);
+                startDate.setDate(startDate.getDate() + 90); // Add 90 days
+               
+                var year = startDate.getFullYear();
+                var month = ("0" + (startDate.getMonth() + 1)).slice(-2); // Adding 1 because getMonth() is 0-based
+                var day = ("0" + startDate.getDate()).slice(-2);
+               
+                var endDateFormatted = year + "-" + month + "-" + day;
+               
+                $('#startdate').val(selectedDate);
+                $('#enddate').val(endDateFormatted);
+            }
+        });
+ 
+    }
+
+
 function modal(id) { //모달창 띄우기
     var zIndex = 9999;
     var modal = $('#' + id);
@@ -172,7 +210,7 @@ function modal(id) { //모달창 띄우기
         })
         .appendTo('body');
 
-    modal
+    	modal
         .css({
             position: 'fixed',
             boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
@@ -244,6 +282,14 @@ function conGrp(sub_no) {
     console.log(sub_no);
   	fetchGet('/alpha/group/getGrpList/'+sub_no, GrpList)
 
+}
+
+
+/////////////////////그룹생성페이지
+function createGrp(sub_no) {
+    var sub_no =  $('#sub_no').val();
+
+  	fetchGet('/alpha/group/getSubOne/'+sub_no, createGroup);
 }
 
 ////////////모달 패키지 정보 출력////////////////////////////////////////////////////////
@@ -347,6 +393,106 @@ function GrpList(list){
 
     main.innerHTML += tableHTML; // main 요소에 테이블 추가
 }
+	
+	
+
+function createGroup(map) {
+
+	main.innerHTML = '';
+	let vo = map.subscribeVO;
+	console.log(vo);
+	
+	var sub_no = vo.sub_no;
+	var sub_date = vo.sub_date;
+	
+	var date = sub_date.substr(0,10);
+	
+	var sub_price = vo.sub_price;
+	var sub_able = vo.sub_able;
+	var sub_month = vo.sub_month;
+	var c_name = vo.c_name;
+
+	var c_level = vo.c_level;
+	var sub_lv = "";
+	
+	if(c_level == '1') {
+		sub_lv = "초급";
+	} else if (c_level == '2') {
+		sub_lv = "중급";
+	} else if (c_level == '3') {
+		sub_lv = "고급";
+	}
+	
+	var sub_connection = vo.sub_connection;
+	console.log(sub_connection);
+    
+	main.innerHTML += ''
+		+ '<input type="text"'
+		+ 'style="text-align: center; background-color: #ececec; border-bottom: 1px solid #dadada;' 
+		+ 'border-top: 1px solid #074691; color: black;'
+		+ 'width: 100%; padding: 10px; font-size: 16px;"'
+		+ 'value="구독 콘텐츠 정보">'
+		+ '<table class="table table-bordered">'
+		+ '<thead>'
+	    + 	'<tr>'
+		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독ID</th>'
+	    +			'<td align="left" class="row"><input type="text" id="sub_no" style="width:100%" value="'
+	    +			sub_no
+	    +			'" readonly></td>'
+		+ 		'<th style="padding: 10px 5px; width: 60px; background-color: #f6f7f9;">구독일</th>'
+        +			'<td align="center"><input type="text" id="sub_date" style="width:100%" value="'
+        +			date
+        +			'" readonly></td>'
+		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독료</th>'
+        +			'<td align="center"><input type="text" id="sub_price" style="width:100%" value="'
+        +			sub_price
+        +			' 원" readonly></td>'
+	    + 	'</tr>'
+		+ '</thead>'
+		+	'<tbody>'
+	    + 	'<tr>'
+		+ 		'<th style="padding: 10px 5px; width: 70px; background-color: #f6f7f9;" >콘텐츠명</th>'
+        +			'<td align="center" colspan="5" ><input type="text" id="c_name" style="width:100%" value="'
+        +			c_name
+        +			'" readonly></td>'
+	    + 	'</tr>'
+	    +	'<tr>'
+		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독개월</th>'
+        +			'<td align="center"><input type="text" id="sub_month" style="width:100%" value="'
+        +			sub_month
+        +			' 개월" readonly></td>'
+		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">정원</th>'
+        +			'<td align="center"><input type="text" id="sub_able" style="width:100%" value="'
+        +			sub_able
+        +			' 명" readonly></td>'
+		+ 		'<th style="padding: 10px 5px; width: 80px; background-color: #f6f7f9;">콘텐츠레벨</th>'
+        +			'<td align="center"><input type="text" id="sub_lv" style="width:100%" value="'
+        +			sub_lv
+        +			'" readonly></td>'
+	    +	'</tr>'
+		+	'</tbody>'
+	    + '</table>';
+
+    if (sub_connection > 0) {
+    	
+    	
+        main.innerHTML += '<h2>그룹 정보</h2>'
+            + '<h3>그룹명<input type="text" id="g_name"></h3>'
+            + '<div id="test">test</div>'
+            + '<div style="display: inline-block;">'
+            + '학습 시작날짜<input type="text" id="startdate">'
+            + '<br>'
+            + '학습 종료날짜<input type="text" id="enddate">'
+            + '</div>'
+            
+            getCalendal();
+            
+    } else {
+        main.innerHTML += '더 이상 그룹을 만들 수 없습니다';
+    }
+}
+
+
 
 function cancelPay(index) {
 	///////////////////////////환불 가능 여부 검사
@@ -411,7 +557,7 @@ function cancelPay(index) {
 	    });
 
 	}
-};
+}
 
 function go(page){
 	//alert(page);
@@ -419,6 +565,7 @@ function go(page){
 	document.searchForm.action = "/alpha/subList";
 	document.searchForm.submit();
 }
+
 </script>
 
 <div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>

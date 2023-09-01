@@ -217,6 +217,7 @@
 	</select>
 	
 	
+	
 	<sql id="criteria">
 	<choose>
 		<when test="searchField == 'c_name'">
