@@ -68,22 +68,24 @@ function checkLogin() {
 	
 }
 
-function getContent() {
+function getContent(idx) {
 	
 	var c_no = $('#c_no').val();
     var m_id = $('#m_id').val();
     var c_name = $('#c_name').val();
     var today = getsys();
     var price =  $('td:eq(5)').text();
-    var sub_connection = $('#c_period').val(); //구독개월수
+    var sub_month = ($('#c_period').val()*3); //구독개월수
+    var sub_able = $('#cnt').val(); 
     
     let list = {
     		c_no : c_no
     		,m_id : m_id
-    		,c_name : c_name
     		,today : today
     		,price : price
-    		,sub_connection : sub_connection
+    		,c_name : c_name
+    		,sub_month : sub_month
+    		, sub_able : sub_able
     }
     
     return list;
@@ -96,10 +98,11 @@ $('#payment').click(function () { //결제버튼
 	
 	alert('a');
 
+	var idx = -1;
+
 	var IMP = window.IMP;
 	IMP.init('imp07586387');
 	
-	var idx = -1;
 	
 	$('input:checkbox[name=chkbox]').each(function() {
 		   if(this.checked){//checked 처리된 항목의 값
@@ -109,9 +112,9 @@ $('#payment').click(function () { //결제버튼
 		   }
 	});
 	
+	var list = getContent(idx);
                      
     //DOM객체들에서 사용할 데이터 뽑기
-	//var list = getContent(idx);
 	
 	var c_no = list.c_no;
     var m_id = list.m_id;
@@ -119,15 +122,15 @@ $('#payment').click(function () { //결제버튼
     var today = list.today;
     var price = list.price;
     var sub_able =  list.sub_able;
-    var sub_connection = list.sub_connection;
+    var sub_month = list.sub_month;
     
-    console.log(c_no);
-    console.log(m_id);
-    console.log(c_name);
-    console.log(today);
-    console.log(price);
-    console.log(sub_able);
-    console.log(sub_connection);
+    console.log('콘텐츠번호 '+c_no);
+    console.log('회원ID '+m_id);
+    console.log('콘텐츠명 '+c_name);
+    console.log('구독일 '+today);
+    console.log('총가격 '+price);
+    console.log('정원 '+sub_able);
+    console.log('구독개월 '+sub_month);
 
 	
                   
@@ -168,10 +171,12 @@ $('#payment').click(function () { //결제버튼
                         	sub_no: rsp.imp_uid, //거래번호(구독ID)
                         	sub_c_no: c_no, //콘텐츠id
                            	t_m_id: m_id, //회원id
-                            sub_date: today, //구독날짜
-                            sub_price: price, //구독료
-                            sub_able: sub_able, //수강가능인원
-                            sub_connection: sub_connection, //콘텐츠id
+                           	sub_date: today, //구독날짜
+                           	sub_price: price, //가격
+                           	sub_able: sub_able, //정원
+                           	sub_month: sub_month, //구독개월수
+
+                           	
                          }    
                        });
                      

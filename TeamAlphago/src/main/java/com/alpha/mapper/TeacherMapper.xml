@@ -41,8 +41,8 @@
 	
 	<!-- 결제 시 구독내역에 인서트 -->
 	<insert id="insertPayAction">
-   	INSERT INTO subscribe (SUB_NO, SUB_C_NO, T_M_ID, SUB_DATE, SUB_PRICE, SUB_ABLE, SUB_CONNECTION)
-	VALUES (#{sub_no}, #{sub_c_no}, #{t_m_id}, #{sub_date}, #{sub_price}, #{sub_able}, #{sub_connection})
+   	INSERT INTO subscribe (SUB_NO, SUB_C_NO, T_M_ID, SUB_DATE, SUB_PRICE, SUB_ABLE, SUB_CONNECTION, SUB_MONTH)
+	VALUES (#{sub_no}, #{sub_c_no}, #{t_m_id}, #{sub_date}, #{sub_price}, #{sub_able}, (#{sub_month}/3), #{sub_month})
    </insert>
 	
 	<!-- 나의 구독내역 리스트 -->

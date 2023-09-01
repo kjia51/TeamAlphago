@@ -72,7 +72,7 @@ public class TeacherController extends CommonRestController {
 		String sub_date = request.getParameter("sub_date");
 		String sub_price = request.getParameter("sub_price");
 		String sub_able = request.getParameter("sub_able");
-		String sub_connection = request.getParameter("sub_connection");
+		String sub_month = request.getParameter("sub_month");
 		
 		System.out.println(sub_no);
 		System.out.println(sub_c_no);
@@ -80,7 +80,7 @@ public class TeacherController extends CommonRestController {
 		System.out.println(sub_date);
 		System.out.println(sub_price);
 		System.out.println(sub_able);
-		System.out.println(sub_connection);
+		System.out.println(sub_month);
 		
 		int res = service.insertPayAction(subVO);
 		
