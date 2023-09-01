@@ -10,21 +10,21 @@
 
 <title>Insert title here</title>
 <style>
-	#calendarList {
-	    display: none;
-	    width: 540px;
-	    height: 300px;
-	    background-color: #fefefe;
-	    border: 1px solid #888;
-	    border-radius: 3px;
-	    text-align: center;
-	}
-	#calendarList .modal_close_btn{
+#calendarList {
+    display: none;
+    width: 540px;
+    height: 300px;
+    background-color: #fefefe;
+    border: 1px solid #888;
+    border-radius: 3px;
+    text-align: center;
+}
+#calendarList .modal_close_btn{
 
-    border: 1px solid black;
-    padding: 5px;
-    border-radius: 5px;
-    margin: 10px 20px;
+   border: 1px solid black;
+   padding: 5px;
+   border-radius: 5px;
+   margin: 10px 20px;
 }
 
 .input {
@@ -35,7 +35,17 @@
     font-size: 13px;
     line-height: 0;
 }
-
+.blue{
+    background-color: #f6f7f9;
+    border: 1px black solid;
+    color: black;
+    
+    }
+#btn.disabled {
+  background-color: #074691;
+  color : white;
+  cursor: not-allowed;
+}
 </style>
 </head>
 <body>
@@ -74,7 +84,8 @@
                 </table>
             </div>
             <div id="entry">
-              	<div >
+            
+              	<div id="myChartView">
 				  <canvas id="myChart"></canvas>
 				</div>
 
