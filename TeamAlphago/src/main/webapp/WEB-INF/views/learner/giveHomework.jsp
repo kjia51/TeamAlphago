@@ -98,29 +98,30 @@
 						<h4 class="t_title">숙제 내용 입력  </h4>
 						<table style="border: 1px solid #000 ,  border-collapse: collapse;">
 						<colgroup>
-							<col width="20%" />
-							<col width="20%" />
 							<col width="30%" />
+							<col width="30%" />
+							<col width="40%" />
 						</colgroup>
 							<tr>
 								<th align="center" style="border: 1px solid #000;">숙제 내용</th>
 								<td align="center" style="border: 1px solid #000;"></td>
-								<td align="center" style="border: 1px solid #000;"><textarea rows="10" cols="10"></textarea></td>
+								<td align="center" style="border: 1px solid #000;">
+								<textarea rows="10" cols="40"></textarea></td>
 							</tr>
 							<tr>
-								<th align="center" style="border: 1px solid #000;">숙제 기한</th>
+								<th align="center" style="border: 1px solid #000;" ></th>
 								<td align="center" style="border: 1px solid #000;">숙제 시작일</td>
 								<td align="center" style="border: 1px solid #000;">숙제 종료일</td>
 							</tr>
 							<tr>
-								<th align="center" style="border: 1px solid #000;">숙제 기한</th>
-								<td align="center" style="border: 1px solid #000;">숙제 시작일</td>
-								<td align="center" style="border: 1px solid #000;">숙제 종료일</td>
+								<th align="center" style="border: 1px solid #000;" >숙제 기한</th>
+								<td align="center" style="border: 1px solid #000;"><%@ include file="test.jsp" %></td>
+								<td align="center" style="border: 1px solid #000;"><%@ include file="test.jsp" %></td>
 							</tr>
 						
 						</table>
 
-					   	<%@ include file="test.jsp" %>
+					   	
 					   	<div style="display: inline-block;">
 					   	<input type="text" id="startdate">
 					   	<br>
@@ -161,24 +162,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:set var="isMember" value="${memberVO.m_id}" />
-								<c:if test="${isMember != null}">
-									<c:forEach items="${grpLearnerList}" var="grpLearner">
-										<tr>
-											<th align="center"><input type="checkbox" id="checkbox"
-												name="myCheckbox" value="${grpLearner.l_no}"></th>
-											<td align="center" class="row">${grpLearner.m_name}</td>
-											<td align="center">${grpLearner.c_name}</td>
-											<td align="center">${grpLearner.g_start}</td>
-											<td align="center">${grpLearner.g_end}</td>
-										</tr>
-									</c:forEach>
-								</c:if>
-								<c:if test="${isMember == null}">
-									<tr>
-										<td colspan="5" style="text-align: center;">로그인 후 이용 가능합니다.</td>
-									</tr>
-								</c:if>	
+
 							</tbody>
 						</table>
 						<div class="paging">
@@ -232,12 +216,6 @@ $(function() {
 });
 
 
-
-
-
-
-
-
 // 그룹 선택시 이벤트 발생 
 function selectGroup(g_no) {
 	console.log("g_no", g_no); 
@@ -280,8 +258,8 @@ function displayLearnerList(map) {
 						+'		</colgroup>                                                         '
 						+'		<thead>                                                             '
 						+'			<tr>                                                            '
-						+'				<th align="center"><input type="checkbox" id="checkboxAll"              '
-						+'						name="myCheckboxAll" value="allChecked"></th>       '
+						+'				<th align="center"><input type="checkbox" id="checkbox"              '
+						+'						name="myCheckbox" value="Checked"></th>       '
 						+'				<th>학습자 이름</th>                                           '
 						+'				<th>콘텐츠명</th>                                             '
 						+'				<th>학습시작일</th>                                            '
@@ -351,9 +329,26 @@ function getLearner(l_no) {
     // 모든 선택된 번호에 대해 데이터를 수집하여 배열에 추가
     learnerAll.forEach(function(l_no) {
     	console.log("l_no", l_no);
+        var m_name = $('input[data-lno="' + l_no + '"]').val();
+        var c_name = $('input[data-cno="' + l_no + '"]').val();
+        var g_start = $('input[data-sno="' + l_no + '"]').val();
+        var g_end = $('input[data-eno="' + l_no + '"]').val();
+	    console.log("m_name", m_name);
+	    console.log("c_name", c_name);
+	    console.log("g_start", g_start);
+	    console.log("g_end", g_end);
+	    
+	    let item = {
+	    		m_name: m_name,
+	            c_name: c_name,
+	            g_start: g_start,
+	            g_end: g_end
+	        };
+	
+	        listArray.push(item);
     });
-    
- // 모든 선택 항목의 데이터를 배열로 반환
+ 		// 모든 선택 항목의 데이터를 배열로 반환
+	    return listArray;
 }
 
 function modal(id) { //모달창 띄우기
@@ -370,7 +365,7 @@ function modal(id) { //모달창 띄우기
             width: '100%',
             height: '100%',
             overflow: 'auto',
-            // 레이어 색갈은 여기서 바꾸면 됨
+            // 레이어 색상은 여기서 바꾸면 됨
             backgroundColor: 'rgba(0,0,0,0.4)'
         })
         .appendTo('body');
