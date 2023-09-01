@@ -42,7 +42,7 @@
 									<div class="searchBox">
 										<select title="groupNameList" name="g_name" id="grpSelectBox"
 											onchange="selectGroup(this.value);" value="">
-											<option value="selectop" >선택</option>
+											<option value="selectop">선택</option>
 											<c:forEach items="${grpNameList}" var="group">
 												<option value="${group.g_no}">${group.g_no}</option>
 											</c:forEach>
@@ -52,36 +52,34 @@
 								<td style="border-left: none;">
 									<button class="btn btn-default" id="writebtn">내용입력</button>
 								</td>
-								<td><input type="text" id="datepicker"
-									placeholder="제출기한 선택"></td>
 							</tr>
 						</tbody>
 					</table>
 				</form>
-				
+
 				<%-- 모달창 --%>
 				<div id="assign_modal">
-				<div class="titleBox">
-					<h3 class="t_title">그룹이름 </h3>
-					<input name="l_no" id="learnerNo" type="hidden" value=""> 
-				</div>
-				<div class="entry">
-					<table class="table table-bordered">
-						<caption>숙제 내용 입력</caption>
-						<colgroup>
-							<col width="20%" />
-							<col width="20%" />
-							<col width="30%" />
-							<col width="30%" />
-						</colgroup>
-						<thead>
-							<tr>
-								<th>학습자 이름</th>
-								<th>콘텐츠명</th>
-								<th>학습시작일</th>
-								<th>학습종료일</th>
-							</tr>
-						</thead>
+					<div class="titleBox">
+						<h3 class="t_title">숙제 내용 입력</h3>
+						<input name="l_no" id="learnerNo" type="hidden" value="">
+					</div>
+					<div class="entry">
+						<table class="table table-bordered">
+							<caption>숙제 내용 입력</caption>
+							<colgroup>
+								<col width="20%" />
+								<col width="20%" />
+								<col width="30%" />
+								<col width="30%" />
+							</colgroup>
+							<thead>
+								<tr>
+									<th>학습자 이름</th>
+									<th>콘텐츠명</th>
+									<th>학습시작일</th>
+									<th>학습종료일</th>
+								</tr>
+							</thead>
 							<tbody>
 								<c:forEach items="${grpLearnerList}" var="grpLearner">
 									<tr>
@@ -93,49 +91,52 @@
 										<td align="center">${grpLearner.g_end}</td>
 									</tr>
 								</c:forEach>
-							</tbody>	
+							</tbody>
 						</table>
-						<h4 class="t_title">숙제 내용 입력  </h4>
-						<table style="border: 1px solid #000 ,  border-collapse: collapse;">
-						<colgroup>
-							<col width="30%" />
-							<col width="30%" />
-							<col width="40%" />
-						</colgroup>
+						<table style="border: 1px solid #000, border-collapse: collapse;">
+							<colgroup>
+								<col width="30%" />
+								<col width="30%" />
+								<col width="40%" />
+							</colgroup>
 							<tr>
 								<th align="center" style="border: 1px solid #000;">숙제 내용</th>
+								<td align="center" style="border: 1px solid #000;" colspan="2">
+									<textarea rows="5" cols="10" style="width: 90%;">내용을 입력하세요.</textarea>
+								</td>
 								<td align="center" style="border: 1px solid #000;"></td>
-								<td align="center" style="border: 1px solid #000;">
-								<textarea rows="10" cols="40"></textarea></td>
 							</tr>
 							<tr>
-								<th align="center" style="border: 1px solid #000;" ></th>
+								<th align="center" style="border: 1px solid #000;" rowspan="3">숙제기한
+								</th>
 								<td align="center" style="border: 1px solid #000;">숙제 시작일</td>
 								<td align="center" style="border: 1px solid #000;">숙제 종료일</td>
 							</tr>
 							<tr>
-								<th align="center" style="border: 1px solid #000;" >숙제 기한</th>
-								<td align="center" style="border: 1px solid #000;"><%@ include file="test.jsp" %></td>
-								<td align="center" style="border: 1px solid #000;"><%@ include file="test.jsp" %></td>
+								<td align="center" style="border: 1px solid #000;"><input
+									type="text" name="startDay" id="datepicker" placeholder="시작일 ">
+								</td>
+								<td align="center" style="border: 1px solid #000;"><input
+									type="text" name="endDay" id="datepicker" placeholder="종료일 ">
+								</td>
 							</tr>
-						
 						</table>
 
-					   	
-					   	<div style="display: inline-block;">
-					   	<input type="text" id="startdate">
-					   	<br>
-						<input type="text" id="enddate">
-					   	</div>
-					   	<br>
+
+
+						<br>
 						<div class="btn">
-						    <button><a onclick="groupinsert()">전송</a></button>
-						    <button><a class="modal_close_btn">닫기</a></button>
-				    	</div>
+							<button>
+								<a onclick="groupinsert()">전송</a>
+							</button>
+							<button>
+								<a class="modal_close_btn">닫기</a>
+							</button>
+						</div>
+					</div>
 				</div>
-				</div>
-				<%-- --------------------------------------------------------------  --%>
-				
+				<%-----------------------------모달창 끝----------------------------------%>
+
 				<!-- 학습자 리스트 -->
 				<div id="learnerInfo">
 					<div class="entry">
@@ -151,7 +152,7 @@
 							<thead>
 								<tr>
 									<th style="text-align: center;"><input type="checkbox"
-										id="checkboxAll" name="myCheckbox" value="Checked"></th>
+										id="checkboxAll" name="myCheckboxAll" value="Checked"></th>
 									<th>학습자 이름</th>
 									<th>콘텐츠명</th>
 									<th>학습시작일</th>
@@ -173,13 +174,13 @@
 			</div>
 			<!-- //content close -->
 
-		
+
 		</div>
 	</div>
 	<!-- container close -->
 
 </body>
-<script type="text/javascript">
+<script>
 //get방식 
 function fetchGet(url,callback){
 	console.log(url);
@@ -210,7 +211,14 @@ function fetchPost(url, obj, callback){
 		consol.log('fetchPost',e);
 	}
 }
-// 날짜 선택
+
+
+
+
+
+
+
+// 숙제 일자 선택
 $(function() {
     $("#datepicker").datepicker();
 });
@@ -237,7 +245,7 @@ function selectGroup(g_no) {
 
     
     
-//선택 그룹에 따른 그룹 정보 리스트
+// 선택 그룹에 따른 그룹 정보 리스트
 function displayLearnerList(map) {
 	console.log("map", map)
 	let LearnerList = map.LearnerList;
@@ -258,8 +266,8 @@ function displayLearnerList(map) {
 						+'		</colgroup>                                                         '
 						+'		<thead>                                                             '
 						+'			<tr>                                                            '
-						+'				<th align="center"><input type="checkbox" id="checkbox"              '
-						+'						name="myCheckbox" value="Checked"></th>       '
+						+'				<th align="center"><input type="checkbox" id="checkboxAll"  '
+						+'				name="myCheckbox" onclick="selectAll(this)" value="checked"></th> '
 						+'				<th>학습자 이름</th>                                           '
 						+'				<th>콘텐츠명</th>                                             '
 						+'				<th>학습시작일</th>                                            '
@@ -293,6 +301,19 @@ function displayLearnerList(map) {
 	}
 	learnerInfo.innerHTML += pageBlock;
 }
+
+function selectAll(selectAll)  {
+	  const checkboxes = document.getElementsByName('myCheckbox');
+	  
+	  checkboxes.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked;
+	  })
+	}
+
+
+
+
+
 // 내용 입력 버튼 클릭 시 이벤트
 $('#writebtn').on('click', function() {
     // 모달창 띄우기
@@ -308,7 +329,7 @@ $('#writebtn').on('click', function() {
     	    });
     	    
     		if($('input:checkbox[name=myCheckbox]:checked').length==0){
-    			alert('선택하세요');
+    			alert('학습자를 선택하세요');
     		} else{
     			getLearner(selectedIndexes);
     	    console.log("selectedIndexes",selectedIndexes[0]);
@@ -316,6 +337,7 @@ $('#writebtn').on('click', function() {
     	   
     	    }
 });
+
 // 회원 정보 리스트 l_no로 받아오기 
 function getLearner(l_no) {
     console.log("l_no", l_no)
@@ -351,7 +373,8 @@ function getLearner(l_no) {
 	    return listArray;
 }
 
-function modal(id) { //모달창 띄우기
+// 모달창 띄우기
+function modal(id) { 
     var zIndex = 9999;
     var modal = $('#' + id);
 
@@ -393,6 +416,7 @@ function modal(id) { //모달창 띄우기
             modal.hide();
         });
 }
+
 
 
 

@@ -81,8 +81,8 @@
     	g_no, 
 		m_name,
         c_name,
-        g_start,
-        g_end
+        DATE_FORMAT(g_start, '%Y-%m-%d') AS g_start,
+        DATE_FORMAT(g_end, '%Y-%m-%d') AS g_end
     from 
     	learner 
     left join member on(l_m_id = m_id)
