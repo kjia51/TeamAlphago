@@ -28,8 +28,8 @@ public class LearnerServiceImpl implements LearnerService {
 
 	// 전체 그룹 리스트 
 	@Override
-	public List<LearnerVO> grouplistAll() {
-		return 	learnerMapper.grouplistAll();
+	public List<LearnerVO> grouplistAll(LearnerVO learnerVO) {
+		return 	learnerMapper.grouplistAll(learnerVO);
 	}
 
 	// 그룹 가입 신청

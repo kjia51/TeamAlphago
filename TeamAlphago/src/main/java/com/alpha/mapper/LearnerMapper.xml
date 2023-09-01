@@ -11,7 +11,9 @@
 <!-- 그룹별 그룹 정보 -->
 <select id="groupInfo" resultType="com.alpha.vo.LearnerVO">
 	SELECT
+		g_cnt,
 		g_name,
+		sub_able,
 		s.t_m_id AS t_m_id,
 		sub_c_no AS l_c_no,
 		g_no AS l_g_no,   
@@ -34,7 +36,9 @@
 <!-- 전체 그룹 정보 -->
 <select id="grouplistAll" resultType="com.alpha.vo.LearnerVO">
 	SELECT
+		g_cnt,
 		g_name,
+		sub_able,
 		s.t_m_id AS t_m_id,
 		sub_c_no AS l_c_no,
 		g_no AS l_g_no, 

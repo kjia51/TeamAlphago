@@ -118,8 +118,8 @@
 								</c:if>
 								<c:if test="${isMember == null}">
 									<tr>
-										<td colspan="5" style="text-align: center;">로그인 후에 이용
-											가능합니다.</td>
+										<td colspan="5" style="text-align: center;">
+										로그인 후 이용 가능합니다.</td>
 									</tr>
 								</c:if>
 							</tbody>
@@ -233,7 +233,7 @@ function displayGroupList(map) {
 
 	                   if(group.dupGrpCount == 0){
 	                   pageBlock += '<button class="apply-button" id="applyButton" onclick="applyButton()">신청하기</button>' 
-					  pageBlock += '</td>'
+					   pageBlock += '</td>'
 					            +'<td style="display: none;">                                                  '
 								+'<input type="hidden" name="t_m_id" id="teacherId" value="' + group.t_m_id + '"> '
 								+'</td>                                                                        '
@@ -244,14 +244,13 @@ function displayGroupList(map) {
 								+'<input type="hidden" name="l_c_no" id="contentNo" value="' + group.l_c_no + '"> '
 								+'</td>                                                                        '
 								+'<td style="display: none;">'
-								+'<input type="hidden" name="sub_able" id="ableGrpCnt" value="'+ group.sub_able+'">'
+								+'<input type="hidden" name="sub_able" id="ableGrpCnt" value="'+ group.sub_able +'">'
 								+'</td>'
 								+'<td style="display: none;">'
-								+'<input type="hidden" name="g_cnt" id="currentGrpCnt" value="'+group.g_cnt+'">'
+								+'<input type="hidden" name="g_cnt" id="currentGrpCnt" value="'+ group.g_cnt +'">'
 								+'</td>'
 								+'</tr>';
 	                   }else{
-	                	   
 	                   pageBlock += '<button class="apply-button" id="applyDuple" disabled>신청완료</button>' 
 	                   }
     	});
@@ -298,13 +297,18 @@ function applyButton() {
 	    	// 학습자인 경우 신청 활성화
 	    	if (!checkbox.prop('checked')) {
 	    		// 체크 박스가 선택되어 있지 않은 경우
-	    		alert('신청하실 그룹을 선택하여 주세요.');
+	    		alert('신청하실 그룹을 선택하여 주세요.'); //안나옴
 	    		//  -> 신청 비활성화
+	    		applyButton.prop('disabled', true);
+	    	} else if(g_cnt === sub_able){
+            	// 현재인원이 그룹인원과 동일한 경우
+    			alert('신청 인원 마감');
 	    		applyButton.prop('disabled', true);
 	    		
 	    	} else {
 	    		// 체크 박스가 선택되어 있는 경우 -> 신청 활성화
-	            console.log("신청버튼 활성화")	
+	            console.log("신청버튼 활성화")
+	            	
 	            // 그룹 신청 Fetch 요청
 	            fetch('/alpha/groupApply', {
 	            	method: 'POST',
@@ -333,7 +337,8 @@ function applyButton() {
 		                	window.location.href = currentPageURL;
 		                	alert("그룹 신청 중 에러가 발생하였습니다.")
 		                });
-	                }
+	                
+	            }
 	    }else{
 	    	// 학습자 이외의 경우 신청 비활성화
 	   		alert('학습자만 신청 가능합니다.');

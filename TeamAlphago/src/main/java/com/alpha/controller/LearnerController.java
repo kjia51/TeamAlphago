@@ -41,14 +41,14 @@ public class LearnerController extends CommonRestController {
 	
 	// 그룹 이름 리스트 	 
 	@GetMapping("/joinGroup")
-	public ModelAndView groupName(String g_name, String l_m_id) {
+	public ModelAndView groupName(String g_name, String l_m_id, LearnerVO learnerVO) {
 		System.out.println("그룹 이름 리스트 연결");
 		Map<String, Object> map = new HashMap<String, Object>();
 		ModelAndView mav = new ModelAndView("/learner/joinGroup");
 		try {
 			mav.addObject("list", learnerService.groupName(g_name));
 			// 그룹 전체 리스트 출력
-			mav.addObject("listAll", learnerService.grouplistAll());
+			mav.addObject("listAll", learnerService.grouplistAll(learnerVO));
 			System.out.println("g_name : "+ g_name);
 			System.out.println("l_m_id :"+ l_m_id);
 			
