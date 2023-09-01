@@ -26,8 +26,6 @@
 						value="${memberVO.m_id}"> <input name="m_division"
 						id="division" type="hidden" value="${memberVO.m_division}">
 				</div>
-				${memberVO}
-
 
 				<!--그룹가입신청-->
 				<form class="searchWrap searchWrap_wide">
@@ -92,11 +90,8 @@
 											<td align="center">${grplist.g_AppCnt}</td>
 											<td align="center">
 											<c:choose>
-											    <c:when test="${group.dupGrpCount == 0 || group.sub_able < group.g_cnt}">
+											    <c:when test="${grplist.dupGrpCount == 0}">
 											        <button class="apply-button" id="applyButton" onclick="applyButton()">신청하기</button>
-											    </c:when>
-											    <c:when test="${group.sub_able == group.g_cnt}">
-											        <button class="apply-button" id="applyDuple" disabled>신청마감</button>
 											    </c:when>
 											    <c:otherwise>
 											        <button class="apply-button" id="applyDuple" disabled>신청완료</button>
@@ -111,6 +106,12 @@
 											</td>
 											<td style="display: none;"><input type="hidden"
 												name="l_c_no" id="contentNo" value="${grplist.l_c_no}">
+											</td>
+											<td style="display: none;"><input type="hidden"
+												name="sub_able" id="ableGrpCnt" value="${grplist.sub_able}">
+											</td>
+											<td style="display: none;"><input type="hidden"
+												name="g_cnt" id="currentGrpCnt" value="${grplist.g_cnt}">
 											</td>
 										</tr>
 									</c:forEach>
@@ -232,22 +233,27 @@ function displayGroupList(map) {
 
 	                   if(group.dupGrpCount == 0){
 	                   pageBlock += '<button class="apply-button" id="applyButton" onclick="applyButton()">신청하기</button>' 
-	                	   
+					  pageBlock += '</td>'
+					            +'<td style="display: none;">                                                  '
+								+'<input type="hidden" name="t_m_id" id="teacherId" value="' + group.t_m_id + '"> '
+								+'</td>                                                                        '
+								+'<td style="display: none;">	                                              '
+								+'<input type="hidden" name="l_g_no" id="groupNo" value="' + group.l_g_no + '">   '
+								+'</td>                                                                        '
+								+'<td style="display: none;">		                                          '
+								+'<input type="hidden" name="l_c_no" id="contentNo" value="' + group.l_c_no + '"> '
+								+'</td>                                                                        '
+								+'<td style="display: none;">'
+								+'<input type="hidden" name="sub_able" id="ableGrpCnt" value="'+ group.sub_able+'">'
+								+'</td>'
+								+'<td style="display: none;">'
+								+'<input type="hidden" name="g_cnt" id="currentGrpCnt" value="'+group.g_cnt+'">'
+								+'</td>'
+								+'</tr>';
 	                   }else{
 	                	   
 	                   pageBlock += '<button class="apply-button" id="applyDuple" disabled>신청완료</button>' 
 	                   }
-	         pageBlock += '</td>'
-	                   +'<td style="display: none;">                                                  '
-					   +'<input type="hidden" name="t_m_id" id="teacherId" value="' + group.t_m_id + '"> '
-					   +'</td>                                                                        '
-					   +'<td style="display: none;">	                                              '
-					   +'<input type="hidden" name="l_g_no" id="groupNo" value="' + group.l_g_no + '">   '
-					   +'</td>                                                                        '
-					   +'<td style="display: none;">		                                          '
-					   +'<input type="hidden" name="l_c_no" id="contentNo" value="' + group.l_c_no + '"> '
-					   +'</td>                                                                        '
-	                   +'</tr>';
     	});
     } else {
     			pageBlock +='<tr>'
@@ -277,56 +283,63 @@ function applyButton() {
 	let t_m_id = checkedRow.querySelector('#teacherId').value;
 	let l_g_no = checkedRow.querySelector('#groupNo').value;
 	let l_c_no = checkedRow.querySelector('#contentNo').value;
+	let sub_able = checkedRow.querySelector('#ableGrpCnt').value;
+	let g_cnt= checkedRow.querySelector('#currentGrpCnt').value;
 	
 	console.log(l_m_id);
 	console.log(t_m_id);
 	console.log(l_g_no);
 	console.log(l_c_no);
 	console.log(m_division);
+	console.log(sub_able);
+	console.log(g_cnt);
+
+		if(m_division == 2){
+	    	// 학습자인 경우 신청 활성화
+	    	if (!checkbox.prop('checked')) {
+	    		// 체크 박스가 선택되어 있지 않은 경우
+	    		alert('신청하실 그룹을 선택하여 주세요.');
+	    		//  -> 신청 비활성화
+	    		applyButton.prop('disabled', true);
+	    		
+	    	} else {
+	    		// 체크 박스가 선택되어 있는 경우 -> 신청 활성화
+	            console.log("신청버튼 활성화")	
+	            // 그룹 신청 Fetch 요청
+	            fetch('/alpha/groupApply', {
+	            	method: 'POST',
+	            	headers: {
+	            		'Content-Type': 'application/json'
+	            	},  
+	            	body: JSON.stringify({
+	            		l_m_id: l_m_id,
+	            		t_m_id: t_m_id,
+	            		l_g_no: l_g_no,
+	            		l_c_no: l_c_no
+	            	})
+	            })
+	            .then(response => response)
+	            .then(data => {
+	            	// fetch 요청이 성공한 경우의 처리
+	            	console.log("data", data);
+	            	var currentPageURL = "/alpha/joinGroup";
+	            	window.location.href = currentPageURL;
+	            	alert('신청되었습니다.');
+		                })
+		                .catch(error => {
+		                	// fetch 요청이 실패한 경우의 처리
+		                	console.error(error);
+		                	var currentPageURL = "/alpha/joinGroup";
+		                	window.location.href = currentPageURL;
+		                	alert("그룹 신청 중 에러가 발생하였습니다.")
+		                });
+	                }
+	    }else{
+	    	// 학습자 이외의 경우 신청 비활성화
+	   		alert('학습자만 신청 가능합니다.');
+			applyButton.prop('disabled', true);
+	    }
 	
-	if(m_division == 2){
-    	// 학습자인 경우 신청 활성화
-    	if (!checkbox.prop('checked')) {
-    		// 체크 박스가 선택되어 있지 않은 경우
-    		alert('신청하실 그룹을 선택하여 주세요.');
-    		//  -> 신청 비활성화
-    		applyButton.prop('disabled', true);
-    		
-    	} else {
-    		// 체크 박스가 선택되어 있는 경우 -> 신청 활성화
-            console.log("신청버튼 활성화")	
-            // 그룹 신청 Fetch 요청
-            fetch('/alpha/groupApply', {
-            	method: 'POST',
-            	headers: {
-            		'Content-Type': 'application/json'
-            	},  
-            	body: JSON.stringify({
-            		l_m_id: l_m_id,
-            		t_m_id: t_m_id,
-            		l_g_no: l_g_no,
-            		l_c_no: l_c_no
-            	})
-            })
-            .then(response => response)
-            .then(data => {
-            	// fetch 요청이 성공한 경우의 처리
-            	console.log("data", data);
-            	alert('신청되었습니다.');
-	                })
-	                .catch(error => {
-	                	// fetch 요청이 실패한 경우의 처리
-	                	console.error(error);
-	                	var currentPageURL = "/alpha/joinGroup";
-	                	window.location.href = currentPageURL;
-	                	alert("그룹 신청 중 에러가 발생하였습니다.")
-	                });
-                }
-    }else{
-    	// 학습자 이외의 경우 신청 비활성화
-   		alert('학습자만 신청 가능합니다.');
-		applyButton.prop('disabled', true);
-    }
 } 
     
 

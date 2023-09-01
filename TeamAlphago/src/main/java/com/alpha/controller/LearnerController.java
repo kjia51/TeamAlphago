@@ -87,8 +87,23 @@ public class LearnerController extends CommonRestController {
 		System.out.println("learnerVO:"+learnerVO);
 		System.out.println(learnerVO.getT_m_id());
 	}
-	
-	
+	/*
+	// 그룹 이름 리스트
+	@GetMapping("/giveHomework")
+	public ModelAndView groupNameList(String g_name) {
+		System.out.println("숙제전송 - 그룹 이름 리스트 연결");
+		Map<String, Object> map = new HashMap<String, Object>();
+		ModelAndView mav = new ModelAndView("/learner/giveHomework");
+		try {
+			mav.addObject("list", learnerService.groupName(g_name));
 
+			System.out.println("g_name : "+ g_name);
+			
+		} catch (Exception e) {
+			map.put(REST_FAIL, "오류가 발생하였습니다.");
+		}
+		return mav; 
+	}
+	 */	
  
 }

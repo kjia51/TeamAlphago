@@ -98,7 +98,7 @@
                             <h3 class="blind">대회정보</h3>
                             <ul>
                                 <li><a href="/alpha/joinGroup?l_m_id=${memberVO.m_id}"> 그룹 가입 신청</a></li>
-                                <li><a href="/"> 숙제 제출 </a></li>
+                                <li><a href="/alpha/submitHomework?l_m_id=${memberVO.m_id}"> 숙제 제출 </a></li>
                             </ul>
                         </div>
                         <div class="gnb_sub gnb_sub_4">
@@ -106,7 +106,7 @@
                             <ul>
                                 <li><a href="/alpha/group?t_m_id=${memberVO.m_id }"> 학습 그룹 등록 </a></li>
                                 <li><a href="/alpha/groupSingup?t_m_id=${memberVO.m_id }"> 그룹 가입 승인 </a></li> </ul>
-                                <li><a href="/"> 숙제 전송 </a></li>
+                                <li><a href="/alpha/giveHomework?t_m_id=${memberVO.m_id }"> 숙제 전송 </a></li>
                                 <li><a href="/"> 숙제 평가 </a></li> </ul>
                         </div>
                         <div class="gnb_sub gnb_sub_5">

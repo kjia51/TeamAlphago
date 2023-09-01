@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+ <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <meta charset="UTF-8">
 <title>숙제 전송</title>
 </head>
@@ -16,25 +18,29 @@
 			<div class="content_wrap">
 				<div class="titleBox">
 					<h2 class="t_title">숙제 전송(학습 지도자용)</h2>
+						<input name="l_m_id" id="memberId" type="hidden"
+						value="${memberVO.m_id}"> <input name="m_division"
+						id="division" type="hidden" value="${memberVO.m_division}">
 				</div>
+				
 
-				<!--대회검색-->
+				<!--그룹명-->
 				<form class="searchWrap searchWrap_wide">
 					<table class="table table-bordered">
-						<caption>대회검색</caption>
+						<caption>그룹명</caption>
 						<colgroup>
 							<col width="15%"/>
 						</colgroup>
 						<tbody>
 							<tr>
-								<th scope="col">대회보기</th>
+								<th scope="col">그룹명</th>
 								<td>
 									<div class="searchBox">
-										<select title="검색 분류" name="g_name"
-											onchange="location.href='./?g_name='+this.value;" value="">
-											<option value="">전체</option>
-											<option value="31">초급반</option>
-											<option value="30">중급반</option>
+										<select title="groupNameList" name="g_name" id="grpSelectBox"
+											onchange="changeGroup(this.value);" value="">
+											<c:forEach items="${list}" var="group">
+												<option value="${group.g_name}">${group.g_name}</option>
+											</c:forEach>
 										</select>
 									</div>
 								</td>
@@ -74,7 +80,7 @@
 								<td align="center" class="row">김첨지</td>
 								<td align="center">초급반</td>
 								<td align="center"><input></td>
-								<td align="center">2023.08.26 ~ 09.02</td>
+								<td align="center"><input type="text" id="datepicker" placeholder="제출기한 선택"></td>
 				
 							</tr>
 
@@ -108,5 +114,13 @@
 	<!-- container close -->
 
 </body>
+<script type="text/javascript">
+$(function() {
+    $("#datepicker").datepicker();
+});
+
+// 그룹명 선택시 이벤트 발생 
+
+</script>
 </html>
 <%@ include file="../common/footer.jsp"%>

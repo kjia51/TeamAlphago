@@ -11,13 +11,14 @@
 <!-- 그룹별 그룹 정보 -->
 <select id="groupInfo" resultType="com.alpha.vo.LearnerVO">
 	SELECT
+		g_name,
 		s.t_m_id AS t_m_id,
 		sub_c_no AS l_c_no,
 		g_no AS l_g_no,   
 	    m_name AS t_m_name,
 	    CONCAT(IFNULL(DATE_FORMAT(g.g_start, '%y.%m.%d'), ''), ' ~ ', IFNULL(DATE_FORMAT(g.g_end, '%y.%m.%d'), '')) AS g_period,
-	    CONCAT(IFNULL(CONVERT(s.sub_able, CHAR), ''), ' / ', IFNULL(CONVERT(g.g_cnt, CHAR), '')) AS g_AppCnt,
-	    	   (SELECT count(*) FROM learner l
+	    CONCAT(IFNULL(CONVERT(g.g_cnt, CHAR), ''), ' / ', IFNULL(CONVERT(s.sub_able, CHAR), '')) AS g_AppCnt,
+	    (SELECT count(*) FROM learner l
 		WHERE l_m_id = #{l_m_id} and  l_g_no = g_no) dupGrpCount
 	FROM                
 	    subscribe s
@@ -39,7 +40,7 @@
 		g_no AS l_g_no, 
 	    m_name AS t_m_name,
 	    CONCAT(IFNULL(DATE_FORMAT(g.g_start, '%y.%m.%d'), ''), ' ~ ', IFNULL(DATE_FORMAT(g.g_end, '%y.%m.%d'), '')) AS g_period,
-	    CONCAT(IFNULL(CONVERT(s.sub_able, CHAR), ''), ' / ', IFNULL(CONVERT(g.g_cnt, CHAR), '')) AS g_AppCnt,
+	    CONCAT(IFNULL(CONVERT(g.g_cnt, CHAR), ''), ' / ', IFNULL(CONVERT(s.sub_able, CHAR), '')) AS g_AppCnt,
 	   (SELECT count(*) FROM learner l
 		WHERE l_m_id = #{l_m_id} and  l_g_no = g_no) dupGrpCount
 	FROM                
@@ -55,5 +56,13 @@
 	values (#{l_no},#{t_m_id}, #{l_m_id}, #{l_c_no}, #{l_g_no}, now(), 'N')
 </insert>
 
+<!-- 그룹별 학습자 리스트 조회 -->
+<select id= "grpLearnerList" resultType="com.alpha.vo.LearnerVO">
+	SELECT * FROM learner l
+    LEFT join grp g ON (l.l_g_no = g.g_no)
+    WHERE l.t_m_id = #{t_m_id};
+</select>
+
+<!-- 학습자 숙제 요청 -->
 
 </mapper>

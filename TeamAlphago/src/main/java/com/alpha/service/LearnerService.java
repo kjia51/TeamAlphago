@@ -21,7 +21,8 @@ public interface LearnerService {
 	// 그룹 가입 신청
 	public int insertGrp(LearnerVO learnerVO);
 
-	
+	// 그룹별 학습자 조회
+	public List<LearnerVO> grpLearnerList();
 
  
 }

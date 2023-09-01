@@ -38,6 +38,12 @@ public class LearnerServiceImpl implements LearnerService {
 		return learnerMapper.insertGrp(learnerVO);
 	}
 
+	// 그룹별 학습자 조회
+	@Override
+	public List<LearnerVO> grpLearnerList() {
+		return learnerMapper.grpLearnerList();
+	}
+
 
 		
 	
