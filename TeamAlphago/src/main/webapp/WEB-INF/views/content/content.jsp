@@ -35,6 +35,7 @@
 
 
             <form class="content" id="content">
+            	<input id="m_id" type="hidden" value="${memberVO.m_id }">
                 <div class="writeForm1">
                     <div id="titleInfo">
                         <table class="table table-bordered table-form">
@@ -63,8 +64,6 @@
                                 </tr>
                                 <tr> 
                                     <th scope="row">학습최대인원</th>
-                                    
-                                    <!-- <td><input type="text" class="input-default" id="c_able"  style="width: 97%" maxlength="100" name="title" value=""></td> -->
                                     <td>
                                     <div id="signDiscount"  style="color:red"></div>
                                         <!-- 수량 선택박스 -->
@@ -79,7 +78,7 @@
                                     <!-- <td><input type="text" class="input-default" id="c_able"  style="width: 97%" maxlength="100" name="title" value=""></td> -->
                                     <td>
                                     <div id="p_able"></div>
-                                    <input type="text" class="input-default" id="poss_able" style="width: 97%" maxlength="100" name="poss_able" value="">
+                                    <input type="hidden" class="input-default" id="poss_able" style="width: 97%" maxlength="100" name="poss_able" value="">
                                     </td>
                                     
                                 </tr>
@@ -87,15 +86,7 @@
                                     <th scope="row">정가</th>
                                     <td><input type="text" class="input-default" id="c_price" style="width: 97%" maxlength="100" name="c_price" value=""></td>
                                 </tr>
-    		                     <tr>
-    		                         <th scope="row">할인율</th>
-    		                         <td>
-    		                         <input type="text" class="input-default" id="c_discount" style="width: 97%" maxlength="100" name="c_discount" value="" disabled></td>
-    		                     </tr>
-    		                     <tr>
-    		                         <th scope="row">판매가</th>
-    		                        <td><input type="text" class="input-default" id="c_sellprice" style="width: 97%" maxlength="100" name="c_sellprice" value="" disabled></td>
-    		                     </tr>
+    		                     
                                 <tr>
                                     <th scope="row">콘텐츠 내용</th>
                                     <td>

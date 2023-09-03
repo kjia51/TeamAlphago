@@ -89,6 +89,7 @@ function result(map){
 	console.log(map);
 	if(map.result == 'success'){
 		alert(map.msg);
+		window.history.back();
 	} else {
 		alert(map.msg);
 	}
@@ -99,14 +100,31 @@ function result(map){
 
 
 $('#contentEdit').click(function () {
-	getContentList()
+    const userConfirmation = confirm('수정하시겠습니까?');
+    if (userConfirmation) {
+        // 사용자가 "확인"을 선택한 경우
+        getContentList()
+        
+    } else {
+        // 사용자가 "취소"를 선택한 경우
+        // 아무 작업도 수행하지 않음
+    }
 
 })
 
 $('#contentDelete').click(function () {
 	let c_no = $('#c_no').val();
-	fetchDelete('/alpha/content/DeleteAction/'+c_no, result)
-	
+	// 확인과 취소를 묻는 알림창 표시
+    const userConfirmation = confirm('정말로 삭제하시겠습니까?');
+    
+    if (userConfirmation) {
+        // 사용자가 "확인"을 선택한 경우
+        fetchDelete('/alpha/content/DeleteAction/' + c_no, result);
+        
+    } else {
+        // 사용자가 "취소"를 선택한 경우
+        // 아무 작업도 수행하지 않음
+    }
 })
     
     
@@ -172,17 +190,7 @@ function resultList(map){
     		+'                         <th scope="row">정가</th>'
     		+'                         <td><input type="text" class="input-default" id="c_price" style="width: 97%" maxlength="100" name="c_price" value="'+vo.c_price+'"></td>'
     		+'                     </tr>'
-    		+'                     <tr>'
-    		+'                         <th scope="row">할인율</th>'
-    		+'                         <td>'
-    		+'						<div id="signDiscount"  style="color:red"></div>'
-    		+'						<input type="text" class="input-default" id="c_discount" style="width: 97%" maxlength="100" name="c_discount" value="'+vo.c_discount+'" disabled></td>'
-    		+'                     </tr>'
-    		+'                     <tr>'
-    		+'                         <th scope="row">판매가</th>'
-    		+'                         <td><input type="text" class="input-default" id="c_sellprice" style="width: 97%" maxlength="100" name="c_sellprice" value="'+vo.c_sellprice+'" disabled></td>'
-    		+'                     </tr>'
-    		+'                     <tr>'
+    		
     		+'                         <th scope="row">콘텐츠 내용</th>'
     		+'                         <td>'
     		+'							<div id="signContent"  style="color:red"></div>'

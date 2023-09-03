@@ -62,6 +62,7 @@ $('#registerBtn').click(function () {
 	let c_discount = $('#c_discount').val();
 	let c_sellprice = $('#c_sellprice').val();
 	let c_content = $('#c_content').val();
+	
 	  
 	console.log(c_able);
 	console.log(c_price);
@@ -78,7 +79,7 @@ $('#registerBtn').click(function () {
 			, c_content : c_content
 			}
 	
-	fetchPost('/alpha/content/insert', obj, getContentList)
+	fetchPost('/alpha/content/insert', obj, result)
 
 })
 
@@ -136,28 +137,21 @@ window.addEventListener('load', function(){
         	  let isDisabled = button.classList.contains("disabled");
             if (isDisabled) {
               button.classList.remove("disabled");
+              btnAll.pop(btnValue*10);
               console.log(`버튼 ${btnValue} 활성화`);
               
             } else {
               button.classList.add("disabled");
               console.log(`버튼 ${btnValue} 비활성화`);
-              btnAll.push(btnValue);
+              btnAll.push(btnValue*10);
               console.log(btnAll);
             }
+            $('#poss_able').val(btnAll);
           });
         });
     })
     
-    $('#c_price').blur(function () {
-    	let c_able = $('#c_able').val();
-    	let c_price = $('#c_price').val();
-    	if(c_able>=30){
-    		let total = c_price * (100-c_able)/100;
-    		$('#c_sellprice').val(total);        	
-    	}else{
-    		$('#c_sellprice').val(c_price);    
-    	}
-    })
+
     $('#c_content').blur(function () {
     	let c_content = $('#c_content').val();
     	const isValidcontent = /^[ㄱ-ㅎㅏ-ㅣ가-힣0-9 ]{10,}$/.test(c_content);
@@ -203,12 +197,11 @@ function result(map){
 
 
 
-//덧글 조회 및 출력
 function getContentList(){
-
+	let m_id = $('#m_id').val();
 	let c_no = $('#c_no').val();
 	console.log(c_no);
-	fetchGet('/alpha/content/list/${c_no}', result)
+	fetchGet('/alpha/content/list/${c_no}/${m_id}', result)
 }
 
 
@@ -253,14 +246,7 @@ function resultList(map){
     		+'                         <th scope="row">정가</th>'
     		+'                         <td><input type="text" class="input-default" id="c_price" style="width: 97%" maxlength="100" name="c_price" value="'+vo.c_price+'"></td>'
     		+'                     </tr>'
-    		+'                     <tr>'
-    		+'                         <th scope="row">할인율</th>'
-    		+'                         <td><input type="text" class="input-default" id="c_discount" style="width: 97%" maxlength="100" name="title" value="'+vo.c_discount+'" disabled></td>'
-    		+'                     </tr>'
-    		+'                     <tr>'
-    		+'                         <th scope="row">판매가</th>'
-    		+'                         <td><input type="text" class="input-default" id="c_sellprice" style="width: 97%" maxlength="100" name="title" value="'+vo.c_sellprice+'" disabled></td>'
-    		+'                     </tr>'
+    		
     		+'                     <tr>'
     		+'                         <th scope="row">콘텐츠 내용</th>'
     		+'                         <td><textarea id="c_content" placeholder="10자 이상 입력하세요" style="width:100%; height:450px; border: solid #ccc 1px;">'+vo.c_content+'</textarea></td>'
