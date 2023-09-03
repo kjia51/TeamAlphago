@@ -10,6 +10,7 @@
 </head>
 <body>
 <h1>학습자 숙제 제출</h1>
+학습자 : ${memberVO.m_name}
 </body>
 </html>
 <%@ include file="../common/footer.jsp"%>

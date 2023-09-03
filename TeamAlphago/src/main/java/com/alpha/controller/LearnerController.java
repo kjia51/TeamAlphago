@@ -34,6 +34,13 @@ public class LearnerController extends CommonRestController {
 		return mav;
 	}
 	
+	// 숙제 평가 페이지
+	@GetMapping("/homeworkAssess")
+	public ModelAndView homeworkAssess() {
+		ModelAndView mav = new ModelAndView("/learner/homeworkAssess");
+		return mav;
+	}
+	
 	// 그룹 이름 리스트 	 
 	@GetMapping("/joinGroup")
 	public ModelAndView groupName(String g_name, String l_m_id, LearnerVO learnerVO) {
