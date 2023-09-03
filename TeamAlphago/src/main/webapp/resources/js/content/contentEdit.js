@@ -141,6 +141,7 @@ function getContentList(){
 
 function resultList(map){
 		let vo = map.contentVO;
+		console.log(vo);
 		console.log(vo.c_level);
 		console.log(vo.c_able);
 		container.innerHTML += ''
@@ -237,32 +238,8 @@ function resultList(map){
     		  	  }
     		})
     		
-    			$('#c_able').blur(function () {
-				// 정규식을 이용하여 한글 숫자로만 구성되고,6자리인지를 검사
-		    	let c_able = $('#c_able').val();
-		    	let c_price = $('#c_price').val();
-		        if(c_able>=30){
-		        	signDiscount.innerHTML = '';
-		        	$('#c_discount').val(c_able+'%');      
-		    		let total = c_price * (100-c_able)/100;
-		    		$('#c_sellprice').val(total);  
-		        }else{
-		        	signDiscount.innerHTML = '학습인원이 30인 이상인 경우 할인 적용됩니다.';
-		        	$('#c_discount').val(0);
-		        	$('#c_sellprice').val(c_price);
-		        }
-		    })
 		    
-		        $('#c_price').blur(function () {
-			    	let c_able = $('#c_able').val();
-			    	let c_price = $('#c_price').val();
-			    	if(c_able>=30){
-			    		let total = c_price * (100-c_able)/100;
-			    		$('#c_sellprice').val(total);        	
-			    	}else{
-			    		$('#c_sellprice').val(c_price);    
-			    	}
-			    })
+
 			    $('#c_content').blur(function () {
 			    	let c_content = $('#c_content').val();
 			    	const isValidcontent = /^[ㄱ-ㅎㅏ-ㅣ가-힣0-9 ]{10,}$/.test(c_content);
@@ -276,17 +253,7 @@ function resultList(map){
 			    	}
 			    })
 			    
-			    	$('#c_able').blur(function () {
-						// 정규식을 이용하여 한글 숫자로만 구성되고,6자리인지를 검사
-				    	let c_able = $('#c_able').val();
-				        if(c_able>=30){
-				        	signDiscount.innerHTML = '';
-				        	$('#c_discount').val(c_able+'%');        	
-				        }else{
-				        	signDiscount.innerHTML = '학습인원이 30인 이상인 경우 할인 적용됩니다.';
-				        	$('#c_discount').val(0);
-				        }
-				    })
+
     
 			
 			$('#editBtn').click(function () {
@@ -294,10 +261,8 @@ function resultList(map){
 			let c_level = $('#c_level').val();
 			let c_able = $('#c_able').val();
 			let c_price = $('#c_price').val();
-			let c_discount = $('#c_discount').val();
-			let c_sellprice = $('#c_sellprice').val();
 			let c_content = $('#c_content').val();
-			let c_no = $('c_no').val();
+			let c_no = $('#c_no').val();
 			  
 
 			//전달할 객체로 생성
@@ -306,8 +271,6 @@ function resultList(map){
 					,  c_level : c_level
 					,  c_able : c_able
 					, c_price: c_price
-					, c_discount : c_discount
-					, c_sellprice : c_sellprice
 					, c_content : c_content
 					, c_no : c_no
 					}
@@ -315,31 +278,7 @@ function resultList(map){
 			fetchPut('/alpha/content/EditAction', obj, result)
 		
 		})
-		$('#editBtn').click(function () {
-			let c_name = $('#c_name').val();
-			let c_level = $('#c_level').val();
-			let c_able = $('#c_able').val();
-			let c_price = $('#c_price').val();
-			let c_discount = $('#c_discount').val();
-			let c_sellprice = $('#c_sellprice').val();
-			let c_content = $('#c_content').val();
-			let c_no = $('#c_no').val();
 
-			//전달할 객체로 생성
-			let obj = {
-					c_name : c_name
-					,  c_level : c_level
-					,  c_able : c_able
-					, c_price: c_price
-					, c_discount : c_discount
-					, c_sellprice : c_sellprice
-					, c_content : c_content
-					, c_no : c_no
-			}
-			
-			fetchPut('/alpha/content/EditAction', obj, result)
-			
-		})
 	
 		
 }
