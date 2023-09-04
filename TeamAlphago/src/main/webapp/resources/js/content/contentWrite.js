@@ -189,6 +189,7 @@ function result(map){
 	console.log(map);
 	if(map.result == 'success'){
 		alert(map.msg);
+		window.location.href = "/alpha/teacher";
 	} else {
 		alert(map.msg);
 	}

@@ -40,7 +40,11 @@
 	</insert>
 	
 	<select id="getCartList" resultType="com.alpha.vo.CartVO">
-		select * from cart WHERE cr_c_no=#{cr_c_no}
+		select * from cart WHERE cr_c_no=#{cr_c_no} 
+	</select>
+	
+	<select id="getMyCart" resultType="com.alpha.vo.CartVO">
+		select * from cart WHERE cr_m_no=#{cr_m_no}
 	</select>
 	
 	<select id="selectCart" resultType="com.alpha.vo.CartVO">
