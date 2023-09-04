@@ -39,12 +39,9 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public NoticeVO getNoticeOne(String n_no, Model model) {
-		NoticeVO noticeVO = noticeMapper.getNoticeOne(n_no);
-		
-		model.addAttribute("noticeVO", noticeVO);
-		
-		return null;
+	public NoticeVO getNoticeOne(String n_no) {
+	
+		return noticeMapper.getNoticeOne(n_no);
 	}
 
 	@Override

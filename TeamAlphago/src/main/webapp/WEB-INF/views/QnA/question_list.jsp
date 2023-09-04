@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://kit.fontawesome.com/a2debf6ac3.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -32,12 +33,14 @@
                             <input type="submit" class="btn btn-primary" value="검색" />
                         </fieldset>
                     </div>
+                <c:if test="${memberVO != null }">
                 <div class="btnArea topbtnWrap">
                     <span class="btn btn-point btn-mg"><button type="button" id="addBtn">문의하기</button></span>
                 </div>
+                </c:if>
             </div>
 
-
+                              
 
             <div class="entry">
 
@@ -63,11 +66,18 @@
                         
                         <c:forEach var="QnAVO" items="${list}">
                         <tr>
-                            <th align="center" scope="row">${QnAVO.q_no }</th>
+                            <td align="center">${QnAVO.q_answerYN == 'Y' ? '답변완료' : '답변대기' }</td>
                             <td class="subject">
-                                <a href="/alpha/QnA/view?q_no=${QnAVO.q_no }">${QnAVO.q_title }</a>
-                                                            </td>
-                            <td align="center">${QnAVO.q_m_id }</td>
+                               <a style="cursor:pointer" class="viewQ" >
+								<input style="display:none" type="text" class="q_no" value="${QnAVO.q_no }">
+								<input style="display:none" type="text" class="q_secret" value="${QnAVO.q_secret }">
+							    <c:if test="${QnAVO.q_secret == 'Y'}">
+							        <i class="fa-solid fa-lock"></i> 
+							    </c:if>
+							    ${QnAVO.q_title}
+							</a>
+                            </td>
+                            <td align="center" class="q_m_id">${QnAVO.q_m_id }</td>
                             <td align="center">${QnAVO.q_regdate }</td>
                         </tr>
 						</c:forEach>
@@ -92,13 +102,29 @@
 function go(page){
 	//alert(page);
 	document.searchForm.pageNo.value=page;
-	document.searchForm.action = "/alpha/QnA";
+	document.searchForm.action = "/alpha/QnA/question";
 	document.searchForm.submit();
 }
 
+$('.viewQ').on('click', function(){
+	var q_no = $(this).closest('tr').find('.q_no').val();
+	var q_secret = $(this).closest('tr').find('.q_secret').val();
+	var q_m_id = $(this).closest('tr').find('.q_m_id').html();
+	/* console.log(q_no);
+	console.log(q_m_id); */
+	if (q_secret === 'Y'){
+		if (3 == '${memberVO.m_division }' || q_m_id === '${memberVO.m_id }'){
+			location.href = '/alpha/QnA/question_view?q_no=' + q_no;
+		} else {
+	    	alert('비밀글은 작성자 본인만 조회할 수 있습니다.');
+	    }
+	} else {
+		location.href = '/alpha/QnA/question_view?q_no=' + q_no;
+	}
+});
 
 $('#addBtn').on('click', function(){
-    location.href = "/alpha/QnA/write";
+    location.href = "/alpha/QnA/question_write";
 });
 
 </script>

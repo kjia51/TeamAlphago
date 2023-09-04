@@ -19,21 +19,30 @@
 		select * from question where q_no=#{q_no}
 	</select>
 	
-<!-- 	
 	<insert id="insertQ">
-		INSERT INTO question (Q_NO, Q_M_ID, Q_TITLE, Q_CONTENT, Q_REGDATE)
-		VALUES (#{q_no}, #{q_m_id}, #{q_title}, #{q_content}, now())
+		INSERT INTO question (Q_NO, Q_M_ID, Q_TITLE, Q_CONTENT, Q_REGDATE, Q_SECRET)
+		VALUES (#{q_no}, #{q_m_id}, #{q_title}, #{q_content}, now(), #{q_secret})
 	</insert>
 	
+ 	
 	<update id="editQ">
-		UPDATE question SET Q_TITLE = #{q_title}, Q_CONTENT = #{q_content}
+		UPDATE question SET Q_TITLE = #{q_title}, Q_CONTENT = #{q_content}, Q_SECRET = #{q_secret}
 		WHERE Q_NO = #{q_no}
 	</update>
-	
- -->
+
+
 	<delete id="deleteQ">
 		DELETE FROM question WHERE Q_NO = #{q_no}
 	</delete>
+	
+	
+	
+	<select id="getAList" resultType="com.alpha.vo.QnAVO">
+		SELECT A_NO, A_M_ID, A_Q_NO, A_CONTENT, DATE_FORMAT(A_REGDATE, '%Y-%m-%d') AS A_REGDATE 
+		FROM answer 
+		WHERE A_Q_NO = #{q_no}
+		ORDER BY A_NO
+	</select>
 
 	<sql id="criteria">
 		<choose>
@@ -45,5 +54,19 @@
 			</when>
 		</choose>
 	</sql>
+	
+	
+	<insert id="insertA">
+		INSERT INTO answer (A_NO, A_M_ID, A_Q_NO, A_TITLE, A_CONTENT, A_REGDATE)
+		VALUES (#{a_no}, #{a_m_id}, #{q_no}, #{a_title}, #{a_content}, now())
+	</insert>
+	
+	<update id="editA">
+		UPDATE answer SET A_CONTENT = #{a_content}
+		WHERE A_NO = #{a_no}
+	</update>
 
+	<delete id="deleteA">
+		DELETE FROM answer WHERE A_NO = #{a_no}
+	</delete>
 </mapper>
