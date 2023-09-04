@@ -150,12 +150,11 @@ public class ContentController extends CommonRestController {
 		   public Map<String, Object> cartList(@RequestBody CartVO cartVO ) {
 		      System.out.println("===================================================================================================================================");
 				try {
-					//if(cartVO.getCr_m_no()!=null){
 						int res = contentService.addCartListCnt(cartVO);
-						System.out.println(res);
 						if(res<1) {
 							contentService.addCart(cartVO);
-							Map<String, Object> map = responseWriteMap(res);
+							Map<String, Object> map = responseResultMap(REST_SUCCESS, "장바구니에 상품이 담겼습니다\r\n"+
+																					"장바구니로 이동하시겠습니까?");
 							return map;
 						} else {
 							return responseResultMap(REST_FAIL, "장바구니에 이미 동일한 상품이 존재합니다.");
