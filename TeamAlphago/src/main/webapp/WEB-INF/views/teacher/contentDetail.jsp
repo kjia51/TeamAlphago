@@ -104,16 +104,7 @@
         
         <!-- 메인 -->
 			<div id="container">
-		<!-- 서브바 -->
-		<div class="location" style="position: relative; margin: 0 auto; text-align:center; font-size:1em">
-            <ul class="locationSub" style="display:inline-block;">
-                <li style="display:inline-block; padding:20px;"><a href="">입문</a></li>
-                <li style="display:inline-block; padding:20px;"><a href="">초급</a></li>
-                <li style="display:inline-block; padding:20px;"><a href="">중급</a></li>
-                <li style="display:inline-block; padding:20px;"><a href="">고급</a></li>
 
-            </ul>
-        </div>
 
 			    <div class="wrap">
 			        <div class="content_wrap" id="competition_wrap">
@@ -126,10 +117,10 @@
 			
 			
 			</div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12">
-			<div class="_widget_data " data-widget-name="메뉴 타이틀" data-widget-type="menu_title" data-widget-anim="none" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N" style="text-align:right"><h1 class="widget_menu_title" style="color : #000;font-size : 20px;letter-spacing : px;text-align : left;font-weight : bold;font-style : normal;">입문반</h1>
+			<div class="_widget_data " data-widget-name="메뉴 타이틀" data-widget-type="menu_title" data-widget-anim="none" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N" style="text-align:right"><h1 class="widget_menu_title" style="color : #000;font-size : 20px;letter-spacing : px;text-align : left;font-weight : bold;font-style : normal; padding-top:50px; padding-bottom:50px">입문반</h1>
 			
 			<c:choose>
-			    <c:when test="${sessionScope.memberVO.m_id=='admin'}">
+			    <c:when test="${sessionScope.memberVO.m_division==3}">
 					<input type="submit" class="btnTopSrch btn btn-primary" value="수정" id="contentEdit"> 
 					<input type="submit" class="btnTopSrch btn btn-primary" value="삭제" id="contentDelete"> 
 			
@@ -164,8 +155,15 @@
 							<p style="line-height: 2;"><strong><span style="font-size: 16px;">- 수업시간 : 오후 2시 ~ 오후 9시 (시간 선택)</span></strong></p>
 							</div></div>		
 				</div>
+				
+			<c:choose>
+			    <c:when test="${sessionScope.memberVO.m_division==1}">
 					<input type="submit" class="btnTopSrch btn btn-primary" value="장바구니" id="cartPopUp"> 
 					<input type="submit" class="btnTopSrch btn btn-primary" value="결제하기" id="payPopUp"> 
+			    </c:when>
+			    <c:otherwise>
+			    </c:otherwise>
+			</c:choose>
 
 			</div></div></div></div><div doz_type="row" doz_grid="12" class="doz_row"><div doz_type="grid" doz_grid="12" class="col-dz col-dz-12"><div doz_type="widget" id="w202107157d792e5155a14"><div class="_widget_data _ds_animated_except" data-widget-name="여백" data-widget-type="padding" data-widget-parent-is-mobile="N"><div class="widget padding" data-height="30" style="margin-top:px; margin-bottom:px;">
 				<div id="padding_w202107157d792e5155a14" style="width:100%; min-height:1px; height:30px; "></div>

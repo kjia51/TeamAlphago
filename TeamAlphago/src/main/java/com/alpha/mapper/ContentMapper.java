@@ -24,6 +24,8 @@ public interface ContentMapper {
 	public int addCart(CartVO cartVO);
 	
 	public List<CartVO> getCartList(String cr_c_no);
+
+	public List<CartVO> getMyCart(String cr_m_no);
 	
 	public int addCartListCnt(CartVO cartVO);
 	
