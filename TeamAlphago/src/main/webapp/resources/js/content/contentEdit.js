@@ -89,6 +89,7 @@ function result(map){
 	console.log(map);
 	if(map.result == 'success'){
 		alert(map.msg);
+		window.history.back();
 	} else {
 		alert(map.msg);
 	}
@@ -99,14 +100,31 @@ function result(map){
 
 
 $('#contentEdit').click(function () {
-	getContentList()
+    const userConfirmation = confirm('수정하시겠습니까?');
+    if (userConfirmation) {
+        // 사용자가 "확인"을 선택한 경우
+        getContentList()
+        
+    } else {
+        // 사용자가 "취소"를 선택한 경우
+        // 아무 작업도 수행하지 않음
+    }
 
 })
 
 $('#contentDelete').click(function () {
 	let c_no = $('#c_no').val();
-	fetchDelete('/alpha/content/DeleteAction/'+c_no, result)
-	
+	// 확인과 취소를 묻는 알림창 표시
+    const userConfirmation = confirm('정말로 삭제하시겠습니까?');
+    
+    if (userConfirmation) {
+        // 사용자가 "확인"을 선택한 경우
+        fetchDelete('/alpha/content/DeleteAction/' + c_no, result);
+        
+    } else {
+        // 사용자가 "취소"를 선택한 경우
+        // 아무 작업도 수행하지 않음
+    }
 })
     
     
@@ -123,6 +141,7 @@ function getContentList(){
 
 function resultList(map){
 		let vo = map.contentVO;
+		console.log(vo);
 		console.log(vo.c_level);
 		console.log(vo.c_able);
 		container.innerHTML += ''
@@ -172,17 +191,7 @@ function resultList(map){
     		+'                         <th scope="row">정가</th>'
     		+'                         <td><input type="text" class="input-default" id="c_price" style="width: 97%" maxlength="100" name="c_price" value="'+vo.c_price+'"></td>'
     		+'                     </tr>'
-    		+'                     <tr>'
-    		+'                         <th scope="row">할인율</th>'
-    		+'                         <td>'
-    		+'						<div id="signDiscount"  style="color:red"></div>'
-    		+'						<input type="text" class="input-default" id="c_discount" style="width: 97%" maxlength="100" name="c_discount" value="'+vo.c_discount+'" disabled></td>'
-    		+'                     </tr>'
-    		+'                     <tr>'
-    		+'                         <th scope="row">판매가</th>'
-    		+'                         <td><input type="text" class="input-default" id="c_sellprice" style="width: 97%" maxlength="100" name="c_sellprice" value="'+vo.c_sellprice+'" disabled></td>'
-    		+'                     </tr>'
-    		+'                     <tr>'
+    		
     		+'                         <th scope="row">콘텐츠 내용</th>'
     		+'                         <td>'
     		+'							<div id="signContent"  style="color:red"></div>'
@@ -229,32 +238,8 @@ function resultList(map){
     		  	  }
     		})
     		
-    			$('#c_able').blur(function () {
-				// 정규식을 이용하여 한글 숫자로만 구성되고,6자리인지를 검사
-		    	let c_able = $('#c_able').val();
-		    	let c_price = $('#c_price').val();
-		        if(c_able>=30){
-		        	signDiscount.innerHTML = '';
-		        	$('#c_discount').val(c_able+'%');      
-		    		let total = c_price * (100-c_able)/100;
-		    		$('#c_sellprice').val(total);  
-		        }else{
-		        	signDiscount.innerHTML = '학습인원이 30인 이상인 경우 할인 적용됩니다.';
-		        	$('#c_discount').val(0);
-		        	$('#c_sellprice').val(c_price);
-		        }
-		    })
 		    
-		        $('#c_price').blur(function () {
-			    	let c_able = $('#c_able').val();
-			    	let c_price = $('#c_price').val();
-			    	if(c_able>=30){
-			    		let total = c_price * (100-c_able)/100;
-			    		$('#c_sellprice').val(total);        	
-			    	}else{
-			    		$('#c_sellprice').val(c_price);    
-			    	}
-			    })
+
 			    $('#c_content').blur(function () {
 			    	let c_content = $('#c_content').val();
 			    	const isValidcontent = /^[ㄱ-ㅎㅏ-ㅣ가-힣0-9 ]{10,}$/.test(c_content);
@@ -268,17 +253,7 @@ function resultList(map){
 			    	}
 			    })
 			    
-			    	$('#c_able').blur(function () {
-						// 정규식을 이용하여 한글 숫자로만 구성되고,6자리인지를 검사
-				    	let c_able = $('#c_able').val();
-				        if(c_able>=30){
-				        	signDiscount.innerHTML = '';
-				        	$('#c_discount').val(c_able+'%');        	
-				        }else{
-				        	signDiscount.innerHTML = '학습인원이 30인 이상인 경우 할인 적용됩니다.';
-				        	$('#c_discount').val(0);
-				        }
-				    })
+
     
 			
 			$('#editBtn').click(function () {
@@ -286,10 +261,8 @@ function resultList(map){
 			let c_level = $('#c_level').val();
 			let c_able = $('#c_able').val();
 			let c_price = $('#c_price').val();
-			let c_discount = $('#c_discount').val();
-			let c_sellprice = $('#c_sellprice').val();
 			let c_content = $('#c_content').val();
-			let c_no = $('c_no').val();
+			let c_no = $('#c_no').val();
 			  
 
 			//전달할 객체로 생성
@@ -298,8 +271,6 @@ function resultList(map){
 					,  c_level : c_level
 					,  c_able : c_able
 					, c_price: c_price
-					, c_discount : c_discount
-					, c_sellprice : c_sellprice
 					, c_content : c_content
 					, c_no : c_no
 					}
@@ -307,31 +278,7 @@ function resultList(map){
 			fetchPut('/alpha/content/EditAction', obj, result)
 		
 		})
-		$('#editBtn').click(function () {
-			let c_name = $('#c_name').val();
-			let c_level = $('#c_level').val();
-			let c_able = $('#c_able').val();
-			let c_price = $('#c_price').val();
-			let c_discount = $('#c_discount').val();
-			let c_sellprice = $('#c_sellprice').val();
-			let c_content = $('#c_content').val();
-			let c_no = $('#c_no').val();
 
-			//전달할 객체로 생성
-			let obj = {
-					c_name : c_name
-					,  c_level : c_level
-					,  c_able : c_able
-					, c_price: c_price
-					, c_discount : c_discount
-					, c_sellprice : c_sellprice
-					, c_content : c_content
-					, c_no : c_no
-			}
-			
-			fetchPut('/alpha/content/EditAction', obj, result)
-			
-		})
 	
 		
 }

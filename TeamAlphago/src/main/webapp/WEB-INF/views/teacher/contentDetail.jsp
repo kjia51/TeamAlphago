@@ -36,6 +36,7 @@
 </style>
 
 <body>
+<%@ include file="../common/header.jsp" %>
 <div id="cartList">
 	<hr>
 	<h2 style="height:50px;">장바구니<i class="fa-solid fa-cart-shopping"></i> </h2>
@@ -70,6 +71,7 @@
 <div id="payList">
 	<hr>
 	<h2 style="height:50px;">결제<i class="fa-solid fa-cart-shopping"></i> </h2>
+
 		<table border="1" style="width:100%;">
 			<colgroup>
 				<col style="width:7%">
@@ -99,7 +101,9 @@
 			</div>
 		
 </div>
-<%@ include file="../common/header.jsp" %>
+        
+        <!-- 메인 -->
+			<div id="container">
 		<!-- 서브바 -->
 		<div class="location" style="position: relative; margin: 0 auto; text-align:center; font-size:1em">
             <ul class="locationSub" style="display:inline-block;">
@@ -110,9 +114,6 @@
 
             </ul>
         </div>
-        
-        <!-- 메인 -->
-			<div id="container">
 
 			    <div class="wrap">
 			        <div class="content_wrap" id="competition_wrap">
@@ -128,7 +129,7 @@
 			<div class="_widget_data " data-widget-name="메뉴 타이틀" data-widget-type="menu_title" data-widget-anim="none" data-widget-anim-duration="0.7" data-widget-anim-delay="0" data-widget-parent-is-mobile="N" style="text-align:right"><h1 class="widget_menu_title" style="color : #000;font-size : 20px;letter-spacing : px;text-align : left;font-weight : bold;font-style : normal;">입문반</h1>
 			
 			<c:choose>
-			    <c:when test="${empty sessionScope.memberVO}">
+			    <c:when test="${sessionScope.memberVO.m_id=='admin'}">
 					<input type="submit" class="btnTopSrch btn btn-primary" value="수정" id="contentEdit"> 
 					<input type="submit" class="btnTopSrch btn btn-primary" value="삭제" id="contentDelete"> 
 			
@@ -198,6 +199,7 @@
 										<div class="shop-item _shop_item" style=" padding: 0px 10px; height: auto; display: flex; flex-wrap: wrap;">
 					
 					
+					<input id="m_id" type="hidden" data-mid="${status.index}" value="${m_id }">
 					<c:forEach items="${contentList}" var="con"  varStatus="status">
 					<input id="m_id" type="hidden" data-mid="${status.index}" value="${memberVO.m_id }">
 					<%--결제에 필요한 값 가져오기 --%>

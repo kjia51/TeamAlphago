@@ -26,16 +26,18 @@ public class LearnerController extends CommonRestController {
 	private LearnerService learnerService;
 	
 	
-	// 학습지도자 숙제 전송 페이지
-	@GetMapping("/giveHomework")
-	public ModelAndView giveHomework() {
-		ModelAndView mav = new ModelAndView("/learner/giveHomework");
-		return mav;
-	}
+
 	// 학생 숙제 제출 페이지
 	@GetMapping("/submitHomework")
 	public ModelAndView submitHomework() {
 		ModelAndView mav = new ModelAndView("/learner/submitHomework");
+		return mav;
+	}
+	
+	// 숙제 평가 페이지
+	@GetMapping("/homeworkAssess")
+	public ModelAndView homeworkAssess() {
+		ModelAndView mav = new ModelAndView("/learner/homeworkAssess");
 		return mav;
 	}
 	
@@ -87,23 +89,42 @@ public class LearnerController extends CommonRestController {
 		System.out.println("learnerVO:"+learnerVO);
 		System.out.println(learnerVO.getT_m_id());
 	}
-	/*
-	// 그룹 이름 리스트
+	
+	// 그룹 이름 리스트 조회
 	@GetMapping("/giveHomework")
-	public ModelAndView groupNameList(String g_name) {
+	public ModelAndView groupNameList(String t_m_id) {
 		System.out.println("숙제전송 - 그룹 이름 리스트 연결");
 		Map<String, Object> map = new HashMap<String, Object>();
 		ModelAndView mav = new ModelAndView("/learner/giveHomework");
+		
 		try {
-			mav.addObject("list", learnerService.groupName(g_name));
+			mav.addObject("grpNameList", learnerService.groupNameForT(t_m_id));
 
-			System.out.println("g_name : "+ g_name);
+			System.out.println("t_m_id : "+ t_m_id);
 			
 		} catch (Exception e) {
+			
 			map.put(REST_FAIL, "오류가 발생하였습니다.");
 		}
 		return mav; 
 	}
-	 */	
- 
+	// 그룹별 학습자 리스트 조회
+	@GetMapping("/giveHomework/{g_no}")
+	public Map<String, Object> grpLearnerList(@PathVariable("g_no") String g_no, HttpSession session){
+		System.out.println("그룹별 학습자 리스트 연결");
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String t_m_id = session.getAttribute("m_id") == null? "":session.getAttribute("m_id").toString();
+		
+		try {
+			System.out.println("학습지도자 아이디 : "+ t_m_id);
+			List<LearnerVO> LearnerList = learnerService.grpLearnerList(g_no, t_m_id);
+			System.out.println("LearnerList : "+LearnerList);
+			map.put("LearnerList", LearnerList);
+
+		} catch (Exception e) {
+			map.put(REST_FAIL, "오류가 발생하였습니다.");
+		}
+		return map;
+	}
 }

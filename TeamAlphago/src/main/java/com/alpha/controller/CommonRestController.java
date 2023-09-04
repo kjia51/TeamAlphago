@@ -26,6 +26,7 @@ public class CommonRestController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		if(res > 0) {
+			System.out.println("res>0=======================================");
 			map.put("result", REST_SUCCESS);
 			map.put("msg", msg+" 되었습니다.");
 		}else {
@@ -97,6 +98,7 @@ public class CommonRestController {
 	
 	public Map<String, Object> responseVo(Object vo) {
 	    int res = vo != null ? 1 : 0;
+	    System.out.println(res);
 	    Map<String, Object> map = responseMap(res, REST_SELECT);
 	    map.put("vo", vo);
 	    return map;

@@ -95,6 +95,7 @@ public class ContentController extends CommonRestController {
 		      
 				try {
 					ContentVO contentVO = contentService.getContentOne(c_no);
+					System.out.println("====================================================="+contentVO);
 					Map<String, Object> map = responseVo(contentVO);
 					map.put("contentVO", contentVO);
 					return map;
@@ -110,13 +111,15 @@ public class ContentController extends CommonRestController {
 			public Map<String, Object> update(@RequestBody ContentVO contentVO) {
 
 				try {
+					System.out.println(contentVO);
 					int res = contentService.updateContent(contentVO);
+					System.out.println(res);
 					Map<String, Object> map = responseEditMap(res);
 					return map;
 
 				} catch (Exception e) {
 					e.printStackTrace();
-					return responseResultMap(REST_FAIL, "삭제 중 오류 발생");
+					return responseResultMap(REST_FAIL, "수정 중 오류 발생");
 				}
 			}
 		   

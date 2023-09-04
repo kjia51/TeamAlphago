@@ -17,16 +17,17 @@
 
 <body>
 	<%@ include file="../common/header.jsp"%>
+	숙제 평가 페이지 
 	<div id="container">
 		<div class="wrap">
 			<div class="content_wrap">
 				<div class="titleBox">
-					<h2 class="t_title">그룹 가입 신청</h2>
+					<h2 class="t_title">숙제 평가(학습지도자)</h2>
 					<input name="l_m_id" id="memberId" type="hidden" value="${memberVO.m_id}"> 
 					<input name="m_division" id="division" type="hidden" value="${memberVO.m_division}">
 				</div>
 
-				<!--그룹가입신청-->
+				<!--그룹 검색-->
 				<form class="searchWrap searchWrap_wide">
 					<table class="table table-bordered">
 						<caption>그룹명</caption>

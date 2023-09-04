@@ -11,6 +11,9 @@ public interface LearnerService {
 
 	// 그룹 이름 리스트 
 	public List<LearnerVO> groupName(String g_name);
+	
+	// 학습지도자별 그룹 이름 리스트 
+	public List<LearnerVO> groupNameForT(String t_m_id);
 
 	// 그룹 정보 리스트
 	public List<LearnerVO> groupInfo(String g_name, String l_m_id);
@@ -21,8 +24,8 @@ public interface LearnerService {
 	// 그룹 가입 신청
 	public int insertGrp(LearnerVO learnerVO);
 
-	// 그룹별 학습자 조회
-	public List<LearnerVO> grpLearnerList();
+	// 그룹별 학습자 리스트
+	public List<LearnerVO> grpLearnerList(String g_no, String t_m_id);
 
  
 }

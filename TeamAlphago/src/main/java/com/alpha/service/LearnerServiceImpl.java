@@ -19,6 +19,12 @@ public class LearnerServiceImpl implements LearnerService {
 	public List<LearnerVO> groupName(String g_name) {
 		return learnerMapper.groupName(g_name);
 	}
+	
+	// 학습지도자 별 그룹 리스트 조회
+	@Override
+	public List<LearnerVO> groupNameForT(String t_m_id) {
+		return learnerMapper.groupNameForT(t_m_id);
+	}
 
 	// 그룹 정보 리스트 
 	@Override
@@ -38,10 +44,10 @@ public class LearnerServiceImpl implements LearnerService {
 		return learnerMapper.insertGrp(learnerVO);
 	}
 
-	// 그룹별 학습자 조회
+	// 그룹별 학습자 리스트 조회
 	@Override
-	public List<LearnerVO> grpLearnerList() {
-		return learnerMapper.grpLearnerList();
+	public List<LearnerVO> grpLearnerList(String g_no, String t_m_id) {
+		return learnerMapper.grpLearnerList(g_no);
 	}
 
 

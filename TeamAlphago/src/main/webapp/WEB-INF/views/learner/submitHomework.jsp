@@ -6,10 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>학습자 숙제 제출</title>
 </head>
 <body>
-
+<h1>학습자 숙제 제출</h1>
+학습자 : ${memberVO.m_name}
 </body>
 </html>
 <%@ include file="../common/footer.jsp"%>

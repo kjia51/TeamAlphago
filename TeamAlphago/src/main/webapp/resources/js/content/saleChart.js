@@ -115,10 +115,11 @@ function saleDate(){
                     +'<button type="button" class="cal-btn-open" data-calendar-module="true" data-calendar-display="false" ><i class="fa-regular fa-calendar" style="font-size:25px"></i></button>'
                     +'</div>'
                     +'<div class="searchBox" style="display:inline-block; margin-left:50px">'
-                    +'<input type="text" class="inputSrch" value="1일" name="day" id="day" style="width:40px; text-align:center" readonly>'
-                    +'<input type="text" class="inputSrch" value="1개월" name="month" id="month" style="width:40px; text-align:center" readonly>'
-                    +'<input type="text" class="inputSrch" value="6개월" name="half" id="half" style="width:40px; text-align:center" readonly>'
-                    +'<input type="text" class="inputSrch" value="1년" name="year" id="year" style="width:40px; text-align:center" readonly>'
+
+                    +'<button type="button" value="1일" class="blue" style="width:40px;height:30px; margin-right:25px" id="btn">1일</button>'
+                    +'<button type="button" value="1개월" class="blue" style="width:40px;height:30px; margin-right:25px" id="btn">1개월</button>'
+                    +'<button type="button" value="6개월" class="blue" style="width:40px;height:30px; margin-right:25px" id="btn">6개월</button>'
+                    +'<button type="button" value="1년" class="blue" style="width:40px;height:30px; margin-right:25px" id="btn">1년</button>'
                     +'<input type="button" class="btn btn-primary" id="btnDate" value="조회">'
                     +'</div>'
                     +'</td>';
@@ -126,7 +127,7 @@ function saleDate(){
     var row1 = document.createElement('tr');
     row1.innerHTML = ''
 			        +'<tr>'
-			        +'<th></th>'
+			        +'<th>일자</th>'
 			        +'<th>매출액</th>'
 			        +'<th>매출건수</th>'
 			        +'</tr>';
@@ -136,6 +137,7 @@ function saleDate(){
 		myChart.style.display = "block";
 		getChartDList();
 	})
+	
 }
 
 	//덧글 조회 및 출력
@@ -143,12 +145,15 @@ function saleDate(){
 		fetchGet('/alpha/content/chartDate', resultChartDate);
 	}
 
-	let s_date = [];
-	let date_sales = [];
 	function resultChartDate(map){
+		let s_date = [];
+		let date_sales = [];
 		let dateList = map.dateList;
 		let contentList = map.contentList;
+		$('#myChart').remove();
+		$('#myChartView').append('<canvas id="myChart"></canvas>');
 		const ctx = document.getElementById('myChart');
+
 		chartBdy.innerHTML='';
 		dateList.forEach(function(chart) {
 			s_date.push(chart.s_date);
@@ -166,7 +171,6 @@ function saleDate(){
 		});
 		
 
-	    
 		new Chart(ctx, {
 			type: 'line',
 			data: {
@@ -176,6 +180,7 @@ function saleDate(){
 		      datasets: [{
 			    label: '매출조회',
 		        data: date_sales,
+		        
 		      }]
 		    },
 		    options: {
@@ -191,11 +196,14 @@ function saleDate(){
 		fetchGet('/alpha/content/chartContent', resultChartContent);
 	}
 	
-	let sub_c_no = [];
-	let content_sales = [];
 	function resultChartContent(map){
+		let sub_c_no = [];
+		let content_sales = [];
 		let contentList = map.contentList;
+		$('#myChart').remove();
+		$('#myChartView').append('<canvas id="myChart"></canvas>');
 		const ctx = document.getElementById('myChart');
+
 		chartBdy.innerHTML='';
 		contentList.forEach(function(chart) {
 			sub_c_no.push(chart.sub_c_no);
@@ -211,9 +219,7 @@ function saleDate(){
 				`;
 			chartBdy.appendChild(row);
 		});
-	    if (ctx) {
-	    	ctx.destroy();
-	    }
+
 		new Chart(ctx, {
 			type: 'line',
 			data: {
@@ -245,4 +251,7 @@ $('#saleDate').on('click', function() {
 $('#saleContent').on('click', function() {		
 	saleContent();
 })
+
+
+
 

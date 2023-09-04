@@ -5,12 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="/resources/css/common.css">
-    <meta http-equiv='X-UA-Compatible' content='IE=edge, chrome=1' />
+<title>게임으로 배우는 바둑 교실</title>
+<script src='/resources/js/jquery-1.12.4.min.js'></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="/resources/css/common.css">
+<meta http-equiv='X-UA-Compatible' content='IE=edge, chrome=1' />
 <meta http-equiv='Content-Language' content='ko' />
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
 <meta http-equiv='Content-Style-Type' content='text/css' />
@@ -24,7 +23,7 @@
 <meta name='reply-to(email)' content='enoch_choi@naver.com' />
 <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon' />
 <meta name="kbaduk_csrf" content="16896db39db66de029a7ada8839c2b3e" id="csrf">
-<link rel='canonical' href='www.kbaduk.or.kr' />
+<link rel='canonical' href='/alpha/main' />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -108,7 +107,7 @@
                                 <li><a href="/alpha/group?t_m_id=${memberVO.m_id }"> 학습 그룹 등록 </a></li>
                                 <li><a href="/alpha/groupSingup?t_m_id=${memberVO.m_id }"> 그룹 가입 승인 </a></li> </ul>
                                 <li><a href="/alpha/giveHomework?t_m_id=${memberVO.m_id }"> 숙제 전송 </a></li>
-                                <li><a href="/"> 숙제 평가 </a></li> </ul>
+                                <li><a href="/alpha/homeworkAssess?t_m_id=${memberVO.m_id }"> 숙제 평가 </a></li> </ul>
                         </div>
                         <div class="gnb_sub gnb_sub_5">
                             <h3 class="blind">자료실</h3>

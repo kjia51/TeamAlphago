@@ -425,6 +425,8 @@ function createGroup(map) {
 	
 	var sub_connection = vo.sub_connection;
 	console.log(sub_connection);
+	
+    if (sub_connection > 0) {
     
 	main.innerHTML += ''
 		+ '<input type="text"'
@@ -472,13 +474,11 @@ function createGroup(map) {
 	    +	'</tr>'
 		+	'</tbody>'
 	    + '</table>';
-
-    if (sub_connection > 0) {
     	
     	
         main.innerHTML += '<h2>그룹 정보</h2>'
             + '<h3>그룹명<input type="text" id="g_name"></h3>'
-            + '<div id="test">test</div>'
+            + '<div id="test"></div>'
             + '<div style="display: inline-block;">'
             + '학습 시작날짜<input type="text" id="startdate">'
             + '<br>'
