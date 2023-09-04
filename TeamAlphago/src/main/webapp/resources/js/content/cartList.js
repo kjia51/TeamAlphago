@@ -104,16 +104,21 @@ function resultList(map){
 		console.log("cartList",cartList);
 	    tbdy.innerHTML='';
 		cartList.forEach(cart => {
-	    	let cr_no = cart.cr_no;
-	    	let cr_m_no = cart.cr_m_no;
-	    	let cr_c_no = cart.cr_c_no;
+	    	let c_name = cart.c_name;
 	    	let cnt = cart.cnt;
+	    	let c_level = cart.c_level;
+	    	let c_discountrate = cart.c_discountrate;
+	    	let c_price = cart.c_price;
+	    	let c_sellprice = cart.c_sellprice;
 	        var row = document.createElement('tr');
 	        row.innerHTML = `
-	            <td>${cr_no}</td>
-	            <td>${cr_m_no}</td>
-	            <td>${cr_c_no}</td>
-	        	<td>${cnt}</td>
+	        	<td></td>
+	        	<td>${c_name}</td>
+	        	<td>${c_level}</td>
+	            <td>${cnt}</td>
+	        	<td>${c_price}원</td>
+	            <td>${c_discountrate}</td>
+	        	<td>${c_sellprice}원</td>
 	        `;
 	        tbdy.appendChild(row);
 		})
