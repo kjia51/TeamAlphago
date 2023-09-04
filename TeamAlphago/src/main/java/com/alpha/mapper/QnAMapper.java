@@ -13,6 +13,18 @@ public interface QnAMapper {
 	
 	public QnAVO getQOne(String q_no);
 	
+	public int insertQ(QnAVO qnAVO);
+	
+	public int editQ(QnAVO qnAVO);
+	
 	public int deleteQ(String q_no);
 	
+	
+	public List<QnAVO> getAList(String a_q_no);
+	
+	public int insertA(QnAVO qnAVO);
+
+	public int editA(QnAVO qnAVO);
+
+	public int deleteA(String a_no);
 }

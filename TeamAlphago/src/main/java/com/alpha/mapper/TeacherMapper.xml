@@ -264,6 +264,18 @@
 		<when test="searchField == 'c_name'">
 			where c_name like CONCAT('%', #{searchWord}, '%')
 		</when>
+		<when test="searchField == 'c_level'">
+			where c_level like CONCAT('%',          
+		 	CASE 
+	           WHEN #{searchWord} = '초급' THEN 1 
+	           WHEN #{searchWord} = '중급' THEN 2 
+	           ELSE 3
+        	 END
+       		  , '%')
+		</when>
+		<when test="searchField == 'c_name'">
+			where c_name like CONCAT('%', #{searchWord}, '%')
+		</when>
 	</choose>
 	</sql>
 

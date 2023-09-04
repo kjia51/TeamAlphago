@@ -76,5 +76,11 @@ public class ContentServiceImpl implements ContentService {
 		return contentMapper.salesDate();
 	}
 
+	@Override
+	public List<CartVO> getMyCart(String cr_m_no) {
+		// TODO Auto-generated method stub
+		return contentMapper.getMyCart(cr_m_no);
+	}
+
 
 }

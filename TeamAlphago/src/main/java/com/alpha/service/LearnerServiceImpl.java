@@ -49,6 +49,12 @@ public class LearnerServiceImpl implements LearnerService {
 	public List<LearnerVO> grpLearnerList(String g_no, String t_m_id) {
 		return learnerMapper.grpLearnerList(g_no);
 	}
+	
+	// 숙제 요청 내역 저장
+	@Override
+	public int insertHomework(LearnerVO learnerVO) {
+		return learnerMapper.insertHomework(learnerVO);
+	}
 
 
 		

@@ -88,14 +88,17 @@ function fetchDelete(url, callback) {
 function result(map){
 	console.log(map);
 	if(map.result == 'success'){
-		alert(map.msg);
-		window.history.back();
+		const userConfirmation = confirm(map.msg);
+		if(userConfirmation){
+			window.location.href = "/alpha/mycart";			
+		} else{
+			window.location.href = "/alpha/teacher";			
+		}
 	} else {
 		alert(map.msg);
 	}
 		
 }
-
 
 
 
@@ -311,6 +314,7 @@ function getCart(index) {
 
         console.log("c_no", c_no);
         console.log("c_name", c_name);
+        console.log("c_able", c_able);
         
         let item = {
             c_no: c_no,
@@ -384,6 +388,10 @@ $('#cartPopUp').on('click', function() {
 	            selectedIndexes.push($('input:checkbox[name=chkbox]').index(this));
 	        }
 	    });
+	    console.log($('#m_id').val())
+	    if($('#m_id').val()==null || $('#m_id').val()==''){
+	    	alert('로그인 후 이용가능합니다.')
+	    } else{
 	    
 		if($('input:checkbox[name=chkbox]:checked').length==0){
 			alert('장바구니에 넣을 콘텐츠를 선택하세요');
@@ -425,26 +433,28 @@ $('#cartPopUp').on('click', function() {
     
     $('#cartContent').click(function () {
 
-
+    	console.log('cart insert;')
         var listArray = getCart(listIndex);
         
         listArray.forEach(list => {
             let cr_m_no = list.m_id;
             let cr_c_no = list.c_no;
             let cnt = list.c_able;
-
+            console.log(cr_m_no);
+            console.log(cr_c_no);
+            console.log(cnt);
             let obj = {
                 cr_m_no: cr_m_no,
                 cr_c_no: cr_c_no,
                 cnt: cnt
             };
 
-            fetchPost('/alpha/cart/insert', obj, resultCart);
-        		alert(map.msg);
+            fetchPost('/alpha/cart/insert', obj, result);
 
         });
     });
 		}
+	    }
 });
 
 $('#payPopUp').on('click', function() {
@@ -455,6 +465,9 @@ $('#payPopUp').on('click', function() {
 			selectedIndexes.push($('input:checkbox[name=chkbox]').index(this));
 		}
 	});
+    if($('#m_id').val()==null || $('#m_id').val()==''){
+    	alert('로그인 후 이용가능합니다.')
+    } else{
 		if($('input:checkbox[name=chkbox]:checked').length==0){
 			alert('구매하실 콘텐츠를 선택하세요');
 		} else if($('input:checkbox[name=chkbox]:checked').length>1){
@@ -503,7 +516,7 @@ $('#payPopUp').on('click', function() {
 		    console.log("listArray",listArray);
 		    console.log("$('#c_period').val()",$('#c_period').val());
 				}
-    
+    }
 });
 
 	$("#theBtn").click(function() {

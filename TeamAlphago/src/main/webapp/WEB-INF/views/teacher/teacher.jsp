@@ -41,6 +41,16 @@ div .InfoBox .info {
 <%@ include file="../common/header.jsp" %>
 
 <div id="container">
+
+		<!-- 서브바 -->
+		<div class="location" style="position: relative; margin: 0 auto; text-align:center; font-size:1em">
+            <ul class="locationSub" style="display:inline-block;">
+                <li style="display:inline-block; padding:20px;"><a href="/alpha/teacher?pageNo=1&searchField=c_level&searchWord=초급">초급</a></li>
+                <li style="display:inline-block; padding:20px;"><a href="/alpha/teacher?pageNo=1&searchField=c_level&searchWord=중급">중급</a></li>
+                <li style="display:inline-block; padding:20px;"><a href="/alpha/teacher?pageNo=1&searchField=c_level&searchWord=고급">고급</a></li>
+
+            </ul>
+        </div>
     <div class="wrap">
 
 
