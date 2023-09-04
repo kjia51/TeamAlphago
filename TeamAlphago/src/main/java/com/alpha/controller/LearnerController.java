@@ -127,4 +127,13 @@ public class LearnerController extends CommonRestController {
 		}
 		return map;
 	}
+	
+	// 숙제 요청 내역 저장
+	@PostMapping("/giveHomework")
+	public void insertHomework(@RequestBody LearnerVO learnerVO) {
+		System.out.println("숙제 요청 페이지");
+		learnerService.insertHomework(learnerVO);
+		System.out.println("learnerVO:"+learnerVO);
+	}
+	
 }
