@@ -10,8 +10,7 @@
 <head>
 <%@ include file="../common/header.jsp"%>
 <!-- 캘린더 사용 -->
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <meta charset="UTF-8">
 <title>숙제 전송</title>
@@ -23,9 +22,8 @@
 			<div class="content_wrap">
 				<div class="titleBox">
 					<h2 class="t_title">숙제 전송(학습 지도자용)</h2>
-					<input name="l_m_id" id="memberId" type="hidden"
-						value="${memberVO.m_id}"> <input name="m_division"
-						id="division" type="hidden" value="${memberVO.m_division}">
+					<input name="t_m_id" id="memberId" type="hidden" value="${memberVO.m_id}"> 
+						<input name="m_division" id="division" type="hidden" value="${memberVO.m_division}">
 				</div>
 
 				<!--그룹명-->
@@ -33,7 +31,7 @@
 					<table class="table table-bordered">
 						<caption>그룹명</caption>
 						<colgroup>
-							<col width="15%" />
+							<col width="20%" />
 						</colgroup>
 						<tbody>
 							<tr>
@@ -52,6 +50,7 @@
 								<td style="border-left: none;">
 									<button class="btn btn-default" id="writebtn">내용입력</button>
 								</td>
+							
 							</tr>
 						</tbody>
 					</table>
@@ -111,14 +110,14 @@
 			<form>
 			<table style="border: 1px solid #000, border-collapse: collapse;">
 				<colgroup>
-					<col width="30%" />
-					<col width="30%" />
+					<col width="20%" />
+					<col width="40%" />
 					<col width="40%" />
 				</colgroup>
 				<tr>
 					<th align="center" style="border: 1px solid #000;">숙제 내용</th>
 					<td align="center" style="border: 1px solid #000;" colspan="2">
-						<textarea rows="5" cols="10" style="width: 90%;">내용을 입력하세요.</textarea>
+						<textarea name="h_content" id="hContent" rows="5" cols="10" style="width: 90%;">내용을 입력하세요.</textarea>
 					</td>
 					<td align="center" style="border: 1px solid #000;"></td>
 				</tr>
@@ -129,11 +128,11 @@
 					<td align="center" style="border: 1px solid #000;">숙제 종료일</td>
 				</tr>
 				<tr>
-					<td align="center" style="border: 1px solid #000;"><input
-						type="text" name="startDay" id="datepicker" placeholder="선택 ">
+					<td align="center" style="border: 1px solid #000;">
+					<input type="text" name="startDay" id="datepickerS" placeholder="선택 " style="text-align:center;">
 					</td>
-					<td align="center" style="border: 1px solid #000;"><input
-						type="text" name="endDay" id="datepicker" placeholder="선택 ">
+					<td align="center" style="border: 1px solid #000;">
+					<input type="text" name="h_limit" id="datepickerE" placeholder="선택 " style="text-align:center;">
 					</td>
 				</tr>
 			</table>
@@ -172,22 +171,58 @@ function fetchGet(url,callback){
 
 }
 
-// fetch Post 방식
-function fetchPost(url, obj, callback){
+
+
+//post방식 요청
+function fetchPost(url,obj,callback){
+	console.log(url);
+	console.log(callback);
+	
 	try {
-	fetch(url, {method : 'post', headers : {'Content-Type' : 'application/json'}, body : JSON.stringify(obj)})
-	.then(response => response.json())
-	.then(map => callback(map));
-		
-	} catch (e) {
-		consol.log('fetchPost',e);
+		//url 요청
+		fetch(url,{method : 'post'
+					,headers : {'Content-Type' : 'application/json'} 
+					,body  : JSON.stringify(obj)
+			  })
+			//요청 결과json 문자열을 javascript 객체로 반환
+			.then(response => response.json())
+			//매개로 받은 콜백함수 실행
+			.then(map => callback(map))
+			
+		} catch (e) {
+			console.log(e);
+
+		}
+	
+}
+
+
+
+
+// 등록, 수정, 삭제의 결과를 처리하는 함수
+function result(map){
+	console.log(map);
+	if(map.result == 'success'){
+		alert(map.msg);
+		var memberId = $('#memberId').val();
+		window.location.href = "/alpha/giveHomework?t_m_id=" + memberId;
+	} else {
+		alert(map.msg);
 	}
+		
 }
 
 
 // 숙제 일자 선택
 $(function() {
-    $("#datepicker").datepicker();
+    $("#datepickerS").datepicker({
+    	dateFormat: 'yy-mm-dd',
+    	minDate: 0
+    	});
+    	$('#datepickerS').datepicker('setDate', 'today');
+    $("#datepickerE").datepicker({
+    	 dateFormat: 'yy-mm-dd'
+    });
 });
 
 
@@ -252,8 +287,17 @@ function displayLearnerList(map) {
 						+'					<td align="center" class="row">'+Learner.m_name+'</td>  '
 						+'					<td align="center">'+Learner.c_name+'</td>              '
 						+'					<td align="center">'+Learner.g_start+'</td>             '
-						+'					<td align="center">'+Learner.g_end+'</td>               '
-						+'				</tr>';
+						+'					<td align="center">'+Learner.g_end+'</td>'
+						+'<td style="display: none">'
+						+'<input type="hidden" name="h_c_no" id="contentNo" value="'+ Learner.h_c_no +'">'
+						+'</td>'
+						+'<td style="display: none">'
+						+'<input type="hidden" name="l_m_id" id="learnerId" value="'+ Learner.l_m_id +'">'
+						+'</td>'
+						+'<td style="display: none">'
+						+'<input type="hidden" name="h_g_no" id="groupNo" value="'+ Learner.h_g_no +'">'
+						+'</td>'
+						+'</tr>';
 		})
 						
 						
@@ -285,33 +329,11 @@ $('#writebtn').on('click', function() {
     // 모달창 띄우기
     modal('assign_modal');
     
-    var selectedIndexes = [];
 
-    console.log("input:checkbox[name=myCheckbox]",$('input:checkbox[name=myCheckbox]'));
-   	    $('input:checkbox[name=myCheckbox]').each(function() {
-   	        if (this.checked) {
-   	            selectedIndexes.push($(this).val());
-   	        }
-   	    });
-   	    
-   		if($('input:checkbox[name=myCheckbox]:checked').length==0){
-   			alert('학습자를 선택하세요');
-   			// 입력 버튼 비활성화 처리 
-   		} else{
-   		 	var learnerInfo  = getLearner(selectedIndexes);
-    	    console.log("selectedIndexes",selectedIndexes[0]);
-    	    console.log("selectedIndexes",selectedIndexes);
-    	    console.log("학습자 정보 : ", learnerInfo);
-    	    
-   	   
-   	    }
 });
 
 // 회원 정보 리스트 l_no로 받아오기 
 function getLearner(selectedIndexes) {
-    //console.log("l_no", l_no)  // 저장됨
-	//let learnerAll = []; 
-    //learnerAll.push(l_no);
 
  	// 여러 선택 항목을 저장할 배열
     var listArray = []; 
@@ -340,6 +362,74 @@ function getLearner(selectedIndexes) {
      });
  		// 모든 선택 항목의 데이터를 배열로 반환
 	    return listArray;
+}
+
+// 전송 버튼 클릭 시  숙제 요청 내역에 insert
+function insertHomework(){
+    var selectedIndexes = [];
+
+    console.log("input:checkbox[name=myCheckbox]",$('input:checkbox[name=myCheckbox]'));
+    
+   	    $('input:checkbox[name=myCheckbox]').each(function() {
+   	        if (this.checked) {
+   	            selectedIndexes.push($(this).val());
+   	        }
+   	    });
+   	    
+   		if($('input:checkbox[name=myCheckbox]:checked').length==0){
+   			alert('학습자를 선택하세요');
+   			// 입력 버튼 비활성화 처리 
+   		} else{
+   				var learnerInfo  = getLearner(selectedIndexes);
+   	    	    console.log("selectedIndexes",selectedIndexes[0]);
+   	    	    console.log("selectedIndexes",selectedIndexes);
+   	    	    console.log("학습자 정보 : ", learnerInfo);
+   		
+   	    	 
+   			    let t_m_id = $('#memberId').val();
+   			    let h_c_no = $('#contentNo').val();
+   			    let l_m_id = $('#learnerId').val();
+   			    let h_g_no = $('#groupNo').val();
+   			    let h_limit = $('#datepickerE').val();
+   			    let h_homework = $('#hContent').val();
+   			
+   			    
+   			    console.log("t_m_id : ", t_m_id);
+   			    console.log("h_c_no : ", h_c_no);
+   			    console.log("l_m_id : ", l_m_id);
+   			    console.log("h_g_no : ", h_g_no);
+   			    console.log("h_limit : ", h_limit);
+   			    console.log("h_homework : ", h_homework);
+   			    
+   			    learnerInfo.forEach(list => {
+   			       let m_name = list.m_name;
+   			       let c_name = list.c_name;
+   			       let g_start = list.g_start;
+   			       let h_limit = list.g_end;
+   			
+   			       let obj = {
+   				       			t_m_id: t_m_id,
+   				       			h_c_no: h_c_no,
+   				       			h_g_no: h_g_no,
+   				       			h_homework: h_homework,
+   				                m_name: m_name,
+   				                c_name: c_name,
+   				            	l_m_id: l_m_id,
+   				                g_start: g_start,
+   				                h_limit: h_limit
+   			       };
+   					console.log("obj:", obj);
+   					console.log("result",result);
+	   		 	try {
+	   					fetchPost('/alpha/giveHomework/save', obj, result);
+	   	    		
+	   			    
+				} catch (e) {
+					 console.error('오류:', error);
+				}
+				
+   				});
+	}
 }
 
 // 모달창 띄우기

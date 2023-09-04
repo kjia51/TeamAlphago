@@ -77,8 +77,10 @@
 <!-- 그룹별 학습자 리스트 조회 (숙제 요청) -->
 <select id= "grpLearnerList" resultType="com.alpha.vo.LearnerVO">
     select
+		c_no AS h_c_no,
+    	m_id AS l_m_id,  
+    	g_no AS h_g_no, 
     	l_no,
-    	g_no, 
 		m_name,
         c_name,
         DATE_FORMAT(g_start, '%Y-%m-%d') AS g_start,
@@ -92,10 +94,10 @@
     	l_g_no = #{g_no}
 </select>
 
-<!-- 숙제 내역 저장 -->
+<!-- 숙제 요청 내역 저장 -->
 <insert id="insertHomework">
-	insert into homework 
-	values(#{t_m_id}, #{h_c_no}, #{l_m_id}, #{h_g_no}, #{h_limit}, #{h_homework}, #{h_regidate}, #{h_content}, null)
+	insert into homework (h_no, t_m_id, h_c_no, l_m_id, h_g_no, h_limit ,h_homework)
+	values(#{h_no}, #{t_m_id}, #{h_c_no}, #{l_m_id}, #{h_g_no}, #{h_limit} ,#{h_homework})
 </insert>	
 	
 <!-- 학습자 숙제 요청 -->
