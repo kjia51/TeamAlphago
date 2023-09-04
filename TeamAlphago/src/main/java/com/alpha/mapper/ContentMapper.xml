@@ -44,7 +44,14 @@
 	</select>
 	
 	<select id="getMyCart" resultType="com.alpha.vo.CartVO">
-		select * from cart WHERE cr_m_no=#{cr_m_no}
+	  select 
+	  <![CDATA[
+	  CONCAT(if(cnt-30<=0,0,cnt-30),'%') c_discountrate,
+	   c_name, cnt, if(c_level=1,'초급', if(c_level=2,'중급', '고급')) c_level, (c_price*cnt/10) c_price,  c_price*(cnt/10)*(1-(if(cnt-30<=0,0,cnt-30)/100)) c_sellprice 
+	   	]]>
+	   from cart c
+      left join (select * from content) s
+      on c.cr_c_no=s.c_no WHERE cr_m_no=#{cr_m_no}
 	</select>
 	
 	<select id="selectCart" resultType="com.alpha.vo.CartVO">

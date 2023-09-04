@@ -133,6 +133,11 @@ public class TeacherServiceImpl implements TeacherService {
 		return mapper.conGroupList(sub_no);
 	}
 
+	@Override
+	public int updateGrpName(String g_no, String g_name) {
+		return mapper.updateGrpName(g_no, g_name);
+	}
+
 	
 
 }

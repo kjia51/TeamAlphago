@@ -22,17 +22,23 @@
 						<table class="table table-bordered">
 							<caption>그룹 정보</caption>
 							<colgroup>
+								<col width="5%" />
 								<col width="30%" />
-								<col width="20%" />
-								<col width="20%" />
-								<col width="20%" />
+								<col width="10%" />
+								<col width="10%" />
+								<col width="10%" />
+								<col width="10%" />
+								<col width="10%" />
 							</colgroup>
 							<thead>
 								<tr>
-									<th>장바구니 번호</th>
-									<th>회원 아이디</th>
-									<th>콘텐츠 번호</th>
-									<th>학습인원</th>
+									<th></th>
+									<th>콘텐츠명</th>
+									<th>수준</th>
+									<th>인원</th>
+									<th>정가</th>
+									<th>할인율</th>
+									<th>판매가</th>
 								</tr>
 							</thead>
 

@@ -60,8 +60,7 @@
         </div>
 <div id="container">
 		<div id="calendarList">
-			<%@ include file="../teacher/test.jsp" %>
-			<%@ include file="../teacher/test.jsp" %>
+
 			<button><a class="modal_close_btn">확인</a></button>
         </div>
 

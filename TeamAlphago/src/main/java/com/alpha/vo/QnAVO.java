@@ -12,6 +12,8 @@ public class QnAVO {
 	private String q_content;
 	private String q_regdate;
 	private String q_answerYN;
+	private String q_secret;
+	
 	
 	// answer
 	private String a_no;

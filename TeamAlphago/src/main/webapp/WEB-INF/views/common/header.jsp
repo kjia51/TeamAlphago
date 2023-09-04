@@ -6,8 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>게임으로 배우는 바둑 교실</title>
-<script src='/resources/js/jquery-1.12.4.min.js'></script>
+<!-- datepicker -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<!-- ----------------------------------------------------------------- -->
 <link rel="stylesheet" href="/resources/css/common.css">
 <meta http-equiv='X-UA-Compatible' content='IE=edge, chrome=1' />
 <meta http-equiv='Content-Language' content='ko' />
@@ -113,9 +117,13 @@
                             <h3 class="blind">자료실</h3>
                             <ul>
                                 <li><a href="/alpha/notice"> 공지사항 </a></li>
+<<<<<<< HEAD
+                                <li><a href="/alpha/QnA/question"> Q&A </a></li>
+=======
                                 <li><a href="/alpha/QnA"> Q&A </a></li>
                             <c:choose>    
                                 <c:when test="${sessionScope.memberVO.m_division==3}">
+>>>>>>> refs/remotes/origin/main
                                 <li><a href="/alpha/content"> 학습패키지 등록 </a></li>
                                 <li><a href="/alpha/saleList"> 매출 조회 </a></li>
                                 </c:when>

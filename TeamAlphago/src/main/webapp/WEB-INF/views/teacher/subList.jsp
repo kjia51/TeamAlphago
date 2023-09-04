@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>구독 내역</title>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <style>
 .main-box {
@@ -33,6 +32,31 @@
     padding: 10px;
     border-radius: 5px;
 }
+
+#my_modal2 {
+    display: none;
+    width: 300px;
+    height: 100px;
+    padding: 30px 60px;
+    background-color: #fefefe;
+    border: 1px solid #888;
+    border-radius: 3px;
+    text-align: center;
+}
+#my_modal2 .modal_close_btn{
+
+    border: 1px solid black;
+    padding: 20px 0;
+    border-radius: 5px;
+    margin: 20px;
+}
+
+
+#searchBtn {
+float: right;
+
+}
+
 
 </style>
 <body>
@@ -63,14 +87,25 @@
 <%-- --------------------------------------------------------------  --%>
 
 
+<%-- 모달창2 --%>
+<div id="my_modal2">
+	<hr>
+	<h2>등록 완료</h2>
+
+		<div class="btn">
+		    <button><a class="modal_close_btn" onClick="location.href='/alpha/groupSingup?t_m_id=${memberVO.m_id }'">학습그룹으로 가기</a></button>
+		    <button><a class="modal_close_btn" onClick="location.reload()">머무르기</a></button>
+    	</div>
+</div>
+
 
 <div class="main-box">
-총 ${totalCnt } 건
 
 <div id="container">
     <div class="wrap">
 
              <form  method="get" name="searchForm" class="content_wrap">
+			총 ${totalCnt } 건
 			<input name="t_m_id" id="m_id" type="text" value="${memberVO.m_id }">
 			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
             <div class="titleBox">
@@ -82,12 +117,15 @@
                         <fieldset>
                             <input type="hidden" name="p" value="1">
                             <legend>전체 검색</legend>
-                            <select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }">
-                                <option value="c_no">콘텐츠명</option>
+                            <select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }" onchange="searchChange()" id="search">
+                                <option value="content.c_name">콘텐츠명</option>
+                                <option value="sub_date">구독일자</option>
                             </select>
-                            <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." 
-                            		name="searchWord" value="${pageDto.cri.searchWord }" />
-                            <input type="submit" class="btn btn-primary" value="검색" />
+                            <div id="getsearch">
+                            <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요."
+							name="searchWord" value=""${pageDto.cri.searchWord }">
+							<input type="submit" class="btn btn-primary" value="검색" />
+							</div>
                         </fieldset>
                     </div>
             </div>           
@@ -191,6 +229,34 @@ function getCalendal(){
     }
 
 
+var search = document.getElementById('getsearch');
+
+function searchChange() {
+var v = $( '#search' ).val();
+console.log(v);
+
+
+
+if(v === 'content.c_name') {
+	
+	search.innerHTML = ''
+	search.innerHTML += ''
+	+ '<input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." '
+	+ 'name="searchWord" value=""${pageDto.cri.searchWord }" />'
+	+ '<input type="submit" class="btn btn-primary" value="검색" />'
+
+} else if(v == 'sub_date') {
+	search.innerHTML = ''
+	search.innerHTML += ''
+	+ '<input type="date" name="searchDate1" id="date1" value=""${pageDto.cri.searchDate1 }>'
+	+ '<input type="date" name="searchDate2" id="date2" value=""${pageDto.cri.searchDate2 }>'
+	+ '<input type="submit" class="btn btn-primary" value="검색" id="searchBtn"/>'
+	
+}
+
+}
+
+
 function modal(id) { //모달창 띄우기
     var zIndex = 9999;
     var modal = $('#' + id);
@@ -252,6 +318,43 @@ function fetchGet(url,callback){
 	}
 
 }
+
+//post방식 요청
+function fetchPost(url,obj,callback){
+	console.log(url);
+	console.log(callback);
+	
+	try {
+		//url 요청
+		fetch(url,{method : 'post'
+			,headers : 
+			{'Content-Type' : 'application/json'} 
+			,body  : JSON.stringify(obj)
+			  })
+			//요청 결과json 문자열을 javascript 객체로 반환
+			.then(response => response.json())
+			//매개로 받은 콜백함수 실행
+			.then(map => callback(map))
+			
+		} catch (e) {
+			console.log(e);
+
+		}
+
+}
+
+//컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
+function updateresult(map){
+	console.log(map);
+	if(map.result == 'success'){
+		alert(map.msg);
+		modal('my_modal2');
+	} else {
+		alert(map.msg);
+	}
+		
+}
+
 
 function connection(index) {
 	var i = index;
@@ -402,6 +505,7 @@ function createGroup(map) {
 	let vo = map.subscribeVO;
 	console.log(vo);
 	
+	var t_m_id = vo.t_m_id;
 	var sub_no = vo.sub_no;
 	var sub_date = vo.sub_date;
 	
@@ -437,6 +541,12 @@ function createGroup(map) {
 		+ '<table class="table table-bordered">'
 		+ '<thead>'
 	    + 	'<tr>'
+	    +			'<input type="text" id="sub_connection" value="'
+	    +			sub_connection
+	    +			'" readonly>'
+	    +			'<input type="text" id="t_m_id" value="'
+	    +			t_m_id
+	    +			'" readonly>'
 		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독ID</th>'
 	    +			'<td align="left" class="row"><input type="text" id="sub_no" style="width:100%" value="'
 	    +			sub_no
@@ -484,15 +594,59 @@ function createGroup(map) {
             + '<br>'
             + '학습 종료날짜<input type="text" id="enddate">'
             + '</div>'
+            + '<button onclick="insertGrp()">만들기</button>'
             
             getCalendal();
+            
             
     } else {
         main.innerHTML += '더 이상 그룹을 만들 수 없습니다';
     }
 }
 
+function insertGrp() {
 
+	let t_m_id = $('#t_m_id').val();
+	let g_name = $('#g_name').val();
+	let sub_no = $('#sub_no').val();
+	
+	
+	let sub_connection = $('#sub_connection').val();
+	let g_start = $('#startdate').val();
+	let g_end = $('#enddate').val();
+	
+	let g_cnt = $('#sub_able').val();
+	
+	let cnt = g_cnt.substr(0, (g_cnt.length-2));
+	console.log(cnt);
+
+	console.log(g_start);
+	console.log(g_end);
+	
+	//전달할 객체로 생성
+	let obj = {
+			t_m_id : t_m_id
+			, sub_no : sub_no
+			, g_name : g_name
+			, g_cnt: cnt
+			, g_start : g_start
+			, g_end : g_end
+			, sub_connection : sub_connection
+			}
+	
+	console.log(obj);
+	
+	var res = confirm('그룹 등록 시 삭제할 수 없습니다. 정말 등록하시겠습니까?');
+	
+	if(res) {
+		fetchPost('/alpha/group/insertsub/'+t_m_id, obj, updateresult)		
+	}else {
+		alert('그룹 등록이 취소되었습니다.')
+	}
+	
+	
+	
+}
 
 function cancelPay(index) {
 	///////////////////////////환불 가능 여부 검사

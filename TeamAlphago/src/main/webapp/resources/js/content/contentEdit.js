@@ -88,8 +88,12 @@ function fetchDelete(url, callback) {
 function result(map){
 	console.log(map);
 	if(map.result == 'success'){
-		alert(map.msg);
-		window.location.href = "/alpha/teacher";
+		const userConfirmation = confirm(map.msg);
+		if(userConfirmation){
+			window.location.href = "/alpha/mycart";			
+		} else{
+			window.location.href = "/alpha/teacher";			
+		}
 	} else {
 		alert(map.msg);
 	}
@@ -310,6 +314,7 @@ function getCart(index) {
 
         console.log("c_no", c_no);
         console.log("c_name", c_name);
+        console.log("c_able", c_able);
         
         let item = {
             c_no: c_no,
@@ -435,7 +440,9 @@ $('#cartPopUp').on('click', function() {
             let cr_m_no = list.m_id;
             let cr_c_no = list.c_no;
             let cnt = list.c_able;
-
+            console.log(cr_m_no);
+            console.log(cr_c_no);
+            console.log(cnt);
             let obj = {
                 cr_m_no: cr_m_no,
                 cr_c_no: cr_c_no,
