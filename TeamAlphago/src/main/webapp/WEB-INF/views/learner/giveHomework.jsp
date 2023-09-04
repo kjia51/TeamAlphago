@@ -234,7 +234,7 @@ function displayLearnerList(map) {
 						+'		<thead>                                                             '
 						+'			<tr>                                                            '
 						+'				<th align="center"><input type="checkbox" id="checkboxAll"  '
-						+'				name="myCheckbox" onclick="selectAll(this)" value="checked" data-l_no="${status.index}"></th> '
+						+'				name="myCheckbox" onclick="selectAll(this)" value="checked"></th> '
 						+'				<th>학습자 이름</th>                                           '
 						+'				<th>학습콘텐츠</th>                                             '
 						+'				<th>학습시작일</th>                                            '
@@ -298,45 +298,46 @@ $('#writebtn').on('click', function() {
    			alert('학습자를 선택하세요');
    			// 입력 버튼 비활성화 처리 
    		} else{
-   			getLearner(selectedIndexes);
+   		 	var learnerInfo  = getLearner(selectedIndexes);
     	    console.log("selectedIndexes",selectedIndexes[0]);
     	    console.log("selectedIndexes",selectedIndexes);
+    	    console.log("학습자 정보 : ", learnerInfo);
+    	    
    	   
    	    }
 });
 
 // 회원 정보 리스트 l_no로 받아오기 
-function getLearner(l_no) {
-    console.log("l_no", l_no)
-	let learnerAll = []; 
-    learnerAll.push(l_no);
+function getLearner(selectedIndexes) {
+    //console.log("l_no", l_no)  // 저장됨
+	//let learnerAll = []; 
+    //learnerAll.push(l_no);
 
  	// 여러 선택 항목을 저장할 배열
-    let listArray = []; 
-    console.log("learnerAll", learnerAll)
+    var listArray = []; 
+    console.log("listArray", listArray)
 
     // 모든 선택된 번호에 대해 데이터를 수집하여 배열에 추가
-    learnerAll.forEach(function(l_no) {
+    selectedIndexes.forEach(function(l_no) {
     	console.log("l_no", l_no);
-        var m_name = $('input[data-lno="' + l_no + '"]').val();
-        var c_name = $('input[data-cno="' + l_no + '"]').val();
-        var g_start = $('input[data-sno="' + l_no + '"]').val();
-        var g_end = $('input[data-eno="' + l_no + '"]').val();
-        
-	    console.log("m_name", m_name);
-	    console.log("c_name", c_name);
-	    console.log("g_start", g_start);
-	    console.log("g_end", g_end);
-	    
-	    let item = {
-	    		m_name: m_name,
-	            c_name: c_name,
-	            g_start: g_start,
-	            g_end: g_end
-	        };
-	
-	        listArray.push(item);
-    });
+    	 var row = $('input[value="' + l_no + '"]').closest('tr');
+
+         // 행에서 각 필드의 데이터를 가져옴
+         var m_name = row.find('td:eq(1)').text(); // 학습자 이름
+         var c_name = row.find('td:eq(2)').text(); // 학습콘텐츠
+         var g_start = row.find('td:eq(3)').text(); // 학습시작일
+         var g_end = row.find('td:eq(4)').text(); // 학습종료일
+
+         var item = {
+             l_no: l_no, // 체크박스의 l_no 값
+             m_name: m_name,
+             c_name: c_name,
+             g_start: g_start,
+             g_end: g_end
+         };
+
+         listArray.push(item);
+     });
  		// 모든 선택 항목의 데이터를 배열로 반환
 	    return listArray;
 }
