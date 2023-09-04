@@ -92,6 +92,12 @@
     	l_g_no = #{g_no}
 </select>
 
+<!-- 숙제 내역 저장 -->
+<insert id="insertHomework">
+	insert into homework 
+	values(#{t_m_id}, #{h_c_no}, #{l_m_id}, #{h_g_no}, #{h_limit}, #{h_homework}, #{h_regidate}, #{h_content}, null)
+</insert>	
+	
 <!-- 학습자 숙제 요청 -->
 
 </mapper>

@@ -57,85 +57,6 @@
 					</table>
 				</form>
 
-				<%-- 모달창 --%>
-				<div id="assign_modal">
-					<div class="titleBox">
-						<h3 class="t_title">숙제 내용 입력</h3>
-						<input name="l_no" id="learnerNo" type="hidden" value="">
-					</div>
-					<div class="entry">
-						<table class="table table-bordered">
-							<caption>숙제 내용 입력</caption>
-							<colgroup>
-								<col width="20%" />
-								<col width="20%" />
-								<col width="30%" />
-								<col width="30%" />
-							</colgroup>
-							<thead>
-								<tr>
-									<th>학습자 이름</th>
-									<th>콘텐츠명</th>
-									<th>학습시작일</th>
-									<th>학습종료일</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${grpLearnerList}" var="grpLearner">
-									<tr>
-										<th align="center"><input type="checkbox" id="checkbox"
-											name="myCheckbox" value="${grpLearner.l_no}"></th>
-										<td align="center" class="row">${grpLearner.m_name}</td>
-										<td align="center">${grpLearner.c_name}</td>
-										<td align="center">${grpLearner.g_start}</td>
-										<td align="center">${grpLearner.g_end}</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-						<table style="border: 1px solid #000, border-collapse: collapse;">
-							<colgroup>
-								<col width="30%" />
-								<col width="30%" />
-								<col width="40%" />
-							</colgroup>
-							<tr>
-								<th align="center" style="border: 1px solid #000;">숙제 내용</th>
-								<td align="center" style="border: 1px solid #000;" colspan="2">
-									<textarea rows="5" cols="10" style="width: 90%;">내용을 입력하세요.</textarea>
-								</td>
-								<td align="center" style="border: 1px solid #000;"></td>
-							</tr>
-							<tr>
-								<th align="center" style="border: 1px solid #000;" rowspan="3">숙제기한
-								</th>
-								<td align="center" style="border: 1px solid #000;">숙제 시작일</td>
-								<td align="center" style="border: 1px solid #000;">숙제 종료일</td>
-							</tr>
-							<tr>
-								<td align="center" style="border: 1px solid #000;"><input
-									type="text" name="startDay" id="datepicker" placeholder="시작일 ">
-								</td>
-								<td align="center" style="border: 1px solid #000;"><input
-									type="text" name="endDay" id="datepicker" placeholder="종료일 ">
-								</td>
-							</tr>
-						</table>
-
-
-
-						<br>
-						<div class="btn">
-							<button>
-								<a onclick="groupinsert()">전송</a>
-							</button>
-							<button>
-								<a class="modal_close_btn">닫기</a>
-							</button>
-						</div>
-					</div>
-				</div>
-				<%-----------------------------모달창 끝----------------------------------%>
 
 				<!-- 학습자 리스트 -->
 				<div id="learnerInfo">
@@ -179,9 +100,60 @@
 	</div>
 	<!-- container close -->
 
+	<%-- 모달창 --%>
+	<div id="assign_modal">
+		<div class="titleBox">
+			<h3 class="t_title">숙제 내용 입력</h3>
+			<input name="l_no" id="learnerNo" type="hidden" value="">
+		</div>
+		<div class="entry">
+			<div>
+			<form>
+			<table style="border: 1px solid #000, border-collapse: collapse;">
+				<colgroup>
+					<col width="30%" />
+					<col width="30%" />
+					<col width="40%" />
+				</colgroup>
+				<tr>
+					<th align="center" style="border: 1px solid #000;">숙제 내용</th>
+					<td align="center" style="border: 1px solid #000;" colspan="2">
+						<textarea rows="5" cols="10" style="width: 90%;">내용을 입력하세요.</textarea>
+					</td>
+					<td align="center" style="border: 1px solid #000;"></td>
+				</tr>
+				<tr>
+					<th align="center" style="border: 1px solid #000;" rowspan="3">숙제기한
+					</th>
+					<td align="center" style="border: 1px solid #000;">숙제 시작일</td>
+					<td align="center" style="border: 1px solid #000;">숙제 종료일</td>
+				</tr>
+				<tr>
+					<td align="center" style="border: 1px solid #000;"><input
+						type="text" name="startDay" id="datepicker" placeholder="선택 ">
+					</td>
+					<td align="center" style="border: 1px solid #000;"><input
+						type="text" name="endDay" id="datepicker" placeholder="선택 ">
+					</td>
+				</tr>
+			</table>
+			</form>
+			</diV>
+			<br>
+			<div class="btn">
+				<button>
+					<a onclick="insertHomework()">전송</a>
+				</button>
+				<button>
+					<a class="modal_close_btn">닫기</a>
+				</button>
+			</div>
+		</div>
+	</div>
+	<%-----------------------------모달창 끝----------------------------------%>
 </body>
 <script>
-//get방식 
+// get방식 
 function fetchGet(url,callback){
 	console.log(url);
 	console.log(callback);
@@ -213,11 +185,6 @@ function fetchPost(url, obj, callback){
 }
 
 
-
-
-
-
-
 // 숙제 일자 선택
 $(function() {
     $("#datepicker").datepicker();
@@ -245,7 +212,7 @@ function selectGroup(g_no) {
 
     
     
-// 선택 그룹에 따른 그룹 정보 리스트
+// 선택 그룹에 따른 그룹 정보 리스트 출력
 function displayLearnerList(map) {
 	console.log("map", map)
 	let LearnerList = map.LearnerList;
@@ -269,7 +236,7 @@ function displayLearnerList(map) {
 						+'				<th align="center"><input type="checkbox" id="checkboxAll"  '
 						+'				name="myCheckbox" onclick="selectAll(this)" value="checked"></th> '
 						+'				<th>학습자 이름</th>                                           '
-						+'				<th>콘텐츠명</th>                                             '
+						+'				<th>학습콘텐츠</th>                                             '
 						+'				<th>학습시작일</th>                                            '
 						+'				<th>학습종료일</th>                                            '
 						+'			</tr>                                                           '
@@ -282,11 +249,11 @@ function displayLearnerList(map) {
 						+'				<tr>                                                        '
 						+'					<th align="center"><input type="checkbox" id="checkbox" '
 						+'						name="myCheckbox" value="'+Learner.l_no+'"></th>    '
-						+'					<td align="center" class="row">'+Learner.m_name+'</td>   '
-						+'					<td align="center">'+Learner.c_name+'</td>               '
-						+'					<td align="center">'+Learner.g_start+'</td>              '
-						+'					<td align="center">'+Learner.g_end+'</td>                '
-						+'				</tr>                                                       ';
+						+'					<td align="center" class="row">'+Learner.m_name+'</td>  '
+						+'					<td align="center">'+Learner.c_name+'</td>              '
+						+'					<td align="center">'+Learner.g_start+'</td>             '
+						+'					<td align="center">'+Learner.g_end+'</td>               '
+						+'				</tr>';
 		})
 						
 						
@@ -299,18 +266,17 @@ function displayLearnerList(map) {
 						+'<td colspan="5" style="text-align: center;">그룹을 선택하여 주세요.</td>'
 						+'</tr>';
 	}
-	learnerInfo.innerHTML += pageBlock;
+			learnerInfo.innerHTML += pageBlock;
 }
 
+// 체크 박스 전체 선택 이벤트
 function selectAll(selectAll)  {
 	  const checkboxes = document.getElementsByName('myCheckbox');
 	  
 	  checkboxes.forEach((checkbox) => {
 	    checkbox.checked = selectAll.checked;
 	  })
-	}
-
-
+}
 
 
 
@@ -318,63 +284,66 @@ function selectAll(selectAll)  {
 $('#writebtn').on('click', function() {
     // 모달창 띄우기
     modal('assign_modal');
+    
+    var selectedIndexes = [];
 
-    	console.log("input:checkbox[name=myCheckbox]",$('input:checkbox[name=myCheckbox]'));
-    	var selectedIndexes = [];
-
-    	    $('input:checkbox[name=myCheckbox]').each(function() {
-    	        if (this.checked) {
-    	            selectedIndexes.push($('input:checkbox[name=myCheckbox]').val());
-    	        }
-    	    });
-    	    
-    		if($('input:checkbox[name=myCheckbox]:checked').length==0){
-    			alert('학습자를 선택하세요');
-    		} else{
-    			getLearner(selectedIndexes);
+    console.log("input:checkbox[name=myCheckbox]",$('input:checkbox[name=myCheckbox]'));
+   	    $('input:checkbox[name=myCheckbox]').each(function() {
+   	        if (this.checked) {
+   	            selectedIndexes.push($(this).val());
+   	        }
+   	    });
+   	    
+   		if($('input:checkbox[name=myCheckbox]:checked').length==0){
+   			alert('학습자를 선택하세요');
+   			// 입력 버튼 비활성화 처리 
+   		} else{
+   		 	var learnerInfo  = getLearner(selectedIndexes);
     	    console.log("selectedIndexes",selectedIndexes[0]);
     	    console.log("selectedIndexes",selectedIndexes);
-    	   
-    	    }
+    	    console.log("학습자 정보 : ", learnerInfo);
+    	    
+   	   
+   	    }
 });
 
 // 회원 정보 리스트 l_no로 받아오기 
-function getLearner(l_no) {
-    console.log("l_no", l_no)
-	let learnerAll = []; 
-    learnerAll.push(l_no);
+function getLearner(selectedIndexes) {
+    //console.log("l_no", l_no)  // 저장됨
+	//let learnerAll = []; 
+    //learnerAll.push(l_no);
 
  	// 여러 선택 항목을 저장할 배열
-    let listArray = []; 
-    console.log("learnerAll", learnerAll)
+    var listArray = []; 
+    console.log("listArray", listArray)
 
     // 모든 선택된 번호에 대해 데이터를 수집하여 배열에 추가
-    learnerAll.forEach(function(l_no) {
+    selectedIndexes.forEach(function(l_no) {
     	console.log("l_no", l_no);
-        var m_name = $('input[data-lno="' + l_no + '"]').val();
-        var c_name = $('input[data-cno="' + l_no + '"]').val();
-        var g_start = $('input[data-sno="' + l_no + '"]').val();
-        var g_end = $('input[data-eno="' + l_no + '"]').val();
-	    console.log("m_name", m_name);
-	    console.log("c_name", c_name);
-	    console.log("g_start", g_start);
-	    console.log("g_end", g_end);
-	    
-	    let item = {
-	    		m_name: m_name,
-	            c_name: c_name,
-	            g_start: g_start,
-	            g_end: g_end
-	        };
-	
-	        listArray.push(item);
-    });
+    	 var row = $('input[value="' + l_no + '"]').closest('tr');
+
+         // 행에서 각 필드의 데이터를 가져옴
+         var m_name = row.find('td:eq(1)').text(); // 학습자 이름
+         var c_name = row.find('td:eq(2)').text(); // 학습콘텐츠
+         var g_start = row.find('td:eq(3)').text(); // 학습시작일
+         var g_end = row.find('td:eq(4)').text(); // 학습종료일
+
+         var item = {
+             l_no: l_no, // 체크박스의 l_no 값
+             m_name: m_name,
+             c_name: c_name,
+             g_start: g_start,
+             g_end: g_end
+         };
+
+         listArray.push(item);
+     });
  		// 모든 선택 항목의 데이터를 배열로 반환
 	    return listArray;
 }
 
 // 모달창 띄우기
-function modal(id) { 
+function modal(id) {
     var zIndex = 9999;
     var modal = $('#' + id);
 

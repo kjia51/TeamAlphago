@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class LearnerVO {
+	// 학습 숙제 내역
 	private String h_no; // 숙제 ID
 	private String t_m_id; // 학습지도자 ID
 	private String h_c_no; // 콘텐츠 ID
@@ -47,5 +48,7 @@ public class LearnerVO {
 	private String m_email;
 	private String m_address;
 	private String m_birth;
+	
+	
 	
 }                            

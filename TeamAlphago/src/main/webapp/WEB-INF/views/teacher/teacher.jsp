@@ -41,6 +41,15 @@ div .InfoBox .info {
 <%@ include file="../common/header.jsp" %>
 
 <div id="container">
+		<!-- 서브바 -->
+		<div class="location" style="position: relative; margin: 0 auto; text-align:center; font-size:1em">
+            <ul class="locationSub" style="display:inline-block;">
+                <li style="display:inline-block; padding:20px;"><a href="/alpha/teacher?pageNo=1&searchField=c_level&searchWord=초급">초급</a></li>
+                <li style="display:inline-block; padding:20px;"><a href="/alpha/teacher?pageNo=1&searchField=c_level&searchWord=중급">중급</a></li>
+                <li style="display:inline-block; padding:20px;"><a href="/alpha/teacher?pageNo=1&searchField=c_level&searchWord=고급">고급</a></li>
+
+            </ul>
+        </div>
     <div class="wrap">
 
 
@@ -48,20 +57,20 @@ div .InfoBox .info {
 
             <form  method="get" name="searchForm" class="content_wrap">
 			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
-            <div class="titleBox">
+            <div class="titleBox" style="padding:0px">
                 <h2 class="t_title">콘텐츠 조회</h2>
             </div>
             
             <div class="searchWrap searchWrap_wide searchWrap_normal">
                     <div class="searchBox searchBox-mid searchBox-center">
                         <fieldset>
-                            <input type="hidden" name="p" value="1">
                             <legend>전체 검색</legend>
                             <select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }">
-                                <option value="c_name">제목</option>
+                                <option value="c_name" ${pageDto.cri.searchField eq "c_name" ? "selected" : " " }>제목</option>
+                                <option value="c_level" ${pageDto.cri.searchField eq "c_level" ? "selected" : " " }>학습레벨</option>
                             </select>
                             <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." 
-                            		name="searchWord" value="${pageDto.cri.searchWord }" />
+                            		name="searchWord" value="${pageDto.cri.searchWord }" style="height:15px" />
                             <input type="submit" class="btn btn-primary" value="검색" />
                         </fieldset>
                     </div>
