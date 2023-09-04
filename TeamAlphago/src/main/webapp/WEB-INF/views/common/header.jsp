@@ -8,8 +8,8 @@
 <title>게임으로 배우는 바둑 교실</title>
 <script src='/resources/js/jquery-1.12.4.min.js'></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <link rel="stylesheet" href="/resources/css/common.css">
-    <meta http-equiv='X-UA-Compatible' content='IE=edge, chrome=1' />
+<link rel="stylesheet" href="/resources/css/common.css">
+<meta http-equiv='X-UA-Compatible' content='IE=edge, chrome=1' />
 <meta http-equiv='Content-Language' content='ko' />
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
 <meta http-equiv='Content-Style-Type' content='text/css' />
