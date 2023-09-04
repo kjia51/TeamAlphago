@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -320,7 +321,7 @@ public class TeacherController extends CommonRestController {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				return responseMap(REST_FAIL, "삭제 중 오류 발생");
+				return responseMap(REST_FAIL, "승인 중 오류 발생");
 			}
 		}
 	   
@@ -345,7 +346,7 @@ public class TeacherController extends CommonRestController {
 
 	   }
 	   
-	   @PostMapping("/group/insert/{sub_no}") //그룹 생성(구독리스트에서)
+	   @PostMapping("/group/insertsub/{t_m_id}") //그룹 생성(구독리스트에서)
 		public Map<String, Object> Listregister(@RequestBody GrpVO groupVO) {
 		   
 		   System.out.println("==============넘어옴");
@@ -377,6 +378,26 @@ public class TeacherController extends CommonRestController {
 				return responseMap(REST_FAIL, "등록 중 오류 발생");
 			}
 		}
+	   
+	   @PostMapping("/group/updateName/{g_no}")
+	   public Map<String, Object> updateName(
+	       @PathVariable("g_no") String g_no,
+	       @RequestBody Map<String, Object> obj) { // @RequestBody 어노테이션 사용
+
+	       System.out.println("update==============");
+	       System.out.println("g_no: " + g_no);
+	       System.out.println("g_name: " + obj.get("g_name")); // obj에서 g_name 값을 가져옴
+
+	       try {
+	           String g_name = (String) obj.get("g_name"); // g_name 값을 추출
+	           int res = service.updateGrpName(g_no, g_name);
+	           Map<String, Object> map = responseEditMap(res);
+	           return map;
+	       } catch (Exception e) {
+	           e.printStackTrace();
+	           return responseMap(REST_FAIL, "등록 중 오류 발생");
+	       }
+	   }
 
 
 

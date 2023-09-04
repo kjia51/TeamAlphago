@@ -91,7 +91,7 @@
 <button id="popup_open_btn">그룹 생성</button>
 
 <%-- 모달창 --%>
-<div id="assign_modal">
+<div id="my_modal">
 	<hr>
 	<h2>학습콘텐츠 선택</h2>
 		<select name="group_content" id="conSelect" style="width: 780px; border: none; border-bottom: 1px solid black;">
@@ -106,7 +106,7 @@
 		<hr>
 		<h2>그룹 정보</h2>
 	   	<h3>그룹명<input type="text" id="g_name"></h3>
-	   	<div id='test'>test</div>
+	   	<div id='test'></div>
 	   	<div style="display: inline-block;">
 	   	학습 시작날짜<input type="text" id="startdate">
 	   	<br>
@@ -126,7 +126,10 @@
 <div id="my_modal2">
 	<hr>
 	<h2>그룹명 수정</h2>
-	   	<h3>그룹명<input type="text" id="g_name"></h3>
+		<input type="text" id="g_no" readonly><br>
+		현재 그룹명 <input type="text" id="name" readonly><br>
+	
+	   	변경 할 그룹명<input type="text" id="up_name">
 	   	
 		<div class="btn">
 		    <button><a onclick="updateName()">변경하기</a></button>
@@ -152,7 +155,7 @@
 			        <th>그룹이름</th>
 			        <th>그룹인원</th> <%--수강가능인원/현재수강인원 --%>
 			        <th>학습가능일</th> <%-- 구독일 ~구독일+90 --%>
-			        <th>그룹관리</th> <%-- 그룹삭제 / 학생관리 / 숙제관리 --%>
+			        <th></th> <%-- 그룹삭제 / 학생관리 / 숙제관리 --%>
     			</tr>
 			</thead>
 			<tbody>
@@ -163,7 +166,7 @@
 						<tr>
                    
                             <th align="center"><input type="text" class="index" id="g_no" data-g_no="${status.index}" value="${group.g_no }"readonly></th>
-                            <td align="center"><input type="text" class="index" id="g_name" data-sub_price="${status.index}" value="${group.g_name }"readonly></td>
+                            <td align="center"><input type="text" class="index" id="g_name" data-g_name="${status.index}" value="${group.g_name }"readonly></td>
                             <td align="center"><input type="text" class="index" id="sub_price" data-sub_price="${status.index}" value="${group.g_cnt }"readonly></td>
                             <td align="center">${group.g_start } ~ ${group.g_end }</td>
                             <td align="center"><button onclick="updateGrp(${status.index})">그룹관리</button></td>
@@ -195,57 +198,64 @@
 
 <script>
 
-window.onload=function(){
-	getCalendal();
-}
-
-function getCalendal(){
-    $('#test').html('<div class="my-datepicker"></div>');
-    
-    let datepickerDiv = $(".my-datepicker");
-    console.log(datepickerDiv);
-        datepickerDiv.datepicker({
-            showOtherMonths: true,
-            showMonthAfterYear: true,
-            selectOtherMonths: true,
-            buttonText: "선택",
-            yearSuffix: "년",
-            monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-            dayNamesMin: ['일','월','화','수','목','금','토'],
-            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
-            minDate: "0",
-            maxDate: "+1y",
-            dateFormat: 'yy-mm-dd',
-            onSelect: function(selectedDate) {
-                var startDate = new Date(selectedDate);
-                startDate.setDate(startDate.getDate() + 90); // Add 90 days
-               
-                var year = startDate.getFullYear();
-                var month = ("0" + (startDate.getMonth() + 1)).slice(-2); // Adding 1 because getMonth() is 0-based
-                var day = ("0" + startDate.getDate()).slice(-2);
-               
-                var endDateFormatted = year + "-" + month + "-" + day;
-               
-                $('#startdate').val(selectedDate);
-                $('#enddate').val(endDateFormatted);
-            }
-        });
- 
+$('#test').datepicker({
+	
+	showOtherMonths: true,
+    showMonthAfterYear: true,
+    selectOtherMonths: true,
+    buttonText: "선택",
+    yearSuffix: "년",
+    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    dayNamesMin: ['일','월','화','수','목','금','토'],
+    dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+    minDate: "0",
+    maxDate: "+1y",
+    dateFormat: 'yy-mm-dd',
+    onSelect: function(selectedDate) {
+        var startDate = new Date(selectedDate);
+        startDate.setDate(startDate.getDate() + 90); // Add 90 days
+       
+        var year = startDate.getFullYear();
+        var month = ("0" + (startDate.getMonth() + 1)).slice(-2); // Adding 1 because getMonth() is 0-based
+        var day = ("0" + startDate.getDate()).slice(-2);
+       
+        var endDateFormatted = year + "-" + month + "-" + day;
+       
+        $('#startdate').val(selectedDate);
+        $('#enddate').val(endDateFormatted);
     }
+	
+});
 
 function updateGrp(index) {
 	var g_no = $('input[data-g_no="'+index+'"]').val();
+	var gname = $('input[data-g_name="'+index+'"]').val();
     console.log("Index:", index);
     console.log("g_no:", g_no);
+    console.log("g_name:", gname);
     
     modal('my_modal2');
+    $('#name').val(gname);
+    $('#g_no').val(g_no);
 	
 }
 
 function updateName() {
-   var g_name = $('#g_name').val();
-   console.lod()
+   var g_name = $('#up_name').val();
+   var g_no = $('#g_no').val();
+  	
+	//전달할 객체로 생성
+	let obj = {
+	  g_no: g_no,
+	  g_name: g_name
+	};
+	
+   console.log(obj);
+   
+   fetchPost('/alpha/group/updateName/' + g_no, obj, result);
+   
+   
 }
 
 
