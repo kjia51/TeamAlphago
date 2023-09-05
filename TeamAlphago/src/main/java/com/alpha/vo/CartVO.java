@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class CartVO {
+	private String c_no; 
 	private String cr_no; 
 	private String cr_regdate; 
 	private String cr_m_no; 

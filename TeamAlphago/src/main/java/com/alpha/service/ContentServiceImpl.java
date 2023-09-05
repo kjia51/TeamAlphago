@@ -82,5 +82,17 @@ public class ContentServiceImpl implements ContentService {
 		return contentMapper.getMyCart(cr_m_no);
 	}
 
+	@Override
+	public int deleteCart(String cr_m_no, String cr_c_no) {
+		// TODO Auto-generated method stub
+		return contentMapper.deleteCart(cr_m_no, cr_c_no);
+	}
+
+	@Override
+	public int cartCnt(String cr_m_no) {
+		// TODO Auto-generated method stub
+		return contentMapper.cartCnt(cr_m_no);
+	}
+
 
 }

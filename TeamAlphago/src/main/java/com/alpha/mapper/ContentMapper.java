@@ -18,6 +18,10 @@ public interface ContentMapper {
 	public int updateContent(ContentVO contentVO);
 	
 	public int deleteContent(String c_id);
+
+	public int cartCnt(String cr_m_no);
+
+	public int deleteCart(@Param("cr_m_no") String cr_m_no, @Param("cr_c_no") String cr_c_no);
 	
 	public List<SalesVO> salesContent();
 

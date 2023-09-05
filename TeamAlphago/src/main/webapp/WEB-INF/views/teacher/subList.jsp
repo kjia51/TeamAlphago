@@ -45,7 +45,6 @@
 }
 #my_modal2 .modal_close_btn{
 
-    border: 1px solid black;
     padding: 20px 0;
     border-radius: 5px;
     margin: 20px;
@@ -118,7 +117,7 @@ nav#topMenu ul button {
 			<input name="t_m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
 			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
             <div class="titleBox">
-                <h2 class="t_title">콘텐츠 조회</h2>
+                <h2 class="t_title">구독 내역</h2>
             </div>
             
             <div class="searchWrap searchWrap_wide searchWrap_normal">

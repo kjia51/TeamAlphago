@@ -68,6 +68,27 @@ $('#registerBtn').click(function () {
 	console.log(c_price);
 	console.log(c_name);
 	console.log(c_level);
+	
+	if(c_name==null ||c_name==''){
+		alert('컨텐츠명을 입력하세요');
+		$('#c_name').focus();
+		return;
+	}
+	if(c_able==null ||c_able==''){
+		alert('수강인원을 입력하세요');
+		$('#p_ableTd').focus();
+		return;
+	}
+	if(c_price==null ||c_price==''){
+		alert('정가를 입력하세요');
+		$('#c_price').focus();
+		return;
+	}
+	if(c_content==null ||c_content==''){
+		alert('내용을 입력하세요');
+		$('#c_content').focus();
+		return;
+	}
 	//전달할 객체로 생성
 	let obj = {
 			c_name : c_name
@@ -101,10 +122,10 @@ window.addEventListener('load', function(){
 
 	$('#c_name').blur(function () {
     	let c_name = $('#c_name').val();
-  	  	const isValidcname = /^[가-힣0-9]{6}$/.test(c_name);
+  	  	const isValidcname = /^[가-힣0-9 ]{1,20}$/.test(c_name);
 	  	  // 결과에 따라 메시지 출력
 	  	  if (!isValidcname) {
-	  		  signCname.innerHTML = "패키지명은 한글과 숫자로만 구성되고, 6자리 가능합니다.";
+	  		  signCname.innerHTML = "패키지명은 한글과 숫자로만 구성되고, 20자리 가능합니다.";
 	  		  $('#c_name').focus();
 	  	    return
 	  	  } else{

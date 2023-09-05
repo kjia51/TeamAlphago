@@ -68,7 +68,7 @@
 
     <div class="wrap">
         <div class="content_wrap">
-            <div class="titleBox">
+            <div class="titleBox" style="padding: 20px 0px 30px">
                 <h2 class="t_title">매출현황</h2>
             </div>
 
@@ -99,7 +99,7 @@
                         <thead id="chartHead">
                         </thead>
                         <tbody id="chartBdy">
-                            
+
                         </tbody>
                 </table>
             </div>

@@ -58,7 +58,7 @@ function modal(id) { //모달창 띄우기
             zIndex: zIndex + 1,
 
             // div center 정렬
-            top: '50%',
+            top: '40%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             msTransform: 'translate(-50%, -50%)',
@@ -94,6 +94,12 @@ function saleContent(){
 			        +'<th>매출건수</th>'
 			        +'</tr>';
     chartHead.appendChild(row1);
+    var row2 = document.createElement('tr');
+    row2.innerHTML = ''
+    	+'<tr>'
+    	+'<td colspan="3"  style="text-align:center">조회된 건이 없습니다</td>'
+    	+'</tr>';
+    chartBdy.appendChild(row2);
 	$('#btnContent').click(function () {
 		myChart.style.display = "block";
 		getChartCList();
@@ -112,14 +118,14 @@ function saleDate(){
                     +'<input type="text" class="input" name="startdate" id="startdate" value="" maxlength="8" style="width:120px; text-align:center">'
                     +'<span style="margin-left:10px; margin-right:10px">~</span>'
                     +'<input type="text" class="input" name="enddate" id="enddate" value="" maxlength="8" style="width:120px; text-align:center">'
-                    +'<button type="button" id="cal" class="cal-btn-open" data-calendar-module="true" data-calendar-display="false" style="margin-top:5px; margin-left:10px; margin-right:10px""><i class="fa-regular fa-calendar" style="font-size:30px"></i></button>'
+                    +'<button type="button" id="cal" class="cal-btn-open" data-calendar-module="true" data-calendar-display="false" style="margin-top:5px; margin-left:10px; margin-right:10px"><i class="fa-regular fa-calendar" style="font-size:30px"></i></button>'
                     +'</div>'
-                    +'<div class="searchBox" style="display:inline-block; margin-left:50px">'
+                    +'<div class="searchBox" style="display:inline-block; margin-left:30px">'
 
-                    +'<button type="button" value="1일" class="blue" style="width:40px;height:30px; margin-right:15px" id="day">1일</button>'
-                    +'<button type="button" value="1개월" class="blue" style="width:40px;height:30px; margin-right:15px" id="month">1개월</button>'
-                    +'<button type="button" value="6개월" class="blue" style="width:40px;height:30px; margin-right:15px" id="hmonth">6개월</button>'
-                    +'<button type="button" value="1년" class="blue" style="width:40px;height:30px; margin-right:15px" id="year">1년</button>'
+                    +'<button type="button" value="1일" class="blue" style="width:50px;height:30px; margin-right:15px" id="day">1일</button>'
+                    +'<button type="button" value="1개월" class="blue" style="width:50px;height:30px; margin-right:15px" id="month">1개월</button>'
+                    +'<button type="button" value="6개월" class="blue" style="width:50px;height:30px; margin-right:15px" id="hmonth">6개월</button>'
+                    +'<button type="button" value="1년" class="blue" style="width:50px;height:30px; margin-right:15px" id="year">1년</button>'
                     +'<input type="button" class="btn btn-primary" id="btnDate" value="조회">'
                     +'</div>'
                     +'</td>';
@@ -132,9 +138,24 @@ function saleDate(){
 			        +'<th>매출건수</th>'
 			        +'</tr>';
     chartHead.appendChild(row1);
+    var row2 = document.createElement('tr');
+    row2.innerHTML = ''
+    	+'<tr>'
+    	+'<td colspan="3"  style="text-align:center">조회된 건이 없습니다</td>'
+    	+'</tr>';
+    chartBdy.appendChild(row2);
     var now = nowDate();
     $('#startdate').val(now);
 	$('#enddate').val(now);
+	
+	$('#startdate').click(function () {
+		$('.blue').removeClass("disabled");
+	})
+	
+	$('#enddate').click(function () {
+		$('.blue').removeClass("disabled");
+	})
+	
 	$('#btnDate').click(function () {
 		myChart.style.display = "block";
 		getChartDList();

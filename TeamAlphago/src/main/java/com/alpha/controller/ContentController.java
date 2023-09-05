@@ -131,11 +131,11 @@ public class ContentController extends CommonRestController {
 			}
 		   
 		   //삭제 action
-		   @DeleteMapping("/content/DeleteAction/{c_no}")
-		   public Map<String, Object> delete(@PathVariable("c_no") String c_no) {
+		   @DeleteMapping("/content/DeleteCart/{cr_c_no}/{cr_m_no}")
+		   public Map<String, Object> delete(@PathVariable("cr_c_no") String cr_c_no, @PathVariable("cr_m_no") String cr_m_no) {
 			   
 			   try {
-				   int res = contentService.deleteContent(c_no);
+				   int res = contentService.deleteCart(cr_m_no, cr_c_no);
 				   Map<String, Object> map = responseDeleteMap(res);
 				   return map;
 				   
