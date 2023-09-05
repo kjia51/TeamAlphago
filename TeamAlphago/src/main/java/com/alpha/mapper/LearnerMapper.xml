@@ -70,8 +70,10 @@
 
 <!-- 그룹 가입 신청  -->
 <insert id="insertGrp">
-	INSERT INTO learner (l_no ,t_m_id, l_m_id, l_c_no, l_g_no, l_register, l_checkyn)
-	values (#{l_no},#{t_m_id}, #{l_m_id}, #{l_c_no}, #{l_g_no}, now(), 'N')
+	INSERT INTO 
+		learner (l_no ,t_m_id, l_m_id, l_c_no, l_g_no, l_register, l_checkyn)
+	values 
+		(#{l_no},#{t_m_id}, #{l_m_id}, #{l_c_no}, #{l_g_no}, now(), 'N')
 </insert>
 
 <!-- 그룹별 학습자 리스트 조회 (숙제 요청) -->
@@ -96,10 +98,24 @@
 
 <!-- 숙제 요청 내역 저장 -->
 <insert id="insertHomework">
-	insert into homework (h_no, t_m_id, h_c_no, l_m_id, h_g_no, h_limit ,h_homework)
-	values(#{h_no}, #{t_m_id}, #{h_c_no}, #{l_m_id}, #{h_g_no}, #{h_limit} ,#{h_homework})
+	insert into 
+		homework (h_no, t_m_id, h_c_no, l_m_id, h_g_no, h_limit ,h_homework)
+	values
+		(#{h_no}, #{t_m_id}, #{h_c_no}, #{l_m_id}, #{h_g_no}, #{h_limit} ,#{h_homework})
 </insert>	
 	
-<!-- 학습자 숙제 요청 -->
+<!-- 학습자 숙제 리스트 -->
+<select id="homeworkList" resultType="com.alpha.vo.LearnerVO">
+	SELECT *
+	FROM 
+		homework h
+	LEFT JOIN content c ON (h.h_c_no = c.c_no)
+	LEFT JOIN learner l ON (h.l_m_id = l.l_m_id AND h.t_m_id = l.t_m_id)
+	LEFT JOIN member m ON (h.t_m_id = m.m_id)
+	WHERE 
+		l.l_m_id = #{m_id};
+</select>
 
+<!-- 학습자 숙제 내역 입력  -->
+	
 </mapper>

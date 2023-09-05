@@ -56,6 +56,12 @@ public class LearnerServiceImpl implements LearnerService {
 		return learnerMapper.insertHomework(learnerVO);
 	}
 
+	// 학습자 숙제 내역
+	@Override
+	public List<LearnerVO> homeworkList(String l_m_id) {
+		return learnerMapper.homeworkList(l_m_id);
+	}
+
 
 		
 	

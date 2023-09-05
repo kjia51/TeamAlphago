@@ -117,7 +117,7 @@
 				<tr>
 					<th align="center" style="border: 1px solid #000;">숙제 내용</th>
 					<td align="center" style="border: 1px solid #000;" colspan="2">
-						<textarea name="h_content" id="hContent" rows="5" cols="10" style="width: 90%;">내용을 입력하세요.</textarea>
+						<textarea name="h_homework" id="hHomework" rows="5" cols="10" style="width: 90%;">내용을 입력하세요.</textarea>
 					</td>
 					<td align="center" style="border: 1px solid #000;"></td>
 				</tr>
@@ -406,6 +406,7 @@ function insertHomework(){
    	        }
    	    });
    	    
+   	    // 체크 박스 선택 검증
    		if($('input:checkbox[name=myCheckbox]:checked').length==0){
    			alert('학습자를 선택하세요');
    			// 입력 버튼 비활성화 처리 
@@ -421,7 +422,7 @@ function insertHomework(){
    			    let l_m_id = $('#learnerId').val();
    			    let h_g_no = $('#groupNo').val();
    			    let h_limit = $('#enddate').val();
-   			    let h_homework = $('#hContent').val();
+   			    let h_homework = $('#hHomework').val();
    			
    			    
    			    console.log("t_m_id : ", t_m_id);

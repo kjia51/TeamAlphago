@@ -29,5 +29,8 @@ public interface LearnerService {
 	
 	// 숙제 요청 내역 저장
 	public int insertHomework(LearnerVO learnerVO);
+	
+	// 학습자 숙제 내역
+	public List<LearnerVO> homeworkList(String l_m_id);
  
 }

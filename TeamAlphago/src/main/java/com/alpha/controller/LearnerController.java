@@ -23,16 +23,7 @@ import com.alpha.vo.LearnerVO;
 public class LearnerController extends CommonRestController {
 
 	@Autowired
-	private LearnerService learnerService;
-	
-	
-
-	// 학생 숙제 제출 페이지
-	@GetMapping("/submitHomework")
-	public ModelAndView submitHomework() {
-		ModelAndView mav = new ModelAndView("/learner/submitHomework");
-		return mav;
-	}
+	private LearnerService learnerService;	
 	
 	// 숙제 평가 페이지
 	@GetMapping("/homeworkAssess")
@@ -141,6 +132,24 @@ public class LearnerController extends CommonRestController {
 			e.printStackTrace();
 			return responseResultMap(REST_FAIL, "요청 중 오류 발생");
 		}
+	}
+	// 학습자 숙제 내역 
+	@GetMapping("/submitHomework")
+	public ModelAndView submitHomework(LearnerVO learnerVO, String l_m_id) {
+		System.out.println("학습자 숙제 제출 페이지 연결");
+		Map<String, Object> map = new HashMap<String, Object>();
+		ModelAndView mav = new ModelAndView("/learner/submitHomework");
+		
+		try {
+			mav.addObject("homeworkList", learnerService.homeworkList(l_m_id));
+			System.out.println("homeworkList"+learnerVO);
+			System.out.println("l_m_id : "+ l_m_id);
+			
+		} catch (Exception e) {
+			
+			map.put(REST_FAIL, "오류가 발생하였습니다.");
+		}
+		return mav; 
 	}
 	
 }
