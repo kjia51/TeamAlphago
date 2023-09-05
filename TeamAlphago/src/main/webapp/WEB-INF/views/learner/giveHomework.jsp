@@ -133,6 +133,7 @@
 					</td>
 					<td align="center" style="border: 1px solid #000;">
 					<input type="text" name="h_limit" id="datepickerE" placeholder="선택 " style="text-align:center;">
+					<input type="hidden" id="enddate">
 					</td>
 				</tr>
 			</table>
@@ -191,9 +192,7 @@ function fetchPost(url,obj,callback){
 			
 		} catch (e) {
 			console.log(e);
-
 		}
-	
 }
 
 
@@ -216,12 +215,43 @@ function result(map){
 // 숙제 일자 선택
 $(function() {
     $("#datepickerS").datepicker({
+    	showOtherMonths: true,
+        showMonthAfterYear: true,
+        selectOtherMonths: true,
+        buttonText: "선택",
+        yearSuffix: "년",
+        monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+        monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+        dayNamesMin: ['일','월','화','수','목','금','토'],
+        dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
     	dateFormat: 'yy-mm-dd',
     	minDate: 0
     	});
-    	$('#datepickerS').datepicker('setDate', 'today');
+    $('#datepickerS').datepicker('setDate', 'today');
     $("#datepickerE").datepicker({
-    	 dateFormat: 'yy-mm-dd'
+    	showOtherMonths: true,
+        showMonthAfterYear: true,
+        selectOtherMonths: true,
+        buttonText: "선택",
+        yearSuffix: "년",
+        monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+        monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+        dayNamesMin: ['일','월','화','수','목','금','토'],
+        dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+        maxDate: "+1M",
+        minDate: 0,
+        dateFormat: 'yy-mm-dd',
+        onSelect: function(selectedDate) {
+            var EndDate = new Date(selectedDate);
+           
+            var year = EndDate.getFullYear();
+            var month = ("0" + (EndDate.getMonth() + 1)).slice(-2); 
+            var day = ("0" + EndDate.getDate()).slice(-2);
+           
+            var endDateFormatted = year + "-" + month + "-" + day;
+           
+            $('#enddate').val(endDateFormatted);
+        }
     });
 });
 
@@ -390,7 +420,7 @@ function insertHomework(){
    			    let h_c_no = $('#contentNo').val();
    			    let l_m_id = $('#learnerId').val();
    			    let h_g_no = $('#groupNo').val();
-   			    let h_limit = $('#datepickerE').val();
+   			    let h_limit = $('#enddate').val();
    			    let h_homework = $('#hContent').val();
    			
    			    
@@ -398,14 +428,14 @@ function insertHomework(){
    			    console.log("h_c_no : ", h_c_no);
    			    console.log("l_m_id : ", l_m_id);
    			    console.log("h_g_no : ", h_g_no);
-   			    console.log("h_limit : ", h_limit);
+   			    console.log(h_limit);
    			    console.log("h_homework : ", h_homework);
    			    
    			    learnerInfo.forEach(list => {
    			       let m_name = list.m_name;
    			       let c_name = list.c_name;
    			       let g_start = list.g_start;
-   			       let h_limit = list.g_end;
+   			     
    			
    			       let obj = {
    				       			t_m_id: t_m_id,
