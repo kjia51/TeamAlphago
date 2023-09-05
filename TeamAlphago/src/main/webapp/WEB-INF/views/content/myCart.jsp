@@ -22,12 +22,12 @@
 						<table class="table table-bordered">
 							<caption>그룹 정보</caption>
 							<colgroup>
-								<col width="5%" />
-								<col width="30%" />
+								<col width="3%" />
+								<col width="40%" />
+								<col width="6%" />
+								<col width="6%" />
+								<col width="8%" />
 								<col width="10%" />
-								<col width="10%" />
-								<col width="10%" />
-								<col width="15%" />
 							</colgroup>
 							<thead>
 								<tr>

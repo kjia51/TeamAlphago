@@ -23,7 +23,7 @@ public interface ContentService {
 	
 	public List<SalesVO> salesContent();
 	
-	public List<SalesVO> salesDate();
+	public List<SalesVO> salesDate(String startdate, String enddate);
 	
 	public int addCart(CartVO cartVO);
 	

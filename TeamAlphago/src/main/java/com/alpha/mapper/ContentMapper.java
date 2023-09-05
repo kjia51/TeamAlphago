@@ -2,6 +2,8 @@ package com.alpha.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.alpha.vo.CartVO;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.SalesVO;
@@ -19,7 +21,7 @@ public interface ContentMapper {
 	
 	public List<SalesVO> salesContent();
 
-	public List<SalesVO> salesDate();
+	public List<SalesVO> salesDate(@Param("startdate") String startdate,@Param("enddate") String enddate);
 	
 	public int addCart(CartVO cartVO);
 	

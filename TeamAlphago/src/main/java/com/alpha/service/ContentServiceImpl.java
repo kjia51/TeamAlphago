@@ -71,9 +71,9 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public List<SalesVO> salesDate() {
+	public List<SalesVO> salesDate(String startdate, String enddate) {
 		// TODO Auto-generated method stub
-		return contentMapper.salesDate();
+		return contentMapper.salesDate(startdate, enddate);
 	}
 
 	@Override

@@ -41,7 +41,7 @@
     color: black;
     
     }
-#btn.disabled {
+.disabled {
   background-color: #074691;
   color : white;
   cursor: not-allowed;
@@ -60,7 +60,9 @@
         </div>
 <div id="container">
 		<div id="calendarList">
-
+			<div id="test" style="display:inline-block"></div>
+			<div id="test2" style="display:inline-block"></div>
+			<button><a class="modal_close_btn">선택</a></button>
 			<button><a class="modal_close_btn">확인</a></button>
         </div>
 
@@ -89,11 +91,10 @@
 				</div>
 
                 <table class="table table-bordered univ-lineTop2" id="eve_academyTable" style="margin-top:50px; margin-bottom:50px">
-                    <caption>바둑학원 정보</caption>
                     <colgroup>
-                        <col width="40%">
-                        <col width="15%">
-                        <col width="15%">
+                        <col width="30%">
+                        <col width="20%">
+                        <col width="20%">
                     </colgroup>
                         <thead id="chartHead">
                         </thead>
