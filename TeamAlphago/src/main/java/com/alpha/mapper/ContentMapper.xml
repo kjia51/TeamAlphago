@@ -25,43 +25,51 @@
 		delete from content where c_no=#{c_no}
 	</delete>
 	
+	<delete id="deleteCart">
+		delete from cart where cr_m_no=#{cr_m_no} and cr_c_no=#{cr_c_no}
+	</delete>
+	
 	<select id="salesContent" resultType="com.alpha.vo.SalesVO">
     	    select sub_c_no, count(*) s_count, ROUND(AVG(sub_price),0) s_sales, c_name  from subscribe s
 			left join (select * from content) c on sub_c_no = c_no
 		    group by sub_c_no
 	</select>
 	
+	<select id="cartCnt" resultType="int">
+	 	select count(*) from cart cr_m_no=#{cr_m_no}
+	</select>
+	
 	<select id="salesDate" resultType="com.alpha.vo.SalesVO">
     	SELECT date_range.date_range AS s_date, 
        IFNULL(COUNT(subscribe.sub_date), 0) AS s_count, 
        IFNULL(ROUND(AVG(subscribe.sub_price), 0), 0) AS s_sales
-FROM (
-    SELECT DATE_ADD(#{startdate}, INTERVAL n DAY) AS date_range
-    FROM (
-        SELECT a.N + b.N * 10 + c.N * 100 AS n
-        FROM (
-            SELECT 0 AS N
-            UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
-            UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
-            UNION ALL SELECT 9
-        ) AS a
-        CROSS JOIN (
-            SELECT 0 AS N
-            UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
-            UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
-            UNION ALL SELECT 9
-        ) AS b
-        CROSS JOIN (
-            SELECT 0 AS N
-            UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
-            UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
-            UNION ALL SELECT 9
-        ) AS c
-    ) AS numbers
-    WHERE DATE_ADD(#{startdate}, INTERVAL n DAY) BETWEEN #{startdate} AND #{enddate}
-) AS date_range
-LEFT JOIN subscribe ON DATE(date_range.date_range) = DATE(subscribe.sub_date)
-GROUP BY date_range.date_range
+		FROM (
+		    SELECT DATE_ADD(#{startdate}, INTERVAL n DAY) AS date_range
+		    FROM (
+		        SELECT a.N + b.N * 10 + c.N * 100 AS n
+		        FROM (
+		            SELECT 0 AS N
+		            UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+		            UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
+		            UNION ALL SELECT 9
+		        ) AS a
+		        CROSS JOIN (
+		            SELECT 0 AS N
+		            UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+		            UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
+		            UNION ALL SELECT 9
+		        ) AS b
+		        CROSS JOIN (
+		            SELECT 0 AS N
+		            UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+		            UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
+		            UNION ALL SELECT 9
+		        ) AS c
+		    ) AS numbers
+		    WHERE DATE_ADD(#{startdate}, INTERVAL n DAY) BETWEEN #{startdate} AND #{enddate}
+		) AS date_range
+		LEFT JOIN subscribe ON DATE(date_range.date_range) = DATE(subscribe.sub_date)
+		GROUP BY date_range.date_range
  
 	</select>
 	
@@ -77,7 +85,7 @@ GROUP BY date_range.date_range
 	  select 
 	  <![CDATA[
 	  CONCAT(if(cnt-30<=0,0,cnt-30),'%') c_discountrate,
-	   c_name, cnt, if(c_level=1,'초급', if(c_level=2,'중급', '고급')) c_level, (c_price*cnt/10) c_price,  c_price*(cnt/10)*(1-(if(cnt-30<=0,0,cnt-30)/100)) c_sellprice 
+	   c_no, c_name, cnt, if(c_level=1,'초급', if(c_level=2,'중급', '고급')) c_level, (c_price*cnt/10) c_price,  c_price*(cnt/10)*(1-(if(cnt-30<=0,0,cnt-30)/100)) c_sellprice 
 	   	]]>
 	   from cart c
       left join (select * from content) s

@@ -49,7 +49,7 @@
                                     <th scope="row">패키지명</th>
                                     <td>
                                     <div id="signCname" style="color:red"></div>
-                                    <input type="text" class="input-default" id="c_name" placeholder="공백없이 한글/숫자 6자" style="width: 97%" maxlength="100" name="c_name" value="">
+                                    <input type="text" class="input-default" id="c_name" placeholder="공백없이 한글/숫자 20자" style="width: 97%" maxlength="100" name="c_name" value="">
                                     </td>
                                 </tr>
                                 <tr>
@@ -83,7 +83,7 @@
                                     
                                 </tr>
                                 <tr>
-                                    <th scope="row">정가</th>
+                                    <th scope="row">정가(10인 기준)</th>
                                     <td><input type="text" class="input-default" id="c_price" style="width: 97%" maxlength="100" name="c_price" value=""></td>
                                 </tr>
     		                     

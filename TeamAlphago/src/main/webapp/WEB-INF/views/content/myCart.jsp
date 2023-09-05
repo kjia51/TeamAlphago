@@ -14,28 +14,28 @@
 		<div class="wrap">
 			<div class="content_wrap">
 				<div class="titleBox">
-					<h2 class="t_title">장바구니 보기</h2>
+					<h2 class="t_title">장바구니</h2>
 				</div>
 
-				<div id="groupInfoDiv">
+				<div id="groupInfoDiv" style="text-align:center">
 					<div class="entry" id="groupInfo">
 						<table class="table table-bordered">
 							<caption>그룹 정보</caption>
 							<colgroup>
 								<col width="3%" />
+								<col width="3%" />
 								<col width="40%" />
 								<col width="6%" />
 								<col width="6%" />
-								<col width="8%" />
 								<col width="10%" />
 							</colgroup>
 							<thead>
 								<tr>
-									<th></th>
+									<th><input type="checkbox" onclick="chkboxAll()"></th>
+									<th>No</th>
 									<th>콘텐츠명</th>
 									<th>수준</th>
 									<th>인원</th>
-									<th>정가</th>
 									<th>판매가</th>
 								</tr>
 							</thead>
@@ -44,8 +44,15 @@
 
 
 							</tbody>
+							<thead id="tbdy1">
+								<tr>
+									<th colspan="6"></th>
+								</tr>
+							</thead>
 						</table>
 					</div>
+						<input type="button" class="btn btn-primary" id="payment" value="결제하기">
+						<input type="button" class="btn btn-primary" id="deleteOption" value="선택삭제" style="margin-left:10px; color:#074691; background-color:white">
 				</div>
 			</div>
 			<!-- //content close -->

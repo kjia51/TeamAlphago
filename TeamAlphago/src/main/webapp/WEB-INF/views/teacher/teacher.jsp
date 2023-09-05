@@ -82,7 +82,7 @@ div .InfoBox .info {
     </div>
     
     <div class="searchWrap searchWrap_wide searchWrap_normal">
-        <div class="searchBox searchBox-mid searchBox-center">
+        <div class="searchBox searchBox-mid searchBox-center" style="text-align:center">
             <fieldset>
                 <input type="hidden" name="p" value="1">
                 <legend>전체 검색</legend>
@@ -94,20 +94,11 @@ div .InfoBox .info {
                 <input type="submit" class="btn btn-primary" value="검색" />
             </fieldset>    
     
-	<div class="search-controls">
-	    <div class="business-srch">
-	        <select title="정렬" name="order" id="orderSelect" style="width: 120px">
-	            <option value="none">=== 선택 ===</option>
-	            <option value="new">최신순</option>
-	            <option value="price1">가격높은순</option>
-	            <option value="price2">가격낮은순</option>
-	            <option value="level1">레벨높은순</option>
-	            <option value="level2">레벨낮은순</option>
-	        </select>
-	    </div>
+	<div class="search-controls" style="text-align:center">
 
-<div class="searchBox">
-    <fieldset>
+
+<div class="searchBox" style="text-align:center">
+    <fieldset style="text-align:center">
         <legend>카테고리</legend>
 		        <label><input type="radio" name="c_level" value="0">전체</label>
 		        <label><input type="radio" name="c_level" value="1">초급</label>
@@ -119,8 +110,17 @@ div .InfoBox .info {
 	        </div>
     </div>  
 </form>
+	    <div class="business-srch" style="margin-bottom:20px">
 총 ${totalCnt } 건
-
+	        <select title="정렬" name="order" id="orderSelect" style="width: 120px; margin-left:785px">
+	            <option value="none">=== 선택 ===</option>
+	            <option value="new">최신순</option>
+	            <option value="price1">가격높은순</option>
+	            <option value="price2">가격낮은순</option>
+	            <option value="level1">레벨높은순</option>
+	            <option value="level2">레벨낮은순</option>
+	        </select>
+	    </div>
 	<c:set var="i" value="0" />
 	<c:set var="j" value="3" />
 	
@@ -142,7 +142,13 @@ div .InfoBox .info {
                                 <span class="text"><em>${status.index}</em></span>
                                                             </a>
                             <p class="desc">
-                                <a onclick="godetail(${status.index})"><strong class="tit">${con.c_name }</strong></a>
+                            <c:if test="${fn:length(con.c_name)>=20}" var="len">
+                                <a onclick="godetail(${status.index})"><strong class="tit">${fn:substring(con.c_name,0,19) }..</strong></a>
+                            </c:if>
+                            <c:if test="${not len}" >
+                                <a onclick="godetail(${status.index})"><strong class="tit">${con.c_name}</strong></a>
+                            </c:if>
+                            
                                 <span class="date">${con.c_price}원</span><em>|</em><span class="hit">학습수준 : ${con.c_level }</span>
                             </p>
                        </li>
@@ -163,7 +169,13 @@ div .InfoBox .info {
     </div>
 </div>
 <script>
-
+function truncateText(text, maxLength) {
+	  if (text.length > maxLength) {
+	    return text.substring(0, maxLength) + "...";
+	  } else {
+	    return text;
+	  }
+	}
 //선택 요소와 라디오 버튼에 대한 이벤트 리스너 추가
 const orderSelect = document.getElementById('orderSelect');
 const radioButtons = document.querySelectorAll('input[name="c_level"]');
