@@ -18,6 +18,7 @@
             <div class="content_wrap main_wrap">
                 <div class="entry">
 		
+		<a href="/alpha/teacher"><img src="/resources/images/main_banner1.png"></a>
 
 	<c:set var="i" value="0" />
 	<c:set var="j" value="3" />
@@ -58,7 +59,7 @@
         </div>
         <!-- //content close -->
 	
-	
+	<a href="/alpha/teacher"><img src="/resources/images/main_banner2.png"></a>
 	
         <div class="atcBox atcBox-notice">
               <h3><i class="ico ico-notice"></i>공지사항</h3>
