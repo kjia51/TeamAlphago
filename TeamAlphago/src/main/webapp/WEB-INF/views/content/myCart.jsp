@@ -27,8 +27,7 @@
 								<col width="10%" />
 								<col width="10%" />
 								<col width="10%" />
-								<col width="10%" />
-								<col width="10%" />
+								<col width="15%" />
 							</colgroup>
 							<thead>
 								<tr>
@@ -37,7 +36,6 @@
 									<th>수준</th>
 									<th>인원</th>
 									<th>정가</th>
-									<th>할인율</th>
 									<th>판매가</th>
 								</tr>
 							</thead>
