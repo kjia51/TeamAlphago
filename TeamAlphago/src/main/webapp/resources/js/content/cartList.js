@@ -117,8 +117,7 @@ function resultList(map){
 	        	<td>${c_level}</td>
 	            <td>${cnt}</td>
 	        	<td>${c_price}원</td>
-	            <td>${c_discountrate}</td>
-	        	<td>${c_sellprice}원</td>
+	        	<td>[${c_discountrate}]${c_sellprice}원</td>
 	        `;
 	        tbdy.appendChild(row);
 		})
