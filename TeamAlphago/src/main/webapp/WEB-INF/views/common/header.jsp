@@ -117,13 +117,9 @@
                             <h3 class="blind">자료실</h3>
                             <ul>
                                 <li><a href="/alpha/notice"> 공지사항 </a></li>
-<<<<<<< HEAD
                                 <li><a href="/alpha/QnA/question"> Q&A </a></li>
-=======
-                                <li><a href="/alpha/QnA"> Q&A </a></li>
                             <c:choose>    
                                 <c:when test="${sessionScope.memberVO.m_division==3}">
->>>>>>> refs/remotes/origin/main
                                 <li><a href="/alpha/content"> 학습패키지 등록 </a></li>
                                 <li><a href="/alpha/saleList"> 매출 조회 </a></li>
                                 </c:when>

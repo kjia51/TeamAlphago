@@ -13,6 +13,8 @@ public interface NoticeService {
 
 	public List<NoticeVO> getNoticeList(Criteria cri, Model model);
 	
+	public List<NoticeVO> getMainNoticeList(Criteria cri);
+	
 	public int getTotalCnt(Criteria cri);
 	
 	public NoticeVO getNoticeOne(String n_no);

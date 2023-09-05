@@ -30,8 +30,6 @@
 
 #my_modal .modal_close_btn, #my_modal2 .modal_close_btn {
     border: 1px solid black;
-    padding: 10px;
-    border-radius: 5px;
 }
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
@@ -51,21 +49,15 @@
 <%@ include file="../common/header.jsp" %>
 
 <div class="main-box">
-<input id="m_id" type="text" value="${memberVO.m_id }">
-총 ${totalCnt } 건
 <div id="container">
     <div class="wrap">
 
-
-        <div class="content_wrap">
-            <div class="titleBox">
-            </div>
-
  		<form  method="get" name="searchForm" class="content_wrap">
-			<input name="t_m_id" id="m_id" type="text" value="${memberVO.m_id }">
+ 		총 ${totalCnt } 건
+			<input name="t_m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
 			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
             <div class="titleBox">
-                <h2 class="t_title">학습 그룹</h2>
+                <h2 class="t_title">학습 그룹 등록</h2>
             </div>
             
             <div class="searchWrap searchWrap_wide searchWrap_normal">
@@ -73,10 +65,10 @@
                         <fieldset>
                             <input type="hidden" name="p" value="1">
                             <legend>전체 검색</legend>
-                            <select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }">
-                                <option value="g_no">그룹ID</option>
-                                <option value="g_name">그룹이름</option>
-                            </select>
+								<select title="검색 분류" name="searchField" id="searchFieldSelect">
+								    <option value="g_no" ${pageDto.cri.searchField == 'g_no' ? 'selected' : ''}>그룹ID</option>
+								    <option value="g_name" ${pageDto.cri.searchField == 'g_name' ? 'selected' : ''}>그룹이름</option>
+								</select>
                             <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." 
                             		name="searchWord" value="${pageDto.cri.searchWord }" />
                             <input type="submit" class="btn btn-primary" value="검색" />
@@ -114,8 +106,8 @@
 	   	</div>
 	   	<br>
 		<div class="btn">
-		    <button><a onclick="groupinsert()">생성하기</a></button>
-		    <button><a class="modal_close_btn">닫기</a></button>
+			<button class="btn btn-primary" onclick="groupinsert()">만들기</button>
+		    <button><a class="btn modal_close_btn">닫기</a></button>
     	</div>
     	
     	
@@ -126,14 +118,14 @@
 <div id="my_modal2">
 	<hr>
 	<h2>그룹명 수정</h2>
-		<input type="text" id="g_no" readonly><br>
+		<input type="hidden" id="g_no" readonly><br>
 		현재 그룹명 <input type="text" id="name" readonly><br>
 	
 	   	변경 할 그룹명<input type="text" id="up_name">
 	   	
 		<div class="btn">
-		    <button><a onclick="updateName()">변경하기</a></button>
-		    <button><a class="modal_close_btn">닫기</a></button>
+			<button class="btn btn-primary" onclick="updateName()">변경하기</button>
+		    <button><a class="btn modal_close_btn">닫기</a></button>
     	</div>
     	
     	
@@ -478,6 +470,8 @@ function groupinsert() { //그룹생성
 	let g_start = $('#startdate').val();
 	let g_end = $('#enddate').val();
 	
+	console.log(typeof(g_start));
+	
 	console.log(startdate);
 	console.log(enddate);
 	
@@ -498,7 +492,31 @@ function groupinsert() { //그룹생성
 	
 }
 
+document.searchForm.addEventListener('submit', function (event) {
+    event.preventDefault(); // 기본 서브밋 동작 방지
 
+    // 선택된 searchField 값을 URL에 업데이트
+    const selectedValue = document.getElementById('searchFieldSelect').value;
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set('searchField', selectedValue);
+
+    // searchWord의 값을 가져와서 URL에 추가
+    const searchWordValue = document.querySelector('input[name="searchWord"]').value;
+    currentUrl.searchParams.set('searchWord', searchWordValue);
+
+    // 업데이트된 URL로 페이지 이동
+    window.location.href = currentUrl.toString();
+});
+
+
+
+function go(page){
+	//alert(page);
+	
+	document.searchForm.pageNo.value=page;
+	document.searchForm.action = "/alpha/group?t_m_id="+$('#m_id').val();
+	document.searchForm.submit();
+}
 
 </script>
 

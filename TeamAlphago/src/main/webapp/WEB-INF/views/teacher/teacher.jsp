@@ -35,26 +35,45 @@ div .InfoBox .info {
 
 }
 
+/* 나란히 표시될 컨테이너 스타일링 */
+.search-controls {
+    display: flex; /* 아이템들을 가로로 나란히 배치 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+
+/* "정렬" 셀렉트 박스 스타일링 */
+.business-srch select {
+    margin-right: 10px; /* 오른쪽 여백 추가 */
+}
+
+/* "카테고리" 라디오 버튼 그룹 스타일링 */
+.searchBox fieldset {
+    border: none; /* fieldset 테두리 제거 */
+    margin: 0; /* 기본 마진 제거 */
+}
+
+.searchBox legend {
+    font-weight: bold; /* 범례 텍스트를 볼드체로 */
+    margin-right: 10px; /* 오른쪽 여백 추가 */
+}
+
+.searchBox label {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.searchBox input[type="radio"] {
+    margin-right: 5px; /* 라디오 버튼과 텍스트 사이의 간격을 조절합니다. */
+    vertical-align: middle;
+}
+
 </style>
 <body>
 
 <%@ include file="../common/header.jsp" %>
 
 <div id="container">
-
-		<!-- 서브바 -->
-		<div class="location" style="position: relative; margin: 0 auto; text-align:center; font-size:1em">
-            <ul class="locationSub" style="display:inline-block;">
-                <li style="display:inline-block; padding:20px;"><a href="/alpha/teacher?pageNo=1&searchField=c_level&searchWord=초급">초급</a></li>
-                <li style="display:inline-block; padding:20px;"><a href="/alpha/teacher?pageNo=1&searchField=c_level&searchWord=중급">중급</a></li>
-                <li style="display:inline-block; padding:20px;"><a href="/alpha/teacher?pageNo=1&searchField=c_level&searchWord=고급">고급</a></li>
-
-            </ul>
-        </div>
     <div class="wrap">
-
-
-        <div class="content_wrap">
 
 <form id="searchForm" method="get" name="searchForm" class="content_wrap">
     <input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
@@ -73,29 +92,32 @@ div .InfoBox .info {
                 <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." 
                         name="searchWord" value="${pageDto.cri.searchWord}" />
                 <input type="submit" class="btn btn-primary" value="검색" />
-            </fieldset>
-        </div>
-    </div>      
+            </fieldset>    
     
-    <div class="business-srch">
-        <select title="정렬" name="order" id="orderSelect">
-            <option value="none">=== 선택 ===</option>
-            <option value="new">최신순</option>
-            <option value="price1">가격높은순</option>
-            <option value="price2">가격낮은순</option>
-            <option value="level1">레벨높은순</option>
-            <option value="level2">레벨낮은순</option>
-        </select>
-    </div>
+	<div class="search-controls">
+	    <div class="business-srch">
+	        <select title="정렬" name="order" id="orderSelect" style="width: 120px">
+	            <option value="none">=== 선택 ===</option>
+	            <option value="new">최신순</option>
+	            <option value="price1">가격높은순</option>
+	            <option value="price2">가격낮은순</option>
+	            <option value="level1">레벨높은순</option>
+	            <option value="level2">레벨낮은순</option>
+	        </select>
+	    </div>
 
 <div class="searchBox">
     <fieldset>
         <legend>카테고리</legend>
-        <input type="radio" name="c_level" value="1"> 초급
-        <input type="radio" name="c_level" value="2"> 중급
-        <input type="radio" name="c_level" value="3"> 고급
-    </fieldset>
-</div>
+		        <label><input type="radio" name="c_level" value="0">전체</label>
+		        <label><input type="radio" name="c_level" value="1">초급</label>
+		        <label><input type="radio" name="c_level" value="2">중급</label>
+		        <label><input type="radio" name="c_level" value="3">고급</label>
+		    </fieldset>
+		</div>
+	</div>
+	        </div>
+    </div>  
 </form>
 총 ${totalCnt } 건
 
@@ -141,28 +163,32 @@ div .InfoBox .info {
     </div>
 </div>
 <script>
-// 서브밋 버튼 클릭 시 폼 서브밋
-document.querySelector('.searchBox-mid input[type="submit"]').addEventListener('click', function (event) {
-    event.preventDefault(); // 기본 동작 방지
-    document.forms["searchForm"].submit(); // 폼 서브밋
+
+//선택 요소와 라디오 버튼에 대한 이벤트 리스너 추가
+const orderSelect = document.getElementById('orderSelect');
+const radioButtons = document.querySelectorAll('input[name="c_level"]');
+const searchForm = document.getElementById('searchForm');
+
+orderSelect.addEventListener('change', function() {
+    searchForm.submit();
+});
+
+// 라디오 버튼의 값을 기존에 선택한 값에서 변경된 값으로 업데이트
+radioButtons.forEach(function(radioButton) {
+    radioButton.addEventListener('change', function() {
+        const paramName = "c_level";
+        const paramValue = Array.from(radioButtons)
+            .filter(checkbox => checkbox.checked)
+            .map(checkbox => checkbox.value);
+        updateURLParameter(paramName, paramValue);
+        searchForm.submit();
+    });
 });
 
 // "정렬" 선택 요소 변경 시 URL에 반영
 document.getElementById('orderSelect').addEventListener('change', function () {
     const selectedValue = this.value;
     updateURLParameter('order', selectedValue);
-});
-
-// "카테고리" 체크박스 변경 시 URL에 반영
-const categoryCheckboxes = document.querySelectorAll('div.searchBox input[type="checkbox"]');
-categoryCheckboxes.forEach(function (checkbox) {
-    checkbox.addEventListener('change', function () {
-        const paramName = "c_level";
-        const paramValue = Array.from(categoryCheckboxes)
-            .filter(checkbox => checkbox.checked)
-            .map(checkbox => checkbox.value);
-        updateURLParameter(paramName, paramValue);
-    });
 });
 
 // URL 파라미터 업데이트 함수
@@ -173,6 +199,27 @@ function updateURLParameter(paramName, paramValue) {
     currentUrl.search = searchParams.toString();
     window.history.replaceState({}, '', currentUrl);
 }
+
+//페이지 로드 시 URL에서 파라미터 읽어와 선택 상태 복원
+window.addEventListener('DOMContentLoaded', function () {
+    const currentUrl = new URL(window.location.href);
+    const searchParams = new URLSearchParams(currentUrl.search);
+
+    // 정렬 선택 요소 복원
+    const orderValue = searchParams.get('order');
+    if (orderValue) {
+        document.getElementById('orderSelect').value = orderValue;
+    }
+
+    // 카테고리 선택 요소 복원
+    const categoryValues = searchParams.getAll('c_level');
+    if (categoryValues.length > 0) {
+        radioButtons.forEach(function (radioButton) {
+            const value = radioButton.value;
+            radioButton.checked = categoryValues.includes(value);
+        });
+    }
+});
 
 function godetail(index) {
 	

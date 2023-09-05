@@ -45,6 +45,14 @@
     </where>
     LIMIT #{startNo}, #{amount}
 </select>
+
+	<!-- 메인 조회  -->
+	<select id="getMainContentList" resultType="com.alpha.vo.ContentVO">
+			SELECT *
+			FROM content		
+		ORDER BY C_NO DESC 
+		LIMIT 0, 4
+	</select>
 	
 	<!-- 콘텐츠 총 갯수 -->
 	<select id="totalCnt" resultType="int">
@@ -209,11 +217,14 @@
 	<select id="totalCntSub" resultType="int">
 	select count(*) from subscribe
 	where t_m_id = #{t_m_id}
-	<choose>
-		<when test="cri.searchField == 'c_name'">
-			and c_name like CONCAT('%', #{cri.searchWord}, '%')
-		</when>
-	</choose>
+	  <choose>
+	    <when test="cri.searchField == 'content.c_name'">
+	     and sub_c_no in (select c_no from content where c_name like CONCAT('%', #{cri.searchWord}, '%'))
+	    </when>
+	    <when test="cri.searchField == 'sub_date'">
+	      AND sub_date BETWEEN #{cri.searchDate1} AND #{cri.searchDate2}
+	    </when>
+	  </choose>
 	</select>	
 	
 	<!-- 그룹 총 갯수 -->
