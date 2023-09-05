@@ -5,13 +5,46 @@
 
 <!-- 콘텐츠  -->
 	<!-- 조회  -->
-	<select id="getContentList" resultType="com.alpha.vo.ContentVO">
-			SELECT *
-			FROM content
-	<include refid="criteria"></include>		
-		ORDER BY C_NO DESC 
-		LIMIT #{startNo}, #{amount}
-	</select>
+<select id="getContentList" resultType="com.alpha.vo.ContentVO">
+    SELECT *
+    FROM content
+    <where>
+        <choose>
+            <when test="searchField == 'c_name'">
+                AND c_name LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+        </choose>
+        <choose>
+             <when test="c_level == 1">
+                 AND c_level = 1
+            </when>
+            <when test="c_level == 2">
+                 AND c_level = 2
+            </when>
+            <when test="c_level == 3">
+                 AND c_level = 3
+            </when>
+        </choose>
+        <choose>
+            <when test="order == 'new'">
+                ORDER BY c_no DESC
+            </when>
+            <when test="order == 'price1'">
+                ORDER BY c_price DESC
+            </when>
+            <when test="order == 'price2'">
+                ORDER BY c_price ASC
+            </when>
+            <when test="order == 'level1'">
+                ORDER BY c_level DESC
+            </when>
+            <when test="order == 'level2'">
+                ORDER BY c_level ASC
+            </when>
+        </choose>
+    </where>
+    LIMIT #{startNo}, #{amount}
+</select>
 	
 	<!-- 콘텐츠 총 갯수 -->
 	<select id="totalCnt" resultType="int">
@@ -45,19 +78,22 @@
 	VALUES (#{sub_no}, #{sub_c_no}, #{t_m_id}, #{sub_date}, #{sub_price}, #{sub_able}, (#{sub_month}/3), #{sub_month})
    </insert>
 	
-	<!-- 나의 구독내역 리스트 -->
-	<select id="mySubList" resultType="com.alpha.vo.SubscribeVO">
-	select s.* , content.c_name
-	from subscribe s, content 
-	where s.sub_c_no = content.c_no
-    and t_m_id = #{t_m_id}
-    	<choose>
-		<when test="cri.searchField == 'c_no'">
-			and c_no like CONCAT('%', #{cri.searchWord}, '%')
-		</when>
-	</choose>	
-    ORDER BY SUB_DATE LIMIT #{cri.startNo}, #{cri.amount}
-	</select>
+<select id="mySubList" resultType="com.alpha.vo.SubscribeVO">
+	SELECT s.*, c.c_name
+	FROM subscribe s
+	JOIN content c ON s.sub_c_no = c.c_no
+	WHERE s.t_m_id = #{t_m_id}
+  <choose>
+    <when test="cri.searchField == 'content.c_name'">
+     and sub_c_no in (select c_no from content where c_name like CONCAT('%', #{cri.searchWord}, '%'))
+    </when>
+    <when test="cri.searchField == 'sub_date'">
+      AND s.sub_date BETWEEN #{cri.searchDate1} AND #{cri.searchDate2}
+    </when>
+  </choose>
+  ORDER BY s.SUB_DATE
+  LIMIT #{cri.startNo}, #{cri.amount}
+</select>
 		
 	<!-- 취소 시 환불&구독내역에서 삭제 -->
 	<delete id="cancelPay">
@@ -215,6 +251,11 @@
 	where grp.sub_no=subscribe.sub_no
 	and grp.sub_no = #{sub_no}
 	</select>
+	
+	<update id="updateGrpName">
+	update grp set g_name=#{g_name}
+	where g_no=#{g_no}
+	</update>
 	
 	
 	

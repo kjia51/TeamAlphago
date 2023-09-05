@@ -56,9 +56,6 @@
         </div>
         <script type="text/javascript">
         
-        localStorage.setItem('n_title', "${noticeVO.n_title}");
-        localStorage.setItem('n_content', "${noticeVO.n_content}");
-        
         $('#delBtn').on('click', function() {
             var n_no = $('input[name="n_no"]').val(); // 삭제할 항목의 n_no
 

@@ -6,7 +6,7 @@ import lombok.Data;
 public class LearnerVO {
 	// 학습 숙제 내역
 	private String h_no; // 숙제 ID
-	private String t_m_id; // 학습지도자 ID
+	private String t_m_id; // 학습지도자 ID 
 	private String h_c_no; // 콘텐츠 ID
 	private String l_m_id; // 학습자 ID
 	private String h_g_no; // 학습그룹 ID

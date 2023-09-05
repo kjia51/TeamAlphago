@@ -129,11 +129,18 @@ public class LearnerController extends CommonRestController {
 	}
 	
 	// 숙제 요청 내역 저장
-	@PostMapping("/giveHomework")
-	public void insertHomework(@RequestBody LearnerVO learnerVO) {
-		System.out.println("숙제 요청 페이지");
-		learnerService.insertHomework(learnerVO);
-		System.out.println("learnerVO:"+learnerVO);
+	@PostMapping("/giveHomework/save")
+	public Map<String, Object> insertHomework(@RequestBody LearnerVO learnerVO) {
+		System.out.println("===숙제 요청 페이지===");
+		try {
+			int res = learnerService.insertHomework(learnerVO);
+			System.out.println("res:"+res);
+			Map<String, Object> map = responseWriteMap(res);
+			return map;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return responseResultMap(REST_FAIL, "요청 중 오류 발생");
+		}
 	}
 	
 }

@@ -36,4 +36,5 @@ public interface TeacherService {
 	public int totalCntLearner(String g_no);//그룹학습인원수
 	public int totalCntJoin(String g_no);//그룹가입신청인원수
 	public int totalCntGrp(@Param("t_m_id") String t_m_id, @Param("cri") Criteria cri);//그룹갯수
+	public int updateGrpName(@Param("g_no") String g_no, @Param("g_name") String g_name); //그룹명 바꾸기
 }

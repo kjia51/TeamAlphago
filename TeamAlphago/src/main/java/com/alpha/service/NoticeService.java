@@ -15,7 +15,7 @@ public interface NoticeService {
 	
 	public int getTotalCnt(Criteria cri);
 	
-	public NoticeVO getNoticeOne(String n_no, Model model);
+	public NoticeVO getNoticeOne(String n_no);
 	
 	public int insertNotice(NoticeVO noticeVO);
 	

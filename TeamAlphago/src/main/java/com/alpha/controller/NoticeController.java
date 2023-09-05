@@ -1,5 +1,7 @@
 package com.alpha.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +21,7 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/alpha/*")
 @RestController
 @Log4j
-public class NoticeController {
+public class NoticeController extends CommonRestController{
 
 	@Autowired
 	NoticeService noticeService;
@@ -36,9 +38,12 @@ public class NoticeController {
 	
 	
 	@GetMapping("/notice/view")
-	public ModelAndView getNoticeOne(String n_no, NoticeVO noticeVO, Model model) {
+	public ModelAndView getNoticeOne(String n_no) {
 		ModelAndView mav = new ModelAndView("/notice/notice_view");
-		noticeService.getNoticeOne(n_no, model);
+		
+		NoticeVO noticeVO = noticeService.getNoticeOne(n_no);
+		mav.addObject("noticeVO", noticeVO);		
+		
 		return mav;
 	}
 	
@@ -59,13 +64,16 @@ public class NoticeController {
 	@GetMapping("/notice/edit")
 	public ModelAndView editNotice(NoticeVO noticeVO) {
 		ModelAndView mav = new ModelAndView("/notice/notice_edit");
+		noticeVO = noticeService.getNoticeOne(noticeVO.getN_no());
 		mav.addObject("noticeVO", noticeVO);
 		return mav;
 	}
 	
 	@PostMapping("/notice/edit")
-	public void editNoticeAction(NoticeVO noticeVO) {
+	public Map<String, Object> editNoticeAction(NoticeVO noticeVO) {
 		int res = noticeService.editNotice(noticeVO);
+		
+		return responseEditMap(res);
 	}
 	
 	
