@@ -612,8 +612,8 @@ h4.traffic {margin:0 0 20px 0; font-size:18px;}
 
 .atcBox-notice, .atcBox-rally {float:left}
 .atcBox-news {float:right}
-.atcBox-notice {width:600px; margin-right:12px}
-.atcBox-notice ul li a {width:460px;}
+.atcBox-notice {width:930px; margin:10px auto}
+.atcBox-notice ul li a {width:850px;}
 .atcBox-rally ul li a, .atcBox-news ul li a {width:305px;}
 .atcBox-rally, .atcBox-news {width:432px; margin-top:12px}
 .atcBox-rally {margin-right:12px}

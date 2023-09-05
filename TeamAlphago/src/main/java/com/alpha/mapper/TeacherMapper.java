@@ -15,6 +15,7 @@ import com.alpha.vo.SubscribeVO;
 public interface TeacherMapper {
 	
 	public List<ContentVO> getContentList(Criteria cri); //콘텐츠 리스트 조회
+	public List<ContentVO> getMainContentList(Criteria cri); //메인 콘텐츠 리스트 조회
 	public int totalCnt(Criteria cri); //콘텐츠 총 건수 조회
 	public List<ContentVO> getContentDetail(String c_no); //콘텐츠 상세리스트
 	public int insertPayAction(SubscribeVO subVO); //콘텐츠 구매

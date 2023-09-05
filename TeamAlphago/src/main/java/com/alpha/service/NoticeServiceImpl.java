@@ -32,6 +32,13 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		return null;
 	}
+	
+
+	@Override
+	public List<NoticeVO> getMainNoticeList(Criteria cri) {
+		return noticeMapper.getMainNoticeList(cri);
+	}
+
 
 	@Override
 	public int getTotalCnt(Criteria cri) {
