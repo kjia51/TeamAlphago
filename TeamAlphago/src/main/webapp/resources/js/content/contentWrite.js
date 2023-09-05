@@ -68,6 +68,27 @@ $('#registerBtn').click(function () {
 	console.log(c_price);
 	console.log(c_name);
 	console.log(c_level);
+	
+	if(c_name==null ||c_name==''){
+		alert('컨텐츠명을 입력하세요');
+		$('#c_name').focus();
+		return;
+	}
+	if(c_able==null ||c_able==''){
+		alert('수강인원을 입력하세요');
+		$('#p_ableTd').focus();
+		return;
+	}
+	if(c_price==null ||c_price==''){
+		alert('정가를 입력하세요');
+		$('#c_price').focus();
+		return;
+	}
+	if(c_content==null ||c_content==''){
+		alert('내용을 입력하세요');
+		$('#c_content').focus();
+		return;
+	}
 	//전달할 객체로 생성
 	let obj = {
 			c_name : c_name
