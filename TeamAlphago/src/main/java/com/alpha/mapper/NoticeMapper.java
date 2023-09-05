@@ -11,6 +11,8 @@ public interface NoticeMapper {
 
 	public List<NoticeVO> getNoticeList(Criteria cri);
 	
+	public List<NoticeVO> getMainNoticeList(Criteria cri);
+	
 	public int getTotalCnt(Criteria cri);
 	
 	public NoticeVO getNoticeOne(String n_no);

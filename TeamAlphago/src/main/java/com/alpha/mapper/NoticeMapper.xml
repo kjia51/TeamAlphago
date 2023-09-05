@@ -9,6 +9,12 @@
 		<include refid="criteria"></include>		
 		ORDER BY N_NO DESC LIMIT #{startNo}, #{endNo}
 	</select>
+
+	<select id="getMainNoticeList" resultType="com.alpha.vo.NoticeVO">
+		SELECT N_NO, N_M_ID, N_TITLE, N_CONTENT, DATE_FORMAT(N_REGDATE, '%Y-%m-%d') AS N_REGDATE
+		FROM notice	
+		ORDER BY N_NO DESC LIMIT 0, 6
+	</select>
 	
 	<select id="getTotalCnt" resultType="int">
 		SELECT COUNT(*) FROM notice 

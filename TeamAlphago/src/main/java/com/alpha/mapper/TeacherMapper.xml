@@ -45,6 +45,14 @@
     </where>
     LIMIT #{startNo}, #{amount}
 </select>
+
+	<!-- 메인 조회  -->
+	<select id="getMainContentList" resultType="com.alpha.vo.ContentVO">
+			SELECT *
+			FROM content		
+		ORDER BY C_NO DESC 
+		LIMIT 0, 4
+	</select>
 	
 	<!-- 콘텐츠 총 갯수 -->
 	<select id="totalCnt" resultType="int">
