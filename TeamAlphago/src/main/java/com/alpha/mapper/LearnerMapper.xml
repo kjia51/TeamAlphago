@@ -5,20 +5,17 @@
 
 <!-- 그룹 이름  -->
 <select id="groupName" resultType="com.alpha.vo.LearnerVO">
-	select * from grp
+	select * from grp 
 </select>
 
 <!-- 학습지도자 별 그룹 이름  -->
 <select id="groupNameForT" resultType="com.alpha.vo.LearnerVO">
-	select 
-		g_name,
-		g_no
-    from 
-    	learner l
-    left join grp g on (l.l_g_no = g.g_no)
-    left join member m on (l.t_m_id = m.m_id)
-    where 
-    	m_id = #{t_m_id}
+        	select 
+        		g_no,
+        		g_name
+        	from grp g
+            left join member m on (g.t_m_id = m.m_id)
+            where m_id = #{t_m_id}
 </select>
 
 <!-- 그룹별 그룹 정보 -->
@@ -64,6 +61,7 @@
 	    subscribe s
 	LEFT JOIN member m ON (s.t_m_id = m.m_id)
 	LEFT JOIN grp g ON (s.sub_no = g.sub_no)
+	WHERE g.g_name is not null
 	ORDER BY 
 		g_period asc
 </select>
@@ -78,7 +76,7 @@
 
 <!-- 그룹별 학습자 리스트 조회 (숙제 요청) -->
 <select id= "grpLearnerList" resultType="com.alpha.vo.LearnerVO">
-    select
+    select 
 		c_no AS h_c_no,
     	m_id AS l_m_id,  
     	g_no AS h_g_no, 
@@ -116,6 +114,11 @@
 		l.l_m_id = #{m_id};
 </select>
 
-<!-- 학습자 숙제 내역 입력  -->
+<!-- 학습자 숙제 제출 -->
+<update id="subitHomework">
+	UPDATE homework 
+	SET h_content = #{h_content}
+	where h_no = #{h_no};
+</update>
 	
 </mapper>

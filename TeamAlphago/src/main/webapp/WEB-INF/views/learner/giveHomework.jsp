@@ -169,10 +169,7 @@ function fetchGet(url,callback){
 	} catch (e) {
 		consol.log('fetchGet', e);
 	}
-
 }
-
-
 
 //post방식 요청
 function fetchPost(url,obj,callback){
@@ -194,8 +191,6 @@ function fetchPost(url,obj,callback){
 			console.log(e);
 		}
 }
-
-
 
 
 // 등록, 수정, 삭제의 결과를 처리하는 함수
@@ -321,8 +316,8 @@ function displayLearnerList(map) {
 						+'<td style="display: none">'
 						+'<input type="hidden" name="h_c_no" id="contentNo" value="'+ Learner.h_c_no +'">'
 						+'</td>'
-						+'<td style="display: none">'
-						+'<input type="hidden" name="l_m_id" id="learnerId" value="'+ Learner.l_m_id +'">'
+						+'<td style="display: ">'
+						+'<input type="text" name="l_m_id" id="learnerId" data-lno="'+Learner.l_no+'" value="'+ Learner.l_m_id +'">'
 						+'</td>'
 						+'<td style="display: none">'
 						+'<input type="hidden" name="h_g_no" id="groupNo" value="'+ Learner.h_g_no +'">'
@@ -379,13 +374,16 @@ function getLearner(selectedIndexes) {
          var c_name = row.find('td:eq(2)').text(); // 학습콘텐츠
          var g_start = row.find('td:eq(3)').text(); // 학습시작일
          var g_end = row.find('td:eq(4)').text(); // 학습종료일
+         var l_m_id = $('input[data-lno="' + l_no + '"]').val(); // 학습자 아이디
+    	console.log("l_no", l_no);
 
          var item = {
              l_no: l_no, // 체크박스의 l_no 값
              m_name: m_name,
              c_name: c_name,
              g_start: g_start,
-             g_end: g_end
+             g_end: g_end,
+             l_m_id : l_m_id
          };
 
          listArray.push(item);
@@ -419,7 +417,6 @@ function insertHomework(){
    	    	 
    			    let t_m_id = $('#memberId').val();
    			    let h_c_no = $('#contentNo').val();
-   			    let l_m_id = $('#learnerId').val();
    			    let h_g_no = $('#groupNo').val();
    			    let h_limit = $('#enddate').val();
    			    let h_homework = $('#hHomework').val();
@@ -427,17 +424,16 @@ function insertHomework(){
    			    
    			    console.log("t_m_id : ", t_m_id);
    			    console.log("h_c_no : ", h_c_no);
-   			    console.log("l_m_id : ", l_m_id);
    			    console.log("h_g_no : ", h_g_no);
-   			    console.log(h_limit);
+   			    console.log("h_limit :", h_limit);
    			    console.log("h_homework : ", h_homework);
    			    
    			    learnerInfo.forEach(list => {
    			       let m_name = list.m_name;
    			       let c_name = list.c_name;
    			       let g_start = list.g_start;
-   			     
-   			
+   			       let l_m_id = list.l_m_id;
+   			       
    			       let obj = {
    				       			t_m_id: t_m_id,
    				       			h_c_no: h_c_no,
@@ -449,18 +445,15 @@ function insertHomework(){
    				                g_start: g_start,
    				                h_limit: h_limit
    			       };
-   					console.log("obj:", obj);
+   					console.log("obj:", obj.l_m_id);
    					console.log("result",result);
-	   		 	try {
-	   					fetchPost('/alpha/giveHomework/save', obj, result);
-	   	    		
-	   			    
-				} catch (e) {
-					 console.error('오류:', error);
-				}
-				
+
+	   				fetchPost('/alpha/giveHomework/save', obj, result);
+	  
+					
    				});
 	}
+	   				console.error('오류:', error);
 }
 
 // 모달창 띄우기
@@ -508,8 +501,78 @@ function modal(id) {
 }
 
 
-
-
 </script>
 </html>
 <%@ include file="../common/footer.jsp"%>
+
+				<tbody>
+				<c:choose>
+					<c:when test="${homeworkList != null}">
+						<c:forEach items="${homeworkList}" var="list" >
+						
+							<tr>
+								<th align="center"><input type="checkbox" id="checkbox"
+									name="myCheckbox" value="list.h_no"></th>
+								<td align="center" class="row">${list.c_name}
+									<input type="text" name="c_name" id="contentNo" value="${list.c_name}" >
+								</td>
+								<td align="center">${list.m_name}
+									<input type="text" name="m_name" id="memberName" value="${list.m_name}" >
+								</td>
+								<td align="center">${list.h_homework}
+									<input type="text" name="h_homework" id="homework" value="${list.h_homework}" >
+								</td>
+								<td align="center">${fn:substring(list.h_limit, 0, 10)}
+									<input type="text" name="h_limit" id="deadline" value="${list.h_limit}" >
+								</td>
+								<td align="center">
+								<textarea name="h_content" id="hContent" rows="5" cols="10" style="width: 90%;">
+								학습내용을 입력하세요.
+								</textarea></td>
+							</tr>
+							
+						</c:forEach>
+					</c:when>
+					</c:choose>
+					<c:if test="${homeworkList == null}">
+						<tr>
+							<td colspan="6" style="text-align: center;">숙제가 존재하지 않습니다.</td>
+						</tr>
+					</c:if>
+				</tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -32,5 +32,8 @@ public interface LearnerService {
 	
 	// 학습자 숙제 내역
 	public List<LearnerVO> homeworkList(String l_m_id);
+	
+	// 학습자 숙제 제출
+	public int subitHomework(String h_no);
  
 }

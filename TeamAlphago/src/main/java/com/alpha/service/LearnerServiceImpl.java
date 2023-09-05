@@ -62,6 +62,11 @@ public class LearnerServiceImpl implements LearnerService {
 		return learnerMapper.homeworkList(l_m_id);
 	}
 
+	@Override
+	public int subitHomework(String h_no) {
+		return learnerMapper.subitHomework(h_no);
+	}
+
 
 		
 	
