@@ -96,7 +96,7 @@ $('#payment').click(function () { //결제버튼
 	
 	checkLogin(); //로그인 체크
 	
-	alert('a');
+	//alert('a');
 
 	var idx = -1;
 

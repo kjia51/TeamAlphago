@@ -227,7 +227,7 @@ function godetail(index) {
 	console.log(i);
 
 	var c_no= $('input[data-cid="'+index+'"]').val();
-	alert(c_no);
+	//alert(c_no);
 
 	console.log(c_no);
 	window.location.replace("/alpha/teacher/detail?c_no="+c_no);

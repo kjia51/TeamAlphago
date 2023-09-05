@@ -160,7 +160,13 @@
                             <th align="center"><input type="text" class="index" id="g_no" data-g_no="${status.index}" value="${group.g_no }"readonly></th>
                             <td align="center"><input type="text" class="index" id="g_name" data-g_name="${status.index}" value="${group.g_name }"readonly></td>
                             <td align="center"><input type="text" class="index" id="sub_price" data-sub_price="${status.index}" value="${group.g_cnt }"readonly></td>
-                            <td align="center">${group.g_start } ~ ${group.g_end }</td>
+                            
+                            <c:choose>
+								<c:when test="${fn:length(group.g_start) > 1}">
+		                            <td align="center">${fn:substring(group.g_start , 0, 10) } ~ ${fn:substring(group.g_end , 0, 10) }
+								</c:when>
+							</c:choose>
+                            
                             <td align="center"><button onclick="updateGrp(${status.index})">그룹관리</button></td>
                             
                            
