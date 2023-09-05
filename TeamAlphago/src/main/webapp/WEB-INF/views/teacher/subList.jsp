@@ -57,6 +57,15 @@ float: right;
 
 }
 
+table td, table th {
+    border-left: 1px solid #ececec;
+    border-bottom: 1px solid #ececec;
+    padding: 3px;
+}
+
+nav#topMenu ul button {
+    margin-right: 10px;
+}
 
 </style>
 <body>
@@ -106,7 +115,7 @@ float: right;
 
              <form  method="get" name="searchForm" class="content_wrap">
 			총 ${totalCnt } 건
-			<input name="t_m_id" id="m_id" type="text" value="${memberVO.m_id }">
+			<input name="t_m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
 			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
             <div class="titleBox">
                 <h2 class="t_title">콘텐츠 조회</h2>
@@ -133,15 +142,15 @@ float: right;
 
 
 <div class="entry">
-	<table class="table table-bordered">
+	<table>
 		<caption>구독 내역</caption>
 			<thead>
-    			<tr>
-			        <th>구독ID</th>
-			        <th>패키지명</th>
-			        <th>구독일</th>
-			        <th>구독료</th>
-			        <th>인원</th>
+    			<tr style="height: 60px; border-bottom: 1px solid #dadada; line-height: 60px;">
+			        <th style="width:150px;">구독ID</th>
+			        <th style="width:400px;">패키지명</th>
+			        <th style="width:125px;">구독일</th>
+			        <th style="width:125px;">구독료</th>
+			        <th style="width:35px;">인원</th>
 			        <th></th>
     			</tr>
 			</thead>
@@ -157,11 +166,20 @@ float: right;
 								</c:if>
 						 --%>
 						 
-                   			<td><input type="text" class="index" id="sub_no" data-subuid="${status.index}" value="${sub.sub_no}" readonly></td>
-                            <th align="left"> <input type="text" id="c_name" value="${sub.c_name }"readonly></th>
-                            <td align="center"><input type="text" class="index" id="sub_date" data-sub_date="${status.index}" value="${sub.sub_date }"readonly></td>
-                            <td align="center"><input type="text" class="index" id="sub_price" data-sub_price="${status.index}" value="${sub.sub_price }"readonly></td>
-                            <td align="center">${sub.sub_able }</td>        
+                   			<input type="hidden" class="index" id="sub_month" style="width: 100%;" data-sub_month="${status.index}" value="${sub.sub_month}" readonly>
+                   			<input type="hidden" class="index" id="sub_connection" style="width: 100%;" data-sub_con="${status.index}" value="${sub.sub_connection}" readonly>
+                   		
+                   			<td><input type="text" class="index" id="sub_no" style="width: 100%;" data-subuid="${status.index}" value="${sub.sub_no}" readonly></td>
+                            <th align="left"> <input type="text" id="c_name" style="width: 90%;" value="${sub.c_name }"readonly></th>
+                            
+                            <c:choose>
+								<c:when test="${fn:length(sub.sub_date) > 1}">
+		                            <td align="center"><input type="text" class="index" id="sub_date" style="width: 100%;" data-sub_date="${status.index}" value="${fn:substring(sub.sub_date, 0, 10) }"readonly></td>
+								</c:when>
+							</c:choose>
+                            
+                            <td align="center"><input type="text" class="index" id="sub_price" style="width: 100%;" data-sub_price="${status.index}" value="${sub.sub_price }"readonly></td>
+                            <td align="center">${sub.sub_able } 명</td>        
                             
                             <td align="center">
                             <button onclick="connection(${status.index})">그룹관리 </button>                                           
@@ -541,10 +559,10 @@ function createGroup(map) {
 		+ '<table class="table table-bordered">'
 		+ '<thead>'
 	    + 	'<tr>'
-	    +			'<input type="text" id="sub_connection" value="'
+	    +			'<input type="hidden" id="sub_connection" value="'
 	    +			sub_connection
 	    +			'" readonly>'
-	    +			'<input type="text" id="t_m_id" value="'
+	    +			'<input type="hidden" id="t_m_id" value="'
 	    +			t_m_id
 	    +			'" readonly>'
 		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독ID</th>'
@@ -594,7 +612,7 @@ function createGroup(map) {
             + '<br>'
             + '학습 종료날짜<input type="text" id="enddate">'
             + '</div>'
-            + '<button onclick="insertGrp()">만들기</button>'
+            + '<button class="btn btn-primary" style="float: right;" onclick="insertGrp()">만들기</button>'
             
             getCalendal();
             
@@ -651,11 +669,16 @@ function insertGrp() {
 function cancelPay(index) {
 	///////////////////////////환불 가능 여부 검사
 	
+	var res = confirm('환불 시 취소할 수 없습니다. 정말 환불하시겠습니까?');
+	
+	if(res) {	
+
 	var i = index;
 	console.log(i);
 	
 	var date =$('input[data-sub_date="'+index+'"]').val();
 	var con = $('input[data-sub_con="'+index+'"]').val();
+	var month = $('input[data-sub_month="'+index+'"]').val();
 	var now = new Date();
 	
 	const getDateDiff = (d1, d2) => { //오늘 날짜와 결제한 날짜 사이의 차이 구하기
@@ -669,7 +692,7 @@ function cancelPay(index) {
 	
 	if(getDateDiff(date, now) > 7) {
 		alert('결제 후 7일이 지난 콘텐츠는 환불할 수 없습니다. 관리자에게 문의하세요.');
-	} else if (con === 'Y') {
+	} else if (con < (month/4)) {
 		alert('그룹에 연결한 콘텐츠는 환불할 수 없습니다. 관리자에게 문의하세요.');
 	} else {
 ///////////////////////////환불 실행
@@ -680,7 +703,7 @@ function cancelPay(index) {
 		console.log(imp_uid);
 		console.log(pay);
 		
-		alert('삭제실행');
+		console.log('삭제실행');
 		
 		$.ajax({
 
@@ -703,20 +726,27 @@ function cancelPay(index) {
 		            })
 		        })
 	    
-	        alert("삭제완료");
+	        console.log("삭제완료");
+		    alert('정상적으로 환불 처리 되었습니다.')
 		    location.reload();
 	    
 	    }).fail(function(error) { // 환불 실패시 로직
-	    	alert("환불 실패");
+	    	alert("환불 중 문제가 발생하였습니다. 관리자에게 문의하세요.");
 	    });
 
-	}
+			}
+	
+		}else {
+			alert('환불이 취소되었습니다.')
+		}
+	
 }
 
 function go(page){
 	//alert(page);
+	
 	document.searchForm.pageNo.value=page;
-	document.searchForm.action = "/alpha/subList";
+	document.searchForm.action = "/alpha/mysubList?t_m_id="+$('#m_id').val();
 	document.searchForm.submit();
 }
 

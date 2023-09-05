@@ -33,21 +33,30 @@
     vertical-align: middle;
 }
 
+#my_modal .modal_close_btn, #my_modal2 .modal_close_btn {
+    border: 1px solid black;
+}
+
+nav#topMenu ul button {
+    margin-right: 10px;
+}
+
 </style>
 <body>
 
 <%@ include file="../common/header.jsp" %>
 
 <div class="main-box">
-총 ${totalCnt } 건
+
 <div id="container">
     <div class="wrap">
 
             <form  method="get" name="searchForm" class="content_wrap">
-			<input name="t_m_id" id="m_id" type="text" value="${memberVO.m_id }">
+          	  총 ${totalCnt } 건
+			<input name="t_m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
 			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
             <div class="titleBox">
-                <h2 class="t_title">학습 그룹</h2>
+                <h2 class="t_title">그룹 가입 승인</h2>
             </div>
             
             <div class="searchWrap searchWrap_wide searchWrap_normal">
@@ -55,10 +64,10 @@
                         <fieldset>
                             <input type="hidden" name="p" value="1">
                             <legend>전체 검색</legend>
-                            <select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }">
-                                <option value="g_no">그룹ID</option>
-                                <option value="g_name">그룹이름</option>
-                            </select>
+								<select title="검색 분류" name="searchField" id="searchFieldSelect">
+								    <option value="g_no" ${pageDto.cri.searchField == 'g_no' ? 'selected' : ''}>그룹ID</option>
+								    <option value="g_name" ${pageDto.cri.searchField == 'g_name' ? 'selected' : ''}>그룹이름</option>
+								</select>
                             <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." 
                             		name="searchWord" value="${pageDto.cri.searchWord }" />
                             <input type="submit" class="btn btn-primary" value="검색" />
@@ -74,6 +83,9 @@
 
 <%-- 모달창 --%>
 <div id="my_modal">
+	<input type="hidden" id="g_no" readonly>
+
+
 	<nav id="topMenu" >
 		<ul>
 			<button><a class="" onclick="getGroup()">그룹 정보</a></button>
@@ -86,26 +98,17 @@
 	<div id="getgroup">
 	</div>
 
-	<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
 
 	<div class="btn">
-	    <button><a class="" onclick="">저장하기</a></button>
-	    <button><a class="modal_close_btn">닫기</a></button>
+	    <button><a class="btn modal_close_btn">닫기</a></button>
     </div>
     	
     	
 </div>
 <%-- --------------------------------------------------------------  --%>
 <div class="entry">
-	<table class="table table-bordered">
+	<table class="table">
 		<caption>학습자 관리</caption>
-		<colgroup>
-		<col width="20%" />
-		<col width="20%" />
-		<col width="10%" />
-		<col width="20%" />
-		<col width="20%" />
-		</colgroup>
 			<thead>
     			<tr>
 			        <th>그룹ID</th>
@@ -122,9 +125,15 @@
 						
 						<tr>
                             <th align="left" class="row"><input type="text" class="index" value="${group.g_no }" data-g_no="${status.index}" id="g_no" readonly></th>
-                            <td align="center"> <input type="text" id="g_name" value="${group.g_name }"readonly></td>
+                            <td align="center"> <input type="text" id="g_name" value="${group.g_name }" readonly></td>
                             <td align="center"> <input type="text" id="sub_price" value="${group.g_cnt }"readonly></td>
-                            <td align="center">${group.g_start } ~ ${group.g_end }</td>
+                            
+                             <c:choose>
+								<c:when test="${fn:length(group.g_start) > 1}">
+		                            <td align="center">${fn:substring(group.g_start , 0, 10) } ~ ${fn:substring(group.g_end , 0, 10) }
+								</c:when>
+							</c:choose>
+                            
                             <td align="center"><button id="popup_open_btn" onclick="getGroupOne(${status.index})">학습자 관리</button></td>
           
                         </tr>
@@ -222,6 +231,9 @@ function getGroupOne(index) {
 	modal('my_modal');
 	
     var g_no =  $('input[data-g_no="'+index+'"]').val();
+    $('#g_no').val(g_no);
+    
+    
     console.log(g_no);
 	fetchGet('/alpha/group/getGroupOne/'+g_no, resultList)
 
@@ -262,10 +274,10 @@ function resultList(map){
 		    +			'<input type="hidden" id="l_g_no" value="'
 		    +			g_no
 		    +			'" readonly>'
-		    +			'<input type="hidden" id="g_no" value="'
+		    +			'그룹명 <input type="text" id="g_no" value="'
 		    +			g_name
-		    +			'" readonly>'
-		    +			'<input type="text" id="g_no" value="'
+		    +			'" readonly><br>'
+		    +			'강사이름 <input type="text" id="m_name" value="'
 		    +			m_name
 		    +			'" readonly>'
 			+ '<table class="table table-bordered">'
@@ -299,7 +311,7 @@ function resultList(map){
     	    
 /////////////////////////////////////// 그룹 학습자 관리    	    
 function groupMemList(g_no) {
-	var g_no = $('#l_g_no').val();
+	var g_no = $('#g_no').val();
 	console.log(g_no);
 
 	fetch('/alpha/group/getGroupOne/list/' + g_no)
@@ -349,7 +361,8 @@ function MemberList(list, LearnerCnt){
     tableHTML += '<thead><tr><th>학생ID</th><th>이름</th><th></th></tr></thead>';
     tableHTML += '<tbody>';
     
-
+    if(LearnerCnt > 0) {
+    
     list.forEach(function(member, index) {
         tableHTML += '<tr>';
         tableHTML +='<input type="hidden" id="l_g_no" value="'+ member.l_g_no +'" readonly>'
@@ -359,6 +372,12 @@ function MemberList(list, LearnerCnt){
         tableHTML += '<td>' + '<button onclick="delMember(' + index + ')">내보내기</button>' + '</td>';
         tableHTML += '</tr>';
     });
+    
+	} else {
+		tableHTML += '<tr>';
+		tableHTML += '<td>그룹에 소속된 멤버가 없습니다</td>';
+		tableHTML += '</tr>';
+	}
 
     tableHTML += '</tbody></table>';
 
@@ -396,7 +415,7 @@ function result(map){
 }
 ////////////////////그룹 가입 승인 관리
 function joinGroup() {
-	var g_no = $('#l_g_no').val();
+	var g_no = $('#g_no').val();
 	console.log(g_no);
 
 	fetch('/alpha/group/getJoin/list/' + g_no)
@@ -416,11 +435,12 @@ function JoinList(list, JoinCnt){
 	main.innerHTML = '';
 
     var tableHTML = '';
-    tableHTML += '총 ' + JoinCnt + ' 명'; // LearnerCnt 변수 삽입
+    tableHTML += '총 ' + JoinCnt + ' 명'; // LearnerCnt 변수 삽입   
     tableHTML += '<table class="table table-bordered">';
     tableHTML += '<thead><tr><th>학생ID</th><th>이름</th><th>신청일자</th><th></th><th></th></tr></thead>';
     tableHTML += '<tbody>';
-
+    
+    if(JoinCnt > 0) {
     list.forEach(function(member, index) {
         tableHTML += '<tr>';
         tableHTML +='<input type="hidden" id="l_g_no" value="'+ member.l_g_no +'" readonly>'
@@ -432,6 +452,13 @@ function JoinList(list, JoinCnt){
         tableHTML += ' '+'<button onclick="RefuserMember(' + index + ')">거절</button>' + '</td>';
         tableHTML += '</tr>';
     });
+    	
+    } else {
+    	tableHTML += '<tr>';
+    	tableHTML += '<td>현재 신청 인원이 없습니다</td>';
+    	tableHTML += '</tr>';
+    }
+
 
     tableHTML += '</tbody></table>';
 
@@ -528,11 +555,36 @@ function RefuserMember(index) { //가입 거절
 /////////////////////그룹 정보
 function getGroup(g_no) {
 	
-    var g_no =  $('#l_g_no').val();
+    var g_no =  $('#g_no').val();
 
     console.log(g_no);
 	fetchGet('/alpha/group/getGroupOne/'+g_no, resultList)
 
+}
+
+document.searchForm.addEventListener('submit', function (event) {
+    event.preventDefault(); // 기본 서브밋 동작 방지
+
+    // 선택된 searchField 값을 URL에 업데이트
+    const selectedValue = document.getElementById('searchFieldSelect').value;
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set('searchField', selectedValue);
+
+    // searchWord의 값을 가져와서 URL에 추가
+    const searchWordValue = document.querySelector('input[name="searchWord"]').value;
+    currentUrl.searchParams.set('searchWord', searchWordValue);
+
+    // 업데이트된 URL로 페이지 이동
+    window.location.href = currentUrl.toString();
+});
+
+
+function go(page){
+	//alert(page);
+	
+	document.searchForm.pageNo.value=page;
+	document.searchForm.action = "/alpha/groupSingup?t_m_id="+$('#m_id').val();
+	document.searchForm.submit();
 }
 
 </script>

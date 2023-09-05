@@ -209,11 +209,14 @@
 	<select id="totalCntSub" resultType="int">
 	select count(*) from subscribe
 	where t_m_id = #{t_m_id}
-	<choose>
-		<when test="cri.searchField == 'c_name'">
-			and c_name like CONCAT('%', #{cri.searchWord}, '%')
-		</when>
-	</choose>
+	  <choose>
+	    <when test="cri.searchField == 'content.c_name'">
+	     and sub_c_no in (select c_no from content where c_name like CONCAT('%', #{cri.searchWord}, '%'))
+	    </when>
+	    <when test="cri.searchField == 'sub_date'">
+	      AND sub_date BETWEEN #{cri.searchDate1} AND #{cri.searchDate2}
+	    </when>
+	  </choose>
 	</select>	
 	
 	<!-- 그룹 총 갯수 -->
