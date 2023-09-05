@@ -112,7 +112,7 @@ function resultList(map){
 	    	let c_sellprice = cart.c_sellprice;
 	        var row = document.createElement('tr');
 	        row.innerHTML = `
-	        	<td></td>
+	        	<td><input type="checkbox"></td>
 	        	<td>${c_name}</td>
 	        	<td>${c_level}</td>
 	            <td>${cnt}</td>

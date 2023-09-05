@@ -199,11 +199,12 @@ public class ContentController extends CommonRestController {
 			   }
 		   }
 		   
-		   @GetMapping("/content/chartDate") 
-		   public Map<String, Object> chartDView() {
+		   @GetMapping("/content/chartDate/{startdate}/{enddate}") 
+		   public Map<String, Object> chartDView(@PathVariable("startdate") String startdate, @PathVariable("enddate") String enddate) {
 				try {
 					Map<String, Object> map = new HashMap<String, Object>();
-					List<SalesVO> dateList = contentService.salesDate();
+					List<SalesVO> dateList = contentService.salesDate(startdate, enddate);
+					System.out.println(dateList);
 					map.put("dateList", dateList);
 					return map;
 	

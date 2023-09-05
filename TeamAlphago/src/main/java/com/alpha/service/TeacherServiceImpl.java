@@ -138,6 +138,10 @@ public class TeacherServiceImpl implements TeacherService {
 		return mapper.updateGrpName(g_no, g_name);
 	}
 
+	@Override
+	public List<ContentVO> getMainContentList(Criteria cri) {
+		return mapper.getMainContentList(cri);
+	}
 	
 
 }

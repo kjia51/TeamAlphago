@@ -9,4 +9,7 @@ public class SalesVO {
 	int s_count;
 	int s_sales;
 	String c_name;
+	
+	String startdate;
+	String enddate;
 }
