@@ -47,11 +47,11 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public List<SalesVO> salesContent() {
+	public List<SalesVO> salesContent(String c_level) {
 		// TODO Auto-generated method stub
-		return contentMapper.salesContent();
+		return contentMapper.salesContent(c_level);
 	}
-
+ 
 	@Override
 	public int addCart(CartVO cartVO) {
 		// TODO Auto-generated method stub

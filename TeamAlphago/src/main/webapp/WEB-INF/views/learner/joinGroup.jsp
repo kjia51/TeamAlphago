@@ -5,7 +5,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
-
 <script src="/resources/js/joinGroup.js"></script>
 <!-- jQuery 라이브러리 추가 -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -14,7 +13,6 @@
 <title>그룹 가입 신청</title>
 </head>
 <link rel="stylesheet" href="/resources/css/learner.css">
-
 <body>
 	<%@ include file="../common/header.jsp"%>
 	<div id="container">
@@ -26,7 +24,6 @@
 					<input name="l_m_id" id="memberId" type="hidden" value="${memberVO.m_id}"> 
 					<input name="m_division" id="division" type="hidden" value="${memberVO.m_division}">
 				</div>
-
 				<!--그룹가입신청-->
 				<form class="searchWrap searchWrap_wide">
 					<table class="table table-bordered">
@@ -50,13 +47,11 @@
 											</c:forEach>
 										</select>
 									</div>
-
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</form>
-
 				<div id="groupInfoDiv">
 					<div class="entry" id="groupInfo">
 						<table class="table table-bordered">
@@ -77,7 +72,6 @@
 									<th>가입신청</th>
 								</tr>
 							</thead>
-
 							<tbody>
 								<c:set var="isMember" value="${memberVO.m_id}" />
 								<c:if test="${isMember != null}">
@@ -151,9 +145,7 @@ function fetchGet(url,callback){
 	} catch (e) {
 		consol.log('fetchGet', e);
 	}
-
 }
-
 // fetch Post 방식
 function fetchPost(url, obj, callback){
 	try {
@@ -190,7 +182,6 @@ function changeGroup(g_name) {
 	    });
     }
 }
-
 // 선택 그룹에 따른 그룹 정보 리스트
 function displayGroupList(map) {
 	console.log("map", map)
@@ -232,7 +223,6 @@ function displayGroupList(map) {
 	                   +'<td align="center">' + group.g_period + '</td>' 
 	                   +'<td align="center">' + group.g_AppCnt + '</td>' 
 	                   +'<td align="center">'; 
-
 	                   if(group.dupGrpCount == 0){
 	                   pageBlock += '<button class="apply-button" id="applyButton" onclick="applyButton()">신청하기</button>' 
 					   pageBlock += '</td>'
@@ -267,9 +257,6 @@ function displayGroupList(map) {
 						+'</div>';
     groupInfoDiv.innerHTML += pageBlock;
 }
-
-
-
 document.addEventListener('click', function() {
     if (event.target && event.target.type === 'checkbox') {
         var applyButton = event.target.closest('tr').querySelector('.apply-button');
@@ -284,9 +271,6 @@ document.addEventListener('click', function() {
         }
     }
 });
-
-
-
 //'신청' 버튼 클릭 이벤트 처리
 function applyButton() {
 	// 체크된 행
@@ -313,7 +297,6 @@ function applyButton() {
 	console.log(m_division);
 	console.log(sub_able);
 	console.log(g_cnt);
-
 		if(m_division == 2){
 			
 	    	// 학습자인 경우 신청 활성화
@@ -322,7 +305,6 @@ function applyButton() {
 	    		alert('신청하실 그룹을 선택하여 주세요.'); 
 	    		//  -> 신청 비활성화
 	    		applyButton.prop('disabled', true);
-
 	    	} else if(g_cnt === sub_able){
             	// 현재인원이 그룹인원과 동일한 경우
     			alert('신청 인원 마감');

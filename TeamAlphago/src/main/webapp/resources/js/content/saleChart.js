@@ -82,14 +82,20 @@ function saleContent(){
     row.innerHTML = ''
 	                    +'<th scope="col" style="width:20%;">검색</th>'
 	                    +'<td style="width:80%;">'
-	                        +'<input type="text">'
-	                            +'<input type="button" class="btn btn-primary" id="btnContent" value="조회">'
+	                       // +'<input type="text">'
+	                    +'<fieldset>'
+	                    +'<label style="margin:15px"><input type="radio" name="c_level" value="1">초급</label>'
+	                    +'<label style="margin:15px"><input type="radio" name="c_level" value="2">중급</label>'
+	                    +'<label style="margin:15px"><input type="radio" name="c_level" value="3">고급</label>'
+	                    +'<input type="text" value="0" id="radioValue">'
+	                    +'</fieldset>'
+	                      +'<input type="button" class="btn btn-primary" id="btnContent" value="조회">'
 	                    +'</td>';
 	searchLayout.appendChild(row);
     var row1 = document.createElement('tr');
     row1.innerHTML = ''
 			        +'<tr>'
-			        +'<th>콘텐츠명</th>'
+			        +'<th>학습수준</th>'
 			        +'<th>매출액</th>'
 			        +'<th>매출건수</th>'
 			        +'</tr>';
@@ -100,11 +106,16 @@ function saleContent(){
     	+'<td colspan="3"  style="text-align:center">조회된 건이 없습니다</td>'
     	+'</tr>';
     chartBdy.appendChild(row2);
-	$('#btnContent').click(function () {
-		myChart.style.display = "block";
 		getChartCList();
-	})
+		$('input[name="c_level"]').click(function () {
+			const rValue = $('input[name="c_level"]:checked').val();
+			$('#radioValue').val(rValue);
+			getChartCList();
+		})
+		
 }
+
+
 function saleDate(){
 	searchLayout.innerHTML='';
 	chartHead.innerHTML='';
@@ -349,12 +360,14 @@ function saleDate(){
 	}
 	//덧글 조회 및 출력
 	function getChartCList(){
-		fetchGet('/alpha/content/chartContent', resultChartContent);
+		let c_level = $('#radioValue').val();
+		console.log("c_level",c_level)
+		fetchGet('/alpha/content/chartContent/'+c_level, resultChartContent);
 	}
 	
 	function resultChartContent(map){
-		let sub_c_no = [];
-		let content_sales = [];
+		let level = ['초급','중급','고급'];
+		let content_sales = [0,0,0];
 		let contentList = map.contentList;
 		$('#myChart').remove();
 		$('#myChartView').append('<canvas id="myChart"></canvas>');
@@ -362,25 +375,83 @@ function saleDate(){
 
 		chartBdy.innerHTML='';
 		contentList.forEach(function(chart) {
-			sub_c_no.push(chart.sub_c_no);
-			content_sales.push(chart.s_sales);
 			
 			let cprice = contentList.price;
 			let cnt = contentList.c_able;
 			var row = document.createElement('tr');
 			row.innerHTML = `
-				<td>${chart.c_name}</td>
+				<td>${chart.level}</td>
 				<td>${chart.s_sales}원</td>
 				<td>${chart.s_count}건</td>
 				`;
 			chartBdy.appendChild(row);
+			
+		    if (chart.level === '초급') {
+		        content_sales[0] += chart.s_sales;
+		      } else if (chart.level === '중급') {
+		        content_sales[1] += chart.s_sales;
+		      } else if (chart.level === '고급') {
+		        content_sales[2] += chart.s_sales;
+		      }
 		});
 
 		new Chart(ctx, {
-			type: 'line',
+			type: 'bar',
 			data: {
 				
-				labels: sub_c_no,
+				labels: level,
+				
+				datasets: [{
+					label: '매출조회',
+					data: content_sales,
+				}]
+			},
+			options: {
+				scales: {
+				}
+			}
+		});
+		
+		
+	}
+	function getChartRList(){
+		let c_level = $('#radioValue').val();
+		fetchGet('/alpha/content/chartContent/'+c_level, resultChartLevel);
+	}
+	
+	function resultChartLevel(map){
+		let contentList = map.contentList;
+		$('#myChart').remove();
+		$('#myChartView').append('<canvas id="myChart"></canvas>');
+		const ctx = document.getElementById('myChart');
+		
+		chartBdy.innerHTML='';
+		contentList.forEach(function(chart) {
+			
+			let cprice = contentList.price;
+			let cnt = contentList.c_able;
+			var row = document.createElement('tr');
+			row.innerHTML = `
+				<td>${chart.level}</td>
+				<td>${chart.s_sales}원</td>
+				<td>${chart.s_count}건</td>
+				`;
+			chartBdy.appendChild(row);
+			
+			if (chart.level === '초급') {
+				content_sales[0] += chart.s_sales;
+			} else if (chart.level === '중급') {
+				content_sales[1] += chart.s_sales;
+			} else if (chart.level === '고급') {
+				content_sales[2] += chart.s_sales;
+			}    
+		});
+		
+		new Chart(ctx, {
+			type: 'bar',
+			data: {
+				
+				labels: level, 
 				
 				datasets: [{
 					label: '매출조회',
