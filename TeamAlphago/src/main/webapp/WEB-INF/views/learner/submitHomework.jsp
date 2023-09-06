@@ -7,6 +7,7 @@
  
 <!DOCTYPE html>
 <html>
+<script src="/resources/js/learner/submitHomework.js"></script>
 <head>
 <link rel="stylesheet" href="/resources/css/learner.css">
 <%@ include file="../common/header.jsp"%>   

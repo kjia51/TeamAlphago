@@ -10,6 +10,7 @@
 <!-- jQuery 라이브러리 추가 -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <head>
+<script src="/resources/js/learner/homeworkAssess.js"></script>
 <meta charset="UTF-8">
 <title>그룹 가입 신청</title>
 </head>
