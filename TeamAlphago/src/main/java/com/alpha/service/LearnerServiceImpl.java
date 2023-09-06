@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alpha.mapper.LearnerMapper;
+import com.alpha.vo.Criteria;
 import com.alpha.vo.LearnerVO;
 
 @Service
@@ -26,7 +27,7 @@ public class LearnerServiceImpl implements LearnerService {
 		return learnerMapper.groupNameForT(t_m_id);
 	}
 
-	// 그룹 정보 리스트 
+	// 그룹별 정보 리스트 
 	@Override
 	public List<LearnerVO> groupInfo(String g_name, String l_m_id) {
 		return learnerMapper.groupInfo(g_name, l_m_id);
@@ -34,8 +35,8 @@ public class LearnerServiceImpl implements LearnerService {
 
 	// 전체 그룹 리스트 
 	@Override
-	public List<LearnerVO> grouplistAll(LearnerVO learnerVO) {
-		return 	learnerMapper.grouplistAll(learnerVO);
+	public List<LearnerVO> grouplistAll(LearnerVO learnerVO, Criteria cri) {
+		return 	learnerMapper.grouplistAll(learnerVO, cri);
 	}
 
 	// 그룹 가입 신청
@@ -62,9 +63,16 @@ public class LearnerServiceImpl implements LearnerService {
 		return learnerMapper.homeworkList(l_m_id);
 	}
 
+	// 학습자 숙제 제출
 	@Override
-	public int subitHomework(String h_no) {
-		return learnerMapper.subitHomework(h_no);
+	public int subitHomework(String h_no, String h_content) {
+		return learnerMapper.subitHomework(h_no, h_content);
+	}
+
+	// 전체 리스트 갯수
+	@Override
+	public int grpTotalCnt(Criteria cri) {
+		return learnerMapper.grpTotalCnt(cri);
 	}
 
 

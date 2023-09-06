@@ -26,28 +26,27 @@
 
 
 	<!-- 숙제 내역 리스트 -->
-	<div id="learnerInfo">
-			<div>학습자 : ${memberVO.m_name}</div> 
+	<div id="homeworkInfo">
+			<div style="margin: 20px; font-style: normal; text-align: left; font-size: medium;">${memberVO.m_name} 님</div>
 		<div class="entry" Style="">
 			<table class="table table-bordered">
 				<caption>숙제 내역</caption>
 				<colgroup>
 					<col width="5%" />
-					<col width="20%" />
-					<col width="15%" />
-					<col width="20%" />
-					<col width="15%" />
 					<col width="25%" />
+					<col width="15%" />
+					<col width="30%" />
+					<col width="15%" />
+					<col width="10%" />
 				</colgroup>
 				<thead>
 					<tr>
-						<th style="text-align: center;"><input type="checkbox"
-							id="checkboxAll" name="myCheckboxAll" value="Checked"></th>
+						<th style="text-align: center;"></th>
 						<th>학습콘텐츠</th>
 						<th>학습지도자</th>
 						<th>숙제내용</th>
 						<th>제출기한</th>
-						<th>학습내용</th>
+						<th>제출현황</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -57,23 +56,23 @@
 						
 							<tr>
 								<th align="center"><input type="checkbox" id="checkbox"
-									name="myCheckbox" value="${list.h_no}"></th>
+									name="myCheckbox" value="${list.h_no}" data-hno="${list.h_no}"></th>
 								<td align="center" class="row">${list.c_name}
-									<input type="text" name="c_name" id="contentNo" value="${list.c_name}" >
+									<input type="hidden" name="c_name" id="contentNo" value="${list.c_name}" >
 								</td>
 								<td align="center">${list.m_name}
-									<input type="text" name="m_name" id="memberName" value="${list.m_name}" >
+									<input type="hidden" name="m_name" id="memberName" value="${list.m_name}" >
 								</td>
 								<td align="center">${list.h_homework}
-									<input type="text" name="h_homework" id="homework" value="${list.h_homework}" >
+									<input type="hidden" name="h_homework" id="homework" value="${list.h_homework}" >
 								</td>
 								<td align="center">${fn:substring(list.h_limit, 0, 10)}
-									<input type="text" name="h_limit" id="deadline" value="${list.h_limit}" >
+									<input type="hidden" name="h_limit" id="deadline" value="${list.h_limit}" >
 								</td>
 								<td align="center">
-								<textarea name="h_content" id="hContent" rows="5" cols="10" style="width: 90%;">
-								학습내용을 입력하세요.
-								</textarea></td>
+									 <span id="submissionStatus_${list.h_no}">
+									 ${list.h_content == null || list.h_content == '' ? '미완료' : '완료'}</span>
+								</td>
 							</tr>
 							
 						</c:forEach>
@@ -87,8 +86,11 @@
 				</tbody>
 			</table>
 		<!-- 제출버튼 -->
+
 		<div class="btnArea-center" style="border:0; padding-top:0;">
-            <span class="btn btn-grayline btn-lg"><a onclick="submitHomework()">제출하기</a></span>
+			 <span class="btn btn-grayline btn-lg">
+			 	<button id="writebtn">학습내용 입력</button>
+           </span>
         </div>
 			<div class="paging">
 				<a href='/' class="current">1</a> <a href='/'>2</a>
@@ -98,6 +100,35 @@
 	</div>
 	</div>
 </div> <!-- container -->
+
+<%---------------------------------모달창 ------------------------------%>
+<div id="assign_modal">
+	<div class="titleBox">
+		<h3 class="t_title">학습 내용 입력</h3>
+		<input name="l_no" id="learnerNo" type="hidden" value="">
+	</div>
+	<div class="entry">
+		<div class="centered-div" style="align-content: center;">
+		<table style="border: 1px solid #000, border-collapse: collapse; width:100%; ">
+			<tr>
+				<td align="center" style="border: 1px solid #000; ">
+					<textarea name="h_content" id="hContent">학습 내용을 입력하세요.</textarea>
+				</td>
+			<tr>
+		</table>
+		</div>
+		<br>
+		<div class="btns">
+			<button>
+				<a class ="submitBtn" onclick="submitHomework()">제출하기</a>
+			</button>
+			<button>
+				<a class="modal_close_btn">닫기</a>
+			</button>
+		</div>
+	</div>
+</div>
+<%-----------------------------모달창 끝----------------------------------%>
 </body>
 <script>
 // post방식 요청
@@ -132,74 +163,110 @@ function result(map){
 	}
 		
 }
+//내용 입력 버튼 클릭 시 이벤트
+$('#writebtn').on('click', function() {
+    // 모달창 띄우기
+    modal('assign_modal');
+    
+
+});
 
 
 //선택된 체크박스의 h_no 값을 저장할 배열
-var selectedHNoArray = [];
+var selectedHnos = [];
 
-// 체크박스의 변경 이벤트를 감지하여 배열에 h_no 값을 추가 또는 제거합니다.
-$('input:checkbox[name=myCheckbox]').on('change', function() {
-    var hNo = $(this).val();
-    console.log("hNo", hNo);
-    if (this.checked) {
-        selectedHNoArray.push(hNo); // 체크된 경우 배열에 추가
-    } else {
-        var index = selectedHNoArray.indexOf(hNo);
-        if (index !== -1) {
-            selectedHNoArray.splice(index, 1); // 체크 해제된 경우 배열에서 제거
-        }
-    }
+// 학습 내용 입력 버튼 클릭 시
+$('#writebtn').on('click', function() {
+    // 초기화: 선택된 h_no 배열 비우기
+    selectedHnos = [];
+
+    // 선택된 체크박스 확인
+    $('input[name="myCheckbox"]:checked').each(function() {
+        var hno = $(this).data('hno');
+        selectedHnos.push(hno);
+    });
+
+    // 모달창 띄우기
+    modal('assign_modal');
 });
 
-// 제출버튼 클릭 시 update
+// 모달창에서 제출하기 버튼 클릭 시
 function submitHomework() {
-    // 배열에 선택된 h_no 값이 있는지 확인
-    if (selectedHNoArray.length === 0) {
-        alert('제출할 숙제를 선택하여 주세요.');
+    var hContent = $('#hContent').val(); // 학습 내용 입력
+	console.log('hContent',hContent)
+    if (selectedHnos.length === 0) {
+        alert('숙제를 선택하세요.');
         return;
     }
 
-    // 선택된 h_no 값을 서버로 전달하여 업데이트
-    var hContent = $('#hContent').val(); // 업데이트할 내용
-    console.log("hContent", hContent);
-    var updateData = {
-        h_no_array: selectedHNoArray,
-        h_content: hContent
-    };
-
-    console.log(updateData);	
-    // AJAX(fetch) 요청을 사용하여 서버에 데이터 전송
-    fetch('/alpha/submitHomework/submit', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updateData)
-    })
-    .then(response => response)
-    .then(data => {
-        if (data.success) {
-            alert('완료되었습니다.');
-            // 필요한 경우 추가적인 처리나 화면 갱신
-        } else {
-            alert('실패했습니다.');
-        }
-    })
-    .catch(error => {
-        console.error('오류:', error);
+    // 선택된 각 h_no에 대해 hContent 전송
+    selectedHnos.forEach(function(hno) {
+        var obj = {
+            h_no: hno,
+            h_content: hContent
+        };
+		console.log("obj", obj);
+		
+        fetchPost('/alpha/submitHomework/submit', obj, function(map) {
+            if (map.result === 'success') {
+                alert('제출되었습니다.');
+                // 제출 현황 업데이트: 완료 표시
+                $('#submissionStatus_' + hno).html('완료');
+            } else {
+                alert('제출에 실패하였습니다.');
+            }
+        });
     });
+
+    // 모달창 닫기
+    $('#assign_modal').hide();
+    $('.modal_bg').remove();
 }
 
 
-// 체크 박스 전체 선택 이벤트
-function selectAll(selectAll)  {
-	const checkboxes = document.getElementsByName('myCheckbox');
-	
-	checkboxes.forEach((checkbox) => {
-	  checkbox.checked = selectAll.checked;
-	});
-}
+//모달창 띄우기
+function modal(id) {
+    var zIndex = 9999;
+    var modal = $('#' + id);
 
+    // 모달 div 뒤에 희끄무레한 레이어
+    var bg = $('<div>')
+        .css({
+            position: 'fixed',
+            zIndex: zIndex,
+            left: '0px',
+            top: '0px',
+            width: '100%',
+            height: '100%',
+            overflow: 'auto',
+            // 레이어 색상은 여기서 바꾸면 됨
+            backgroundColor: 'rgba(0,0,0,0.4)'
+        })
+        .appendTo('body');
+
+    modal
+        .css({
+            position: 'fixed',
+            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+            // 시꺼먼 레이어 보다 한칸 위에 보이기
+            zIndex: zIndex + 1,
+
+            // div center 정렬
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            msTransform: 'translate(-50%, -50%)',
+            webkitTransform: 'translate(-50%, -50%)'
+        })
+        .show()
+        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+        .find('.modal_close_btn')
+        .on('click', function() {
+            bg.remove();
+            modal.hide();
+        });
+}
 </script>
-</html>
 <%@ include file="../common/footer.jsp"%>
+</html>

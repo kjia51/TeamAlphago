@@ -42,7 +42,7 @@
 											onchange="selectGroup(this.value);" value="">
 											<option value="selectop">선택</option>
 											<c:forEach items="${grpNameList}" var="group">
-												<option value="${group.g_no}">${group.g_no}</option>
+												<option value="${group.g_no}">${group.g_name}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -115,14 +115,14 @@
 					<col width="40%" />
 				</colgroup>
 				<tr>
-					<th align="center" style="border: 1px solid #000;">숙제 내용</th>
+					<th align="center" style="border: 1px solid #000; vertical-align: middle;">숙제 내용</th>
 					<td align="center" style="border: 1px solid #000;" colspan="2">
 						<textarea name="h_homework" id="hHomework" rows="5" cols="10" style="width: 90%;">내용을 입력하세요.</textarea>
 					</td>
 					<td align="center" style="border: 1px solid #000;"></td>
 				</tr>
 				<tr>
-					<th align="center" style="border: 1px solid #000;" rowspan="3">숙제기한
+					<th align="center" style="border: 1px solid #000; vertical-align: middle;" rowspan="3">숙제 기한
 					</th>
 					<td align="center" style="border: 1px solid #000;">숙제 시작일</td>
 					<td align="center" style="border: 1px solid #000;">숙제 종료일</td>
@@ -140,9 +140,9 @@
 			</form>
 			</diV>
 			<br>
-			<div class="btn">
+			<div class="btns">
 				<button>
-					<a onclick="insertHomework()">전송</a>
+					<a class ="submitBtn" onclick="insertHomework()">전송</a>
 				</button>
 				<button>
 					<a class="modal_close_btn">닫기</a>
@@ -316,8 +316,8 @@ function displayLearnerList(map) {
 						+'<td style="display: none">'
 						+'<input type="hidden" name="h_c_no" id="contentNo" value="'+ Learner.h_c_no +'">'
 						+'</td>'
-						+'<td style="display: ">'
-						+'<input type="text" name="l_m_id" id="learnerId" data-lno="'+Learner.l_no+'" value="'+ Learner.l_m_id +'">'
+						+'<td style="display: none">'
+						+'<input type="hidden" name="l_m_id" id="learnerId" data-lno="'+Learner.l_no+'" value="'+ Learner.l_m_id +'">'
 						+'</td>'
 						+'<td style="display: none">'
 						+'<input type="hidden" name="h_g_no" id="groupNo" value="'+ Learner.h_g_no +'">'
@@ -502,77 +502,7 @@ function modal(id) {
 
 
 </script>
-</html>
 <%@ include file="../common/footer.jsp"%>
-
-				<tbody>
-				<c:choose>
-					<c:when test="${homeworkList != null}">
-						<c:forEach items="${homeworkList}" var="list" >
-						
-							<tr>
-								<th align="center"><input type="checkbox" id="checkbox"
-									name="myCheckbox" value="list.h_no"></th>
-								<td align="center" class="row">${list.c_name}
-									<input type="text" name="c_name" id="contentNo" value="${list.c_name}" >
-								</td>
-								<td align="center">${list.m_name}
-									<input type="text" name="m_name" id="memberName" value="${list.m_name}" >
-								</td>
-								<td align="center">${list.h_homework}
-									<input type="text" name="h_homework" id="homework" value="${list.h_homework}" >
-								</td>
-								<td align="center">${fn:substring(list.h_limit, 0, 10)}
-									<input type="text" name="h_limit" id="deadline" value="${list.h_limit}" >
-								</td>
-								<td align="center">
-								<textarea name="h_content" id="hContent" rows="5" cols="10" style="width: 90%;">
-								학습내용을 입력하세요.
-								</textarea></td>
-							</tr>
-							
-						</c:forEach>
-					</c:when>
-					</c:choose>
-					<c:if test="${homeworkList == null}">
-						<tr>
-							<td colspan="6" style="text-align: center;">숙제가 존재하지 않습니다.</td>
-						</tr>
-					</c:if>
-				</tbody>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</html>
 
 

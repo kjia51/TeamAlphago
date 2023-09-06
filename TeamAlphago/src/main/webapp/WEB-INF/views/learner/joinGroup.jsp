@@ -22,6 +22,7 @@
 			<div class="content_wrap">
 				<div class="titleBox">
 					<h2 class="t_title">그룹 가입 신청</h2>
+					
 					<input name="l_m_id" id="memberId" type="hidden" value="${memberVO.m_id}"> 
 					<input name="m_division" id="division" type="hidden" value="${memberVO.m_division}">
 				</div>
@@ -130,7 +131,9 @@
 		</div>
 	</div>
 	<!-- container close -->
-	<%@ include file="../common/footer.jsp"%>
+
+	<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
+
 	<script type="text/javascript">
 //get방식 
 function fetchGet(url,callback){
@@ -168,7 +171,7 @@ function changeGroup(g_name) {
     var url = '';
     if (g_name === 'listAll') {
         // 현재 페이지의 URL을 가져와서 리로드
-        var currentPageURL = "'/alpha/joinGroup/' + g_name";
+        var currentPageURL = "/alpha/joinGroup";
         window.location.href = currentPageURL;
     } else {   
 	    $.ajax({
@@ -284,8 +287,6 @@ document.addEventListener('click', function() {
 
 
 
-
-
 //'신청' 버튼 클릭 이벤트 처리
 function applyButton() {
 	// 체크된 행
@@ -321,6 +322,7 @@ function applyButton() {
 	    		alert('신청하실 그룹을 선택하여 주세요.'); 
 	    		//  -> 신청 비활성화
 	    		applyButton.prop('disabled', true);
+
 	    	} else if(g_cnt === sub_able){
             	// 현재인원이 그룹인원과 동일한 경우
     			alert('신청 인원 마감');
@@ -347,9 +349,9 @@ function applyButton() {
 	            .then(data => {
 	            	// fetch 요청이 성공한 경우의 처리
 	            	console.log("data", data);
-	            	var currentPageURL = "/alpha/joinGroup";
-	            	window.location.href = currentPageURL;
 	            	alert('신청되었습니다.');
+	            	var currentPageURL = "/alpha/main";
+	            	window.location.href = currentPageURL;
 		                })
 		                .catch(error => {
 		                	// fetch 요청이 실패한 경우의 처리
@@ -365,15 +367,15 @@ function applyButton() {
 	   		alert('학습자만 신청 가능합니다.');
 			applyButton.prop('disabled', true);
 	    }
-	
 } 
-
-
-
-    
-
- 
-
+// 페이징 처리
+function go(page){
+	//alert(page);
+	document.searchForm.pageNo.value=page;
+	document.searchForm.action = "/alpha/joinGroup";
+	document.searchForm.submit();
+}
 </script>
+<%@ include file="../common/footer.jsp"%>
 </body>
 </html>

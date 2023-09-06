@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.service.LearnerService;
+import com.alpha.vo.Criteria;
 import com.alpha.vo.LearnerVO;
+import com.alpha.vo.PageDto;
 
 @RestController
 @RequestMapping("/alpha/*")
@@ -26,32 +28,39 @@ public class LearnerController extends CommonRestController {
 	private LearnerService learnerService;	
 	
 	
-	// 그룹 이름 리스트 	 
+	// 그룹 이름 리스트 및 그룹 전체 리스트	 
 	@GetMapping("/joinGroup")
-	public ModelAndView groupName(String g_name, String l_m_id, LearnerVO learnerVO) {
-		System.out.println("그룹 이름 리스트 연결");
+	public ModelAndView groupName(String g_name, String l_m_id, LearnerVO learnerVO, Criteria cri) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		ModelAndView mav = new ModelAndView("/learner/joinGroup");
 		try {
+
+			System.out.println("그룹 이름 리스트 연결");
+			int totalCnt = learnerService.grpTotalCnt(cri);
+			PageDto pageDto = new PageDto(cri, totalCnt);
+			System.out.println("totalCnt : "+totalCnt);
+			System.out.println("pageDto : "+pageDto);
 			mav.addObject("list", learnerService.groupName(g_name));
 			// 그룹 전체 리스트 출력
-			mav.addObject("listAll", learnerService.grouplistAll(learnerVO));
+			mav.addObject("listAll", learnerService.grouplistAll(learnerVO, cri));
+			System.out.println(learnerService.grouplistAll(learnerVO, cri));
 			System.out.println("g_name : "+ g_name);
 			System.out.println("l_m_id :"+ l_m_id);
 			
-			
+			mav.addObject("pageDto", pageDto);
+			mav.addObject("totalCnt", totalCnt);
 		} catch (Exception e) {
 			map.put(REST_FAIL, "오류가 발생하였습니다.");
 		}
 		return mav; 
 	}
 	
-	// 그룹 정보 리스트
+	// 그룹별 그룹가입 리스트
 	@GetMapping("/joinGroup/{g_name}")
 	public Map<String, Object> groupInfo(@PathVariable("g_name") String g_name, HttpSession session){
 		System.out.println("그룹 정보 리스트 연결");
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+
 		String mId = session.getAttribute("m_id") == null? "":session.getAttribute("m_id").toString();
 		
 		try {
@@ -59,6 +68,7 @@ public class LearnerController extends CommonRestController {
 			List<LearnerVO> grplist = learnerService.groupInfo(g_name, mId);
 			System.out.println(grplist);
 			map.put("grplist", grplist);
+
 			
 		} catch (Exception e) {
 			map.put(REST_FAIL, "오류가 발생하였습니다.");
@@ -121,6 +131,10 @@ public class LearnerController extends CommonRestController {
 			int res = learnerService.insertHomework(learnerVO);
 			System.out.println("res:"+res);
 			Map<String, Object> map = responseWriteMap(res);
+			
+			if(res > 0) {
+				map.put(REST_SUCCESS, "숙제를"+ res +"건 전송하였습니다.");
+			}
 			return map;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -148,10 +162,11 @@ public class LearnerController extends CommonRestController {
 	
 	// 학습자 숙제  제출(update)
 	@PostMapping("/submitHomework/submit")
-	public Map<String, Object> submitHomework(@RequestBody LearnerVO learnerVO, String h_no) {
+	public Map<String, Object> submitHomework(@RequestBody LearnerVO learnerVO) {
 		System.out.println("===숙제 제출 ===");
+		
 		try {
-			int res = learnerService.subitHomework(h_no);
+			int res = learnerService.subitHomework(learnerVO.getH_no(), learnerVO.getH_content());
 			System.out.println("res:"+res);
 			Map<String, Object> map = responseWriteMap(res);
 			return map;

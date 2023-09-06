@@ -3,6 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alpha.mapper.LearnerMapper">
 
+
 <!-- 그룹 이름  -->
 <select id="groupName" resultType="com.alpha.vo.LearnerVO">
 	select * from grp 
@@ -10,15 +11,17 @@
 
 <!-- 학습지도자 별 그룹 이름  -->
 <select id="groupNameForT" resultType="com.alpha.vo.LearnerVO">
-        	select 
-        		g_no,
-        		g_name
-        	from grp g
-            left join member m on (g.t_m_id = m.m_id)
-            where m_id = #{t_m_id}
+  	select 
+  		g_no,
+  		g_name
+  	from 
+  		grp g
+    left join member m on (g.t_m_id = m.m_id)
+    where
+		m_id = #{t_m_id}
 </select>
 
-<!-- 그룹별 그룹 정보 -->
+<!-- 그룹별 가입 그룹 리스트 -->
 <select id="groupInfo" resultType="com.alpha.vo.LearnerVO">
 	SELECT
 		g_cnt,
@@ -43,7 +46,8 @@
 	ORDER BY g_period asc     
 </select>
 
-<!-- 전체 그룹 정보 -->
+
+<!-- 전체 그룹 가입 리스트 -->
 <select id="grouplistAll" resultType="com.alpha.vo.LearnerVO">
 	SELECT
 		g_cnt,
@@ -53,7 +57,7 @@
 		sub_c_no AS l_c_no,
 		g_no AS l_g_no, 
 	    m_name AS t_m_name,
-	    CONCAT(IFNULL(DATE_FORMAT(g.g_start, '%y.%m.%d'), ''), ' ~ ', IFNULL(DATE_FORMAT(g.g_end, '%y.%m.%d'), '')) AS g_period,
+	    CONCAT(IFNULL(DATE_FORMAT(g.g_start, '%y-%m-%d'), ''), ' ~ ', IFNULL(DATE_FORMAT(g.g_end, '%y-%m-%d'), '')) AS g_period,
 	    CONCAT(IFNULL(CONVERT(g.g_cnt, CHAR), ''), ' / ', IFNULL(CONVERT(s.sub_able, CHAR), '')) AS g_AppCnt,
 	   (SELECT count(*) FROM learner l
 		WHERE l_m_id = #{l_m_id} and  l_g_no = g_no) dupGrpCount
@@ -64,6 +68,20 @@
 	WHERE g.g_name is not null
 	ORDER BY 
 		g_period asc
+	LIMIT #{cri.startNo}, #{cri.amount}	
+</select>
+
+<!-- 전체 그룹 총 갯수 -->
+<select id="grpTotalCnt" resultType="int">
+    SELECT 
+    	count(*) 
+	FROM                
+	    subscribe s
+	LEFT JOIN 
+	    member m ON (s.t_m_id = m.m_id)
+	LEFT JOIN 
+	    grp g ON (s.sub_no = g.sub_no)
+	WHERE g.g_name is not null    
 </select>
 
 <!-- 그룹 가입 신청  -->
@@ -91,7 +109,7 @@
     left join grp on(l_g_no = g_no)
     left join content on(l_c_no = c_no)
     where 
-    	l_g_no = #{g_no}
+    	l_g_no = #{g_no} and l_checkyn = 'Y'
 </select>
 
 <!-- 숙제 요청 내역 저장 -->
@@ -117,7 +135,7 @@
 <!-- 학습자 숙제 제출 -->
 <update id="subitHomework">
 	UPDATE homework 
-	SET h_content = #{h_content}
+	SET h_content = TRIM(BOTH ' ' FROM #{h_content})
 	where h_no = #{h_no};
 </update>
 	
