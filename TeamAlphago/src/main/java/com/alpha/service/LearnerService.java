@@ -21,7 +21,7 @@ public interface LearnerService {
 	public List<LearnerVO> groupInfo(@Param("g_name") String g_name, @Param("l_m_id") String l_m_id);
 	
 	// 그룹 전체 리스트 
-	public List<LearnerVO> grouplistAll(@Param("learnerVO") LearnerVO learnerVO,@Param("cri") Criteria cri);
+	public List<LearnerVO> grouplistAll(@Param("l_m_id") String l_m_id, @Param("cri") Criteria cri);
 
 	// 그룹 가입 전체 갯수
 	public int grpTotalCnt(Criteria cri);

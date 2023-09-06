@@ -22,7 +22,7 @@
 			<div class="content_wrap">
 				<div class="titleBox">
 					<h2 class="t_title">그룹 가입 신청</h2>
-					
+
 					<input name="l_m_id" id="memberId" type="hidden" value="${memberVO.m_id}"> 
 					<input name="m_division" id="division" type="hidden" value="${memberVO.m_division}">
 				</div>
@@ -131,7 +131,7 @@
 		</div>
 	</div>
 	<!-- container close -->
-
+	
 	<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
 
 	<script type="text/javascript">

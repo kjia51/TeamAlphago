@@ -30,7 +30,7 @@ public class LearnerController extends CommonRestController {
 	
 	// 그룹 이름 리스트 및 그룹 전체 리스트	 
 	@GetMapping("/joinGroup")
-	public ModelAndView groupName(String g_name, String l_m_id, LearnerVO learnerVO, Criteria cri) {
+	public ModelAndView groupName(String g_name, String l_m_id, Criteria cri) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		ModelAndView mav = new ModelAndView("/learner/joinGroup");
 		try {
@@ -38,17 +38,20 @@ public class LearnerController extends CommonRestController {
 			System.out.println("그룹 이름 리스트 연결");
 			int totalCnt = learnerService.grpTotalCnt(cri);
 			PageDto pageDto = new PageDto(cri, totalCnt);
-			System.out.println("totalCnt : "+totalCnt);
-			System.out.println("pageDto : "+pageDto);
+			
+			// 그룹 이름 리스트 
 			mav.addObject("list", learnerService.groupName(g_name));
-			// 그룹 전체 리스트 출력
-			mav.addObject("listAll", learnerService.grouplistAll(learnerVO, cri));
-			System.out.println(learnerService.grouplistAll(learnerVO, cri));
+			
+			// 그룹 전체 리스트 
+			mav.addObject("listAll", learnerService.grouplistAll(l_m_id, cri));
+			System.out.println(learnerService.grouplistAll(l_m_id, cri));
 			System.out.println("g_name : "+ g_name);
 			System.out.println("l_m_id :"+ l_m_id);
 			
 			mav.addObject("pageDto", pageDto);
 			mav.addObject("totalCnt", totalCnt);
+			System.out.println("totalCnt : "+totalCnt);
+			System.out.println("pageDto : "+pageDto);
 		} catch (Exception e) {
 			map.put(REST_FAIL, "오류가 발생하였습니다.");
 		}

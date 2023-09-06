@@ -35,8 +35,8 @@ public class LearnerServiceImpl implements LearnerService {
 
 	// 전체 그룹 리스트 
 	@Override
-	public List<LearnerVO> grouplistAll(LearnerVO learnerVO, Criteria cri) {
-		return 	learnerMapper.grouplistAll(learnerVO, cri);
+	public List<LearnerVO> grouplistAll(String l_m_id, Criteria cri) {
+		return 	learnerMapper.grouplistAll(l_m_id,cri);
 	}
 
 	// 그룹 가입 신청
