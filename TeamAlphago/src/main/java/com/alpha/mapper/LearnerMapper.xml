@@ -133,10 +133,11 @@
 </select>
 
 <!-- 학습자 숙제 제출 -->
-<update id="subitHomework">
+<update id="subitHomework">	
 	UPDATE homework 
-	SET h_content = TRIM(BOTH ' ' FROM #{h_content})
-	where h_no = #{h_no};
+	SET h_content = TRIM(BOTH ' ' FROM #{h_content}),
+	    h_regidate = NOW()
+	WHERE h_no = #{h_no}
 </update>
 	
 </mapper>

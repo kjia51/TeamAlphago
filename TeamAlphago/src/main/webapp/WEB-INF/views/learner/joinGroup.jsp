@@ -17,6 +17,9 @@
 	<%@ include file="../common/header.jsp"%>
 	<div id="container">
 		<div class="wrap">
+	<form id="searchForm" method="get" name="searchForm" class="content_wrap">
+    	<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
+    </form>		
 			<div class="content_wrap">
 				<div class="titleBox">
 					<h2 class="t_title">그룹 가입 신청</h2>

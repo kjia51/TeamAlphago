@@ -49,6 +49,11 @@
 						<th>제출기한</th>
 						<th>제출현황</th>
 					</tr>
+					<c:if test="${homeworkList == null}">
+						<tr>
+							<td colspan="6" style="text-align: center;">숙제가 존재하지 않습니다.</td>
+						</tr>
+					</c:if>
 				</thead>
 				<tbody>
 				<c:choose>
@@ -213,6 +218,11 @@ function submitHomework() {
                 alert('제출되었습니다.');
                 // 제출 현황 업데이트: 완료 표시
                 $('#submissionStatus_' + hno).html('완료');
+                
+                // 현재 페이지의 URL을 가져와서 리로드
+                var currentPageURL = "/alpha/submitHomework?l_m_id="+memberId;
+                window.location.href = currentPageURL;
+                
             } else {
                 alert('제출에 실패하였습니다.');
             }

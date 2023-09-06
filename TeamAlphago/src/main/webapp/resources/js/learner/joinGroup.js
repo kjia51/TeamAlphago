@@ -26,6 +26,8 @@ function fetchPost(url, obj, callback){
 		consol.log('fetchPost',e);
 	}
 }
+
+
 // 그룹명 선택시 이벤트 발생 
 function changeGroup(g_name) {
 	console.log("g_name", g_name); 
@@ -219,6 +221,9 @@ function applyButton() {
 			applyButton.prop('disabled', true);
 	    }
 } 
+//서치폼 요소 저장
+const searchForm = document.getElementById('searchForm');
+
 // 페이징 처리
 function go(page){
 	//alert(page);
