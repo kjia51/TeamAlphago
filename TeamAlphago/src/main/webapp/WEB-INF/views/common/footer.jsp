@@ -32,8 +32,8 @@
                 </ul>
             </div>
             <div class="txtinfo">
-                <p class="corp_info">재단법인 한기원 <em>|</em> 주소: 서울특별시 마포구 중앙로 <br>전화: 02) 0000-0000  <em>|</em> 팩스: 02) 2282-5614 </p>
-                <p class="copytxt">COPYRIGHT © 재단법인 한기원 ALL RIGHTS RESERVED.</p>
+                <p class="corp_info">재단법인 OOO <em>|</em> 주소: 서울특별시 마포구 중앙로 <br>전화: 02) 0000-0000  <em>|</em> 팩스: 02) 0000-0000 </p>
+                <p class="copytxt">COPYRIGHT © 재단법인 OOO ALL RIGHTS RESERVED.</p>
             </div>
         </div>
     </div>

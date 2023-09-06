@@ -14,8 +14,8 @@
 <div id="container">
             <div class="wrap">
                 <div class="content_wrap">
-                	<input type="text" name="q_no" value=${QnAVO.q_no }>
-                	<input type="text" name="m_id" value="${memberVO.m_id }">
+                	<input type="hidden" name="q_no" value=${QnAVO.q_no }>
+                	<input type="hidden" name="m_id" value="${memberVO.m_id }">
                     <div class="titleBox">
                         <h2 class="t_title">Q&A</h2>
                     </div>

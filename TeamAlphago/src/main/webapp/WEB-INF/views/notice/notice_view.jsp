@@ -13,7 +13,7 @@
 <div id="container">
             <div class="wrap">
                 <div class="content_wrap">
-                	<input type="text" name="n_no" value=${noticeVO.n_no }>
+                	<input type="hidden" name="n_no" value=${noticeVO.n_no }>
                     <div class="titleBox">
                         <h2 class="t_title">공지사항</h2>
                     </div>

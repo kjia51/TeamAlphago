@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://kit.fontawesome.com/a2debf6ac3.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -33,8 +34,8 @@
                                 <tr>
                                     <th scope="row">제목</th>
                                     <td><input type="text" class="input-default" title="제목을 입력해주세요." placeholder="제목을 입력해주세요." style="width: 95%" maxlength="100" name="q_title" value=""></td>
-                                    <th scope="row">비밀글</th>
-                                    <td><input type="checkbox" id="q_secret" name="q_secret"></td>
+                                    <th scope="row"> <i class="fa-solid fa-lock"></i> </th>
+                                    <td><input style="margin-top:7px;" type="checkbox" id="q_secret" name="q_secret"></td>
                                 </tr>
                                 <tr>
                                 	<th scope="row">내용</th>

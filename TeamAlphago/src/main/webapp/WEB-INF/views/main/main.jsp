@@ -37,12 +37,12 @@
         </c:if>
              <li style="width:222px; height:170px;">
              	
-                <a href="https://www.kbaduk.or.kr/bbs/view/thum/photo/95/" class="img">
+                <a href="#" onclick="godetail(${status.index})" class="img">
                     <img src="https://www.kbaduk.or.kr/storage/mis/2023_03/06/b78e96e66dffc3d12d10e49db1563282.jpg" alt="">
                     <span class="text"><em>${status.index}</em></span>
                 </a>
                 <p class="desc">
-                    <a onclick="godetail(${status.index})"><strong class="tit">${con.c_name }</strong></a>
+                    <a href="#" onclick="godetail(${status.index})"><strong class="tit">${con.c_name }</strong></a>
                     <em>|</em><span class="hit">학습수준 : ${con.c_level }</span>
                 </p>
            </li>
@@ -79,5 +79,19 @@
 </div>           
 	
 	<%@ include file="../common/footer.jsp" %>
+	
+	<script>
+	function godetail(index) {
+		
+		var i = index;
+		console.log(i);
+
+		var c_no= $('input[data-cid="'+index+'"]').val();
+
+		console.log(c_no);
+		window.location.replace("/alpha/teacher/detail?c_no="+c_no);
+		
+	}
+	</script>
 </body>
 </html>

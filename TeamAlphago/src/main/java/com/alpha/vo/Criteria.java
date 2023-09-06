@@ -15,10 +15,10 @@ public class Criteria{
 
 	
 	private int pageNo = 1;		//요청 페이지 번호
-	private int amount = 12;	//한 페이지당 게시물 수
+	private int amount = 8;	//한 페이지당 게시물 수
 	
 	private int startNo = 0;
-	private int endNo 	= 12;
+	private int endNo 	= 8;
 
 	public void setPageNo(int pageNo) {
 		this.pageNo = pageNo;

@@ -86,7 +86,7 @@
                         <div class="gnb_sub gnb_sub_1">
                             <h3 class="blind">협회소개</h3>
                             <ul>
-                                <li><a href="/"> 사이트 소개 </a></li>
+                                <li><a href="/alpha/siteIntro"> 사이트 소개 </a></li>
                                 <li><a href="/alpha/guide"> 이용가이드 </a></li>
                             </ul>
                         </div>

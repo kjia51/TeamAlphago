@@ -54,6 +54,15 @@ public class MainController {
 	}
 	
 	
+	
+	@GetMapping("/siteIntro")
+	public ModelAndView siteIntro() {
+		
+		ModelAndView mav = new ModelAndView("/main/siteIntro");
+		return mav;
+	}
+	
+	
 	@GetMapping("/guide")
 	public ModelAndView guide() {
 		

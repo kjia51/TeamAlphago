@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://kit.fontawesome.com/a2debf6ac3.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -20,7 +21,7 @@
 
             <form class="entry" name="writeForm">
                 <div class="writeForm">
-                <input type="text" id="q_no" name="q_no" value=${QnAVO.q_no }>
+                <input type="hidden" id="q_no" name="q_no" value=${QnAVO.q_no }>
                     <div class="titleInfo">
                         <table class="table table-bordered table-form">
                             <caption>수정</caption>
@@ -33,8 +34,8 @@
                                     <th scope="row">제목</th>
                                     <td><input type="text" class="input-default" title="제목을 입력해주세요." placeholder="제목을 입력해주세요." 
                                     style="width: 95%" maxlength="100" name="q_title" value="${QnAVO.q_title }"></td>
-                                    <th scope="row">비밀글</th>
-                                    <td><input type="checkbox" id="q_secret" name="q_secret" ${QnAVO.q_secret == 'Y' ? 'checked' : ''}></td>
+                                    <th scope="row"> <i class="fa-solid fa-lock"></i> </th>
+                                    <td><input  style="margin-top:7px;" type="checkbox" id="q_secret" name="q_secret" ${QnAVO.q_secret == 'Y' ? 'checked' : ''}></td>
                                 </tr>
                                 <tr>
                                 	<th scope="row">내용</th>
