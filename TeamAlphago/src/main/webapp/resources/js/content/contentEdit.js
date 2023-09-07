@@ -90,14 +90,25 @@ function result(map){
 	if(map.result == 'success'){
 		const userConfirmation = confirm(map.msg);
 		if(userConfirmation){
-			window.location.href = "/alpha/mycart";			
-		} else{
 			window.location.href = "/alpha/teacher";			
 		}
 	} else {
 		alert(map.msg);
 	}
 		
+}
+//장바구니 등록
+function cartresult(map){
+	console.log(map);
+	if(map.result == 'success'){
+		const userConfirmation = confirm(map.msg);
+		if(userConfirmation){
+			window.location.href = "/alpha/mycart";			
+		}
+	} else {
+		alert(map.msg);
+	}
+	
 }
 
 
@@ -147,6 +158,12 @@ function resultList(map){
 		console.log(vo);
 		console.log(vo.c_level);
 		console.log(vo.c_able);
+		const c_ableArray = vo.c_able.split(',').map(Number);
+
+		// 배열에서 최댓값을 추출
+		const maxC_able = Math.max(...c_ableArray);
+
+		console.log(maxC_able); 
 		container.innerHTML += ''
 			+'	<div id="container">'
 			+'    <div class="wrap">'
@@ -175,21 +192,28 @@ function resultList(map){
     		+'                     <tr>'
     		+'                         <th scope="row">학습난이도</th>'
     		+'                         <td>'
-    		+'                               <select title="검색 분류" name="c_level" id="c_level" value="'+vo.c_level+'" }>'
-    		+'                                                <option value="1" ${'+vo.c_level+' eq "1" ? "selected" : "" }> 초급 </option>'
-    		+'                                                <option value="2" ${'+vo.c_level+' eq "2" ? "selected" : "" }> 중급 </option>'
-    		+'                                                <option value="3" ${'+vo.c_level+' eq "3" ? "selected" : "" }> 고급 </option>'
+    		+'                               <select title="검색 분류" name="c_level" id="c_level" value="" }>'
+    		+'                                                <option value="1" '+ (vo.c_level == 1 ? "selected" : "") + '> 초급 </option>'
+    		+'                                                <option value="2" '+ (vo.c_level == 2 ? "selected" : "") + '> 중급 </option>'
+    		+'                                                <option value="3"'+ (vo.c_level == 3 ? "selected" : "") + '> 고급 </option>'
     		+'                               </select> '
     		+'							</td>'
     		+'                     </tr>'
     		+'                     <tr>'
     		+'                         <th scope="row">학습가능인원</th>'
     		+'                         <td>'
-    		+'		                        <select name="selAmount" data-index="index" id="c_able" value="'+vo.c_able+'">'
+    		+'		                        <select name="selAmount" data-index="index" id="c_able" value="'+maxC_able+'">'
     		+'		                        </select>'
     		+'                         </td>'
     		+'                         '
     		+'                     </tr>'
+    		+'			            <tr>'
+    		+'			            <th scope="row">수강인원</th>'
+    		+'			            <td id="p_ableTd" >'
+    		+'			            <div id="p_able"></div>'
+    		+'			            <input type="hidden" class="input-default" id="poss_able" style="width: 97%" maxlength="100" name="poss_able" value="'+c_ableArray+'">'
+    		+'			            </td>'
+    		+'			       		 </tr>'
     		+'                     <tr>'
     		+'                         <th scope="row">정가</th>'
     		+'                         <td><input type="text" class="input-default" id="c_price" style="width: 97%" maxlength="100" name="c_price" value="'+vo.c_price+'"></td>'
@@ -218,7 +242,7 @@ function resultList(map){
     	    // select 옵션
     	    let options = '';
     	    for(let i=1;i<=10;i++){
-    	        options += `<option value='${i*10}'>${i*10}${i==10?'+':''}</option>`
+    	        options += `<option value='${i*10}' ${maxC_able == i * 10 ? "selected" : ""}>${i*10}</option>`
     	    }
     	    // select박스들에 옵션 추가및 change이벤트 추가
     	    selAmountList.forEach(function(item, index){
@@ -228,6 +252,7 @@ function resultList(map){
     	    })
     		
     
+
     	    $('#c_name').blur(function () {
     	    	let c_name = $('#c_name').val();
     	  	  	const isValidcname = /^[가-힣0-9]{6}$/.test(c_name);
@@ -256,13 +281,80 @@ function resultList(map){
 			    	}
 			    })
 			    
+		        p_able.innerHTML='';
+	            for(let i=1;i<=maxC_able/10;i++){
+	            	p_able.innerHTML += `<button type="button" value="${i}" class="blue" style="width:40px;height:30px; margin-right:25px" id="btn">${i*10}</button>`
+	            		}
+	            
+                let buttons = document.querySelectorAll("#btn");
+                buttons.forEach(button => {
+              	let isDisabled = button.classList.contains("disabled");
+               	let btnValue = button.getAttribute("value");
+               	for (let i = 1; i <= c_ableArray.length; i++) {
+               			console.log(c_ableArray);
+               			const c_able = c_ableArray[i - 1]/10;
+	               		if(c_able==btnValue){
+		                button.classList.add("disabled");
+	               		}
+               	}
+                })
+                let btnAll = c_ableArray;
+                buttons.forEach(button => {
+	                  button.addEventListener("click", () => {
+	                	  let btnValue = button.getAttribute("value");
+	                	  let isDisabled = button.classList.contains("disabled");
+	                    if (isDisabled) {
+	                      button.classList.remove("disabled");
+	                      btnAll.pop(btnValue*10);
+	                      console.log(`버튼 ${btnValue} 활성화`);
+	                      
+	                    } else {
+	                      button.classList.add("disabled");
+	                      console.log(`버튼 ${btnValue} 비활성화`);
+	                      btnAll.push(btnValue*10);
+	                      console.log(btnAll);
+	                    }
+	                    $('#poss_able').val(btnAll);
+	                  });
+	                });
 
+	            $('#c_able').blur(function () {
+	        		// 정규식을 이용하여 한글 숫자로만 구성되고,6자리인지를 검사
+	            	let c_able = $('#c_able').val();
+	                
+	                p_able.innerHTML='';
+	                for(let i=1;i<=c_able/10;i++){
+	                	p_able.innerHTML += `<button type="button" value="${i}" class="blue" style="width:40px;height:30px; margin-right:25px" id="btn">${i*10}</button>`
+	                }
+	                
+	                let buttons = document.querySelectorAll("#btn");
+
+	                let btnAll = [];
+	                buttons.forEach(button => {
+	                  button.addEventListener("click", () => {
+	                	  let btnValue = button.getAttribute("value");
+	                	  let isDisabled = button.classList.contains("disabled");
+	                    if (isDisabled) {
+	                      button.classList.remove("disabled");
+	                      btnAll.pop(btnValue*10);
+	                      console.log(`버튼 ${btnValue} 활성화`);
+	                      
+	                    } else {
+	                      button.classList.add("disabled");
+	                      console.log(`버튼 ${btnValue} 비활성화`);
+	                      btnAll.push(btnValue*10);
+	                      console.log(btnAll);
+	                    }
+	                    $('#poss_able').val(btnAll);
+	                  });
+	                });
+	            })
     
 			
 			$('#editBtn').click(function () {
 			let c_name = $('#c_name').val();
 			let c_level = $('#c_level').val();
-			let c_able = $('#c_able').val();
+			let c_able = $('#poss_able').val();
 			let c_price = $('#c_price').val();
 			let c_content = $('#c_content').val();
 			let c_no = $('#c_no').val();
@@ -284,8 +376,8 @@ function resultList(map){
 
 	
 		
-}
 
+}
 
 
 function getCart(index) {
@@ -403,6 +495,8 @@ $('#cartPopUp').on('click', function() {
 	    	let cname = list.c_name;
 	    	let cprice = list.price;
 	    	let cnt = list.c_able;
+	    	let cno = list.c_no;
+	    	let mid = list.m_id;
 	        var row = document.createElement('tr');
 	        row.innerHTML = `
 	            <td><input type="checkbox" name="selectedItem" data-index="${index}" style="margin-top: 5px;" /></td>
@@ -411,6 +505,8 @@ $('#cartPopUp').on('click', function() {
 	            <td>${cnt}</td>
 	            <td>${cprice}</td>
 	        	<td>${cprice}</td>
+	        	<td style="display: none">${cno}</td>
+	        	<td style="display: none">${mid}</td>
 	        `;
 	        tbdy.appendChild(row);
 	    });
@@ -428,31 +524,36 @@ $('#cartPopUp').on('click', function() {
         } else {
         	listIndex.splice(existingIndex, 1);
         }
-        return listIndex;
         });
-    
     $('#cartContent').click(function () {
-
-    	console.log('cart insert;')
-        var listArray = getCart(listIndex);
+        var table = document.getElementById('cartTable');
+        var selectedData = listIndex;
+        console.log(selectedData);
+        // 행들을 순회하면서 선택된 행들의 데이터를 추출
         
-        listArray.forEach(list => {
-            let cr_m_no = list.m_id;
-            let cr_c_no = list.c_no;
-            let cnt = list.c_able;
-            console.log(cr_m_no);
-            console.log(cr_c_no);
-            console.log(cnt);
-            let obj = {
-                cr_m_no: cr_m_no,
-                cr_c_no: cr_c_no,
-                cnt: cnt
-            };
+        for (var i = 1; i < table.rows.length; i++) { // 첫 번째 행은 헤더이므로 인덱스 1부터 시작
+            var checkbox = table.rows[i].cells[0].querySelector('input[type="checkbox"]');
+            
+            if (checkbox && checkbox.checked) {
+                var cnt = table.rows[i].cells[3].innerHTML;
+                var cr_c_no = table.rows[i].cells[6].innerHTML;
+                var cr_m_no = table.rows[i].cells[7].innerHTML;
+                console.log(cnt);
+                console.log(cr_c_no);
+                console.log(cr_m_no);
+                let obj = {
+                        cr_m_no: cr_m_no,
+                        cr_c_no: cr_c_no,
+                        cnt: cnt
+                    };
 
-            fetchPost('/alpha/cart/insert', obj, result);
+                    fetchPost('/alpha/cart/insert', obj, cartresult);
+            }
 
-        });
+
+        }
     });
+    
 		}
 	    }
 });

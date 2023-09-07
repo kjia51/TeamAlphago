@@ -110,7 +110,7 @@ window.addEventListener('load', function(){
     // select 옵션
     let options = '';
     for(let i=1;i<=10;i++){
-        options += `<option value='${i}'>${i*10}${i==10?'+':''}</option>`
+        options += `<option value='${i}'>${i*10}</option>`
     }
     // select박스들에 옵션 추가및 change이벤트 추가
     selAmountList.forEach(function(item, index){

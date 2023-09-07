@@ -32,7 +32,17 @@
     border-radius: 5px;
     margin: 20px;
 }
-
+.blue{
+    background-color: #f6f7f9;
+    border: 1px black solid;
+    color: black;
+    
+    }
+#btn.disabled {
+  background-color: #074691;
+  color : white;
+  cursor: not-allowed;
+}
 </style>
 
 <body>
@@ -40,7 +50,7 @@
 <div id="cartList">
 	<hr>
 	<h2 style="height:50px;">장바구니<i class="fa-solid fa-cart-shopping"></i> </h2>
-		<table border="1" style="width:100%;">
+		<table border="1" style="width:100%;" id="cartTable">
 			<colgroup>
 				<col style="width:5%">
 				<col style="width:10%">
@@ -209,7 +219,13 @@
 					
 					<div class="item-wrap" style="position: relative; padding:18px">
 			            	<input type="hidden" id="c_no" value=" ${con.c_no }">
-			            	<input type="checkbox" name="chkbox" style="display:block; margin-bottom:10px" id="chk" value="${status.index}">
+			            	<c:choose>
+							    <c:when test="${sessionScope.memberVO.m_division==1}">
+					            	<input type="checkbox" name="chkbox" style="display:block; margin-bottom:10px" id="chk" value="${status.index}">
+							    </c:when>
+							    <c:otherwise>
+							    </c:otherwise>
+							</c:choose>
 						<a href="/24/?idx=63" class="_fade_link shop-item-thumb hover_img_none">
 							<img data-prodcode="s2023081114659ed573520" alt="" src="https://cdn.imweb.me/thumbnail/20210713/a40bef34a9fba.png" class="_org_img org_img _lazy_img" data-original="" data-src="" style="display: inline; width:200px;height:200px;">
 						</a>

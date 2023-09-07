@@ -7,7 +7,59 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+#payList{
+    display: none;
+    width: 600px;
+    height: 300px;
+    padding: 30px 60px;
+    background-color: #fefefe;
+    border: 1px solid #888;
+    border-radius: 3px;
+    text-align: center;
+}
+#payList .modal_close_btn{
+
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 20px;
+}
+</style>
 <body>
+<div id="payList">
+	<hr>
+	<h2 style="height:50px;">결제<i class="fa-solid fa-cart-shopping"></i> </h2>
+
+		<table border="1" style="width:100%;">
+			<colgroup>
+				<col style="width:7%">
+				<col style="width:30%">
+				<col style="width:20%">
+				<col style="width:20%">
+				<col style="width:15%">
+				<col style="width:20%">
+			</colgroup>
+		<thead>
+		<tr>
+			<th>No</th>
+			<th>강의명</th>
+			<th>정원</th>
+			<th>가격</th>
+			<th>기간</th>
+			<th>소계</th>
+		</tr>
+		</thead>
+		<tbody id="tbdy1">
+		</tbody>
+		</table>
+		<br>
+			<div>
+				<input type="submit" class="btnTopSrch btn btn-primary" value="결제하기" id="payment">
+		    	<button><a class="modal_close_btn">닫기</a></button>
+			</div>
+		
+</div>
 <%@ include file="../common/header.jsp" %>
 <input id="m_id" type="hidden" value="${memberVO.m_id }">
 <div id="container">
@@ -51,7 +103,7 @@
 							</thead>
 						</table>
 					</div>
-						<input type="button" class="btn btn-primary" id="payment" value="결제하기">
+						<input type="button" class="btn btn-primary" id="payOption" value="결제하기">
 						<input type="button" class="btn btn-primary" id="deleteOption" value="선택삭제" style="margin-left:10px; color:#074691; background-color:white">
 				</div>
 			</div>
@@ -61,4 +113,5 @@
 <%@ include file="../common/footer.jsp" %>
 </body>
 <script src="/resources/js/content/cartList.js"></script>
+<script src="/resources/js/content/payment.js"></script>
 </html>

@@ -62,7 +62,6 @@
 		<div id="calendarList">
 			<div id="test" style="display:inline-block"></div>
 			<div id="test2" style="display:inline-block"></div>
-			<button><a class="modal_close_btn">선택</a></button>
 			<button><a class="modal_close_btn">확인</a></button>
         </div>
 

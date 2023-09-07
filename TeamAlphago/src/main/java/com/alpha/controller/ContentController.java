@@ -130,12 +130,27 @@ public class ContentController extends CommonRestController {
 				}
 			}
 		   
-		   //삭제 action
-		   @DeleteMapping("/content/DeleteCart/{cr_c_no}/{cr_m_no}")
-		   public Map<String, Object> delete(@PathVariable("cr_c_no") String cr_c_no, @PathVariable("cr_m_no") String cr_m_no) {
+		   //콘텐츠 삭제 action
+		   @DeleteMapping("/content/DeleteAction/{c_no}")
+		   public Map<String, Object> delete(@PathVariable("c_no") String c_no) {
 			   
 			   try {
-				   int res = contentService.deleteCart(cr_m_no, cr_c_no);
+				   int res = contentService.deleteContent(c_no);
+				   Map<String, Object> map = responseDeleteMap(res);
+				   return map;
+				   
+			   } catch (Exception e) {
+				   e.printStackTrace();
+				   return responseResultMap(REST_FAIL, "삭제 중 오류 발생");
+			   }
+		   }
+		   
+		   //장바구니 삭제 action
+		   @DeleteMapping("/content/DeleteCart/{cr_c_no}/{cr_m_no}/{cnt}")
+		   public Map<String, Object> delete(@PathVariable("cr_c_no") String cr_c_no, @PathVariable("cr_m_no") String cr_m_no, @PathVariable("cnt") String cnt) {
+			   
+			   try {
+				   int res = contentService.deleteCart(cr_m_no, cr_c_no, cnt);
 				   Map<String, Object> map = responseDeleteMap(res);
 				   return map;
 				   
@@ -213,11 +228,14 @@ public class ContentController extends CommonRestController {
 					return responseResultMap(REST_FAIL, "조회 중 오류 발생");
 				}
 		   }
-		   @GetMapping("/content/chartContent") 
-		   public Map<String, Object> chartCView() {
+		   @GetMapping("/content/chartContent/{c_level}") 
+		   public Map<String, Object> chartCView(@PathVariable("c_level") String c_level) {
 			   try {
 				   Map<String, Object> map = new HashMap<String, Object>();
-				   List<SalesVO> contentList = contentService.salesContent();
+				   List<SalesVO> levelList = contentService.salesLevel(c_level);
+				   List<SalesVO> contentList = contentService.salesContent(c_level);
+				   System.out.println(contentService.salesLevel(c_level));
+				   map.put("levelList", levelList);
 				   map.put("contentList", contentList);
 				   return map;
 				   

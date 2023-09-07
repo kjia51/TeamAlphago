@@ -23,9 +23,11 @@ public interface ContentService {
 	
 	public int cartCnt(String cr_m_no);
 	
-	public int deleteCart(String cr_m_no, String cr_c_no);
+	public int deleteCart(String cr_m_no, String cr_c_no, String cnt);
 	
-	public List<SalesVO> salesContent();
+	public List<SalesVO> salesContent(String c_level);
+	
+	public List<SalesVO> salesLevel(String c_level);
 	
 	public List<SalesVO> salesDate(String startdate, String enddate);
 	

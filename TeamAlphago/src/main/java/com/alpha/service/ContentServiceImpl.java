@@ -83,15 +83,21 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public int deleteCart(String cr_m_no, String cr_c_no) {
+	public int deleteCart(String cr_m_no, String cr_c_no, String cnt) {
 		// TODO Auto-generated method stub
-		return contentMapper.deleteCart(cr_m_no, cr_c_no);
+		return contentMapper.deleteCart(cr_m_no, cr_c_no, cnt);
 	}
 
 	@Override
 	public int cartCnt(String cr_m_no) {
 		// TODO Auto-generated method stub
 		return contentMapper.cartCnt(cr_m_no);
+	}
+
+	@Override
+	public List<SalesVO> salesLevel(String c_level) {
+		// TODO Auto-generated method stub
+		return contentMapper.salesLevel(c_level);
 	}
 
 

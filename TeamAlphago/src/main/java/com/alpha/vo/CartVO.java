@@ -11,7 +11,7 @@ public class CartVO {
 	private String cr_c_no; 
 	private String c_name; 
 	private String c_level; 
-	private int cnt;
+	private String cnt;
 	private int c_price;
 	private int c_sellprice;
 	private String c_discountrate; 

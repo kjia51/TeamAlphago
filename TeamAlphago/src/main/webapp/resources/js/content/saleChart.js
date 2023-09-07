@@ -87,9 +87,8 @@ function saleContent(){
 	                    +'<label style="margin:15px"><input type="radio" name="c_level" value="1">초급</label>'
 	                    +'<label style="margin:15px"><input type="radio" name="c_level" value="2">중급</label>'
 	                    +'<label style="margin:15px"><input type="radio" name="c_level" value="3">고급</label>'
-	                    +'<input type="text" value="0" id="radioValue">'
+	                    +'<input type="hidden" value="0" id="radioValue">'
 	                    +'</fieldset>'
-	                      +'<input type="button" class="btn btn-primary" id="btnContent" value="조회">'
 	                    +'</td>';
 	searchLayout.appendChild(row);
     var row1 = document.createElement('tr');
@@ -110,7 +109,7 @@ function saleContent(){
 		$('input[name="c_level"]').click(function () {
 			const rValue = $('input[name="c_level"]:checked').val();
 			$('#radioValue').val(rValue);
-			getChartCList();
+			getChartRList();
 		})
 		
 }
@@ -420,42 +419,41 @@ function saleDate(){
 	}
 	
 	function resultChartLevel(map){
-		let contentList = map.contentList;
+		let levelList = map.levelList;
+		console.log(levelList);
+		let level_cno = [];
+		let level_cprice = [];
 		$('#myChart').remove();
 		$('#myChartView').append('<canvas id="myChart"></canvas>');
 		const ctx = document.getElementById('myChart');
 		
 		chartBdy.innerHTML='';
-		contentList.forEach(function(chart) {
-			
-			let cprice = contentList.price;
-			let cnt = contentList.c_able;
+		levelList.forEach(function(level) {
+			let cprice = level.s_sales;
+			let cno = level.sub_c_no;
+			let s_count = level.s_count;
+			let cname = level.c_name;
+			level_cprice.push(cprice);
+			level_cno.push(cno);
 			var row = document.createElement('tr');
 			row.innerHTML = `
-				<td>${chart.level}</td>
-				<td>${chart.s_sales}원</td>
-				<td>${chart.s_count}건</td>
+				<td>${cname}</td>
+				<td>${cprice}원</td>
+				<td>${s_count}</td>
 				`;
 			chartBdy.appendChild(row);
-			
-			if (chart.level === '초급') {
-				content_sales[0] += chart.s_sales;
-			} else if (chart.level === '중급') {
-				content_sales[1] += chart.s_sales;
-			} else if (chart.level === '고급') {
-				content_sales[2] += chart.s_sales;
-			}    
+
 		});
 		
 		new Chart(ctx, {
 			type: 'bar',
 			data: {
 				
-				labels: level, 
+				labels: level_cno, 
 				
 				datasets: [{
 					label: '매출조회',
-					data: content_sales,
+					data: level_cprice,
 				}]
 			},
 			options: {

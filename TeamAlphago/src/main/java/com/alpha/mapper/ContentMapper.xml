@@ -26,23 +26,35 @@
 	</delete>
 	
 	<delete id="deleteCart">
-		delete from cart where cr_m_no=#{cr_m_no} and cr_c_no=#{cr_c_no}
+		delete from cart where cr_m_no=#{cr_m_no} and cr_c_no=#{cr_c_no} and cnt=#{cnt}
 	</delete>
 	
 	<select id="salesContent" resultType="com.alpha.vo.SalesVO">
-    	    select sub_c_no, count(*) s_count, ROUND(AVG(sub_price),0) s_sales, c_name  from subscribe s
-			left join (select * from content) c on sub_c_no = c_no
-		    group by sub_c_no
+    	    select sub_c_no, count(*) s_count, ROUND(SUM(sub_price),0) s_sales, c_name, if(c_level='1','초급', if(c_level='2','중급','고급')) level  from subscribe s
+			left join (select * from content) c on sub_c_no = c_no 
+			<if test="c_level!=0">
+			where c_level = #{c_level}
+			</if>
+			<if test="c_level==0">
+			group by c_level
+			</if>
+	</select>
+	
+	<select id="salesLevel" resultType="com.alpha.vo.SalesVO">
+            	    select sum(sub_price) s_sales, sub_c_no, c_name, count(*) s_count from subscribe s
+			left join (select * from content) c on sub_c_no = c_no 
+
+			where c_level = #{c_level} group by sub_c_no order by s_sales desc
 	</select>
 	
 	<select id="cartCnt" resultType="int">
-	 	select count(*) from cart cr_m_no=#{cr_m_no}
+	 	select count(*) from cart cr_m_no=#{cr_m_no} 
 	</select>
 	
 	<select id="salesDate" resultType="com.alpha.vo.SalesVO">
     	SELECT date_range.date_range AS s_date, 
        IFNULL(COUNT(subscribe.sub_date), 0) AS s_count, 
-       IFNULL(ROUND(AVG(subscribe.sub_price), 0), 0) AS s_sales
+       IFNULL(ROUND(SUM(subscribe.sub_price), 0), 0) AS s_sales
 		FROM (
 		    SELECT DATE_ADD(#{startdate}, INTERVAL n DAY) AS date_range
 		    FROM (
