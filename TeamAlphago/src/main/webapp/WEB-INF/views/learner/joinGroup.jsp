@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
-<script src="/resources/js/learner/joinGroup.js"></script>
+
 <!-- jQuery 라이브러리 추가 -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <head>
@@ -130,8 +130,9 @@
 	<!-- container close -->
 	
 <div style="text-align:center">
-	<%@include file = "pageNavi.jsp" %>
+<%@include file = "pageNavi.jsp" %>
 </div>
 <%@ include file="../common/footer.jsp"%>
 </body>
+<script src="/resources/js/learner/joinGroup.js"></script>
 </html>
