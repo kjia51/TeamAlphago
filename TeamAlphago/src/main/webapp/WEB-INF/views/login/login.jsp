@@ -66,9 +66,9 @@
             	url : "/alpha/loginAction",
             	contentType : 'application/json',
             	data : JSON.stringify(loginData),
-            	success : function(result){
+            	success : function(response){
             		alert('로그인이 완료되었습니다.');
-            	    location.href = '/alpha/main';
+            	    location.href = response.url;
             	},
             	error: function(xhr, status, error) {
             		var errorMessage = xhr.responseText; // 서버에서 전달한 오류 메시지를 가져옴

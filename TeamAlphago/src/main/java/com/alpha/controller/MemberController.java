@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alpha.service.LearnerService;
 import com.alpha.service.MailService;
 import com.alpha.service.MemberService;
 import com.alpha.vo.MemberVO;
@@ -33,6 +35,9 @@ public class MemberController {
 	MemberService memberService;
 	
 	@Autowired
+	LearnerService learnerService;
+	
+	@Autowired
 	MailService mailService;
 
 	@GetMapping("/login")
@@ -42,8 +47,9 @@ public class MemberController {
 	}
 	
 	@PostMapping("/loginAction")
-	public ResponseEntity<String> loginAction(@RequestBody MemberVO memberVO,
-	                                          HttpSession session) {
+	public ResponseEntity<Map<String, Object>> loginAction(@RequestBody MemberVO memberVO, String l_m_id,
+	                                      HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
 
 	    try {
 	        memberVO = memberService.login(memberVO);
@@ -52,13 +58,26 @@ public class MemberController {
 	            session.setAttribute("memberVO", memberVO);
 	            session.setAttribute("m_id", memberVO.getM_id());
 	            session.setMaxInactiveInterval(-1);
-	            return ResponseEntity.ok("로그인이 완료되었습니다.");
+
+	            // 학습자가 로그인 시 그룹 가입되어 있지 않으면 그룹 가입 화면 이동
+	            int res = learnerService.searchJoinGrp(memberVO.getM_id());
+	            if (memberVO.getM_division() == 2 && res == 0) {
+	            	response.put("message", "그룹 가입 화면으로 이동해야 합니다.");
+	                response.put("url", "/alpha/joinGroup");
+	                return ResponseEntity.ok(response);
+	            } else {
+	                response.put("message", "로그인이 완료되었습니다.");
+	                response.put("url", "/alpha/main");
+	                return ResponseEntity.ok(response);
+	            }
 	        } else {
-	            return ResponseEntity.badRequest().body("로그인 정보가 올바르지 않습니다.");
+	            response.put("error", "로그인 정보가 올바르지 않습니다.");
+	            return ResponseEntity.badRequest().body(response);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        return ResponseEntity.badRequest().body("로그인 중 오류가 발생했습니다.");
+	        response.put("error", "로그인 중 오류가 발생했습니다.");
+	        return ResponseEntity.badRequest().body(response);
 	    }
 	}
 

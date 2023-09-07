@@ -6,6 +6,10 @@ import com.alpha.vo.Criteria;
 import com.alpha.vo.LearnerVO;
 @Mapper
 public interface LearnerMapper {
+	
+	// 그룹 가입 신청 조회
+	public int searchJoinGrp(String l_m_id);
+	
 	// 그룹 이름 리스트 
 	public List<LearnerVO> groupName(String g_name);
 	

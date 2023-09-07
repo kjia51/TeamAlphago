@@ -6,11 +6,16 @@ import com.alpha.vo.Criteria;
 import com.alpha.vo.LearnerVO;
 @Service
 public interface LearnerService {
+	
+	// 그룹 가입 신청 조회
+	public int searchJoinGrp(String l_m_id);
+	
 	// 그룹 이름 리스트 
 	public List<LearnerVO> groupName(String g_name);
 	
 	// 학습지도자별 그룹 이름 리스트 
 	public List<LearnerVO> groupNameForT(String t_m_id);
+	
 	// 그룹별 가입 신청 리스트 
 	public List<LearnerVO> groupInfo(@Param("g_name") String g_name, @Param("l_m_id") String l_m_id);
 

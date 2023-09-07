@@ -10,6 +10,12 @@ public class LearnerServiceImpl implements LearnerService {
 	@Autowired
 	private LearnerMapper learnerMapper;
 	
+	// 그룹 가입 신청 조회
+	@Override
+	public int searchJoinGrp(String l_m_id) {
+		return learnerMapper.searchJoinGrp(l_m_id);
+	}
+	
 	// 그룹 이름 리스트
 	@Override
 	public List<LearnerVO> groupName(String g_name) {
@@ -64,7 +70,8 @@ public class LearnerServiceImpl implements LearnerService {
 	public int grpTotalCnt(Criteria cri) {
 		return learnerMapper.grpTotalCnt(cri);
 	}
-		
+
+
 	
  
 }

@@ -3,6 +3,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alpha.mapper.LearnerMapper">
 
+<!-- 그룹 가입 신청 조회 -->
+<select id="searchJoinGrp" resultType="int">
+	select count(*) from learner
+	where l_m_id = #{l_m_id}
+</select>
 
 <!-- 그룹 이름  -->
 <select id="groupName" resultType="com.alpha.vo.LearnerVO">
