@@ -62,6 +62,7 @@ $('#registerBtn').click(function () {
 	let c_discount = $('#c_discount').val();
 	let c_sellprice = $('#c_sellprice').val();
 	let c_content = $('#c_content').val();
+	let files = $('#files').val();
 	
 	  
 	console.log(c_able);
@@ -99,8 +100,12 @@ $('#registerBtn').click(function () {
 			, c_sellprice : c_sellprice
 			, c_content : c_content
 			}
-	
+	let data = {
+			files : files
+	}
 	fetchPost('/alpha/content/insert', obj, result)
+	fetchPost('/alpha/fileupload', data, result)
+	
 
 })
 
@@ -273,7 +278,25 @@ function resultList(map){
     		+'                         <th scope="row">콘텐츠 내용</th>'
     		+'                         <td><textarea id="c_content" placeholder="10자 이상 입력하세요" style="width:100%; height:450px; border: solid #ccc 1px;">'+vo.c_content+'</textarea></td>'
     		+'                     </tr>'
+
     		+'                 </tbody>'
     		+'             </table>'
     }
     
+function checkExtension(fileName, fileSize) {
+	let MaxSize = 1024 * 1024 *10;
+	// .exe, .sh, .zip, .alz 끝나는 문자열
+	// 정규표현식 : 특정 규칙을 가진 문자열을 검색하거나 치환 할때 사용
+	let regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+	if(MaxSize <= fileSize){
+		alert("파일 사이즈가 초과하였습니다.");
+		return false;
+	}
+	
+	// 문자열에 정규식 패턴을 만족하는 값이 있으면 true, 없으면 ㄹ먀ㅣ
+	if(regex.test(fileName)){
+		alert("해당 종류의 파일은 업로드 할 수 없습니다.");
+		return false;
+	}
+	return true;
+}
