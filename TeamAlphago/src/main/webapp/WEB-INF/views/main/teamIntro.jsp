@@ -17,7 +17,11 @@
         </div>
         <div class="entry">
             <div class="policy-content">
-               	팀 소개
+               	팀 소개 <br>
+               	김솔이 - 일본 여행중.. <br>
+               	김지아 (ESFP) <br>
+               	유화(ENTJ)  <br>
+               	한유진(ESTP) <br>
             </div>
         </div>
     </div>

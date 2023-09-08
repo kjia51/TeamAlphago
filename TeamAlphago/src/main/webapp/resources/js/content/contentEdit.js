@@ -291,7 +291,7 @@ function resultList(map){
               	let isDisabled = button.classList.contains("disabled");
                	let btnValue = button.getAttribute("value");
                	for (let i = 1; i <= c_ableArray.length; i++) {
-               			console.log(c_ableArray);
+               			console.log("c_ableArray",c_ableArray);
                			const c_able = c_ableArray[i - 1]/10;
 	               		if(c_able==btnValue){
 		                button.classList.add("disabled");
@@ -299,13 +299,18 @@ function resultList(map){
                	}
                 })
                 let btnAll = c_ableArray;
+                console.log("btnAll", btnAll)
                 buttons.forEach(button => {
 	                  button.addEventListener("click", () => {
 	                	  let btnValue = button.getAttribute("value");
+	                	  console.log("btnValue*10", btnValue*10)
 	                	  let isDisabled = button.classList.contains("disabled");
 	                    if (isDisabled) {
+	                    	const indexToRemove = btnAll.indexOf(btnValue * 10);
+	                    	if (indexToRemove !== -1) {
+	                    	  btnAll.splice(indexToRemove, 1);
+	                    	}
 	                      button.classList.remove("disabled");
-	                      btnAll.pop(btnValue*10);
 	                      console.log(`버튼 ${btnValue} 활성화`);
 	                      
 	                    } else {
@@ -492,7 +497,7 @@ $('#cartPopUp').on('click', function() {
 	    var listArray = getCart(selectedIndexes);
 	    
 	    listArray.forEach((list,index) => {
-	    	let cname = list.c_name;
+	    	let cname = list.c_name.slice(0,18);
 	    	let cprice = list.price;
 	    	let cnt = list.c_able;
 	    	let cno = list.c_no;
@@ -501,7 +506,7 @@ $('#cartPopUp').on('click', function() {
 	        row.innerHTML = `
 	            <td><input type="checkbox" name="selectedItem" data-index="${index}" style="margin-top: 5px;" /></td>
 	            <td>${index+1}</td>
-	            <td>${cname}</td>
+	            <td>${cname}..</td>
 	            <td>${cnt}</td>
 	            <td>${cprice}</td>
 	        	<td>${cprice}</td>
@@ -580,13 +585,13 @@ $('#payPopUp').on('click', function() {
 			console.log("listArray",listArray);
 			
 			listArray.forEach((list,index) => {
-				let cname = list.c_name;
+				let cname = list.c_name.slice(0,15);
 				let cprice = list.price;
 				let cnt = list.c_able;
 				var row = document.createElement('tr');
 				row.innerHTML = `
 					<td>${index+1}</td>
-					<td>${cname}</td>
+					<td>${cname}..</td>
 					<td>${cnt}명</td>
 					<td>${cprice}</td>
 					<td>
@@ -623,3 +628,5 @@ $('#payPopUp').on('click', function() {
 	$("#theBtn").click(function() {
 		modal('no_content');
 	});
+	
+	

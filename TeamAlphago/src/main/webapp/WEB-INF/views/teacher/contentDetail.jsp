@@ -84,12 +84,12 @@
 
 		<table border="1" style="width:100%;">
 			<colgroup>
-				<col style="width:7%">
-				<col style="width:30%">
-				<col style="width:20%">
-				<col style="width:20%">
+				<col style="width:5%">
+				<col style="width:40%">
+				<col style="width:6%">
 				<col style="width:15%">
-				<col style="width:20%">
+				<col style="width:10%">
+				<col style="width:25%">
 			</colgroup>
 		<thead>
 		<tr>
