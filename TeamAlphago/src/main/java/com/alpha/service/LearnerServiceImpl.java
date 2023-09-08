@@ -74,7 +74,7 @@ public class LearnerServiceImpl implements LearnerService {
 	// 학습지도자별 숙제 제출 리스트 조회
 	@Override
 	public List<LearnerVO> submittedList(String g_no, String t_m_id) {
-		return learnerMapper.submittedList(g_no);
+		return learnerMapper.submittedList(g_no, t_m_id);
 	}
 
 

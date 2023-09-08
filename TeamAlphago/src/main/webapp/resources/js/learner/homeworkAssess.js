@@ -96,7 +96,7 @@ function displayLearnerList(map) {
 						+'			</thead>                         '
 						+'			<tbody>							 ';			
 	if(submittedList != null){
-		submittedList.forEach((homework)=>{
+		submittedList.forEach((homework, index)=>{
  		console.log('homework', homework.m_name);
  		pageBlock += ''					
 						+'<tr>'
