@@ -10,4 +10,6 @@ import com.alpha.vo.FileuploadVO;
 public interface FileuploadMapper {
 	
 	public int insert(@Param("file") List<MultipartFile> file, @Param("c_no") String c_no);
+	
+	public int contentfileupload(List<MultipartFile> files) throws Exception;
 }

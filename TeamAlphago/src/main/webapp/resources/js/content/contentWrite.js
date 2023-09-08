@@ -33,6 +33,20 @@ function result(map){
 	}
 		
 }
+function file(map){
+	let files = $('#files').val();
+	console.log(files);
+	if(map.result == 'success'){
+		alert(map.msg);
+		let obj = {
+				files : files
+		}
+		fetchPost('/alpha/fileupload', obj, result)
+	} else {
+		alert(map.msg);
+	}
+	
+}
 
 //get방식 요청
 function fetchGet(url,callback){
@@ -101,7 +115,7 @@ $('#registerBtn').click(function () {
 
 			}
 
-	fetchPost('/alpha/content/insert', obj, result)
+	fetchPost('/alpha/content/insert', obj, file)
 	
 
 })
@@ -177,7 +191,7 @@ window.addEventListener('load', function(){
 
     $('#c_content').blur(function () {
     	let c_content = $('#c_content').val();
-    	const isValidcontent = /^[ㄱ-ㅎㅏ-ㅣ가-힣0-9 ]{10,}$/.test(c_content);
+    	const isValidcontent = /^[ㄱ-ㅎㅏ-ㅣ가-힣0-9\s!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{10,}$/.test(c_content);
     	// 결과에 따라 메시지 출력
     	if (!isValidcontent) {
     		signContent.innerHTML = "10자리 이상 입력하세요";

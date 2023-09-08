@@ -30,7 +30,7 @@ public class FileuploadServiceImpl implements FileuploadService {
 	}
 
 	
-		public int Contentfileupload(List<MultipartFile> files, String p_id) throws Exception {
+		public int contentfileupload(List<MultipartFile> files) throws Exception {
 			int insertRes = 0;
 			for(MultipartFile file : files) {
 				if(file.isEmpty()) {
@@ -47,7 +47,7 @@ public class FileuploadServiceImpl implements FileuploadService {
 					 * 파일이름이 중복되어 파일이 소실되지 않도록 uuid를 붙여서 저장
 					 */
 					UUID uuid = UUID.randomUUID();
-					String saveFileName = p_id+file.getOriginalFilename();
+					String saveFileName = file.getOriginalFilename();
 					String uploadPath = getContent();
 					
 					File sFile = new File(FileuploadController.ATTACHES_DIR
