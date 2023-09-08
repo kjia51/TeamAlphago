@@ -66,15 +66,13 @@ function displayGroupList(map) {
 						+'	<table class="table table-bordered">    '
 						+'		<caption>그룹 정보</caption>          '
 						+'		<colgroup>                          '
-						+'			<col width="10%" />             '
 						+'			<col width="30%" />             '
-						+'			<col width="20%" />             '
-						+'			<col width="20%" />             '
+						+'			<col width="25%" />             '
+						+'			<col width="25%" />             '
 						+'			<col width="20%" />             '
 						+'		</colgroup>                         '
 						+'		<thead>                             '
 						+'			<tr>                            '
-						+'				<th>선택</th>                '
 						+'				<th>학습지도자명</th>          '
 						+'				<th>학습기간</th>             '
 						+'				<th>가입현황</th>             '
@@ -89,7 +87,6 @@ function displayGroupList(map) {
     		pageBlock += ''
     				   + '<tbody>'
     				   +'<tr>' 
-	                   +'<th align="center"><input type="checkbox" id="checkbox" name="myCheckbox" value="isChecked"></th>' 
 	                   +'<td align ="center" class="row">' + group.t_m_name + '</td>' 
 	                   +'<td align="center">' + group.g_period + '</td>' 
 	                   +'<td align="center">' + group.g_AppCnt + '</td>' 
@@ -128,38 +125,23 @@ function displayGroupList(map) {
 						+'</div>';
     groupInfoDiv.innerHTML += pageBlock;
 }
-document.addEventListener('click', function() {
-    if (event.target && event.target.type === 'checkbox') {
-        var applyButton = event.target.closest('tr').querySelector('.apply-button');
-        
-        if (event.target.checked) {
-            // 체크 박스가 선택된 경우 - 버튼 활성화
-            applyButton.disabled = false;
-        } else {
-            // 체크 박스가 선택되어 있지 않은 경우 - 버튼 비활성화
-            applyButton.disabled = true;
-            alert('신청하실 그룹을 선택하여 주세요.');
-        }
-    }
-});
+
 //'신청' 버튼 클릭 이벤트 처리
 function applyButton() {
 	// 체크된 행
-	let checkedRow = document.querySelector('input[name="myCheckbox"]:checked').closest('tr');
 	let inputMid = document.querySelector('#memberId');
 	let inputDiv = document.querySelector('#division');
 	
-	let checkbox = $(event.target).closest('tr').find('input[type="checkbox"]');
-	let applyButton = $(event.target);
+
 	
 	// 각 input 요소에서 값을 가져옴
 	let l_m_id = inputMid.value;
 	let m_division = inputDiv.value;
-	let t_m_id = checkedRow.querySelector('#teacherId').value;
-	let l_g_no = checkedRow.querySelector('#groupNo').value;
-	let l_c_no = checkedRow.querySelector('#contentNo').value;
-	let sub_able = checkedRow.querySelector('#ableGrpCnt').value;
-	let g_cnt= checkedRow.querySelector('#currentGrpCnt').value;
+	let t_m_id = document.querySelector('#teacherId').value;
+	let l_g_no = document.querySelector('#groupNo').value;
+	let l_c_no = document.querySelector('#contentNo').value;
+	let sub_able = document.querySelector('#ableGrpCnt').value;
+	let g_cnt= document.querySelector('#currentGrpCnt').value;
 	
 	console.log(l_m_id);
 	console.log(t_m_id);
@@ -168,22 +150,16 @@ function applyButton() {
 	console.log(m_division);
 	console.log(sub_able);
 	console.log(g_cnt);
+	
 		if(m_division == 2){
 			
 	    	// 학습자인 경우 신청 활성화
-	    	if (!checkbox.prop('checked')) {
-	    		// 체크 박스가 선택되어 있지 않은 경우
-	    		alert('신청하실 그룹을 선택하여 주세요.'); 
-	    		//  -> 신청 비활성화
-	    		applyButton.prop('disabled', true);
-	    	} else if(g_cnt === sub_able){
+			if(g_cnt == sub_able){
             	// 현재인원이 그룹인원과 동일한 경우
     			alert('신청 인원 마감');
 	    		applyButton.prop('disabled', true);
 	    		
 	    	} else {
-	    		// 체크 박스가 선택되어 있는 경우 -> 신청 활성화
-	            console.log("신청버튼 활성화")
 	            	
 	            // 그룹 신청 Fetch 요청
 	            fetch('/alpha/groupApply', {
@@ -221,7 +197,7 @@ function applyButton() {
 			applyButton.prop('disabled', true);
 	    }
 } 
-//서치폼 요소 저장
+/*//서치폼 요소 저장
 const searchForm = document.getElementById('searchForm');
 
 // 페이징 처리
@@ -230,4 +206,4 @@ function go(page){
 	document.searchForm.pageNo.value=page;
 	document.searchForm.action = "/alpha/joinGroup";
 	document.searchForm.submit();
-}
+}*/

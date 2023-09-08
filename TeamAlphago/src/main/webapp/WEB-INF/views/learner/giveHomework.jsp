@@ -22,7 +22,7 @@
 		<div class="wrap">
 			<div class="content_wrap">
 				<div class="titleBox">
-					<h2 class="t_title">숙제 전송(학습 지도자용)</h2>
+					<h2 class="t_title">숙제 전송(학습 지도자)</h2>
 					<input name="t_m_id" id="memberId" type="hidden" value="${memberVO.m_id}"> 
 						<input name="m_division" id="division" type="hidden" value="${memberVO.m_division}">
 				</div>

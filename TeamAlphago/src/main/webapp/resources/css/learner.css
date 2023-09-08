@@ -83,3 +83,13 @@
     width: 90%;
     height: 300px;
 }
+
+/* homeworkAssess 모달 평가박스  */
+#searchBox{
+    float: left;
+    width: auto;
+    min-width: 115px;
+    height: 38px;
+    padding: 5px 20px 5px 6px;
+    border: 1px solid #ccc;	
+}

@@ -154,8 +154,8 @@
 	    t_m_id,
 	    l_m_id,
 		m_name,
-	    h_limit,
-	    h_regidate,
+	    DATE_FORMAT(h_limit, '%Y-%m-%d') AS h_limit,
+	    DATE_FORMAT(h_regidate, '%Y-%m-%d') AS h_regidate,
 	    c_name,
 	    h_content,
 	    h_homework
