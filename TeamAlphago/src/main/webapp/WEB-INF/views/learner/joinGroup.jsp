@@ -11,6 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>그룹 가입 신청</title>
+<link rel="icon" href="/resources/images/favicon.ico"/>
 </head>
 <link rel="stylesheet" href="/resources/css/learner.css">
 <body>

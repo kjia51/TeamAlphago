@@ -62,7 +62,6 @@ $('#registerBtn').click(function () {
 	let c_discount = $('#c_discount').val();
 	let c_sellprice = $('#c_sellprice').val();
 	let c_content = $('#c_content').val();
-	let files = $('#files').val();
 	
 	  
 	console.log(c_able);
@@ -93,18 +92,16 @@ $('#registerBtn').click(function () {
 	//전달할 객체로 생성
 	let obj = {
 			c_name : c_name
-			,  c_level : c_level
-			,  c_able : c_able
+			, c_level : c_level
+			, c_able : c_able
 			, c_price: c_price
 			, c_discount : c_discount
 			, c_sellprice : c_sellprice
 			, c_content : c_content
+
 			}
-	let data = {
-			files : files
-	}
+
 	fetchPost('/alpha/content/insert', obj, result)
-	fetchPost('/alpha/fileupload', data, result)
 	
 
 })

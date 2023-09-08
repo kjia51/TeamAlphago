@@ -8,7 +8,8 @@
 <script src="https://kit.fontawesome.com/1028c0334c.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<title>Insert title here</title>
+<title>매출 조회</title>
+<link rel="icon" href="/resources/images/favicon.ico"/>
 <style>
 #calendarList {
     display: none;

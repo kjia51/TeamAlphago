@@ -26,9 +26,7 @@
             </when>
         </choose>
         <choose>
-            <when test="order == 'new'">
-                ORDER BY c_no DESC
-            </when>
+
             <when test="order == 'price1'">
                 ORDER BY c_price DESC
             </when>
@@ -43,6 +41,7 @@
             </when>
         </choose>
     </where>
+        ORDER BY c_no DESC
     LIMIT #{startNo}, #{amount}
 </select>
 
@@ -126,7 +125,7 @@
 	<!-- 그룹 등록  -->
 	<insert id="insertGroups">
 	INSERT INTO grp (g_no, sub_no, t_m_id, g_name, g_cnt, g_start, g_end) VALUES
-    (#{g_no}, #{sub_no},#{t_m_id}, #{g_name}, #{g_cnt},
+    (#{g_no}, #{sub_no},#{t_m_id}, #{g_name}, 0,
     STR_TO_DATE(#{g_start}, '%Y-%m-%d'),
     DATE_ADD(STR_TO_DATE(#{g_start}, '%Y-%m-%d'), INTERVAL 90 DAY))
 	</insert>
@@ -195,7 +194,9 @@
 	</select>
 	
 	<update id="updateGroupLearner">
-	update learner set l_checkyn= 'Y'
+	update learner 
+    left join grp on l_g_no = g_no
+    set l_checkyn = 'Y' , g_cnt=g_cnt+1
 	where l_no=#{l_no}
 	</update>
 	

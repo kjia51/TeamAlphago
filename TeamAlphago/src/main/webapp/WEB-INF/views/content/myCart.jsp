@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="icon" href="/resources/images/favicon.ico"/>
+<title>장바구니</title>
 </head>
 <style>
 #payList{

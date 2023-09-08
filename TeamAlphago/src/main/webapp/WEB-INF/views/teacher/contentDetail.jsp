@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>상세페이지</title>
+<link rel="icon" href="/resources/images/favicon.ico"/>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script><!-- 결제api -->
@@ -226,7 +227,7 @@
 							    <c:otherwise>
 							    </c:otherwise>
 							</c:choose>
-						<a href="/24/?idx=63" class="_fade_link shop-item-thumb hover_img_none">
+						<a href="" class="_fade_link shop-item-thumb hover_img_none">
 							<img data-prodcode="s2023081114659ed573520" alt="" src="https://cdn.imweb.me/thumbnail/20210713/a40bef34a9fba.png" class="_org_img org_img _lazy_img" data-original="" data-src="" style="display: inline; width:200px;height:200px;">
 						</a>
 			
@@ -248,10 +249,10 @@
 								<div class="ns-icon clearfix">
 									<!--<span class="new bg-brand">NEW</span>-->
 									<div class="item-icon _unit_list unit-list">
-							                                        <span class="im-icon-wrap" onclick="location.href='https://kibaonline.co.kr/23/?idx=1'">
+							                                        <span class="im-icon-wrap">
 			                       <i class="fa-regular fa-comment"></i> 0</span>
 			                    </span>
-							                    <span class="im-icon-wrap" onclick="SITE_SHOP_DETAIL.addProdWish('s20210713f943dd02f7efe', 'LzIz')">
+							                    <span class="im-icon-wrap">
 			                        <i id="wish-icon-s20210713f943dd02f7efe" class="wish-icon-s20210713f943dd02f7efe im-icon im-ico-like"></i>
 			                        <i class="fa-regular fa-heart"></i> 0</span>
 			                    </span>

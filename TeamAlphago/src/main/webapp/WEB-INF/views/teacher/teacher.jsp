@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>콘텐츠 조회</title>
+<link rel="icon" href="/resources/images/favicon.ico"/>
 </head>
 
 
@@ -137,7 +138,7 @@ div .InfoBox .info {
                          </c:if>
                          <li>
                          	
-                            <a href="https://www.kbaduk.or.kr/bbs/view/thum/photo/95/" class="img">
+                            <a href="" class="img">
                                 <img src="https://www.kbaduk.or.kr/storage/mis/2023_03/06/b78e96e66dffc3d12d10e49db1563282.jpg" alt="">
                                 <span class="text"><em>${status.index}</em></span>
                                                             </a>

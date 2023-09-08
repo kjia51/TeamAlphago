@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>Insert title here</title>
+<title>학습콘텐츠 등록</title>
+<link rel="icon" href="/resources/images/favicon.ico"/>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <style>
 .blue{
@@ -20,10 +21,9 @@
   cursor: not-allowed;
 }
 </style>
-</head>
+
 <body>
 	<%@ include file="../common/header.jsp" %>
-	
 	
 	<div id="container">
     <div class="wrap">
@@ -93,10 +93,7 @@
                                     <div id="signContent"  style="color:red"></div>
                                     <textarea id="c_content" placeholder="10자 이상 입력하세요" style="width:100%; height:450px; border: solid #ccc 1px;"></textarea></td>
                                 </tr>
-                                <tr>
-    		                         <th scope="row">파일첨부</th>
-    		                         <td><input type="file" class="form-control" id="files" name="img"></td>
-    		                     </tr>
+
                             </tbody>
                         </table>
                     </div>

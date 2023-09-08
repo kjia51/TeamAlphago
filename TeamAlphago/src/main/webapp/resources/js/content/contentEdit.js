@@ -87,6 +87,20 @@ function fetchDelete(url, callback) {
 //컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
 function result(map){
 	console.log(map);
+	let c_no = $('#c_no').val();
+	if(map.result == 'success'){
+		const userConfirmation = confirm(map.msg);
+		if(userConfirmation){
+			window.location.href = "/alpha/teacher/detail?c_no="+c_no;			
+		}
+	} else {
+		alert(map.msg);
+	}
+		
+}
+
+function dresult(map){
+	console.log(map);
 	if(map.result == 'success'){
 		const userConfirmation = confirm(map.msg);
 		if(userConfirmation){
@@ -95,7 +109,7 @@ function result(map){
 	} else {
 		alert(map.msg);
 	}
-		
+	
 }
 //장바구니 등록
 function cartresult(map){
@@ -133,7 +147,7 @@ $('#contentDelete').click(function () {
     
     if (userConfirmation) {
         // 사용자가 "확인"을 선택한 경우
-        fetchDelete('/alpha/content/DeleteAction/' + c_no, result);
+        fetchDelete('/alpha/content/DeleteAction/' + c_no, dresult);
         
     } else {
         // 사용자가 "취소"를 선택한 경우

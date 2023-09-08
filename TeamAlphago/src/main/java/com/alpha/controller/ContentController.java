@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.service.ContentService;
+import com.alpha.service.FileuploadService;
 import com.alpha.vo.CartVO;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.MemberVO;
@@ -31,6 +32,8 @@ public class ContentController extends CommonRestController {
 	   @Autowired
 	   ContentService contentService;
 	   
+	   @Autowired
+	   FileuploadService service;
 	   	
 	   @GetMapping("/")
 	   public ModelAndView main() {
@@ -69,6 +72,7 @@ public class ContentController extends CommonRestController {
 				int res = contentService.insertContent(contentVO);
 				System.out.println(res);
 				Map<String, Object> map = responseWriteMap(res);
+				map.put("c_no", contentVO.getC_no());
 				return map;
 
 			} catch (Exception e) {
@@ -141,7 +145,7 @@ public class ContentController extends CommonRestController {
 				   
 			   } catch (Exception e) {
 				   e.printStackTrace();
-				   return responseResultMap(REST_FAIL, "삭제 중 오류 발생");
+				   return responseResultMap(REST_FAIL, "구매된 상품이 존재합니다.");
 			   }
 		   }
 		   
