@@ -12,7 +12,7 @@
 	</insert>
 	
 	<select id="getContentOne" resultType="com.alpha.vo.ContentVO">
-		select * from content where c_no=#{c_no}
+		select *, if(c_level=1,'초급', if(c_level=2, '중급', '고급')) level from content where c_no=#{c_no}	
 	</select>
 	
 	<update id="updateContent">
@@ -112,6 +112,7 @@
 	    SELECT count(*) FROM cart WHERE (cr_m_no, cr_c_no) IN (SELECT cr_m_no, cr_c_no FROM cart where cr_m_no=#{cr_m_no} and cr_c_no=#{cr_c_no} and cnt=#{cnt})
 	</select>
 	
+
 	
 
 </mapper>

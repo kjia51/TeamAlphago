@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alpha.service.ContentService;
 import com.alpha.service.TeacherService;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.Criteria;
@@ -35,6 +36,9 @@ public class TeacherController extends CommonRestController {
 	
 	@Autowired 
 	TeacherService service;
+	
+    @Autowired
+    ContentService contentService;
 	
 	@GetMapping("/teacher") //콘텐츠 조회 페이지
 	public ModelAndView teacher(Criteria cri) {
@@ -58,6 +62,8 @@ public class TeacherController extends CommonRestController {
 		
 		ModelAndView mav = new ModelAndView("/teacher/contentDetail");
 		System.out.println(c_no);
+		
+		mav.addObject("contentVO", contentService.getContentOne(c_no));
 		mav.addObject("contentList", service.getContentDetail(c_no));
 		mav.addObject("getContentCnt", service.getContentCnt(c_no));
 		
