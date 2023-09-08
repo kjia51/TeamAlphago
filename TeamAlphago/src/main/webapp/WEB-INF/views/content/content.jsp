@@ -46,7 +46,7 @@
                             </colgroup>
                             <tbody>
                                 <tr>
-                                    <th scope="row">패키지명</th>
+                                    <th scope="row">콘텐츠명</th>
                                     <td>
                                     <div id="signCname" style="color:red"></div>
                                     <input type="text" class="input-default" id="c_name" placeholder="공백없이 한글/숫자 20자" style="width: 97%" maxlength="100" name="c_name" value="">

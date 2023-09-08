@@ -8,6 +8,7 @@ public class ContentVO {
 	private String c_no; 
 	private String c_name; 
 	private String c_level; 
+	private String level; 
 	private String c_able; 
 	private int c_price; 
 	private String c_discount; 
