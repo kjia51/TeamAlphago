@@ -13,6 +13,7 @@
 <%@ include file="../common/header.jsp"%>
 <meta charset="UTF-8">
 <title>학습자 숙제 내역</title>
+<link rel="icon" href="/resources/images/favicon.ico"/>
 </head>
 <body>
 	<div id="container">
@@ -102,7 +103,7 @@
 										</td>
 										<td align="center">
 											<input type="hidden" id="subStatus" value="">
-											<span id="submissionStatus_${list.h_no}"> ${list.h_content == null || list.h_content == '' ? '미완료' : '완료'}</span>
+											<span id="submissionStatus_${list.h_no}"> ${list.h_content == null || list.h_content == '' ? '미제출' : '제출'}</span>
 										</td>
 									</tr>
 
@@ -136,7 +137,7 @@
 					style="border: 1px solid #000, border-collapse: collapse; width: 100%;">
 					<tr>
 						<td align="center" style="border: 1px solid #000;"><textarea
-								name="h_content" id="hContent">학습 내용을 입력하세요.</textarea></td>
+								name="h_content" id="hContent" placeholder="학습 내용을 입력하세요."></textarea></td>
 					<tr>
 				</table>
 			</div>

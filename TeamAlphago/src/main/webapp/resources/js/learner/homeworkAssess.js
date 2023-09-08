@@ -42,7 +42,7 @@ function result(map){
 }
 
 //그룹 선택시 이벤트 발생 
-function selectGroupHw(g_no) {
+function selectGroup(g_no) {
 	console.log("g_no", g_no); 
  var url = '';
 	    $.ajax({
@@ -51,7 +51,7 @@ function selectGroupHw(g_no) {
 	        success: function(response) {
 	        	// 성공 시 작업
 				var url = '/alpha/homeworkAssess/' + g_no;
-	        	fetchGet(url, displayLearnerListH)
+	        	fetchGet(url, displayLearnerList)
 	        },
 	        error: function(xhr, status, error) {
 	            // 에러 처리
@@ -63,7 +63,7 @@ function selectGroupHw(g_no) {
  
  
 //선택 그룹에 따른 학습자 리스트 출력
-function displayLearnerListH(map) {
+function displayLearnerList(map) {
 	console.log("map", map)
 	let submittedList = map.submittedList;
 	console.log("submittedList", submittedList)
@@ -86,27 +86,33 @@ function displayLearnerListH(map) {
 						+'			<thead>                          '
 						+'				<tr>                         '
 						+'					<th>No.</th>             '
-						+'					<th>학습자 이름</th>        '
-						+'					<th>제출기한</th>          '
-						+'					<th>제출일자</th>          '
-						+'					<th>콘텐츠이름</th>        '
+						+'					<th>학습자 이름</th>'
+						+'					<th>제출기한</th>'
+						+'					<th>제출일자</th>'
+						+'					<th>콘텐츠이름</th>'
 						+'					<th>학습내용</th>          '
 						+'					<th>평가</th>             '
 						+'				</tr>                        '
 						+'			</thead>                         '
 						+'			<tbody>							 ';			
 	if(submittedList != null){
-		submittedList.forEach((homework, index)=>{
+		submittedList.forEach((homework)=>{
  		console.log('homework', homework.m_name);
  		pageBlock += ''					
 						+'<tr>'
-						+'		<th align="center">'+(index + 1)+'</th>'
+						+'		<th align="center">'+ index+1 +'</th>'
 						+'		<td align="center" class="row">'+homework.m_name+'</td>  '
 						+'		<td align="center">'+homework.h_limit+'</td>'
 						+'		<td align="center">'+homework.h_regidate+'</td>'
 						+'		<td align="center">'+homework.c_name+'</td>'
 						+'		<td align="center">'+homework.h_content+'</td>'
 						+'		<td align="center">'
+						+'<select name="h_review" onchange="assess(this.value);" value="">'
+						+'<option value="selectop">선택</option>'
+						+'<option value="Excellent">우수</option>'
+						+'<option value="Good">보통</option>'
+						+'<option value="Poor">미흡</option>'
+						+'</select>'
 						+'		</td>'
 						+'</tr>';
 		})
@@ -121,4 +127,18 @@ function displayLearnerListH(map) {
 	}
 	learnerInfoDiv.innerHTML += pageBlock;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

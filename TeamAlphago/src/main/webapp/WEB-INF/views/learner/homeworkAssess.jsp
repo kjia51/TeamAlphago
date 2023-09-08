@@ -11,6 +11,7 @@
 
 <meta charset="UTF-8">
 <title>숙제 평가</title>
+<link rel="icon" href="/resources/images/favicon.ico"/>
 </head>
 <link rel="stylesheet" href="/resources/css/learner.css">
 
@@ -31,7 +32,7 @@
 					<table class="table table-bordered">
 						<caption>그룹명</caption>
 						<colgroup>
-							<col width="20%" />
+							<col width="20%"/>
 						</colgroup>
 						<tbody>
 							<tr>
@@ -39,10 +40,10 @@
 								<td>
 									<div class="searchBox">
 										<select title="grpNameList" name="g_name" id="grpSelectBox"
-											onchange="selectGroupHw(this.value);" value="">
+											onchange="selectGroup(this.value);" value="">
 											<option value="selectop">선택</option>
 											<c:forEach items="${grpNameList}" var="group">
-												<option value="${group.g_name}">${group.g_name}</option>
+												<option value="${group.g_no}">${group.g_name}</option>
 											</c:forEach>
 										</select>
 									</div>

@@ -14,6 +14,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <meta charset="UTF-8">
 <title>숙제 전송</title>
+<link rel="icon" href="/resources/images/favicon.ico"/>
 </head>
 <link rel="stylesheet" href="/resources/css/learner.css">
 <body>
@@ -117,7 +118,7 @@
 				<tr>
 					<th align="center" style="border: 1px solid #000; vertical-align: middle;">숙제 내용</th>
 					<td align="center" style="border: 1px solid #000;" colspan="2">
-						<textarea name="h_homework" id="hHomework" rows="5" cols="10" style="width: 90%;">내용을 입력하세요.</textarea>
+						<textarea name="h_homework" id="hHomework" rows="5" cols="10" style="width: 90%;" placeholder="내용을 입력하세요."></textarea>
 					</td>
 					<td align="center" style="border: 1px solid #000;"></td>
 				</tr>

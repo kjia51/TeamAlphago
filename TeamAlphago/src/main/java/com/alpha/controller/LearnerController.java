@@ -202,16 +202,20 @@ public class LearnerController extends CommonRestController {
 	public Map<String, Object> homeworkAssess(@PathVariable("g_no") String g_no, HttpSession session){
 		System.out.println("그룹별 학습자 리스트 연결");
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+		System.out.println("map:"+ map);
 		String t_m_id = session.getAttribute("m_id") == null? "":session.getAttribute("m_id").toString();
 		
 		try {
 			System.out.println("학습지도자 아이디 : "+ t_m_id);
-			System.out.println("submittedList:"+ learnerService.submittedList(g_no, t_m_id));
+			System.out.println("g_no"+g_no);
 			List<LearnerVO> submittedList = learnerService.submittedList(g_no, t_m_id);
+			System.out.println("submittedList:"+ learnerService.submittedList(g_no, t_m_id));
 			map.put("submittedList", submittedList);
 			System.out.println("submittedList :"+submittedList);
 
+			
+			
+			
 		} catch (Exception e) {
 			map.put(REST_FAIL, "오류가 발생하였습니다.");
 		}

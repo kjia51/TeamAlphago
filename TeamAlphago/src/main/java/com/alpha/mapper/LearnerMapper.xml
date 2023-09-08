@@ -135,7 +135,8 @@
 	LEFT JOIN member m ON (h.t_m_id = m.m_id)
 	WHERE 
 	    l.l_m_id = #{m_id}
-	group by h_no    
+	group by h_no
+	order by h_limit    
 </select>
 
 <!-- 학습자 숙제 제출 -->
@@ -163,9 +164,9 @@
 	left join member on (l_m_id = m_id)
 	left join content on (h_c_no = c_no)
 	where 
-		h_g_no = #{h_g_no} 
+		h_g_no = #{g_no} 
 	and 
-		t_m_id = #{m_id} 
+		t_m_id = #{t_m_id} 
 	and 
 		h_regidate is not null
 	 order by h_limit 	
