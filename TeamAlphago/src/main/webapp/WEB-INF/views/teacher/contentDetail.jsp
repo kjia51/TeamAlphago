@@ -155,9 +155,8 @@
 					
 							<div class="text-table " style="text-align:left"><div>
 							<p style="line-height: 2;">
-							<strong><span style="font-size: 16px;">한기원 <span style="color: #074691;">${con.level }</span>은 한 판의 대국을 진행하려면 꼭 알아야 하는</span></strong>
+							<strong><span style="font-size: 16px;">한기원 <span style="color: #074691;">${con.level }</span></span></strong>
 							</p>
-							<p style="line-height: 2;"><strong><span style="font-size: 16px;">필수적인 이론과 방법들을 재미있는 교육 컨텐츠를 통해 배우며</span></strong></p>
 							<p style="line-height: 2;"><strong><span style="font-size: 16px;">${con.c_content }</span></strong></p>
 							<hr style="line-height: 2;"><p style="line-height: 2;"><span style="font-size: 16px;"><strong>- ${con.level } (1반, 2반, 3반, 4반 운영중)</strong></span></p>
 							<p style="line-height: 2;"><span style="font-size: 16px;"><strong>- 바둑 수업</strong></span></p>
@@ -165,7 +164,6 @@
 							<p style="line-height: 2;"><span style="font-size: 16px;"><strong>- 1대4 정원 수업 진행</strong></span></p>
 							<p style="line-height: 2;"><span style="font-size: 16px;"><strong>- 1수업 : 50분 기준</strong></span></p> 
 							<p style="line-height: 2;"><span style="font-size: 16px;"><strong>- 수업요일 : 월 ~ 금</strong></span></p>
-							<p style="line-height: 2;"><strong><span style="font-size: 16px;">- 수업시간 : 오후 2시 ~ 오후 9시 (시간 선택)</span></strong></p>
 							</div></div>		
 							
 				</div>
