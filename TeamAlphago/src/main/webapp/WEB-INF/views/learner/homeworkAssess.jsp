@@ -86,7 +86,7 @@
 								<c:if test="${isMember == null}">
 									<tr>
 										<td colspan="7" style="text-align: center;">
-										로그인 후 이용 가능합니다.</td>
+										로그인 후 이용해주세요.</td>
 									</tr>
 								</c:if>
 								<c:set var="isTeacher" value="${memberVO.m_division}" />

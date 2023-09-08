@@ -112,11 +112,11 @@
 					</table>
 
 					<!-- 제출버튼 -->
-					<div class="btnArea-center" style="border: 0; padding-top: 0;">
-						<span class="btn btn-grayline btn-lg">
-							<button id="writebtn">학습내용 입력</button>
-						</span>
-					</div>
+	                <div class="btnArea-center" style="margin-top:0" id="submitBtns">
+	                    <span class="btn btn-point btn-lg">
+	                    	<button type="button" id="writebtn" data-route="one/add/user/">학습내용 입력</button>
+	                    </span>
+                    </div>
 				</div>
 			</div>
 		</div>

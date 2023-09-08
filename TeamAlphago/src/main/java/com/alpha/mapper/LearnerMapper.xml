@@ -127,7 +127,7 @@
 	
 <!-- 학습자 숙제 리스트 -->
 <select id="homeworkList" resultType="com.alpha.vo.LearnerVO">
-	SELECT DISTINCT h.*
+	SELECT *
 	FROM 
 	    homework h
 	LEFT JOIN content c ON (h.h_c_no = c.c_no)
@@ -135,6 +135,7 @@
 	LEFT JOIN member m ON (h.t_m_id = m.m_id)
 	WHERE 
 	    l.l_m_id = #{m_id}
+	group by h_no    
 </select>
 
 <!-- 학습자 숙제 제출 -->
@@ -155,7 +156,8 @@
 	    h_limit,
 	    h_regidate,
 	    c_name,
-	    h_content
+	    h_content,
+	    h_homework
 	from 
 		homework
 	left join member on (l_m_id = m_id)

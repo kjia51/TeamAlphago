@@ -50,7 +50,7 @@ function selectGroupHw(g_no) {
 
  
  
-//선택 그룹에 따른 그룹 정보 리스트 출력
+//선택 그룹에 따른 학습자 리스트 출력
 function displayLearnerList(map) {
 	console.log("map", map)
 	let LearnerList = map.LearnerList_h;
@@ -87,25 +87,17 @@ function displayLearnerList(map) {
 		LearnerList.forEach((Learner)=>{
  		console.log('Learner', Learner.m_name);
  		pageBlock += ''					
-						+'				<tr>                                                        '
-						+'					<th align="center"><input type="checkbox" id="checkbox" '
-						+'						name="myCheckbox" value="'+Learner.l_no+'"></th>    '
-						+'					<td align="center" class="row">'+Learner.m_name+'</td>  '
-						+'					<td align="center">'+Learner.c_name+'</td>              '
-						+'					<td align="center">'+Learner.g_start+'</td>             '
-						+'					<td align="center">'+Learner.g_end+'</td>'
-						+'<td style="display: none">'
-						+'<input type="hidden" name="h_c_no" id="contentNo" value="'+ Learner.h_c_no +'">'
-						+'</td>'
-						+'<td style="display: ">'
-						+'<input type="text" name="l_m_id" id="learnerId" data-lno="'+Learner.l_no+'" value="'+ Learner.l_m_id +'">'
-						+'</td>'
-						+'<td style="display: none">'
-						+'<input type="hidden" name="h_g_no" id="groupNo" value="'+ Learner.h_g_no +'">'
-						+'</td>'
+						+'	<tr>                                                        '
+						+'		<th align="center"><input type="checkbox" id="checkbox" '
+						+'			name="myCheckbox" value="'+Learner.l_no+'"></th>    '
+						+'		<td align="center" class="row">'+Learner.m_name+'</td>  '
+						+'		<td align="center">'+Learner.h_limit+'</td>'
+						+'		<td align="center">'+Learner.h_regidate+'</td>'
+						+'		<td align="center">'+Learner.c_name+'</td>'
+						+'		<td align="center">'+Learner.h_content+'</td>'
+						+'		<td align="center">'+Learner.h_review+'</td>'
 						+'</tr>';
 		})
-						
 						
 			pageBlock += ''			
 						+'		</tbody>'
