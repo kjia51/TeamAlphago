@@ -100,7 +100,7 @@ function modal(id) {
             modal.hide();
         });
 }
-//숙제 일자 선택
+// 숙제 일자 선택
 $(function() {
     $("#datepickerS").datepicker({
     	showOtherMonths: true,
@@ -221,8 +221,8 @@ function displayLearnerList(map) {
 						
 						
 			pageBlock += ''			
-						+'		</tbody>                                                            '
-						+'	</table>                                                                '
+						+'		</tbody>'
+						+'	</table>'
 						+'</div>';
 	} else {
 			pageBlock +='<tr>'

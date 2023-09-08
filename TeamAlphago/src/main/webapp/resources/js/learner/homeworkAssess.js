@@ -28,6 +28,18 @@ function fetchPost(url, obj, callback){
 		consol.log('fetchPost',e);
 	}
 }
+//등록, 수정, 삭제의 결과를 처리하는 함수
+function result(map){
+	console.log(map);
+	if(map.result == 'success'){
+		alert(map.msg);
+		var memberId = $('#memberId').val();
+		window.location.href = "/alpha/homeworkAssess?t_m_id=" + memberId;
+	} else {
+		alert(map.msg);
+	}
+		
+}
 
 //그룹 선택시 이벤트 발생 
 function selectGroupHw(g_no) {
@@ -39,7 +51,7 @@ function selectGroupHw(g_no) {
 	        success: function(response) {
 	        	// 성공 시 작업
 				var url = '/alpha/homeworkAssess/' + g_no;
-	        	fetchGet(url, displayLearnerList)
+	        	fetchGet(url, displayLearnerListH)
 	        },
 	        error: function(xhr, status, error) {
 	            // 에러 처리
@@ -51,10 +63,10 @@ function selectGroupHw(g_no) {
  
  
 //선택 그룹에 따른 학습자 리스트 출력
-function displayLearnerList(map) {
+function displayLearnerListH(map) {
 	console.log("map", map)
-	let LearnerList = map.LearnerList_h;
-	console.log("LearnerList", LearnerList)
+	let submittedList = map.submittedList;
+	console.log("submittedList", submittedList)
 	
 	learnerInfoDiv.innerHTML='';
 	let pageBlock = ''; // 기존 내용 초기화
@@ -83,31 +95,30 @@ function displayLearnerList(map) {
 						+'				</tr>                        '
 						+'			</thead>                         '
 						+'			<tbody>							 ';			
-	if(LearnerList != null){
-		LearnerList.forEach((Learner)=>{
- 		console.log('Learner', Learner.m_name);
+	if(submittedList != null){
+		submittedList.forEach((homework, index)=>{
+ 		console.log('homework', homework.m_name);
  		pageBlock += ''					
-						+'	<tr>                                                        '
-						+'		<th align="center"><input type="checkbox" id="checkbox" '
-						+'			name="myCheckbox" value="'+Learner.l_no+'"></th>    '
-						+'		<td align="center" class="row">'+Learner.m_name+'</td>  '
-						+'		<td align="center">'+Learner.h_limit+'</td>'
-						+'		<td align="center">'+Learner.h_regidate+'</td>'
-						+'		<td align="center">'+Learner.c_name+'</td>'
-						+'		<td align="center">'+Learner.h_content+'</td>'
-						+'		<td align="center">'+Learner.h_review+'</td>'
+						+'<tr>'
+						+'		<th align="center">'+(index + 1)+'</th>'
+						+'		<td align="center" class="row">'+homework.m_name+'</td>  '
+						+'		<td align="center">'+homework.h_limit+'</td>'
+						+'		<td align="center">'+homework.h_regidate+'</td>'
+						+'		<td align="center">'+homework.c_name+'</td>'
+						+'		<td align="center">'+homework.h_content+'</td>'
+						+'		<td align="center">'
+						+'		</td>'
 						+'</tr>';
 		})
-						
 			pageBlock += ''			
 						+'		</tbody>'
 						+'	</table>'
 						+'</div>';
 	} else {
 			pageBlock +='<tr>'
-						+'<td colspan="6" style="text-align: center;">그룹을 선택하여 주세요.</td>'
+						+'<td colspan="7" style="text-align: center;">그룹을 선택하여 주세요.</td>'
 						+'</tr>';
 	}
-			learnerInfo.innerHTML += pageBlock;
+	learnerInfoDiv.innerHTML += pageBlock;
 }
 

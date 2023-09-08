@@ -41,5 +41,5 @@ public interface LearnerMapper {
 	public int subitHomework(@Param("h_no") String h_no, @Param("h_content") String h_content);
 	
 	// 학습지도자별 숙제 제출 리스트 조회
-	public List<LearnerVO> submittedList(String t_m_id);
+	public List<LearnerVO> submittedList(String g_no);
 }

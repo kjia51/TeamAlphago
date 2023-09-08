@@ -27,8 +27,9 @@ public interface LearnerService {
 	
 	// 그룹 가입 신청
 	public int insertGrp(LearnerVO learnerVO);
+	
 	// 그룹별 학습자 리스트
-	public List<LearnerVO> grpLearnerList(String g_no, String t_m_id);
+	public List<LearnerVO> grpLearnerList(@Param("g_no") String g_no, @Param("t_m_id") String t_m_id);
 	
 	// 숙제 요청 내역 저장
 	public int insertHomework(LearnerVO learnerVO);
@@ -40,6 +41,6 @@ public interface LearnerService {
 	public int subitHomework(@Param("h_no") String h_no, @Param("h_content") String h_content);
 	
 	// 학습지도자별 숙제 제출 리스트 조회
-	public List<LearnerVO> submittedList(String t_m_id);
+	public List<LearnerVO> submittedList(@Param("g_no") String g_no, @Param("t_m_id") String t_m_id);
  
 }

@@ -168,6 +168,8 @@
 		t_m_id = #{m_id} 
 	and 
 		h_regidate is not null
-</select>	
+	 order by h_limit 	
+</select>
+	
 <!-- 학습지도자 숙제 평가 저장 -->	
 </mapper>

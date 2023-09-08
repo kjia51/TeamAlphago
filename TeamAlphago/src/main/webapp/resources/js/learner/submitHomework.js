@@ -79,9 +79,9 @@ function submitHomework() {
                 alert('제출되었습니다.');
                 // 제출 현황 업데이트: 완료 표시
                 $('#submissionStatus_' + hno).html('완료');
-                
+        		var memberId = $('#memberId').val();
                 // 현재 페이지의 URL을 가져와서 리로드
-                var currentPageURL = "/alpha/submitHomework?l_m_id="+memberId;
+                var currentPageURL = "/alpha/submitHomework/?l_m_id="+memberId;
                 window.location.href = currentPageURL;
                 
             } else {
