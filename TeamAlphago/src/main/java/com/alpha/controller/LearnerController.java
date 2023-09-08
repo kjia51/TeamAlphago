@@ -197,5 +197,25 @@ public class LearnerController extends CommonRestController {
 		}
 		return mav; 
 	}
-	
+	// 그룹별 학습자 리스트 조회
+	@GetMapping("/homeworkAssess/{g_no}")
+	public Map<String, Object> homeworkAssess(@PathVariable("g_no") String g_no, HttpSession session){
+		System.out.println("그룹별 학습자 리스트 연결");
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String t_m_id = session.getAttribute("m_id") == null? "":session.getAttribute("m_id").toString();
+		
+		try {
+			System.out.println("학습지도자 아이디 : "+ t_m_id);
+			List<LearnerVO> LearnerList_h = learnerService.submittedList(t_m_id);
+			System.out.println("LearnerList_h : "+LearnerList_h);
+			map.put("LearnerList_h", LearnerList_h);
+
+		} catch (Exception e) {
+			map.put(REST_FAIL, "오류가 발생하였습니다.");
+		}
+		return map;
+	}
+
+		
 }

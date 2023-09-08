@@ -146,6 +146,26 @@
 </update>
 
 <!-- 제출된 숙제 리스트 (학습지도자)-->
-	
-<!-- 학습지도자 숙제 평가-->	
+<select id="submittedList" resultType="com.alpha.vo.LearnerVO">
+	select 
+		h_no,
+	    t_m_id,
+	    l_m_id,
+		m_name,
+	    h_limit,
+	    h_regidate,
+	    c_name,
+	    h_content
+	from 
+		homework
+	left join member on (l_m_id = m_id)
+	left join content on (h_c_no = c_no)
+	where 
+		h_g_no = #{h_g_no} 
+	and 
+		t_m_id = #{m_id} 
+	and 
+		h_regidate is not null
+</select>	
+<!-- 학습지도자 숙제 평가 저장 -->	
 </mapper>

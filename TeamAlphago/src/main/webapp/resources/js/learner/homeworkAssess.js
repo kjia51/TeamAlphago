@@ -30,15 +30,15 @@ function fetchPost(url, obj, callback){
 }
 
 //그룹 선택시 이벤트 발생 
-function selectGroup(g_no) {
+function selectGroupHw(g_no) {
 	console.log("g_no", g_no); 
  var url = '';
 	    $.ajax({
-	        url: '/alpha/giveHomework/' + g_no,
+	        url: '/alpha/homeworkAssess/' + g_no,
 	        method: 'GET',
 	        success: function(response) {
 	        	// 성공 시 작업
-				var url = '/alpha/giveHomework/' + g_no;
+				var url = '/alpha/homeworkAssess/' + g_no;
 	        	fetchGet(url, displayLearnerList)
 	        },
 	        error: function(xhr, status, error) {
@@ -53,35 +53,36 @@ function selectGroup(g_no) {
 //선택 그룹에 따른 그룹 정보 리스트 출력
 function displayLearnerList(map) {
 	console.log("map", map)
-	let LearnerList = map.LearnerList;
+	let LearnerList = map.LearnerList_h;
 	console.log("LearnerList", LearnerList)
 	
-	learnerInfo.innerHTML='';
+	learnerInfoDiv.innerHTML='';
 	let pageBlock = ''; // 기존 내용 초기화
 	         pageBlock += ''                                                                        
-						+'	<div class="entry">                                                     '
-						+'	<table class="table table-bordered">                                    '
-						+'		<caption>학습자 정보</caption>                                         '
-						+'		<colgroup>                                                          '
-						+'			<col width="10%" />                                             '
-						+'			<col width="15%" />                                             '
-						+'			<col width="15%" />                                             '
-						+'			<col width="15%" />                                             '
-						+'			<col width="30%" />                                             '
-						+'			<col width="10%" />                                             '
-						+'		</colgroup>                                                         '
-						+'		<thead>                                                             '
-						+'			<tr>                                                            '
-						+'				<th align="center"><input type="checkbox" id="checkboxAll"  '
-						+'				name="myCheckbox" onclick="selectAll(this)" value="checked"></th> '
-						+'				<th>학습자명</th>                                           '
-						+'				<th>제출기한</th>                                             '
-						+'				<th>제출일자</th>                                            '
-						+'				<th>학습내용</th>                                            '
-						+'				<th>평가</th>                                            '
-						+'			</tr>                                                           '
-						+'		</thead>                                                            '
-						+'		<tbody>';
+						+'	<div class="entry" id="learnerInfo">     '
+						+'		<table class="table table-bordered"> '
+						+'			<caption>그룹 정보</caption>        '
+						+'			<colgroup>                       '
+						+'				<col width="5%" />           '
+						+'				<col width="15%" />          '
+						+'				<col width="15%" />          '
+						+'				<col width="15%" />          '
+						+'				<col width="20%" />          '
+						+'				<col width="20%" />          '
+						+'				<col width="10%" />          '
+						+'			</colgroup>                      '
+						+'			<thead>                          '
+						+'				<tr>                         '
+						+'					<th>No.</th>             '
+						+'					<th>학습자 이름</th>        '
+						+'					<th>제출기한</th>          '
+						+'					<th>제출일자</th>          '
+						+'					<th>콘텐츠이름</th>        '
+						+'					<th>학습내용</th>          '
+						+'					<th>평가</th>             '
+						+'				</tr>                        '
+						+'			</thead>                         '
+						+'			<tbody>							 ';			
 	if(LearnerList != null){
 		LearnerList.forEach((Learner)=>{
  		console.log('Learner', Learner.m_name);
@@ -118,11 +119,3 @@ function displayLearnerList(map) {
 			learnerInfo.innerHTML += pageBlock;
 }
 
-// 체크 박스 전체 선택 이벤트
-function selectAll(selectAll)  {
-	  const checkboxes = document.getElementsByName('myCheckbox');
-	  
-	  checkboxes.forEach((checkbox) => {
-	    checkbox.checked = selectAll.checked;
-	  })
-}
