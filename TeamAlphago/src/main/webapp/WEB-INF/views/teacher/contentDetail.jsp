@@ -282,12 +282,9 @@
 			</div>
 			
 			
-			<div id="no_content" style="height:150px">
-			<div class="enoch-dialogs-contents"><div> 더 이상의 콘텐츠가 없습니다. </div>
-			<div class="enoch-dialogs-btns">
-			<button type="button" class="enoch-dialogs-btn enoch-dialogs-btn-cancel modal_close_btn">닫기</button>
-			</div>
-			</div>
+			<div id="no_content" style="height:100px">
+				<h2>더 이상의 콘텐츠가 없습니다. </h2>
+			<button type="button" class="modal_close_btn">닫기</button>
 			</div>
 			
 			<%-- 모달창 --%>
