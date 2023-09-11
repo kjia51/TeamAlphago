@@ -56,21 +56,31 @@ function result(map){
 		
 }
 function file(map){
-	let file = $('#files').val();
-	document.querySelector('#c_no').value = map['c_no'];
-	let c_no = $('#c_no').val();
-	console.log($('#c_no').val());
-	console.log(file);
-	if(map.result == 'success'){
-		alert(map.msg);
-		let obj = {
-				c_no : c_no,
-				file : file
+	  let formData = new FormData(); // FormData 객체를 생성합니다.
+
+	  // 파일 업로드 필드에 파일 추가
+	  let files = $('#files')[0].files;
+	  formData.append('files', files[0]);
+
+	  // 다른 필드에 데이터 추가
+	  document.querySelector('#c_no').value = map['c_no'];
+	  formData.append('c_no', $('#c_no').val());
+	  console.log($('#c_no').val())
+	  if(map.result == 'success'){
+			alert(map.msg);
+			fetch('/alpha/fileupload'
+					,{ 
+						method : 'post'
+						, body : formData
+			})
+			.then(response=>response.json())
+			.then(map => {
+	                // 페이지 리디렉션 실행
+	             window.location.href = '/alpha/main'; // 원하는 페이지 URL로 변경
+			});
+		} else {
+			alert(map.msg);
 		}
-		fetchPost('/alpha/fileupload', obj, result)
-	} else {
-		alert(map.msg);
-	}
 	
 }
 

@@ -46,13 +46,17 @@ public class TeacherController extends CommonRestController {
 
 		int totalCnt = service.totalCnt(cri);
 		PageDto pageDto = new PageDto(cri, totalCnt);
-		
+		List<ContentVO> contentList = service.getContentList(cri);
 		System.out.println("연결");
 		System.out.println(pageDto);
 		ModelAndView mav = new ModelAndView("/teacher/teacher");
 		mav.addObject("pageDto", pageDto);
 		mav.addObject("totalCnt", totalCnt);
-		mav.addObject("contentList", service.getContentList(cri));
+		mav.addObject("contentList", contentList);
+		for (ContentVO contentVO : contentList) {
+			String convertedPath = contentVO.getSavepath().replace("\\", "/");
+			contentVO.setSavepath(convertedPath);
+		}
 	
 		return mav;
 	}
@@ -62,9 +66,13 @@ public class TeacherController extends CommonRestController {
 		
 		ModelAndView mav = new ModelAndView("/teacher/contentDetail");
 		System.out.println(c_no);
-		
+		List<ContentVO>	contentList = service.getContentDetail(c_no);
+		for (ContentVO contentVO : contentList) {
+			String convertedPath = contentVO.getSavepath().replace("\\", "/");
+			contentVO.setSavepath(convertedPath);
+		}
 		mav.addObject("contentVO", contentService.getContentOne(c_no));
-		mav.addObject("contentList", service.getContentDetail(c_no));
+		mav.addObject("contentList", contentList);
 		mav.addObject("getContentCnt", service.getContentCnt(c_no));
 		
 		return mav;

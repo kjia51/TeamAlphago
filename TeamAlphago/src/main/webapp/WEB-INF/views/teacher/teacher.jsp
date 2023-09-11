@@ -139,9 +139,8 @@ div .InfoBox .info {
                          <li>
                          	
                             <a href="" class="img">
-                                <img src="https://www.kbaduk.or.kr/storage/mis/2023_03/06/b78e96e66dffc3d12d10e49db1563282.jpg" alt="">
-                                <span class="text"><em>${status.index}</em></span>
-                                                            </a>
+                                <img src="/alpha/display?fileName=${con.savepath}" class="card-img-top" alt="..." style="height:120px; width:200px;     background-size: contain; padding:10px">
+                                <span class="text"><em>${status.index}</em></span></a>
                             <p class="desc">
                             <c:if test="${fn:length(con.c_name)>=20}" var="len">
                                 <a onclick="godetail(${status.index})"><strong class="tit">${fn:substring(con.c_name,0,19) }..</strong></a>

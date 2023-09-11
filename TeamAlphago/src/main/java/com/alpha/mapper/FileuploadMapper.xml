@@ -3,8 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alpha.mapper.FileuploadMapper">
 	<insert id="insert">
-		insert into c_img values(#{c_no}, #{uploadpath}, #{filename}, #{filetype},
-		#{uuid})
+		insert into c_img values(#{c_no}, #{uploadpath}, #{filename}, #{filetype})
 	</insert>
 
 </mapper>

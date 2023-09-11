@@ -229,7 +229,7 @@
 							    </c:otherwise>
 							</c:choose>
 						<a href="" class="_fade_link shop-item-thumb hover_img_none">
-							<img data-prodcode="s2023081114659ed573520" alt="" src="https://cdn.imweb.me/thumbnail/20210713/a40bef34a9fba.png" class="_org_img org_img _lazy_img" data-original="" data-src="" style="display: inline; width:200px;height:200px;">
+							<img data-prodcode="s2023081114659ed573520" alt="" src="/alpha/display?fileName=${con.savepath}" class="_org_img org_img _lazy_img" data-original="" data-src="" style="display: inline; width:200px;height:200px;">
 						</a>
 			
 			

@@ -16,4 +16,5 @@ public class ContentVO {
 	private String c_content; 
 
 	private String poss_able; 
+	private String savepath; 
 }

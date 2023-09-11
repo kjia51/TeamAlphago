@@ -7,6 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+  img {
+        width: 100%;
+        height: 100%;
+  }
+</style>
 </head>
 <body>
 	<%@ include file="../common/header.jsp" %>
@@ -38,7 +44,7 @@
              <li style="width:222px; height:170px;">
              	
                 <a href="#" onclick="godetail(${status.index})" class="img">
-                    <img src="https://www.kbaduk.or.kr/storage/mis/2023_03/06/b78e96e66dffc3d12d10e49db1563282.jpg" alt="">
+                    <img src="/alpha/display?fileName=${con.savepath}" alt="">
                     <span class="text"><em>${status.index}</em></span>
                 </a>
                 <p class="desc">
