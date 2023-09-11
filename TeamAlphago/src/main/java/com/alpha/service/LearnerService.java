@@ -42,5 +42,8 @@ public interface LearnerService {
 	
 	// 학습지도자별 숙제 제출 리스트 조회
 	public List<LearnerVO> submittedList(@Param("g_no") String g_no, @Param("t_m_id") String t_m_id);
+	
+	// 숙제 평가 내역 저장
+	public int updateAssess(@Param("h_no") String h_no, @Param("h_review") String h_review);
  
 }

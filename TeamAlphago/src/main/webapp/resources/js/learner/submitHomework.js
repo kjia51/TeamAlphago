@@ -30,13 +30,7 @@ function result(map){
 	}
 		
 }
-//내용 입력 버튼 클릭 시 이벤트
-$('#writebtn').on('click', function() {
-    // 모달창 띄우기
-    modal('assign_modal');
-    
 
-});
 
 
 //선택된 체크박스의 h_no 값을 저장할 배열

@@ -77,6 +77,13 @@ public class LearnerServiceImpl implements LearnerService {
 		return learnerMapper.submittedList(g_no, t_m_id);
 	}
 
+	@Override
+	public int updateAssess(String h_no, String h_review) {
+		return learnerMapper.updateAssess(h_no, h_review);
+	}
+
+	
+
 
 	
  

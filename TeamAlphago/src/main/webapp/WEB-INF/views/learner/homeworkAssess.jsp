@@ -105,7 +105,6 @@
 	<div id="assign_modal">
 		<div class="titleBox">
 			<h3 class="ttitle">학습 평가</h3>
-			<input name="h_no" id="learnerNo" type="hidden" value="">
 			<div class="searchBox">
 				<select name="h_review" onchange="assess(this.value);" value="">
 					<option value="selectop">선택</option>
@@ -116,18 +115,9 @@
 			</div>	
 		</div>
 		<div class="entry">
-			<div class="centered-div" style="align-content: center;">
-				<table style="border: 1px solid #000, border-collapse: collapse; width: 100%;">
-					<tr>
-						<th align="center" style="border: 1px solid #000;">숙제 내용</th>
-						<th align="center" style="border: 1px solid #000;">학습내용</th>
-					<tr>
-					<tr>
-						<td align="center" style="border: 1px solid #000; height: 300px;">bg</td>
-						<td align="center" style="border: 1px solid #000; height: 300px;">fds</td>
-					<tr>
-				</table>
-			</div>
+		<div id="homeworkListDiv">
+
+		</div>
 			<br>
 			<div class="btns">
 				<button>
