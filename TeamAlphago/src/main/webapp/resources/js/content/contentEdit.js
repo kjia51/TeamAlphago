@@ -265,22 +265,19 @@ function resultList(map){
 
     	    })
     		
-    
-
-    	    $('#c_name').blur(function () {
-    	    	let c_name = $('#c_name').val();
-    	  	  	const isValidcname = /^[가-힣0-9]{6}$/.test(c_name);
-    		  	  // 결과에 따라 메시지 출력
-    		  	  if (!isValidcname) {
-    		  		  signCname.innerHTML = "패키지명은 한글과 숫자로만 구성되고, 6자리 가능합니다.";
-    		  		  $('#c_name').focus();
-    		  	    return
-    		  	  } else{
-    		  		  signCname.innerHTML = '';	  		  
-    		  	  }
-    		})
     		
-		    
+		    	$('#c_name').blur(function () {
+			    	let c_name = $('#c_name').val();
+			  	  	const isValidcname = /^[가-힣0-9 ]{1,20}$/.test(c_name);
+				  	  // 결과에 따라 메시지 출력
+				  	  if (!isValidcname) {
+				  		  signCname.innerHTML = "패키지명은 한글과 숫자로만 구성되고, 20자리 가능합니다.";
+				  		  $('#c_name').focus();
+				  	    return
+				  	  } else{
+				  		  signCname.innerHTML = '';	  		  
+				  	  }
+				})
 
 			    $('#c_content').blur(function () {
 			    	let c_content = $('#c_content').val();

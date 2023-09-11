@@ -35,6 +35,7 @@
 
 
             <form class="content" id="content">
+            	<input type="hidden" name="c_no" id="c_no" value="">
             	<input id="m_id" type="hidden" value="${memberVO.m_id }">
                 <div class="writeForm1">
                     <div id="titleInfo">

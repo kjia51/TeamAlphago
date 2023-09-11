@@ -15,6 +15,10 @@
 		select *, if(c_level=1,'초급', if(c_level=2, '중급', '고급')) level from content where c_no=#{c_no}	
 	</select>
 	
+	<select id="contentGetOne" resultType="com.alpha.vo.ContentVO">
+		select * from content where c_name = #{c_name} and c_level = #{c_level}
+	</select>
+	
 	<update id="updateContent">
 		update content set c_name=#{c_name}, c_level=#{c_level}, 
 		c_able=#{c_able}, c_price=#{c_price}, c_content=#{c_content}

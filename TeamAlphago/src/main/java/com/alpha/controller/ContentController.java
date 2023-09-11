@@ -70,9 +70,12 @@ public class ContentController extends CommonRestController {
 
 			try {
 				int res = contentService.insertContent(contentVO);
+				contentVO = contentService.contentGetOne(contentVO);
 				System.out.println(res);
 				Map<String, Object> map = responseWriteMap(res);
 				map.put("c_no", contentVO.getC_no());
+				System.out.println("==============================================");
+				System.out.println(contentVO.getC_no());
 				return map;
 
 			} catch (Exception e) {

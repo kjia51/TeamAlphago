@@ -100,5 +100,11 @@ public class ContentServiceImpl implements ContentService {
 		return contentMapper.salesLevel(c_level);
 	}
 
+	@Override
+	public ContentVO contentGetOne(ContentVO contentVO) {
+		// TODO Auto-generated method stub
+		return contentMapper.contentGetOne(contentVO);
+	}
+
 
 }

@@ -24,78 +24,88 @@ public class FileuploadServiceImpl implements FileuploadService {
 	FileuploadMapper mapper;
 
 	@Override
-	public int insert(List<MultipartFile> file, String c_no) {
+	public int insert(FileuploadVO vo) {
 		// TODO Auto-generated method stub
-		return mapper.insert(file, c_no);
+		return mapper.insert(vo);
 	}
-
 	
-		public int contentfileupload(List<MultipartFile> files) throws Exception {
-			int insertRes = 0;
-			for(MultipartFile file : files) {
-				if(file.isEmpty()) {
-					continue;
-				}
-				log.info("=====================================");
-				log.info("oFileName : "+file.getOriginalFilename());
-				log.info("name : "+file.getName());
-				log.info("size : "+file.getSize());
-				
-				try {
-					/**
-					 * 소프트웨어 구축에 쓰이는 식별자 표준
-					 * 파일이름이 중복되어 파일이 소실되지 않도록 uuid를 붙여서 저장
-					 */
-					UUID uuid = UUID.randomUUID();
-					String saveFileName = file.getOriginalFilename();
-					String uploadPath = getContent();
-					
-					File sFile = new File(FileuploadController.ATTACHES_DIR
-							+uploadPath
-							+saveFileName);
-					
-					// file(원본파일)을 sFile(저장 대상 파일)에 저장
-					file.transferTo(sFile);
-					
-					//주어진 파일의 Mine유형
-					String contentType = Files.probeContentType(sFile.toPath());
-					FileuploadVO vo = new FileuploadVO();
-					
-					if(contentType.startsWith("image")) {
-						vo.setFiletype("I");
-						
-					}else {
-						vo.setFiletype("F");
-					}
-					
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-					throw new Exception("첨부파일 등록중 예외사항이 발생 하였습니다.(IllegalStateException)");
-				} catch (IOException e) {
-					e.printStackTrace();
-					throw new Exception("첨부파일 등록중 예외사항이 발생 하였습니다.(IOException)");
-				} catch(Exception e) {
-					e.printStackTrace();
-					throw new Exception("첨부파일 등록중 예외사항이 발생 하였습니다.(Exception)");
-				}
+		
+	public String getContent() {
+		String uploadPath = "content" + File.separator;
+		log.info("경로 : " + uploadPath);
+		
+		File saveDir = new File(FileuploadController.ATTACHES_DIR + uploadPath);
+		if(!saveDir.exists()) {
+			if(saveDir.mkdirs()) {
+				log.info("폴더 생성!!");
+			}else {
+				log.info("폴더 생성 실패!!");
 			}
-			return insertRes;
 		}
 		
-		public String getContent() {
-			String uploadPath = "content" + File.separator;
-			log.info("경로 : " + uploadPath);
+		return uploadPath;
+	}
+
+
+	@Override
+	public int fileupload(FileuploadVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		int insertRes = 0;
+			log.info("=====================================");
+			log.info("oFileName : "+vo.getFile().getOriginalFilename());
+			log.info("name : "+vo.getFile().getName());
+			log.info("size : "+vo.getFile().getSize());
 			
-			File saveDir = new File(FileuploadController.ATTACHES_DIR + uploadPath);
-			if(!saveDir.exists()) {
-				if(saveDir.mkdirs()) {
-					log.info("폴더 생성!!");
+			try {
+				/**
+				 * 소프트웨어 구축에 쓰이는 식별자 표준
+				 * 파일이름이 중복되어 파일이 소실되지 않도록 uuid를 붙여서 저장
+				 */
+				UUID uuid = UUID.randomUUID();
+				String saveFileName = vo.getFile().getOriginalFilename();
+				String uploadPath = getContent();
+				
+				File sFile = new File(FileuploadController.ATTACHES_DIR
+						+uploadPath
+						+saveFileName);
+				
+				// file(원본파일)을 sFile(저장 대상 파일)에 저장
+				vo.getFile().transferTo(sFile);
+				
+				//주어진 파일의 Mine유형
+				String contentType = Files.probeContentType(sFile.toPath());
+				FileuploadVO Fileuploadvo = new FileuploadVO();
+				
+				if(contentType.startsWith("image")) {
+					Fileuploadvo.setFiletype("I");
+					
 				}else {
-					log.info("폴더 생성 실패!!");
+					Fileuploadvo.setFiletype("F");
 				}
+				
+				Fileuploadvo.setC_no(vo.getC_no());
+				Fileuploadvo.setUploadpath(uploadPath);
+				Fileuploadvo.setFilename(vo.getFile().getOriginalFilename());
+				Fileuploadvo.setUuid(uuid.toString());
+				
+				int res = insert(Fileuploadvo);
+				
+				if(res>0) {
+					insertRes++;
+				}
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+				throw new Exception("첨부파일 등록중 예외사항이 발생 하였습니다.(IllegalStateException)");
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new Exception("첨부파일 등록중 예외사항이 발생 하였습니다.(IOException)");
+			} catch(Exception e) {
+				e.printStackTrace();
+				throw new Exception("첨부파일 등록중 예외사항이 발생 하였습니다.(Exception)");
 			}
-			
-			return uploadPath;
-		}
+		return insertRes;
+	}
+
+
 
 }

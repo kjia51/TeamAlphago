@@ -23,30 +23,7 @@ function fetchPost(url,obj,callback){
 
 
 
-//컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
-function result(map){
-	console.log(map);
-	if(map.result == 'success'){
-		alert(map.msg);
-	} else {
-		alert(map.msg);
-	}
-		
-}
-function file(map){
-	let files = $('#files').val();
-	console.log(files);
-	if(map.result == 'success'){
-		alert(map.msg);
-		let obj = {
-				files : files
-		}
-		fetchPost('/alpha/fileupload', obj, result)
-	} else {
-		alert(map.msg);
-	}
-	
-}
+
 
 //get방식 요청
 function fetchGet(url,callback){
@@ -65,6 +42,35 @@ function fetchGet(url,callback){
 		console.log(e);
 	}
 	
+	
+}
+
+//컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
+function result(map){
+	console.log(map);
+	if(map.result == 'success'){
+		alert(map.msg);
+	} else {
+		alert(map.msg);
+	}
+		
+}
+function file(map){
+	let file = $('#files').val();
+	document.querySelector('#c_no').value = map['c_no'];
+	let c_no = $('#c_no').val();
+	console.log($('#c_no').val());
+	console.log(file);
+	if(map.result == 'success'){
+		alert(map.msg);
+		let obj = {
+				c_no : c_no,
+				file : file
+		}
+		fetchPost('/alpha/fileupload', obj, result)
+	} else {
+		alert(map.msg);
+	}
 	
 }
 

@@ -132,7 +132,7 @@ function saleDate(){
                     +'</div>'
                     +'<div class="searchBox" style="display:inline-block; margin-left:30px">'
 
-                    +'<button type="button" value="1일" class="blue" style="width:50px;height:30px; margin-right:15px" id="day">1일</button>'
+                    +'<button type="button" value="7일" class="blue" style="width:50px;height:30px; margin-right:15px" id="day">7일</button>'
                     +'<button type="button" value="1개월" class="blue" style="width:50px;height:30px; margin-right:15px" id="month">1개월</button>'
                     +'<button type="button" value="6개월" class="blue" style="width:50px;height:30px; margin-right:15px" id="hmonth">6개월</button>'
                     +'<button type="button" value="1년" class="blue" style="width:50px;height:30px; margin-right:15px" id="year">1년</button>'
@@ -172,10 +172,10 @@ function saleDate(){
 	})
 	
 	$('#day').click(function () {
-		var before = addDays(now, 1);
+		var before = addDays(now, -6);
 		$('.blue').removeClass("disabled");
 		$('#day').addClass("disabled");
-		$('#startdate').val(now);
+		$('#startdate').val(before);
 		$('#enddate').val(now);
 	})
 	
