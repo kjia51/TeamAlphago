@@ -6,7 +6,7 @@
 <!-- 콘텐츠  -->
 	<!-- 조회  -->
 <select id="getContentList" resultType="com.alpha.vo.ContentVO">
-	select c.*, savepath from content c
+	select c.*,if(c_level=1,'초급', if(c_level=2, '중급', '고급')) level, savepath from content c
 	left join
 	( select c_no, concat(uploadpath,c_no,filename) savepath from c_img) i
 	on c.c_no = i.c_no
