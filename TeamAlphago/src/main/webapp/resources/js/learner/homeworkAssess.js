@@ -98,7 +98,9 @@ function displayLearnerList(map) {
  		console.log('homework', homework.m_name);
  		pageBlock += ''					
 						+'<tr>'
-						+'		<th align="center">'+ (index+1) +'</th>'
+						+'		<th align="center">'+ (index+1) +''
+						+'<input type="text" name="h_no" id="h_no" value="'+ homework.h_no +'">'
+						+'</th>'
 						+'		<td align="center" class="row">'+homework.m_name+'</td>  '
 						+'		<td align="center">'+homework.h_limit+'</td>'
 						+'		<td align="center">'+homework.h_regidate+'</td>'
@@ -120,11 +122,57 @@ function displayLearnerList(map) {
 	learnerInfoDiv.innerHTML += pageBlock;
 	
 //내용 입력 버튼 클릭 시 이벤트
-	$('#writebtn').on('click', function() {
-		// 모달창 띄우기
-		modal('assign_modal');
+$('#writebtn').on('click', function() {
+
+	// 모달창 띄우기
+	modal('assign_modal');
+	
+    var hNoArray = []; 
+	// name이 "h_no"인 input 요소를 선택하고 각 요소의 값을 배열에 추가
+	$('input[name="h_no"]').each(function() {
+	    var hNoValue = $(this).val();
+	    hNoArray.push(hNoValue);
+		// "h_no" input 요소의 값이 저장
+		console.log("hNoArray:",hNoArray);
+	});
+	getHomework(hNoArray);
+    
 	});
 }
+
+// 숙제정보 h_no로 받아오기 
+function getHomework(map) {	
+
+	let submittedList = map.submittedList;
+	console.log("submittedList", submittedList);
+	
+	homeworkListDiv.innerHTML = '';
+	let pageBlock = ''; // 기존 내용 초기화
+	    pageBlock += ''                                                                        
+			+'<div class="centered-div" style="align-content: center;">                        '
+			+'	<table style="border: 1px solid #000, border-collapse: collapse; width: 100%;">'
+			+'		<tr>                                                                       '
+			+'			<th align="center" style="border: 1px solid #000;">숙제 내용</th>      '
+			+'			<th align="center" style="border: 1px solid #000;">학습 내용</th>      '
+			+'		<tr>                                                                       ';
+				
+	if(submittedList != null){
+		submittedList.forEach((homework)=>{
+		console.log('homework', homework.h_homework);
+		pageBlock += ''								
+			+'		<tr>                                                                                               '
+			+'			<td align="center" style="border: 1px solid #000; height: 300px;">'+homework.h_homework+'</td> '
+			+'			<td align="center" style="border: 1px solid #000; height: 300px;">'+homework.h_content+'</td>  '
+			+'		<tr>                                                                                               '
+			+'	</table>                                                                                               '
+			+'</div>                                                                                                   ';
+	
+		});
+	}
+		homeworkListDiv.innerHTML += pageBlock;
+
+}
+
 
 
 //모달창 띄우기

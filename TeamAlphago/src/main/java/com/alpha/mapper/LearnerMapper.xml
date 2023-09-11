@@ -172,5 +172,17 @@
 	 order by h_limit 	
 </select>
 	
-<!-- 학습지도자 숙제 평가 저장 -->	
+<!-- 학습지도자 숙제 평가 저장 -->
+<update id="updateAssess">	
+	UPDATE 
+		homework 
+	SET 
+		h_review = #{h_review}
+	WHERE 
+		h_no = #{h_no}
+	AND 
+		h_review is null 
+	AND 
+		h_content is not null	
+</update>	
 </mapper>

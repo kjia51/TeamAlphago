@@ -13,7 +13,7 @@ public class LearnerVO {
 	private String h_limit; // 제출기한 
 	private String h_homework; // 숙제 내용
 	private String h_regidate; // 제출일자
-	private String h_content; // 학습내용
+	private String h_content; // 학습 내용
 	private String h_review; // 관리자 평가
 	
 	// 학습 그룹

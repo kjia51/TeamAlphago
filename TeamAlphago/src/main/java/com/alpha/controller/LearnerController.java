@@ -212,15 +212,25 @@ public class LearnerController extends CommonRestController {
 			System.out.println("submittedList:"+ learnerService.submittedList(g_no, t_m_id));
 			map.put("submittedList", submittedList);
 			System.out.println("submittedList :"+submittedList);
-
-			
-			
-			
 		} catch (Exception e) {
 			map.put(REST_FAIL, "오류가 발생하였습니다.");
 		}
 		return map;
 	}
-
+	// 숙제  평가(update)
+	@PostMapping("/homeworkAssess/Assess")
+	public Map<String, Object> submitAssess(@RequestBody LearnerVO learnerVO) {
+		System.out.println("===숙제 평가 ===");
+		
+		try {
+			int res = learnerService.updateAssess(learnerVO.getH_no(), learnerVO.getH_review());
+			System.out.println("숙제 평가 건수 res:"+res);
+			Map<String, Object> map = responseWriteMap(res);
+			return map;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return responseResultMap(REST_FAIL, "요청 중 오류 발생");
+		}
+	}
 		
 }
