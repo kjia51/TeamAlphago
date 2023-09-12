@@ -17,4 +17,5 @@ public class ContentVO {
 
 	private String poss_able; 
 	private String savepath; 
+	private String filename; 
 }

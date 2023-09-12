@@ -106,5 +106,11 @@ public class ContentServiceImpl implements ContentService {
 		return contentMapper.contentGetOne(contentVO);
 	}
 
+	@Override
+	public int deleteFile(String c_id) {
+		// TODO Auto-generated method stub
+		return contentMapper.deleteFile(c_id);
+	}
+
 
 }

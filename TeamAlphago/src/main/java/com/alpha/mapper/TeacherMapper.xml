@@ -10,7 +10,6 @@
 	left join
 	( select c_no, concat(uploadpath,c_no,filename) savepath from c_img) i
 	on c.c_no = i.c_no
-	where savepath is not null
     <where>
         <choose>
             <when test="searchField == 'c_name'">
@@ -284,10 +283,10 @@
 	<sql id="criteria">
 	<choose>
 		<when test="searchField == 'c_name'">
-			and c_name like CONCAT('%', #{searchWord}, '%')
+			where c_name like CONCAT('%', #{searchWord}, '%')
 		</when>
 		<when test="searchField == 'c_level'">
-			and c_level like CONCAT('%',          
+			where c_level like CONCAT('%',          
 		 	CASE 
 	           WHEN #{searchWord} = '초급' THEN 1 
 	           WHEN #{searchWord} = '중급' THEN 2 
@@ -296,7 +295,7 @@
        		  , '%')
 		</when>
 		<when test="searchField == 'c_name'">
-			and c_name like CONCAT('%', #{searchWord}, '%')
+			where c_name like CONCAT('%', #{searchWord}, '%')
 		</when>
 	</choose>
 	</sql>

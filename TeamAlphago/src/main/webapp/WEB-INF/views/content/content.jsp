@@ -95,7 +95,7 @@
                                     <textarea id="c_content" placeholder="10자 이상 입력하세요" style="width:100%; height:450px; border: solid #ccc 1px;"></textarea></td>
                                 </tr>
                                 <tr>
-									<th scope="row">첨부파일</th>
+									<th scope="row">파일업로드</th>
                                 <td>
 									<input type="file" id="files" name="files">
                                 </td>

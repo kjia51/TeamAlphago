@@ -20,6 +20,8 @@ public interface ContentMapper {
 	public int updateContent(ContentVO contentVO);
 	
 	public int deleteContent(String c_id);
+	
+	public int deleteFile(String c_id);
 
 	public int cartCnt(String cr_m_no);
 
