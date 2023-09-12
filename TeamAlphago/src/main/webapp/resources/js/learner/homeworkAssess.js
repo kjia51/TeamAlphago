@@ -41,140 +41,6 @@ function result(map){
 		
 }
 
-//그룹 선택시 이벤트 발생 
-function selectGroup(g_no) {
-	console.log("g_no", g_no); 
- var url = '';
-	    $.ajax({
-	        url: '/alpha/homeworkAssess/' + g_no,
-	        method: 'GET',
-	        success: function(response) {
-	        	// 성공 시 작업
-				var url = '/alpha/homeworkAssess/' + g_no;
-	        	fetchGet(url, displayLearnerList)
-	        },
-	        error: function(xhr, status, error) {
-	            // 에러 처리
-	        	console.log(error)
-	        }
-	    });
-} 
-
-
- 
-//선택 그룹에 따른 학습자 리스트 출력
-function displayLearnerList(map) {
-	console.log("map", map)
-	let submittedList = map.submittedList;
-	console.log("submittedList", submittedList)
-	
-	learnerInfoDiv.innerHTML='';
-	let pageBlock = ''; // 기존 내용 초기화
-	         pageBlock += ''                                                                        
-						+'	<div class="entry" id="learnerInfo">     '
-						+'		<table class="table table-bordered"> '
-						+'			<caption>그룹 정보</caption>        '
-						+'			<colgroup>                       '
-						+'				<col width="5%" />           '
-						+'				<col width="15%" />          '
-						+'				<col width="15%" />          '
-						+'				<col width="15%" />          '
-						+'				<col width="35%" />          '
-						+'				<col width="15%" />          '
-						+'			</colgroup>                      '
-						+'			<thead>                          '
-						+'				<tr>                         '
-						+'					<th>No</th>             '
-						+'					<th>학습자 이름</th>'
-						+'					<th>제출기한</th>'
-						+'					<th>제출일자</th>'
-						+'					<th>콘텐츠이름</th>'
-						+'					<th>평가</th>             '
-						+'				</tr>                        '
-						+'			</thead>                         '
-						+'			<tbody>							 ';			
-	if(submittedList != null){
-		submittedList.forEach((homework, index)=>{
- 		console.log('homework', homework.m_name);
- 		pageBlock += ''					
-						+'<tr>'
-						+'		<th align="center">'+ (index+1) +''
-						+'<input type="text" name="h_no" id="h_no" value="'+ homework.h_no +'">'
-						+'</th>'
-						+'		<td align="center" class="row">'+homework.m_name+'</td>  '
-						+'		<td align="center">'+homework.h_limit+'</td>'
-						+'		<td align="center">'+homework.h_regidate+'</td>'
-						+'		<td align="center">'+homework.c_name+'</td>'
-						+'		<td align="center">'
-						+'		<button class="btn btn-default" id="writebtn">평가하기</button>'
-						+'		</td>'
-						+'</tr>';
-		})
-			pageBlock += ''			
-						+'		</tbody>'
-						+'	</table>'
-						+'</div>';
-	} else {
-			pageBlock +='<tr>'
-						+'<td colspan="7" style="text-align: center;">그룹을 선택하여 주세요.</td>'
-						+'</tr>';
-	}
-	learnerInfoDiv.innerHTML += pageBlock;
-	
-//내용 입력 버튼 클릭 시 이벤트
-$('#writebtn').on('click', function() {
-
-	// 모달창 띄우기
-	modal('assign_modal');
-	
-    var hNoArray = []; 
-	// name이 "h_no"인 input 요소를 선택하고 각 요소의 값을 배열에 추가
-	$('input[name="h_no"]').each(function() {
-	    var hNoValue = $(this).val();
-	    hNoArray.push(hNoValue);
-		// "h_no" input 요소의 값이 저장
-		console.log("hNoArray:",hNoArray);
-	});
-	getHomework(hNoArray);
-    
-	});
-}
-
-// 숙제정보 h_no로 받아오기 
-function getHomework(map) {	
-
-	let submittedList = map.submittedList;
-	console.log("submittedList", submittedList);
-	
-	homeworkListDiv.innerHTML = '';
-	let pageBlock = ''; // 기존 내용 초기화
-	    pageBlock += ''                                                                        
-			+'<div class="centered-div" style="align-content: center;">                        '
-			+'	<table style="border: 1px solid #000, border-collapse: collapse; width: 100%;">'
-			+'		<tr>                                                                       '
-			+'			<th align="center" style="border: 1px solid #000;">숙제 내용</th>      '
-			+'			<th align="center" style="border: 1px solid #000;">학습 내용</th>      '
-			+'		<tr>                                                                       ';
-				
-	if(submittedList != null){
-		submittedList.forEach((homework)=>{
-		console.log('homework', homework.h_homework);
-		pageBlock += ''								
-			+'		<tr>                                                                                               '
-			+'			<td align="center" style="border: 1px solid #000; height: 300px;">'+homework.h_homework+'</td> '
-			+'			<td align="center" style="border: 1px solid #000; height: 300px;">'+homework.h_content+'</td>  '
-			+'		<tr>                                                                                               '
-			+'	</table>                                                                                               '
-			+'</div>                                                                                                   ';
-	
-		});
-	}
-		homeworkListDiv.innerHTML += pageBlock;
-
-}
-
-
-
 //모달창 띄우기
 function modal(id) {
     var zIndex = 9999;
@@ -211,6 +77,7 @@ function modal(id) {
             webkitTransform: 'translate(-50%, -50%)'
         })
         .show()
+        
         // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
         .find('.modal_close_btn')
         .on('click', function() {
@@ -218,6 +85,167 @@ function modal(id) {
             modal.hide();
         });
 }
+
+//그룹 선택시 이벤트 발생 
+function selectGroup(g_no) {
+	console.log("g_no", g_no);
+	
+	 var url = '';
+		    $.ajax({
+		        url: '/alpha/homeworkAssess/' + g_no,
+		        method: 'GET',
+		        success: function(response) {
+		        	// 성공 시 작업
+					var url = '/alpha/homeworkAssess/' + g_no;
+		        	fetchGet(url, displayHomeworkList)
+		        },
+		        error: function(xhr, status, error) {
+		            // 에러 처리
+		        	console.log(error)
+		        }
+		    });
+} 
+
+//선택 그룹에 따른 학습자 리스트 출력
+function displayHomeworkList(map) {
+	console.log("map", map)
+	let submittedList = map.submittedList;
+	console.log("submittedList", submittedList)
+	
+	learnerInfoDiv.innerHTML='';
+	let pageBlock = ''; // 기존 내용 초기화
+	         pageBlock += ''                                                                        
+						+'	<div class="entry" id="learnerInfo">     '
+						+'		<table class="table table-bordered"> '
+						+'			<caption>그룹 정보</caption>        '
+						+'			<colgroup>                       '
+						+'				<col width="5%" />           '
+						+'				<col width="15%" />          '
+						+'				<col width="15%" />          '
+						+'				<col width="15%" />          '
+						+'				<col width="35%" />          '
+						+'				<col width="15%" />          '
+						+'			</colgroup>                      '
+						+'			<thead>                          '
+						+'				<tr>                         '
+						+'					<th>No</th>             '
+						+'					<th>학습자 이름</th>'
+						+'					<th>제출기한</th>'
+						+'					<th>제출일자</th>'
+						+'					<th>콘텐츠이름</th>'
+						+'					<th>평가</th>             '
+						+'				</tr>                        '
+						+'			</thead>                         '
+						+'			<tbody>							 ';			
+	if(submittedList != null && submittedList.length > 0){
+		submittedList.forEach((homework, index)=>{
+ 		console.log('homework', homework.m_name);
+ 		pageBlock += ''					
+						+'<tr>'
+						+'<th align="center">'+ (index+1) +''
+						+'<input type="hidden" name="h_no" id="h_no" value="'+ homework.h_no +'">'
+						+'</th>'
+						+'<td align="center" class="row">'+homework.m_name+''
+						+'<input type="hidden" name="m_name" id="m_name" value="'+ homework.m_name +'">'
+						+'</td>  '
+						+'		<td align="center">'+homework.h_limit+'</td>'
+						+'		<td align="center">'+homework.h_regidate+'</td>'
+						+'		<td align="center">'+homework.c_name+'</td>'
+						+'<td style="display: none">'
+						+'<input type="hidden" name="h_homework" id="h_homework" value="'+ homework.h_homework +'">'
+						+'</td>'
+						+'<td style="display: none">'
+						+'<input type="hidden" name="h_content" id="h_content" value="'+ homework.h_content +'">'
+						+'</td>'
+						+'		<td align="center">'
+						+'		<button class="btn btn-default" id="writebtn">평가하기</button>'
+						+'		</td>'
+						+'</tr>';
+		})
+			pageBlock += ''			
+						+'		</tbody>'
+						+'	</table>'
+						+'</div>';
+	} else {
+			pageBlock +='<tr>'
+						+'<td colspan="7" style="text-align: center;">제출된 숙제가 없습니다.</td>'
+						+'</tr>';
+	}
+	learnerInfoDiv.innerHTML += pageBlock;
+	
+
+
+// 평가하기 버튼 클릭 시 이벤트
+$('#writebtn').on('click', function() {
+	
+	
+    // 초기화: 선택된 h_no 배열 비우기
+    selectedHnos = [];
+	
+    // 선택한 숙제 데이터를 배열에 추가
+    var hno = $(this).closest('tr').find('input[name="h_no"]').val();
+    selectedHnos.push(hno);
+    
+    // 숙제 내용과 학습내용을 모달에 표시
+    var hName = $(this).closest('tr').find('input[name="m_name"]').val();
+    var hHomework = $(this).closest('tr').find('input[name="h_homework"]').val();
+    var hContent = $(this).closest('tr').find('input[name="h_content"]').val();
+    
+    console.log(hHomework);
+    console.log(hContent);
+    
+    $('#h_m_name').text(hName);
+    $('#h_homeworkh').text(hHomework);
+    $('#h_contenth').text(hContent);
+    
+    // 모달창 띄우기
+    modal('assign_modal'); 
+	});
+
+} // displayHomeworkList 끝
+
+
+//특정 숙제 데이터를 저장하기 위한 배열
+var selectedHnos = [];
+
+function homeworkAssess() {
+	  // 선택된 평가 값을 가져옵니다.
+	  var hReview = $("#evaluationSelect").val(); // 숙제 평가 값
+	  console.log("hReview:", hReview);
+
+	  // 선택된 각 h_no에 대해 hContent 전송
+	  selectedHnos.forEach(function(hno) {
+		var obj = {
+		    h_no: hno,
+		    h_review: hReview
+		};
+		console.log("obj", obj);
+		
+		fetchPost('/alpha/homeworkAssess/Assess', obj, function(map) {
+		    if (map.result === 'success') {
+		        alert('저장되었습니다.');
+				
+		        // 현재 페이지의 URL을 가져와서 리로드
+		        var currentPageURL = "/alpha/homeworkAssess";
+		        window.location.href = currentPageURL;
+		        
+		    } else {
+		        alert('제출에 실패하였습니다.');
+		        }
+		    });
+		});
+
+    // 모달창 닫기
+    $('#assign_modal').hide();
+    $('.modal_bg').remove();
+}
+
+
+
+
+
+
+ 
 
 
 

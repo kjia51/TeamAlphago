@@ -14,7 +14,42 @@
 <link rel="icon" href="/resources/images/favicon.ico"/>
 </head>
 <link rel="stylesheet" href="/resources/css/learner.css">
+<style>
 
+#evaluationSelect {
+
+width: 150px;
+margin-left :40px;
+padding: .5em .5em;
+
+border: 1px solid #999;
+
+font-family: inherit;
+
+background: url('arrow.jpg') no-repeat 95% 50%;
+
+border-radius: 0px;
+
+-webkit-appearance: none;
+
+-moz-appearance: none;
+
+text-align: center;
+
+
+}
+.titleBox{
+	text-align: left;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	
+}
+
+ 
+
+
+
+</style>
 <body>
 	<%@ include file="../common/header.jsp"%>
 
@@ -86,10 +121,17 @@
 									</tr>
 								</c:if>
 								<c:set var="isTeacher" value="${memberVO.m_division}" />
-								<c:if test="${isTeacher == 1}">
+								<c:if test="${listCheck != null && isTeacher == 1}">
 									<tr>
 										<td colspan="7" style="text-align: center;">
 										그룹을 선택하여 주세요.</td>
+									</tr>
+								</c:if>
+								<c:set var="listCheck" value="${submittedList}" />
+								<c:if test="${listCheck == null && isTeacher == 1}">
+									<tr>
+										<td colspan="7" style="text-align: center;">
+										제출된 숙제가 없습니다.</td>
 									</tr>
 								</c:if>
 							</tbody>
@@ -103,19 +145,38 @@
 	<!-- container close -->
 	<%------모달창 -----%>
 	<div id="assign_modal">
+		<h2 class="ttitle">숙제 평가</h2>
 		<div class="titleBox">
-			<h3 class="ttitle">학습 평가</h3>
-			<div class="searchBox">
-				<select name="h_review" onchange="assess(this.value);" value="">
+			<div style="margin-bottom: 20px;">
+				학   습   자 : <span id ="h_m_name" style="margin-left: 50px; font-weight: bold;"></span>
+			</div>
+			<div class="assessBox">
+			학습평가 :
+				<select id="evaluationSelect" name="h_review" value="">
 					<option value="selectop">선택</option>
 					<option value="Excellent">우수</option>
 					<option value="Good">보통</option>
 					<option value="Poor">미흡</option>
 				</select>
-			</div>	
+			</div>
+		
 		</div>
 		<div class="entry">
-		<div id="homeworkListDiv">
+       <!-- 숙제 내용과 콘텐츠 이름 표시 -->
+        <div id="homeworkDetails">
+			<div class="centered-div" style="align-content: center;">                        
+				<table style="border: 1px solid #000, border-collapse: collapse; width: 100%;">
+					<tr>                                                                       
+						<th align="center" style="border: 1px solid #000;">숙제 내용</th>      
+						<th align="center" style="border: 1px solid #000;">학습 내용</th>      
+					</tr>
+					<tr>                                                                                               
+						<td align="center" style="border: 1px solid #000; width: 200px; height: 300px;"><span id="h_homeworkh"></span></td> 
+						<td align="center" style="border: 1px solid #000; width: 200px; height: 300px;"><span id="h_contenth"></span></td>  
+					</tr>                                                                                               
+				</table>                                                                                               
+			</div>    
+        </div>
 
 		</div>
 			<br>

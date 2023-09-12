@@ -87,9 +87,7 @@
 
 							</tbody>
 						</table>
-						<div class="paging">
-							<a href='/' class="current">1</a> <a href='/'>2</a>
-						</div>
+			
 					</div>
 				</div>
 			</div>

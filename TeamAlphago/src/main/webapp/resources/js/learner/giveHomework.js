@@ -196,7 +196,7 @@ function displayLearnerList(map) {
 						+'			</tr>                                                           '
 						+'		</thead>                                                            '
 						+'		<tbody>';
-	if(LearnerList != null){
+	if(LearnerList != null && LearnerList.length > 0){
 		LearnerList.forEach((Learner)=>{
     		console.log('Learner', Learner.m_name);
     		pageBlock += ''					
@@ -217,16 +217,14 @@ function displayLearnerList(map) {
 						+'<input type="hidden" name="h_g_no" id="groupNo" value="'+ Learner.h_g_no +'">'
 						+'</td>'
 						+'</tr>';
-		})
-						
-						
+		});
 			pageBlock += ''			
 						+'		</tbody>'
 						+'	</table>'
 						+'</div>';
 	} else {
 			pageBlock +='<tr>'
-						+'<td colspan="5" style="text-align: center;">그룹을 선택하여 주세요.</td>'
+						+'<td colspan="5" style="text-align: center;">학습자가 존재하지 않습니다.</td>'
 						+'</tr>';
 	}
 			learnerInfo.innerHTML += pageBlock;
