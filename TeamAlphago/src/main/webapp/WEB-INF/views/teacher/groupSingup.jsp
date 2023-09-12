@@ -465,8 +465,9 @@ function JoinList(list, JoinCnt, grpVO){
 
     tableHTML += '</tbody></table>';
 
-    tableHTML += '<input type="hidden" id="g_cnt" value="' + grpVO.g_cnt + '" readonly>';
-    tableHTML += '<input type="hidden" id="sub_able" value="' + grpVO.sub_able + '" readonly>';
+    tableHTML += '<input type="text" id="g_cnt" value="' + grpVO.g_cnt + '" readonly>';
+    tableHTML += '<input type="text" id="sub_able" value="' + grpVO.sub_able + '" readonly>';
+    console.log(grpVO);
 
     main.innerHTML += tableHTML; // main 요소에 테이블 추가
 }

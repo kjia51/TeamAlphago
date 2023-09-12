@@ -238,9 +238,10 @@
 	SET g_cnt = (
 	    SELECT COUNT(*)
 	    FROM learner
-	    WHERE l_g_no = #{g_no}
-	    AND l_checkyn = 'Y'
+	    WHERE l_g_no = #{g_no} 
+	    and l_checkyn = 'Y'
 	)
+	WHERE g_no = #{g_no}
 	</update>
 	
 	<!-- 나의 구독내역 리스트 / 그룹이 연결되지 않음 -->
