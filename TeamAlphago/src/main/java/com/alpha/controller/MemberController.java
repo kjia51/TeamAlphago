@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alpha.service.LearnerService;
 import com.alpha.service.MailService;
@@ -106,6 +108,15 @@ public class MemberController {
 		
 		ModelAndView mav = new ModelAndView("/login/signup_step2");
 		return mav;
+	}
+	
+	
+	
+	@PostMapping("/signup_step3")
+	public ModelAndView signup_step3(@ModelAttribute("email") String email) {
+	    ModelAndView mav = new ModelAndView("/login/signup_step3");
+	    mav.addObject("email", email);
+	    return mav;
 	}
 	
 	@PostMapping("/register")
@@ -211,6 +222,57 @@ public class MemberController {
 
         return response;
 	}
+	
+	
+	@PostMapping("/email_check")
+    public Map<String, Object> emailCheck(@RequestBody Map<String, String> requestData) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            String email = requestData.get("email");
+            String temporaryPassword = RandomPassword(6);
+            
+            mailService.emailCheckSendMail(email, temporaryPassword);
+
+            response.put("temporaryPassword", temporaryPassword);
+            
+            response.put("status", "success");
+            response.put("message", "인증 메일이 발송되었습니다.");
+        } catch (Exception e) {
+            response.put("status", "fail");
+            response.put("message", "인증 메일 발송에 실패했습니다.");
+        }
+        
+        
+        return response;
+    }
+	
+	
+	@PostMapping("/email_check_confirm")
+	public Map<String, Object> emailCheckConfirm(@RequestBody Map<String, String> requestData) {
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    try {
+	        String enteredVerificationCode = requestData.get("verificationCode");
+	        String serverVerificationCode = requestData.get("temporaryPassword");
+
+	        // 사용자가 입력한 인증 번호와 서버에서 생성한 인증 번호를 비교
+	        if (enteredVerificationCode.equals(serverVerificationCode) && !serverVerificationCode.equals("")) {
+	            response.put("status", "success");
+	            response.put("message", "인증이 완료되었습니다.");
+	        } else {
+	            response.put("status", "fail");
+	            response.put("message", "인증 번호가 일치하지 않습니다.");
+	        }
+	    } catch (Exception e) {
+	        response.put("status", "fail");
+	        response.put("message", "인증 처리 중 오류가 발생했습니다.");
+	    }
+	    
+	    return response;
+	}
+	
+	
 	
 
 	

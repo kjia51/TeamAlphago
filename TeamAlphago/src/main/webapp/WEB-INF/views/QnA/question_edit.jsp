@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Q&A</title>
+<link rel="icon" href="/resources/images/favicon.ico">
 <script src="https://kit.fontawesome.com/a2debf6ac3.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -65,13 +66,14 @@ $(document).ready(function() {
         
 	        var action = $(this).data('route');
 	        var q_secret = (document.querySelector('#q_secret').checked == true) ? 'Y' : 'N';
+	        var q_no = $('input[name="q_no"]').val();
 	        
 	        var formData = new FormData();
 	        
 	        formData.append("q_secret", q_secret);
 	        formData.append("q_title", $('input[name="q_title"]').val());
 	        formData.append("q_content", $('textarea[name="q_content"]').val());
-	        formData.append("q_no", $('input[name="q_no"]').val());
+	        formData.append("q_no", q_no);
 	
 	        $.ajax({
 	            type: "POST",
@@ -82,7 +84,7 @@ $(document).ready(function() {
 	            success: function(data) {
 	                // 성공 처리
 	                alert('문의가 수정되었습니다.');
-	                window.location.href = "/alpha/question_QnA";
+	                window.location.href = "/alpha/QnA/question_view?q_no=" + q_no;
 	            },
 	            error: function() {
 	                // 에러 처리

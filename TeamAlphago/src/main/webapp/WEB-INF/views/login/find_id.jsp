@@ -4,8 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<title>아이디 찾기</title>
+
+<link rel="icon" href="/resources/images/favicon.ico"></head>
 <body>
 <%@ include file="../common/header.jsp" %>
 	

@@ -31,8 +31,5 @@
 	where m_id = #{m_id}
 </update>
 
-<select id="checkEmail" resultType="int">
-	SELECT COUNT(*) FROM member WHERE M_EMAIL = #{m_email}
-</select>
 
 </mapper>

@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Q&A</title>
+<link rel="icon" href="/resources/images/favicon.ico">
 <script src="https://kit.fontawesome.com/a2debf6ac3.js" crossorigin="anonymous"></script>
 </head>
 <body>
