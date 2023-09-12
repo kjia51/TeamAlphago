@@ -14,7 +14,6 @@
     width: 1280px;
     height: 100%;
     background-color: #fff;
-    border: 1px solid #d8dfe6;
     margin: 0 auto;
     justify-content: center;
 }
@@ -34,11 +33,42 @@
 }
 
 #my_modal .modal_close_btn, #my_modal2 .modal_close_btn {
+	text-align: center;
     border: 1px solid black;
+    padding: 2px 15px;
+    border-radius: 5px;
 }
 
-nav#topMenu ul button {
-    margin-right: 10px;
+.btns{
+	padding: 20px;
+	justify-content: center;
+	width: 100%;
+    height: 100%;
+    text-align: center;	
+}
+
+#modalmenu td {
+	padding: 0;
+	border: none;
+	border-bottom: 2px solid #074691;
+}
+
+.topMenu {
+    width: 100%;
+    border: 2px solid #dddddd;
+    border-radius: 5px 5px 0 0;
+    height: 45px;
+    border-bottom: none;
+    color: darkgrey;
+}
+
+.topMenu:hover {
+    color: #074691;
+}
+
+.my-custom-class {
+	border-color: #074691;
+	color: #074691;
 }
 
 </style>
@@ -84,38 +114,48 @@ nav#topMenu ul button {
 <%-- 모달창 --%>
 <div id="my_modal">
 	<input type="hidden" id="g_no" readonly>
-
-
-	<nav id="topMenu" >
-		<ul>
-			<button><a class="" onclick="getGroup()">그룹 정보</a></button>
-			<button><a class="" onclick="groupMemList()">그룹 멤버 관리</a></button>
-	   		<button><a class="" onclick="joinGroup()">그룹 신청 승인</a></button>
-
-		</ul>
-	</nav>
+	
+		<table id="modalmenu" style="width: 100%;">
+		<colgroup>
+			<col width="33%" />
+			<col width="33%" />
+			<col width="33%" />
+		</colgroup>
+			<tr>
+			<td><button class="topMenu" id="getGroup" onclick="getGroup()">그룹 정보</button></td>
+			<td><button class="topMenu" id="groupMemList" onclick="groupMemList()">그룹 멤버 관리</button></td>
+			<td><button class="topMenu" id="joinGroup" onclick="joinGroup()">그룹 신청 승인</button></td>
+			</tr>
+		</table>
 
 	<div id="getgroup">
 	</div>
 
 
-	<div class="btn">
-	    <button><a class="btn modal_close_btn">닫기</a></button>
-    </div>
+		<div class="btns">
+		    <button class="modal_close_btn"><a>닫기</a></button>
+    	</div>
     	
     	
 </div>
 <%-- --------------------------------------------------------------  --%>
 <div class="entry">
-	<table class="table">
+	<table class="table table-bordered">
 		<caption>학습자 관리</caption>
+		<colgroup>
+			<col width="5%" />
+			<col width="20%" />
+			<col width="10%" />
+			<col width="50%" />
+			<col width="15%" />
+		</colgroup>
 			<thead>
     			<tr>
 			        <th>그룹ID</th>
 			        <th>그룹이름</th>
 			        <th>그룹인원</th> <%--수강가능인원/현재수강인원 --%>
 			        <th>학습가능일</th> <%-- 구독일 ~구독일+90 --%>
-			        <th>학습자관리</th> <%-- 그룹삭제 / 학생관리 / 숙제관리 --%>
+			        <th></th> <%-- 그룹삭제 / 학생관리 / 숙제관리 --%>
     			</tr>
 			</thead>
 			<tbody>
@@ -125,9 +165,9 @@ nav#topMenu ul button {
 						<c:forEach  var="group" items="${groupList }" varStatus="status">
 						
 						<tr>
-                            <th align="left" class="row"><input type="text" class="index" value="${group.g_no }" data-g_no="${status.index}" id="g_no" readonly></th>
-                            <td align="center"> <input type="text" id="g_name" value="${group.g_name }" readonly></td>
-                             <td align="center"><input type="text" class="index" id="sub_able" data-sub_able="${status.index}" value="${group.g_cnt }/${group.sub_able }"readonly></td>
+                            <th align="center" class="row">${group.g_no }<input type="hidden" class="index" value="${group.g_no }" data-g_no="${status.index}" id="g_no"></th>
+                            <td align="center">${group.g_name }<input type="hidden" id="g_name" value="${group.g_name }"></td>
+                             <td align="center">${group.g_cnt }/${group.sub_able }<input type="hidden" class="index" id="sub_able" data-sub_able="${status.index}" value="${group.g_cnt }/${group.sub_able }"></td>
                             
                              <c:choose>
 								<c:when test="${fn:length(group.g_start) > 1}">
@@ -228,6 +268,14 @@ function fetchGet(url,callback){
 var main = document.getElementById('getgroup');
 
 function getGroupOne(index) {
+	
+	const getGroup = document.getElementById('getGroup');
+	getGroup.classList.add('my-custom-class');
+	const groupMemList = document.getElementById('groupMemList');
+	groupMemList.classList.remove('my-custom-class');
+	const joinGroup = document.getElementById('joinGroup');
+	joinGroup.classList.remove('my-custom-class');
+	
 	var i = index;
 	console.log(i);
 	main.innerHTML = '';
@@ -314,6 +362,14 @@ function resultList(map){
     	    
 /////////////////////////////////////// 그룹 학습자 관리    	    
 function groupMemList(g_no) {
+	
+	const getGroup = document.getElementById('getGroup');
+	getGroup.classList.remove('my-custom-class');
+	const groupMemList = document.getElementById('groupMemList');
+	groupMemList.classList.add('my-custom-class');
+	const joinGroup = document.getElementById('joinGroup');
+	joinGroup.classList.remove('my-custom-class');
+	
 	var g_no = $('#g_no').val();
 	console.log(g_no);
 
@@ -418,6 +474,14 @@ function result(map){
 }
 ////////////////////그룹 가입 승인 관리
 function joinGroup() {
+	
+	const getGroup = document.getElementById('getGroup');
+	getGroup.classList.remove('my-custom-class');
+	const groupMemList = document.getElementById('groupMemList');
+	groupMemList.classList.remove('my-custom-class');
+	const joinGroup = document.getElementById('joinGroup');
+	joinGroup.classList.add('my-custom-class');
+	
 	var g_no = $('#g_no').val();
 	console.log(g_no);
 
@@ -566,6 +630,13 @@ function RefuserMember(index) { //가입 거절
 
 /////////////////////그룹 정보
 function getGroup(g_no) {
+	
+	const getGroup = document.getElementById('getGroup');
+	getGroup.classList.add('my-custom-class');
+	const groupMemList = document.getElementById('groupMemList');
+	groupMemList.classList.remove('my-custom-class');
+	const joinGroup = document.getElementById('joinGroup');
+	joinGroup.classList.remove('my-custom-class');
 	
     var g_no =  $('#g_no').val();
 
