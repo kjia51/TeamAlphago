@@ -62,7 +62,24 @@
 	<!-- 콘텐츠 총 갯수 -->
 	<select id="totalCnt" resultType="int">
 	select count(*) from content
-	<include refid="criteria"></include>	
+	<where>
+        <choose>
+            <when test="searchField == 'c_name'">
+                AND c_name LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+        </choose>
+        <choose>
+             <when test="c_level == 1">
+                 AND c_level = 1
+            </when>
+            <when test="c_level == 2">
+                 AND c_level = 2
+            </when>
+            <when test="c_level == 3">
+                 AND c_level = 3
+            </when>
+        </choose>
+        </where>	
 	</select>	
 	
 	<!-- c_id로 콘텐츠 상세 내용 가져오기 -->
@@ -295,25 +312,5 @@
 	where g_no=#{g_no}
 	</update>
 	
-	
-	<sql id="criteria">
-	<choose>
-		<when test="searchField == 'c_name'">
-			where c_name like CONCAT('%', #{searchWord}, '%')
-		</when>
-		<when test="searchField == 'c_level'">
-			where c_level like CONCAT('%',          
-		 	CASE 
-	           WHEN #{searchWord} = '초급' THEN 1 
-	           WHEN #{searchWord} = '중급' THEN 2 
-	           ELSE 3
-        	 END
-       		  , '%')
-		</when>
-		<when test="searchField == 'c_name'">
-			where c_name like CONCAT('%', #{searchWord}, '%')
-		</when>
-	</choose>
-	</sql>
 
 </mapper>
