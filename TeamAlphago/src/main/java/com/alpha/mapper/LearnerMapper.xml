@@ -169,7 +169,10 @@
 		t_m_id = #{t_m_id} 
 	and 
 		h_regidate is not null
-	 order by h_limit 	
+	and 
+		h_review is null 
+	order by 
+		h_limit 	
 </select>
 	
 <!-- 학습지도자 숙제 평가 저장 -->
@@ -183,6 +186,6 @@
 	AND 
 		h_review is null 
 	AND 
-		h_content is not null	
+		h_content is not null 		
 </update>	
 </mapper>
