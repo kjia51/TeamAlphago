@@ -30,9 +30,9 @@ public interface TeacherMapper {
 	public GrpVO getGroupOne(String g_no); //선택된 그룹 정보 출력
 	public List<LearnerVO> getGroupLearner(@Param("g_no") String g_no, @Param("cri") Criteria cri); //그룹에 속한 학습자 정보 출력
 	public List<LearnerVO> JoinGroupLearner(@Param("g_no") String g_no, @Param("cri") Criteria cri); //그룹 가입 신청자 정보 출력
-	public int deleteGroupLearner(String l_no); //그룹에서 학습자 탈퇴
-	public int updateGroupLearner(String l_no); //그룹 가입 신청자 승인
-	public int updateGroup(String g_no); //그룹 가입 신청자 승인
+	public int deleteGroupLearner(@Param("g_no") String g_no, @Param("l_no") String l_no); //그룹에서 학습자 탈퇴
+	public int updateGroupLearner(@Param("g_no") String g_no, @Param("l_no") String l_no); //그룹 가입 신청자 승인
+	public int updateMemCnt(String g_no); //그룹 학습자 인원 업데이트
 	public int insertGroupupdatesub(@Param("sub_no") String sub_no, @Param("sub_connection") String sub_connection); //그룹 연결 패키지 구독내역 연결여부 yn
 	public int getContentCnt(String c_no);//콘텐츠 상세리스트 갯수
 	public int totalCntLearner(String g_no);//그룹학습인원수

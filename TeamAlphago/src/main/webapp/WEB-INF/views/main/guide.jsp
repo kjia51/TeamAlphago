@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>이용 가이드</title>
+<link rel="icon" href="/resources/images/favicon.ico">
 </head>
 <body>
 

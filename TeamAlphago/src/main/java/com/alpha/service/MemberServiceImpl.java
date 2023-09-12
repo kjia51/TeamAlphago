@@ -56,12 +56,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
-	@Override
-	public int checkEmail(MemberVO memberVO) {
-		
-		return memberMapper.checkEmail(memberVO);
-	}
-
 
 	@Override
 	public MemberVO findPw(MemberVO memberVO) {
@@ -86,5 +80,7 @@ public class MemberServiceImpl implements MemberService {
 	public int updatePw(MemberVO memberVO) {
 		return memberMapper.updatePw(memberVO);
 	}
+
+
 
 }

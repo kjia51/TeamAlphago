@@ -13,7 +13,6 @@
     width: 1280px;
     height: 100%;
     background-color: #fff;
-    border: 1px solid #d8dfe6;
     margin: 0 auto;
     justify-content: center;
 }
@@ -28,8 +27,9 @@
 }
 
 #my_modal .modal_close_btn {
+	text-align: center;
     border: 1px solid black;
-    padding: 10px;
+    padding: 2px 15px;
     border-radius: 5px;
 }
 
@@ -44,12 +44,11 @@
     text-align: center;
 }
 #my_modal2 .modal_close_btn{
-
+	text-align: center;
     padding: 20px 0;
     border-radius: 5px;
     margin: 20px;
 }
-
 
 #searchBtn {
 float: right;
@@ -60,10 +59,39 @@ table td, table th {
     border-left: 1px solid #ececec;
     border-bottom: 1px solid #ececec;
     padding: 3px;
+    text-align: center;
 }
 
-nav#topMenu ul button {
-    margin-right: 10px;
+.btns{
+	padding: 20px;
+	justify-content: center;
+	width: 100%;
+    height: 100%;
+    text-align: center;	
+}
+
+#modalmenu td {
+	padding: 0;
+	border: none;
+	border-bottom: 2px solid #074691;
+}
+
+.topMenu {
+    width: 100%;
+    border: 2px solid #dddddd;
+    border-radius: 5px 5px 0 0;
+    height: 45px;
+    border-bottom: none;
+    color: darkgrey;
+}
+
+.topMenu:hover {
+    color: #074691;
+}
+
+.my-custom-class {
+	border-color: #074691;
+	color: #074691;
 }
 
 </style>
@@ -74,20 +102,24 @@ nav#topMenu ul button {
 <%-- 모달창 --%>
 <div id="my_modal">
 
-	<nav id="topMenu" >
-		<ul>
-			<button><a class="" onclick="getContent()">콘텐츠 정보</a></button>
-			<button><a class="" onclick="conGrp()">연결 그룹 관리</a></button>
-			<button><a class="" onclick="createGrp()">그룹 생성</a></button>
-
-		</ul>
-	</nav>
+	<table id="modalmenu" style="width: 100%;">
+		<colgroup>
+			<col width="33%" />
+			<col width="33%" />
+			<col width="33%" />
+		</colgroup>
+	<tr>
+	<td><button class="topMenu" id="getContent" onclick="getContent()">콘텐츠 정보</button></td>
+	<td><button class="topMenu" id="conGrp" onclick="conGrp()">연결 그룹 관리</button></td>
+	<td><button class="topMenu" id="createGrp" onclick="createGrp()">그룹 생성</button></td>
+	</tr>
+	</table>
 
 		<div id="getSub"></div>
 		<hr>
 	   	<br>
-		<div class="btn">
-		    <button><a class="modal_close_btn">닫기</a></button>
+		<div class="btns">
+		    <button class="modal_close_btn"><a>닫기</a></button>
     	</div>
     	
     	
@@ -141,8 +173,16 @@ nav#topMenu ul button {
 
 
 <div class="entry">
-	<table>
+	<table class="table table-bordered">
 		<caption>구독 내역</caption>
+			<colgroup>
+				<col width="15%" />
+				<col width="40%" />
+				<col width="14%" />
+				<col width="12%" />
+				<col width="7%" />
+				<col width="12%" />
+			</colgroup>
 			<thead>
     			<tr style="height: 60px; border-bottom: 1px solid #dadada; line-height: 60px;">
 			        <th style="width:150px;">구독ID</th>
@@ -166,18 +206,18 @@ nav#topMenu ul button {
 						 --%>
 						 
                    			<input type="hidden" class="index" id="sub_month" style="width: 100%;" data-sub_month="${status.index}" value="${sub.sub_month}" readonly>
-                   			<input type="hidden" class="index" id="sub_connection" style="width: 100%;" data-sub_con="${status.index}" value="${sub.sub_connection}" readonly>
+                   			<input type="hidden" class="index" id="sub_connection" style="width: 100%;" data-sub_con="${status.index}" value="${sub.sub_connection}">
                    		
-                   			<td><input type="text" class="index" id="sub_no" style="width: 100%;" data-subuid="${status.index}" value="${sub.sub_no}" readonly></td>
-                            <th align="left"> <input type="text" id="c_name" style="width: 90%;" value="${sub.c_name }"readonly></th>
+                   			<td align="center">${sub.sub_no}<input type="hidden" class="index" id="sub_no" style="width: 100%;" data-subuid="${status.index}" value="${sub.sub_no}"></td>
+                            <td align="center">${sub.c_name }<input type="hidden" id="c_name" style="width: 90%;" value="${sub.c_name }"></td>
                             
                             <c:choose>
 								<c:when test="${fn:length(sub.sub_date) > 1}">
-		                            <td align="center"><input type="text" class="index" id="sub_date" style="width: 100%;" data-sub_date="${status.index}" value="${fn:substring(sub.sub_date, 0, 10) }"readonly></td>
+		                            <td align="center">${fn:substring(sub.sub_date, 0, 10) }<input type="hidden" class="index" id="sub_date" style="width: 100%;" data-sub_date="${status.index}" value="${fn:substring(sub.sub_date, 0, 10) }"></td>
 								</c:when>
 							</c:choose>
                             
-                            <td align="center"><input type="text" class="index" id="sub_price" style="width: 100%;" data-sub_price="${status.index}" value="${sub.sub_price }"readonly></td>
+                            <td align="center">${sub.sub_price }원<input type="hidden" class="index" id="sub_price" style=" width: 100%;" data-sub_price="${status.index}" value="${sub.sub_price }"></td>
                             <td align="center">${sub.sub_able } 명</td>        
                             
                             <td align="center">
@@ -374,6 +414,14 @@ function updateresult(map){
 
 
 function connection(index) {
+	
+	const getContent = document.getElementById('getContent');
+	getContent.classList.add('my-custom-class');
+	const conGrp = document.getElementById('conGrp');
+	conGrp.classList.remove('my-custom-class');
+	const createGrp = document.getElementById('createGrp');
+	createGrp.classList.remove('my-custom-class');
+	
 	var i = index;
 	console.log(i);
 	modal('my_modal');
@@ -388,6 +436,14 @@ function connection(index) {
 /////////////////////그룹 정보
 function getContent(sub_no) {
 	
+	const getContent = document.getElementById('getContent');
+	getContent.classList.add('my-custom-class');
+	const conGrp = document.getElementById('conGrp');
+	conGrp.classList.remove('my-custom-class');
+	const createGrp = document.getElementById('createGrp');
+	createGrp.classList.remove('my-custom-class');
+	
+	
     var sub_no =  $('#sub_no').val();
 
     console.log(sub_no);
@@ -396,6 +452,13 @@ function getContent(sub_no) {
 }
 /////////////////////연결 그룹 리스트
 function conGrp(sub_no) {
+	
+	const getContent = document.getElementById('getContent');
+	getContent.classList.remove('my-custom-class');
+	const conGrp = document.getElementById('conGrp');
+	conGrp.classList.add('my-custom-class');
+	const createGrp = document.getElementById('createGrp');
+	createGrp.classList.remove('my-custom-class');
 	
     var sub_no =  $('#sub_no').val();
 
@@ -407,6 +470,14 @@ function conGrp(sub_no) {
 
 /////////////////////그룹생성페이지
 function createGrp(sub_no) {
+	
+	const getContent = document.getElementById('getContent');
+	getContent.classList.remove('my-custom-class');
+	const conGrp = document.getElementById('conGrp');
+	conGrp.classList.remove('my-custom-class');
+	const createGrp = document.getElementById('createGrp');
+	createGrp.classList.add('my-custom-class');
+	
     var sub_no =  $('#sub_no').val();
 
   	fetchGet('/alpha/group/getSubOne/'+sub_no, createGroup);
@@ -442,51 +513,51 @@ function resultList(map){
 	}
 
 	main.innerHTML += ''
-		+ '<input type="text"'
-		+ 'style="text-align: center; background-color: #ececec; border-bottom: 1px solid #dadada;' 
-		+ 'border-top: 1px solid #074691; color: black;'
-		+ 'width: 100%; padding: 10px; font-size: 16px;"'
-		+ 'value="구독 콘텐츠 정보">'
-		+ '<table class="table table-bordered">'
-		+ '<thead>'
-	    + 	'<tr>'
-		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독ID</th>'
-	    +			'<td align="left" class="row"><input type="text" id="sub_no" style="width:100%" value="'
-	    +			sub_no
-	    +			'" readonly></td>'
-		+ 		'<th style="padding: 10px 5px; width: 60px; background-color: #f6f7f9;">구독일</th>'
-        +			'<td align="center"><input type="text" id="sub_date" style="width:100%" value="'
-        +			date
-        +			'" readonly></td>'
-		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독료</th>'
-        +			'<td align="center"><input type="text" id="sub_price" style="width:100%" value="'
-        +			sub_price
-        +			' 원" readonly></td>'
-	    + 	'</tr>'
-		+ '</thead>'
-		+	'<tbody>'
-	    + 	'<tr>'
-		+ 		'<th style="padding: 10px 5px; width: 70px; background-color: #f6f7f9;" >콘텐츠명</th>'
-        +			'<td align="center" colspan="5" ><input type="text" id="c_name" style="width:100%" value="'
-        +			c_name
-        +			'" readonly></td>'
-	    + 	'</tr>'
-	    +	'<tr>'
-		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독개월</th>'
-        +			'<td align="center"><input type="text" id="sub_month" style="width:100%" value="'
-        +			sub_month
-        +			' 개월" readonly></td>'
-		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">정원</th>'
-        +			'<td align="center"><input type="text" id="sub_able" style="width:100%" value="'
-        +			sub_able
-        +			' 명" readonly></td>'
-		+ 		'<th style="padding: 10px 5px; width: 80px; background-color: #f6f7f9;">콘텐츠레벨</th>'
-        +			'<td align="center"><input type="text" id="sub_lv" style="width:100%" value="'
-        +			sub_lv
-        +			'" readonly></td>'
-	    +	'</tr>'
-		+	'</tbody>'
-	    +'</table>' 
+	      + '<input type="text"'
+	      + 'style="text-align: center; background-color: #ececec; border-bottom: 1px solid #dadada;' 
+	      + 'color: black;'
+	      + 'width: 730px; padding: 10px; font-size: 16px;"'
+	      + 'value="구독 콘텐츠 정보">'
+	      + '<table class="table table-bordered">'
+	      + '<thead>'
+	       +    '<tr>'
+	      +       '<th style="padding: 10px 5px; background-color: #f6f7f9;">구독ID</th>'
+	       +         '<td align="left" class="row">'+sub_no+'<input type="hidden" id="sub_no" style="width:100%" value="'
+	       +         sub_no
+	       +         '" readonly></td>'
+	      +       '<th style="padding: 10px 5px; width: 60px; background-color: #f6f7f9;">구독일</th>'
+	        +         '<td>'+date+'<input type="hidden" id="sub_date" style="width:100%" value="'
+	        +         date
+	        +         '" readonly></td>'
+	      +       '<th style="padding: 10px 5px; background-color: #f6f7f9;">구독료</th>'
+	        +         '<td>'+sub_price+'<input type="hidden" id="sub_price" style="width:100%" value="'
+	        +         sub_price
+	        +         ' 원" readonly></td>'
+	       +    '</tr>'
+	      + '</thead>'
+	      +   '<tbody>'
+	       +    '<tr>'
+	      +       '<th style="padding: 10px 5px; width: 70px; background-color: #f6f7f9;" >콘텐츠명</th>'
+	        +         '<td colspan="5" >'+c_name+'<input type="hidden" id="c_name" style="width:100%" value="'
+	        +         c_name
+	        +         '" readonly></td>'
+	       +    '</tr>'
+	       +   '<tr>'
+	      +       '<th style="padding: 10px 5px; background-color: #f6f7f9;">구독개월</th>'
+	        +         '<td>'+sub_month+'개월<input type="hidden" id="sub_month" style="width:100%" value="'
+	        +         sub_month
+	        +         ' 개월" readonly></td>'
+	      +       '<th style="padding: 10px 5px; background-color: #f6f7f9;">정원</th>'
+	        +         '<td>'+sub_able+'<input type="hidden" id="sub_able" style="width:100%" value="'
+	        +         sub_able
+	        +         ' 명" readonly></td>'
+	      +       '<th style="padding: 10px 5px; width: 80px; background-color: #f6f7f9;">콘텐츠레벨</th>'
+	        +         '<td>'+sub_lv+'<input type="hidden" id="sub_lv" style="width:100%" value="'
+	        +         sub_lv
+	        +         '" readonly></td>'
+	       +   '</tr>'
+	      +   '</tbody>'
+	       +'</table>' 
 }
 
 function GrpList(list){
@@ -640,6 +711,12 @@ function insertGrp() {
 	console.log(g_start);
 	console.log(g_end);
 	
+	if (g_name.trim() === "") {
+	       alert("그룹명을 입력해주세요");
+	   }  else if (g_start.trim() === "") {
+	       alert("학습날짜를 선택해주세요");
+	   } else {	   
+	
 	//전달할 객체로 생성
 	let obj = {
 			t_m_id : t_m_id
@@ -661,6 +738,7 @@ function insertGrp() {
 		alert('그룹 등록이 취소되었습니다.')
 	}
 	
+	   }
 	
 	
 }

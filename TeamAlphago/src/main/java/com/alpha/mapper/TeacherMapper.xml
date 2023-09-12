@@ -6,11 +6,10 @@
 <!-- 콘텐츠  -->
 	<!-- 조회  -->
 <select id="getContentList" resultType="com.alpha.vo.ContentVO">
-	select c.*, savepath from content c
+	select c.*,if(c_level=1,'초급', if(c_level=2, '중급', '고급')) level, savepath from content c
 	left join
 	( select c_no, concat(uploadpath,c_no,filename) savepath from c_img) i
 	on c.c_no = i.c_no
-	where savepath is not null
     <where>
         <choose>
             <when test="searchField == 'c_name'">
@@ -63,7 +62,24 @@
 	<!-- 콘텐츠 총 갯수 -->
 	<select id="totalCnt" resultType="int">
 	select count(*) from content
-	<include refid="criteria"></include>	
+	<where>
+        <choose>
+            <when test="searchField == 'c_name'">
+                AND c_name LIKE CONCAT('%', #{searchWord}, '%')
+            </when>
+        </choose>
+        <choose>
+             <when test="c_level == 1">
+                 AND c_level = 1
+            </when>
+            <when test="c_level == 2">
+                 AND c_level = 2
+            </when>
+            <when test="c_level == 3">
+                 AND c_level = 3
+            </when>
+        </choose>
+        </where>	
 	</select>	
 	
 	<!-- c_id로 콘텐츠 상세 내용 가져오기 -->
@@ -120,7 +136,11 @@
 	<!-- 그룹  -->
 	<!-- t_m_id로  가져오기 -->
 	<select id="getmyGroupList" resultType="com.alpha.vo.GrpVO">
-	select * from grp where t_m_id = #{t_m_id}
+	select g.*, c_name, sub_able
+    from grp g, subscribe, content
+	where g.sub_no = subscribe.sub_no
+	and subscribe.sub_c_no = content.c_no
+    and g.t_m_id = #{t_m_id}
 	 <choose>
 		<when test="cri.searchField == 'g_no'">
 			and g_no like CONCAT('%', #{cri.searchWord}, '%')
@@ -150,7 +170,7 @@
 	
 	<!-- 해당 그룹 정보 가져오기 / g_no-->
 	<select id="getGroupOne"  resultType="com.alpha.vo.GrpVO">
-	select g.*, member.m_name, content.c_name, content.c_level
+	select g.*, member.m_name, content.c_name, content.c_level, sub_able
 	from grp g, subscribe, member, content
 	where g.sub_no = subscribe.sub_no
 	and subscribe.sub_c_no = content.c_no
@@ -189,7 +209,9 @@
 	
 	<!-- 그룹에서 멤버 내보내기 -->
 	<delete id="deleteGroupLearner">
-		delete from learner where l_no=#{l_no}
+		delete from learner
+		where l_g_no= #{g_no}
+		and l_no=#{l_no}
 	</delete>
 	
 	<!-- 해당 그룹 신청자 정보 가져오기 / g_no -->
@@ -203,11 +225,23 @@
     ORDER BY m_name DESC LIMIT #{cri.startNo}, #{cri.amount}
 	</select>
 	
-	<update id="updateGroupLearner">
+	<update id="updateGroupLearner" >
 	update learner 
     left join grp on l_g_no = g_no
-    set l_checkyn = 'Y' , g_cnt=g_cnt+1
-	where l_no=#{l_no}
+    set l_checkyn = 'Y'
+	where l_g_no = #{g_no}
+	and l_no=#{l_no}
+	</update>
+	
+	<update id="updateMemCnt">
+	UPDATE grp
+	SET g_cnt = (
+	    SELECT COUNT(*)
+	    FROM learner
+	    WHERE l_g_no = #{g_no} 
+	    and l_checkyn = 'Y'
+	)
+	WHERE g_no = #{g_no}
 	</update>
 	
 	<!-- 나의 구독내역 리스트 / 그룹이 연결되지 않음 -->
@@ -279,26 +313,5 @@
 	where g_no=#{g_no}
 	</update>
 	
-	
-	
-	<sql id="criteria">
-	<choose>
-		<when test="searchField == 'c_name'">
-			and c_name like CONCAT('%', #{searchWord}, '%')
-		</when>
-		<when test="searchField == 'c_level'">
-			and c_level like CONCAT('%',          
-		 	CASE 
-	           WHEN #{searchWord} = '초급' THEN 1 
-	           WHEN #{searchWord} = '중급' THEN 2 
-	           ELSE 3
-        	 END
-       		  , '%')
-		</when>
-		<when test="searchField == 'c_name'">
-			and c_name like CONCAT('%', #{searchWord}, '%')
-		</when>
-	</choose>
-	</sql>
 
 </mapper>

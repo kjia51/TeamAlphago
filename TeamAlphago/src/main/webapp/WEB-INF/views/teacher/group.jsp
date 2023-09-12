@@ -10,11 +10,14 @@
 <title>그룹관리</title>
 </head>
 <style>
+input:read-only {
+    outline: none; /* readonly 속성이 있는 input 요소의 아웃라인 없애기 */
+}
+
 .main-box {
     width: 1280px;
     height: 100%;
     background-color: #fff;
-    border: 1px solid #d8dfe6;
     margin: 0 auto;
     justify-content: center;
 }
@@ -42,6 +45,7 @@
 		padding: .2em .2em 0;
 		float: left;
 }
+
 
 </style>
 <body>
@@ -74,20 +78,28 @@
                             <input type="submit" class="btn btn-primary" value="검색" />
                         </fieldset>
                     </div>
-            </div>           
+                    
+                    
+                    <div class="btnArea topbtnWrap">
+    					<span class="btn btn-point btn-mg"><button type="button" id="popup_open_btn">그룹 생성</button></span>
+					</div>
+            </div>
+            
+            
+                       
         </form>
 
 
 
 
-<button id="popup_open_btn">그룹 생성</button>
 
 <%-- 모달창 --%>
 <div id="my_modal">
+
 	<hr>
 	<h2>학습콘텐츠 선택</h2>
 		<select name="group_content" id="conSelect" style="width: 780px; border: none; border-bottom: 1px solid black;">
-		    <option value="">학습 콘텐츠 선택</option>
+		    <option value="0">학습 콘텐츠 선택</option>
 		     <c:forEach var="list" items="${subList}">
 		     	<option value="${list.sub_no}">${list.c_name}</option>
 		    </c:forEach>
@@ -97,7 +109,7 @@
 		</div>
 		<hr>
 		<h2>그룹 정보</h2>
-	   	<h3>그룹명<input type="text" id="g_name"></h3>
+	   	<h3><label for="g_name">그룹명  <input type="text" id="g_name"></label></h3>
 	   	<div id='test'></div>
 	   	<div style="display: inline-block;">
 	   	학습 시작날짜<input type="text" id="startdate">
@@ -110,7 +122,6 @@
 		    <button><a class="btn modal_close_btn">닫기</a></button>
     	</div>
     	
-    	
 </div>
 <%-- --------------------------------------------------------------  --%>
 
@@ -119,9 +130,10 @@
 	<hr>
 	<h2>그룹명 수정</h2>
 		<input type="hidden" id="g_no" readonly><br>
-		현재 그룹명 <input type="text" id="name" readonly><br>
+		<label for="name">현재 그룹명  <input type="text" id="name" readonly><br>
 	
-	   	변경 할 그룹명<input type="text" id="up_name">
+	   	 <label for="up_name">변경 할 그룹명  </label>
+	   	 <input type="text" id="up_name"><br>
 	   	
 		<div class="btn">
 			<button class="btn btn-primary" onclick="updateName()">변경하기</button>
@@ -136,15 +148,18 @@
 	<table class="table table-bordered">
 		<caption>그룹 관리</caption>
 		<colgroup>
+		<col width="5%" />
 		<col width="20%" />
-		<col width="20%" />
-		<col width="30%" />
-		<col width="20%" />
+		<col width="35%" />
+		<col width="10%" />
+		<col width="15%" />
+		<col width="15%" />
 		</colgroup>
 			<thead>
     			<tr>
 			        <th>그룹ID</th>
 			        <th>그룹이름</th>
+			        <th>학습 중인 패키지</th> <%--수강가능인원/현재수강인원 --%>
 			        <th>그룹인원</th> <%--수강가능인원/현재수강인원 --%>
 			        <th>학습가능일</th> <%-- 구독일 ~구독일+90 --%>
 			        <th></th> <%-- 그룹삭제 / 학생관리 / 숙제관리 --%>
@@ -157,9 +172,10 @@
 						
 						<tr>
                    
-                            <th align="center"><input type="text" class="index" id="g_no" data-g_no="${status.index}" value="${group.g_no }"readonly></th>
-                            <td align="center"><input type="text" class="index" id="g_name" data-g_name="${status.index}" value="${group.g_name }"readonly></td>
-                            <td align="center"><input type="text" class="index" id="sub_price" data-sub_price="${status.index}" value="${group.g_cnt }"readonly></td>
+                            <th align="center">${group.g_no }<input type="hidden" class="index" id="g_no" data-g_no="${status.index}" value="${group.g_no }"></th>
+                            <td align="center">${group.g_name }<input type="hidden" class="index" id="g_name" data-g_name="${status.index}" value="${group.g_name }"></td>
+                            <td align="center">${group.c_name }<input type="hidden" class="index" id="c_name" data-c_name="${status.index}" value="${group.c_name }"></td>
+                            <td align="center">${group.g_cnt }/${group.sub_able }<input type="hidden" class="index" id="sub_able" data-sub_able="${status.index}" value="${group.g_cnt }/${group.sub_able }"></td>
                             
                             <c:choose>
 								<c:when test="${fn:length(group.g_start) > 1}">
@@ -167,7 +183,7 @@
 								</c:when>
 							</c:choose>
                             
-                            <td align="center"><button onclick="updateGrp(${status.index})">그룹관리</button></td>
+                            <td align="center"><button onclick="updateGrp(${status.index})">그룹명 변경</button></td>
                             
                            
                         </tr>
@@ -195,6 +211,9 @@
 
 
 <script>
+
+var main = document.getElementById('getSub');
+
 
 $('#test').datepicker({
 	
@@ -239,24 +258,27 @@ function updateGrp(index) {
 	
 }
 
+
 function updateName() {
    var g_name = $('#up_name').val();
    var g_no = $('#g_no').val();
-  	
-	//전달할 객체로 생성
-	let obj = {
-	  g_no: g_no,
-	  g_name: g_name
-	};
-	
-   console.log(obj);
    
-   fetchPost('/alpha/group/updateName/' + g_no, obj, result);
-   
-   
+  if(g_name.trim() === "") {
+	  alert("그룹명을 입력하세요")
+  } else {
+	  //전달할 객체로 생성
+		let obj = {
+		  g_no: g_no,
+		  g_name: g_name
+		};
+		
+	   console.log(obj);
+	   
+	   fetchPost('/alpha/group/updateName/' + g_no, obj, result);
+      
+  }
+
 }
-
-
 
 function modal(id) { //모달창 띄우기
     var zIndex = 9999;
@@ -292,13 +314,22 @@ function modal(id) { //모달창 띄우기
             msTransform: 'translate(-50%, -50%)',
             webkitTransform: 'translate(-50%, -50%)'
         })
-        .show()
-        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-        .find('.modal_close_btn')
-        .on('click', function() {
-            bg.remove();
-            modal.hide();
-        });
+        .show();
+
+    // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+    modal.find('.modal_close_btn').on('click', function() {
+    	var selectBox = modal.find('#conSelect');
+    	
+    	if(selectBox) {
+    		selectBox.val(0);
+    		main.innerHTML = ''
+    	}
+    	
+    	
+    	modal.find('input[type="text"]').val(''); // 모달 내부의 모든 text input을 비움
+        bg.remove();
+        modal.hide();
+    });
 }
 
 $('#popup_open_btn').on('click', function() {
@@ -361,7 +392,6 @@ function result(map){
 }
 
 ////////////모달 패키지 정보 출력////////////////////////////////////////////////////////
-var main = document.getElementById('getSub');
 
 $("#conSelect").change(function(){
 	
@@ -406,7 +436,7 @@ function resultList(map){
 		console.log(typeof(sub_date));
 		console.log(sub_able);
 		
-		main.innerHTML += ''
+		main.innerHTML = ''
 		    +			'<input type="text" id="sub_no" value="'
 		    +			sub_no
 		    +			'" readonly>'
@@ -468,6 +498,7 @@ function getsys() {
 }
 
 function groupinsert() { //그룹생성
+	
 	let t_m_id = $('#m_id').val();
 	let g_name = $('#g_name').val();
 	let sub_no = $('#sub_no').val();
@@ -476,44 +507,49 @@ function groupinsert() { //그룹생성
 	let g_start = $('#startdate').val();
 	let g_end = $('#enddate').val();
 	
-	console.log(typeof(g_start));
+	console.log(sub_no)
 	
-	console.log(startdate);
-	console.log(enddate);
-	
-	//전달할 객체로 생성
-	let obj = {
-			t_m_id : t_m_id
-			, sub_no : sub_no
-			, g_name : g_name
-			, g_cnt: g_cnt
-			, g_start : g_start
-			, g_end : g_end
-			, sub_connection : sub_connection
+	 if (sub_no === undefined || sub_no === "") {
+		  alert("학습콘텐츠를 선택해주세요");
+	   } else if(g_name.trim() === "") {
+	       alert("그룹명을 입력해주세요");
+	   }  else if (g_start.trim() === "") {
+	       alert("학습날짜를 선택해주세요");
+	   } else {	   
+		   console.log(typeof(g_start));
+			
+			console.log(startdate);
+			console.log(enddate);
+			
+			//전달할 객체로 생성
+			let obj = {
+					t_m_id : t_m_id
+					, sub_no : sub_no
+					, g_name : g_name
+					, g_cnt: g_cnt
+					, g_start : g_start
+					, g_end : g_end
+					, sub_connection : sub_connection
+					}
+			
+			console.log(obj);
+			
+			var res = confirm('그룹 등록 시 삭제할 수 없습니다. 정말 등록하시겠습니까?');
+			
+			if(res) {
+				fetchPost('/alpha/group/insert/'+t_m_id, obj, result)	
+			}else {
+				alert('그룹 등록이 취소되었습니다.')
 			}
+			
+			
+			
+			
+		}
+
+			
+	   }
 	
-	console.log(obj);
-	
-	fetchPost('/alpha/group/insert/'+t_m_id, obj, result)
-	
-}
-
-document.searchForm.addEventListener('submit', function (event) {
-    event.preventDefault(); // 기본 서브밋 동작 방지
-
-    // 선택된 searchField 값을 URL에 업데이트
-    const selectedValue = document.getElementById('searchFieldSelect').value;
-    const currentUrl = new URL(window.location.href);
-    currentUrl.searchParams.set('searchField', selectedValue);
-
-    // searchWord의 값을 가져와서 URL에 추가
-    const searchWordValue = document.querySelector('input[name="searchWord"]').value;
-    currentUrl.searchParams.set('searchWord', searchWordValue);
-
-    // 업데이트된 URL로 페이지 이동
-    window.location.href = currentUrl.toString();
-});
-
 
 
 function go(page){

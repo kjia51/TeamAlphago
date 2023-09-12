@@ -24,7 +24,7 @@
             <div class="content_wrap main_wrap">
                 <div class="entry">
 		
-		<a href="/alpha/teacher"><img src="/resources/images/main_banner1.png"></a>
+		<a href="/alpha/teacher"><img src="/resources/images/main_banner4.gif"></a>
 
 	<c:set var="i" value="0" />
 	<c:set var="j" value="3" />

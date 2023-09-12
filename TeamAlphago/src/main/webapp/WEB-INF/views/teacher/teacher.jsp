@@ -17,7 +17,6 @@
     width: 60%;
     height: 100%;
     background-color: #fff;
-    border: 1px solid #d8dfe6;
     margin: 0 auto;
     justify-content: center;
 }
@@ -78,7 +77,7 @@ div .InfoBox .info {
 
 <form id="searchForm" method="get" name="searchForm" class="content_wrap">
     <input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
-    <div class="titleBox">
+    <div class="titleBox" style="padding: 40px 0px 20px;">
         <h2 class="t_title">콘텐츠 조회</h2>
     </div>
     
@@ -138,7 +137,7 @@ div .InfoBox .info {
                          </c:if>
                          <li>
                          	
-                            <a href="" class="img">
+                            <a  onclick="godetail(${status.index})" class="img">
                                 <img src="/alpha/display?fileName=${con.savepath}" class="card-img-top" alt="..." style="height:120px; width:200px;     background-size: contain; padding:10px">
                                 <span class="text"><em>${status.index}</em></span></a>
                             <p class="desc">
@@ -149,7 +148,7 @@ div .InfoBox .info {
                                 <a onclick="godetail(${status.index})"><strong class="tit">${con.c_name}</strong></a>
                             </c:if>
                             
-                                <span class="date">${con.c_price}원</span><em>|</em><span class="hit">학습수준 : ${con.c_level }</span>
+                                <span class="date">${con.c_price}원</span><em>|</em><span class="hit">학습수준 : ${con.level }</span>
                             </p>
                        </li>
   	    <c:if test="${i%j == j-1 }">

@@ -20,6 +20,18 @@
         <property name="username" value="jungang301"></property>
         <property name="password" value="db301jungang"></property>
 	</bean>
+	<!--
+		<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+         <property name="jdbcUrl"
+            value="jdbc:mysql://jungang301.cafe24.com/jungang301?useSSL=false&amp;serverTimezone=UTC"> 
+            <property name="jdbcUrl"
+            value="jdbc:log4jdbc:mysql://database-1.cg7s3o8h9qnn.ap-northeast-2.rds.amazonaws.com/alphago">
+        </property>
+        <property name="username" value="admin"></property>
+        <property name="password" value="12345678"></property>
+	</bean>-->
+	
 	
    <!-- 위에 설정한 DB정보를 데이터소스 객체에 주입 -->
    <bean id="ds" class="com.zaxxer.hikari.HikariDataSource">

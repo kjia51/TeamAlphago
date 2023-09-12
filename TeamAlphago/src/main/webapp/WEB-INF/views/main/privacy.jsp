@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>개인정보처리방침</title>
+<link rel="icon" href="/resources/images/favicon.ico">
 </head>
 <body>
 
