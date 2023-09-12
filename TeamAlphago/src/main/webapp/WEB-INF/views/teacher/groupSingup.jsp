@@ -121,12 +121,13 @@ nav#topMenu ul button {
 			<tbody>
 				<c:choose>
 					<c:when test="${groupList != null && fn:length(groupList) > 0 }">
+					<div id="info">
 						<c:forEach  var="group" items="${groupList }" varStatus="status">
 						
 						<tr>
                             <th align="left" class="row"><input type="text" class="index" value="${group.g_no }" data-g_no="${status.index}" id="g_no" readonly></th>
                             <td align="center"> <input type="text" id="g_name" value="${group.g_name }" readonly></td>
-                            <td align="center"> <input type="text" id="sub_price" value="${group.g_cnt }"readonly></td>
+                             <td align="center"><input type="text" class="index" id="sub_able" data-sub_able="${status.index}" value="${group.g_cnt }/${group.sub_able }"readonly></td>
                             
                              <c:choose>
 								<c:when test="${fn:length(group.g_start) > 1}">
@@ -140,6 +141,7 @@ nav#topMenu ul button {
 						
 						
 						</c:forEach>
+						</div>
 					</c:when>
 				<c:otherwise>
 					<tr>
@@ -199,6 +201,7 @@ function modal(id) { //모달창 띄우기
         .on('click', function() {
             bg.remove();
             modal.hide();
+            location.replace(location.href);
         });
 }
 
@@ -252,7 +255,7 @@ function resultList(map){
 		var end = vo.g_end.substr(0,10);;
 		var date = start+" ~ "+end;
 		
-		var cnt = vo.g_cnt;
+		var cnt = vo.sub_able;
 		var g_name = vo.g_name;
 		var c_name = vo.c_name;
 		var m_name = vo.m_name;
@@ -336,7 +339,7 @@ function delMember(index) {
 	console.log(g_no);
 
 	//삭제 성공 시 MemberList 리로드
-    fetchDelete('/alpha/group/getGroupOne/delAction/'+l_no, function(data) {
+    fetchDelete('/alpha/group/getGroupOne/delAction/'+g_no+'/'+l_no, function(data) {
         result(data);
     	fetch('/alpha/group/getGroupOne/list/' + g_no)
         .then(response => response.json())
@@ -380,7 +383,7 @@ function MemberList(list, LearnerCnt){
 	}
 
     tableHTML += '</tbody></table>';
-
+    
     main.innerHTML += tableHTML; // main 요소에 테이블 추가
 }
     	       	    
@@ -423,14 +426,15 @@ function joinGroup() {
     .then(data => {
         const JoinCnt = data.JoinCnt;
         const list = data.list;
-        JoinList(list, JoinCnt);
+        const grpVO = data.grpVO;
+        JoinList(list, JoinCnt, grpVO);
     })
     .catch(error => {
         console.error('Error:', error);
     });
 }
 
-function JoinList(list, JoinCnt){
+function JoinList(list, JoinCnt, grpVO){
 
 	main.innerHTML = '';
 
@@ -459,8 +463,10 @@ function JoinList(list, JoinCnt){
     	tableHTML += '</tr>';
     }
 
-
     tableHTML += '</tbody></table>';
+
+    tableHTML += '<input type="hidden" id="g_cnt" value="' + grpVO.g_cnt + '" readonly>';
+    tableHTML += '<input type="hidden" id="sub_able" value="' + grpVO.sub_able + '" readonly>';
 
     main.innerHTML += tableHTML; // main 요소에 테이블 추가
 }
@@ -489,40 +495,45 @@ function fetchPut(url,obj,callback){
 }
 
 function JoinMember(index) { //가입 승인
-    var l_no = $('input[data-l_no="'+index+'"]').val();
-    console.log("Index:", index);
-    console.log("l_no:", l_no);
-
-	var g_no = $('#g_no').val();
-	console.log(g_no);
+	var able = $('#sub_able').val(); //가입가능인원
+	var cnt = $('#g_cnt').val(); //현재 가입된 인원
 	
-	let l_checkyn = $('#l_checkyn').val();
-	console.log(l_checkyn);
+	if(able<=cnt) {
+		alert('최대 수강가능인원은 '+ able +'명입니다. 더이상 승인할 수 없습니다.');
+	} else {
+		
+		var l_no = $('input[data-l_no="'+index+'"]').val();
+	    console.log("Index:", index);
+	    console.log("l_no:", l_no);
 
-		  
+		var g_no = $('#g_no').val();
+		console.log("g_no:",g_no);
+			  
 
-	//전달할 객체로 생성
-	let obj = {
-			l_no : l_no
-	};
-	
-	console.log(obj);
+		//전달할 객체로 생성
+		let obj = {
+				g_no : g_no,
+				l_no : l_no
+		};
+		
+		console.log(obj);
 
 
-	//업데이트 성공 시 MemberList 리로드
-    fetchPut('/alpha/group/getGroupOne/updateAction/'+l_no, obj, function(data) {
-        result(data);
-    	fetch('/alpha/group/getJoin/list/' + g_no)
-        .then(response => response.json())
-        .then(data => {
-            const JoinCnt = data.JoinCnt;
-            const list = data.list;
-            JoinList(list, JoinCnt);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    });
+		//업데이트 성공 시 MemberList 리로드
+		fetchPut('/alpha/group/getGroupOne/updateAction/'+g_no+'/'+l_no, obj, function(data) {
+	        result(data);
+	    	fetch('/alpha/group/getJoin/list/' + g_no)
+	        .then(response => response.json())
+	        .then(data => {
+	            const JoinCnt = data.JoinCnt;
+	            const list = data.list;
+	            JoinList(list, JoinCnt);
+	        })
+	        .catch(error => {
+	            console.error('Error:', error);
+	        });
+	    });
+	}
 
 }
 
@@ -535,7 +546,7 @@ function RefuserMember(index) { //가입 거절
 	console.log(g_no);
 
 	//삭제 성공 시 MemberList 리로드
-    fetchDelete('/alpha/group/getGroupOne/delAction/'+l_no, function(data) {
+    fetchDelete('/alpha/group/getGroupOne/delAction/'+g_no+'/'+l_no, function(data) {
         result(data);
     	fetch('/alpha/group/getJoin/list/' + g_no)
         .then(response => response.json())

@@ -79,8 +79,8 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public int deleteGroupLearner(String l_no) {
-		return mapper.deleteGroupLearner(l_no);
+	public int deleteGroupLearner(String g_no, String l_no) {
+		return mapper.deleteGroupLearner(g_no, l_no);
 	}
 
 	@Override
@@ -89,8 +89,8 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public int updateGroupLearner(String l_no) {
-		return mapper.updateGroupLearner(l_no);
+	public int updateGroupLearner(String g_no, String l_no) {
+		return mapper.updateGroupLearner(g_no, l_no);
 	}
 
 	@Override
@@ -141,6 +141,11 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public List<ContentVO> getMainContentList(Criteria cri) {
 		return mapper.getMainContentList(cri);
+	}
+
+	@Override
+	public int updateMemCnt(String g_no) {
+		return mapper.updateMemCnt(g_no);
 	}
 	
 

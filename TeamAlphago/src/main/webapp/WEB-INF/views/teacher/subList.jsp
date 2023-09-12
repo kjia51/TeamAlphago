@@ -640,6 +640,12 @@ function insertGrp() {
 	console.log(g_start);
 	console.log(g_end);
 	
+	if (g_name.trim() === "") {
+	       alert("그룹명을 입력해주세요");
+	   }  else if (g_start.trim() === "") {
+	       alert("학습날짜를 선택해주세요");
+	   } else {	   
+	
 	//전달할 객체로 생성
 	let obj = {
 			t_m_id : t_m_id
@@ -661,6 +667,7 @@ function insertGrp() {
 		alert('그룹 등록이 취소되었습니다.')
 	}
 	
+	   }
 	
 	
 }

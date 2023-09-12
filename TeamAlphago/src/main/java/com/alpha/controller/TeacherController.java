@@ -240,6 +240,8 @@ public class TeacherController extends CommonRestController {
 		   System.out.println("==============");
 		   System.out.println(g_no);
 		   
+		   int res = service.updateMemCnt(g_no);
+		   
 		   try {
 				GrpVO grpVO = service.getGroupOne(g_no);
 				Map<String, Object> map = new HashMap<String, Object>();
@@ -286,6 +288,9 @@ public class TeacherController extends CommonRestController {
 		   System.out.println("join==============");
 		   System.out.println(g_no);
 		   
+		   GrpVO grpVO = service.getGroupOne(g_no);
+			Map<String, Object> map = new HashMap<String, Object>();
+		   
 			int JoinCnt = service.totalCntJoin(g_no);
 			PageDto JoinpageDto = new PageDto(cri, JoinCnt);
 			System.out.println(JoinCnt);
@@ -298,21 +303,26 @@ public class TeacherController extends CommonRestController {
 			Map<String, Object> responseData = new HashMap<>();
 		    responseData.put("JoinCnt", JoinCnt);
 		    responseData.put("list", list);
+		    responseData.put("grpVO", grpVO);
 
 		    return ResponseEntity.ok(responseData);
 	}
 
 
-	   @DeleteMapping("/group/getGroupOne/delAction/{l_no}")  //그룹의 학습자 정보 삭제(내보내기)
-		public Map<String, Object> Groupupdate(@PathVariable("l_no") String l_no) {
+	   @DeleteMapping("/group/getGroupOne/delAction/{g_no}/{l_no}")  //그룹의 학습자 정보 삭제(내보내기)
+		public Map<String, Object> Groupupdate(@PathVariable("l_no") String l_no, @PathVariable("g_no") String g_no) {
 
 		   System.out.println("delete==============");
 		   System.out.println(l_no);
+		   System.out.println(g_no);
 
 		   
 			try {
-				int res =  service.deleteGroupLearner(l_no);
+				int res =  service.deleteGroupLearner(g_no, l_no);
 				Map<String, Object> map = responseEditMap(res);
+				
+				int res2 = service.updateMemCnt(g_no);
+				
 				return map;
 
 			} catch (Exception e) {
@@ -321,16 +331,20 @@ public class TeacherController extends CommonRestController {
 			}
 		}
 	   
-	   @PutMapping("/group/getGroupOne/updateAction/{l_no}")  //그룹 학습자 승인
-		public Map<String, Object> JoinGroup(@PathVariable("l_no") String l_no) {
+	   @PutMapping("/group/getGroupOne/updateAction/{g_no}/{l_no}")  //그룹 학습자 승인
+		public Map<String, Object> JoinGroup(@PathVariable("l_no") String l_no, @PathVariable("g_no") String g_no) {
 
 		   System.out.println("update==============");
 		   System.out.println(l_no);
+		   System.out.println(g_no);
 
 		   
 			try {
-				int res =  service.updateGroupLearner(l_no);
+				int res =  service.updateGroupLearner(g_no, l_no);
 				Map<String, Object> map = responseEditMap(res);
+				
+				int res2 = service.updateMemCnt(g_no);
+				
 				return map;
 
 			} catch (Exception e) {

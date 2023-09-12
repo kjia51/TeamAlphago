@@ -48,6 +48,7 @@
 
 <body>
 <%@ include file="../common/header.jsp" %>
+
 <div id="cartList">
 	<hr>
 	<h2 style="height:50px;">장바구니<i class="fa-solid fa-cart-shopping"></i> </h2>
