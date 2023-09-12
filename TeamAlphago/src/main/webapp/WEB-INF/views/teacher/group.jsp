@@ -10,11 +10,14 @@
 <title>그룹관리</title>
 </head>
 <style>
+input:read-only {
+    outline: none; /* readonly 속성이 있는 input 요소의 아웃라인 없애기 */
+}
+
 .main-box {
     width: 1280px;
     height: 100%;
     background-color: #fff;
-    border: 1px solid #d8dfe6;
     margin: 0 auto;
     justify-content: center;
 }
@@ -75,13 +78,20 @@
                             <input type="submit" class="btn btn-primary" value="검색" />
                         </fieldset>
                     </div>
-            </div>           
+                    
+                    
+                    <div class="btnArea topbtnWrap">
+    					<span class="btn btn-point btn-mg"><button type="button" id="popup_open_btn">그룹 생성</button></span>
+					</div>
+            </div>
+            
+            
+                       
         </form>
 
 
 
 
-<button id="popup_open_btn">그룹 생성</button>
 
 <%-- 모달창 --%>
 <div id="my_modal">
@@ -138,10 +148,12 @@
 	<table class="table table-bordered">
 		<caption>그룹 관리</caption>
 		<colgroup>
+		<col width="5%" />
 		<col width="20%" />
-		<col width="20%" />
-		<col width="30%" />
-		<col width="20%" />
+		<col width="35%" />
+		<col width="10%" />
+		<col width="15%" />
+		<col width="15%" />
 		</colgroup>
 			<thead>
     			<tr>
@@ -160,10 +172,10 @@
 						
 						<tr>
                    
-                            <th align="center"><input type="text" class="index" id="g_no" data-g_no="${status.index}" value="${group.g_no }"readonly></th>
-                            <td align="center"><input type="text" class="index" id="g_name" data-g_name="${status.index}" value="${group.g_name }"readonly></td>
-                            <td align="center"><input type="text" class="index" id="c_name" data-c_name="${status.index}" value="${group.c_name }"readonly></td>
-                            <td align="center"><input type="text" class="index" id="sub_able" data-sub_able="${status.index}" value="${group.g_cnt }/${group.sub_able }"readonly></td>
+                            <th align="center">${group.g_no }<input type="hidden" class="index" id="g_no" data-g_no="${status.index}" value="${group.g_no }"></th>
+                            <td align="center">${group.g_name }<input type="hidden" class="index" id="g_name" data-g_name="${status.index}" value="${group.g_name }"></td>
+                            <td align="center">${group.c_name }<input type="hidden" class="index" id="c_name" data-c_name="${status.index}" value="${group.c_name }"></td>
+                            <td align="center">${group.g_cnt }/${group.sub_able }<input type="hidden" class="index" id="sub_able" data-sub_able="${status.index}" value="${group.g_cnt }/${group.sub_able }"></td>
                             
                             <c:choose>
 								<c:when test="${fn:length(group.g_start) > 1}">
@@ -171,7 +183,7 @@
 								</c:when>
 							</c:choose>
                             
-                            <td align="center"><button onclick="updateGrp(${status.index})">그룹관리</button></td>
+                            <td align="center"><button onclick="updateGrp(${status.index})">그룹명 변경</button></td>
                             
                            
                         </tr>
