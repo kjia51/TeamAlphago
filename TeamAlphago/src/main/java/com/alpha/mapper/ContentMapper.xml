@@ -13,9 +13,11 @@
 	</insert>
 
 	<select id="getContentOne" resultType="com.alpha.vo.ContentVO">
-		select *,
-		if(c_level=1,'초급', if(c_level=2, '중급', '고급')) level from content where
-		c_no=#{c_no}
+		select c.*, filename,
+		if(c_level=1,'초급', if(c_level=2, '중급', '고급')) level from content c
+        left join (select * from c_img) i
+        on c.c_no = i.c_no
+        where c.c_no=#{c_no}
 	</select>
 
 	<select id="contentGetOne" resultType="com.alpha.vo.ContentVO">
@@ -32,6 +34,10 @@
 
 	<delete id="deleteContent">
 		delete from content where c_no=#{c_no}
+	</delete>
+	
+	<delete id="deleteFile">
+		delete from c_img where c_no=#{c_no}
 	</delete>
 
 	<delete id="deleteCart">
