@@ -44,6 +44,15 @@
   color : white;
   cursor: not-allowed;
 }
+
+  .circle {
+    width: 50px; /* 동그라미(원)의 너비 */
+    height: 50px; /* 동그라미(원)의 높이 */
+    background-color: #ff0000; /* 동그라미(원)의 배경색 */
+    border-radius: 50%; /* 동그라미(원) 모양으로 만듭니다. */
+    display: inline-block; /* 다른 내용과 나란히 표시하기 위해 inline-block을 사용합니다. */
+  }
+  
 </style>
 
 <body>
@@ -210,6 +219,9 @@
 					
 					<input id="m_id" type="hidden" data-mid="${status.index}" value="${m_id }">
 					<c:forEach items="${contentList}" var="con"  varStatus="status">
+					
+				<c:set var="discount" value="${con.c_discount}" />
+				<fmt:formatNumber var="discountWithoutDecimal" value="${discount}" pattern="#0" />
 					<input id="m_id" type="hidden" data-mid="${status.index}" value="${memberVO.m_id }">
 					<%--결제에 필요한 값 가져오기 --%>
 					<input type="hidden" id="c_no" data-cno="${status.index}"value="${con.c_no }">
@@ -227,8 +239,11 @@
 							    <c:otherwise>
 							    </c:otherwise>
 							</c:choose>
-						<a href="" class="_fade_link shop-item-thumb hover_img_none">
+						<a href="" class="_fade_link shop-item-thumb hover_img_none" style="position:relative">
 							<img data-prodcode="s2023081114659ed573520" alt="" src="/alpha/display?fileName=${con.savepath}" class="_org_img org_img _lazy_img" data-original="" data-src="" style="display: inline; width:200px;height:200px;">
+							<c:if test="${discountWithoutDecimal!=0}">
+							<span style="position:absolute; top: -30px; left: 130px; display: block; font-size:2em; color:red; font-weight:bold">${discountWithoutDecimal}%</span>
+							</c:if>
 						</a>
 			
 			
@@ -236,11 +251,11 @@
 					<div class="item-detail">
 									<div class="item-pay" style="display:block">
 			                				<h2 style="display: ">
-								<a class="_fade_link" href="#" onclick="getContent(${status.index})">입문반 - 정원 ${con.c_able }명</a>
+								<a class="_fade_link" href="#" onclick="getContent(${status.index})">${con.level }반 - 정원 ${con.c_able }명</a>
 							</h2>
 							<div class="item-pay-detail" style="font-size:1.3em; display:inline">
 							 <c:if test="${con.c_able>30}">
-								<p class="pay inline-blocked" style="text-decoration:line-through; display:inline-block"> ${con.c_price }</p> <p class="pay inline-blocked" style="display:inline-block">→ ${con.c_sellprice }</p>
+								<p class="pay inline-blocked" style="text-decoration:line-through; display:inline-block"> ${con.c_price }</p> <p class="pay inline-blocked" style="display:inline-block; color:red; font-weight:bold">→ ${con.c_sellprice }</p>
 							</c:if>
 							<c:if test="${con.c_able<=30}">
 								<p class="pay inline-blocked" style=" display:inline-block"> ${con.c_price }</p>

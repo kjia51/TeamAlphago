@@ -29,7 +29,7 @@ import lombok.extern.log4j.Log4j;
 public class FileuploadController extends CommonRestController{
 
 	public static final String ATTACHES_DIR = "c:\\upload\\";
-
+//	public static final String ATTACHES_DIR = "/home/ubuntu/tomcat/apache-tomcat-9.0.80/webapps/upload";
 	@Autowired
 	FileuploadService service;
 	

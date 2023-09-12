@@ -82,6 +82,14 @@ function fetchDelete(url, callback) {
     }
 }
 
+function fileresult(map){
+	let c_no = $('#c_no').val();
+	if(map.result == 'success'){
+		console.log("성공")
+	} else {
+	}
+	
+}
 
 
 //컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
@@ -242,7 +250,7 @@ function resultList(map){
     		+'                     <th scope="row">첨부파일</th>'
     		+'                     <td>'
     		+						vo.filename
-    		+'						<span>삭제</span>'		
+    		+'						<span id="deletefile">삭제</span>'		
     		+'                     </td>'
     		+'                     </tr>'
     		+'                     <tr>'
@@ -278,7 +286,10 @@ function resultList(map){
     	        item.innerHTML = options;
 
     	    })
-    		
+    				$('#deletefile').click(function () {
+						let c_no = $('#c_no').val();
+						fetchDelete('/alpha/content/DeleteFile/' + c_no, result);
+					})	
     		
 		    	$('#c_name').blur(function () {
 			    	let c_name = $('#c_name').val();
@@ -316,7 +327,6 @@ function resultList(map){
               	let isDisabled = button.classList.contains("disabled");
                	let btnValue = button.getAttribute("value");
                	for (let i = 1; i <= c_ableArray.length; i++) {
-               			console.log("c_ableArray",c_ableArray);
                			const c_able = c_ableArray[i - 1]/10;
 	               		if(c_able==btnValue){
 		                button.classList.add("disabled");

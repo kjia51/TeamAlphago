@@ -68,6 +68,8 @@ div .InfoBox .info {
     vertical-align: middle;
 }
 
+
+
 </style>
 <body>
 
@@ -79,11 +81,22 @@ div .InfoBox .info {
 <form id="searchForm" method="get" name="searchForm" class="content_wrap">
     <input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
     <div class="titleBox" style="padding: 40px 0px 20px;">
-        <h2 class="t_title">콘텐츠 조회</h2>
+        <h3 class="t_title">콘텐츠 조회</h3>
     </div>
     
     <div class="searchWrap searchWrap_wide searchWrap_normal">
         <div class="searchBox searchBox-mid searchBox-center" style="text-align:center">
+            	<div class="search-controls" style="text-align:center">
+				<div class="searchBox" style="text-align:center">
+				    <fieldset style="width:450px">
+				        <legend>카테고리</legend>
+						        <label><input type="radio" name="c_level" value="0">전체</label>
+						        <label><input type="radio" name="c_level" value="1">초급</label>
+						        <label><input type="radio" name="c_level" value="2">중급</label>
+						        <label><input type="radio" name="c_level" value="3">고급</label>
+						    </fieldset>
+						</div>
+					</div>
             <fieldset>
                 <input type="hidden" name="p" value="1">
                 <legend>전체 검색</legend>
@@ -94,26 +107,13 @@ div .InfoBox .info {
                         name="searchWord" value="${pageDto.cri.searchWord}" />
                 <input type="submit" class="btn btn-primary" value="검색" />
             </fieldset>    
-    
-	<div class="search-controls" style="text-align:center">
 
-
-<div class="searchBox" style="text-align:center">
-    <fieldset style="text-align:center">
-        <legend>카테고리</legend>
-		        <label><input type="radio" name="c_level" value="0">전체</label>
-		        <label><input type="radio" name="c_level" value="1">초급</label>
-		        <label><input type="radio" name="c_level" value="2">중급</label>
-		        <label><input type="radio" name="c_level" value="3">고급</label>
-		    </fieldset>
-		</div>
-	</div>
 	        </div>
     </div>  
 </form>
-	    <div class="business-srch" style="margin-bottom:20px">
-총 ${totalCnt } 건
-	        <select title="정렬" name="order" id="orderSelect" style="width: 120px; margin-left:785px">
+	    <div class="business-srch" style="margin-bottom:0px; margin-left:40px">
+		총 ${totalCnt } 건
+	        <select title="정렬" name="order" id="orderSelect" style="width: 120px; margin-left:725px;">
 	            <option value="none">=== 선택 ===</option>
 	            <option value="new">최신순</option>
 	            <option value="price1">가격높은순</option>
@@ -128,7 +128,7 @@ div .InfoBox .info {
 	
 <c:choose>
 <c:when test="${contentList != null && fn:length(contentList) > 0 }">
-                    <ul class="pList">
+                    <ul class="pList" style="padding-left:40px;">
 	  <c:forEach  var="con" items="${contentList }" varStatus="status">
 
 	  		<input type="hidden" class="index" id="c_level" data-clevel="${status.index}" value="${con.c_level }"readonly>
@@ -136,14 +136,14 @@ div .InfoBox .info {
 	  
 	    <c:if test="${i%j == 0 }">
                          </c:if>
-                         <li>
+                         <li style="margin:0px; text-align:center">
                          	
                             <a  onclick="godetail(${status.index})" class="img">
-                                <img src="/alpha/display?fileName=${con.savepath}" class="card-img-top" alt="..." style="height:120px; width:200px;     background-size: contain; padding:10px">
+                                <img src="/alpha/display?fileName=${con.savepath}" class="card-img-top" alt="..." style="height:150px; width:200px;     background-size: contain; padding:10px">
                                 <span class="text"><em>${status.index}</em></span></a>
                             <p class="desc">
-                            <c:if test="${fn:length(con.c_name)>=20}" var="len">
-                                <a onclick="godetail(${status.index})"><strong class="tit">${fn:substring(con.c_name,0,19) }..</strong></a>
+                            <c:if test="${fn:length(con.c_name)>=15}" var="len">
+                                <a onclick="godetail(${status.index})"><strong class="tit">${fn:substring(con.c_name,0,15) }..</strong></a>
                             </c:if>
                             <c:if test="${not len}" >
                                 <a onclick="godetail(${status.index})"><strong class="tit">${con.c_name}</strong></a>
