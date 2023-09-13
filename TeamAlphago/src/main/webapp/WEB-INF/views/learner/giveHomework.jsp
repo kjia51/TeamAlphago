@@ -22,7 +22,7 @@
 		<div class="wrap">
 			<div class="content_wrap">
 				<div class="titleBox">
-					<h2 class="t_title">숙제 전송(학습 지도자)</h2>
+					<h2 class="t_title">숙제 전송</h2>
 					<input name="t_m_id" id="memberId" type="hidden" value="${memberVO.m_id}"> 
 						<input name="m_division" id="division" type="hidden" value="${memberVO.m_division}">
 				</div>
@@ -49,7 +49,7 @@
 									</div>
 								</td>
 								<td style="border-left: none;">
-									<button class="btn btn-default" id="writebtn">내용입력</button>
+									<button class="btn btn-default" id="writebtn" >내용입력</button>
 								</td>
 							
 							</tr>

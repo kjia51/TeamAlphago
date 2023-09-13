@@ -10,10 +10,6 @@
 <title>그룹관리</title>
 </head>
 <style>
-input:read-only {
-    outline: none; /* readonly 속성이 있는 input 요소의 아웃라인 없애기 */
-}
-
 .main-box {
     width: 1280px;
     height: 100%;
@@ -31,10 +27,6 @@ input:read-only {
     border-radius: 3px;
 }
 
-#my_modal .modal_close_btn, #my_modal2 .modal_close_btn {
-    border: 1px solid black;
-}
-
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
     border-bottom: 1px solid #dadada;
     vertical-align: middle;
@@ -46,6 +38,47 @@ input:read-only {
 		float: left;
 }
 
+#g_name {
+	width: 210px;
+	border-bottom: 1px solid #dadada;
+}
+
+#startdate, #enddate {
+	border: none;
+    outline: none;
+    border-bottom: 1px solid #dadada;
+}
+
+#infobox {
+	display: inline-block;
+	font-size: 17px;
+}
+.modal_close_btn {
+	display: inline-block;
+	float: right;
+}
+
+.modal_close_btn:after {
+	display: inline-block;
+	content: "\00d7";
+	font-size: 25px;
+	color: #a7a7a7;
+	width: 25px;
+
+}
+
+#name, #up_name {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #a7a7a7;
+    margin-left: 15px;
+    width: 60%;
+}
+
+select {
+        font-size: 16px;
+}
+
 
 </style>
 <body>
@@ -53,6 +86,7 @@ input:read-only {
 <%@ include file="../common/header.jsp" %>
 
 <div class="main-box">
+<input name="m_division" id="m_division" type="hidden" value="${memberVO.m_division }">
 <div id="container">
     <div class="wrap">
 
@@ -80,7 +114,8 @@ input:read-only {
                     </div>
                     
                     
-                    <div class="btnArea topbtnWrap">
+                    
+                    <div class="btnArea topbtnWrap" id="btnclass">
     					<span class="btn btn-point btn-mg"><button type="button" id="popup_open_btn">그룹 생성</button></span>
 					</div>
             </div>
@@ -95,10 +130,11 @@ input:read-only {
 
 <%-- 모달창 --%>
 <div id="my_modal">
-
-	<hr>
-	<h2>학습콘텐츠 선택</h2>
-		<select name="group_content" id="conSelect" style="width: 780px; border: none; border-bottom: 1px solid black;">
+	<button class="modal_close_btn"></button>
+		
+	<h2>그룹 생성</h2>
+		<hr>
+		<select name="group_content" id="conSelect" style="width: 750px; font-size: 16px; padding:3px; border: none; border-bottom: 1px solid black;">
 		    <option value="0">학습 콘텐츠 선택</option>
 		     <c:forEach var="list" items="${subList}">
 		     	<option value="${list.sub_no}">${list.c_name}</option>
@@ -107,38 +143,42 @@ input:read-only {
 		<br>
 		<div id="getSub">
 		</div>
-		<hr>
-		<h2>그룹 정보</h2>
-	   	<h3><label for="g_name">그룹명  <input type="text" id="g_name"></label></h3>
-	   	<div id='test'></div>
-	   	<div style="display: inline-block;">
-	   	학습 시작날짜<input type="text" id="startdate">
+
+		<br><h2>그룹 정보</h2><br>
+	   	<div id="test" style="display: inline-block; float: left; margin-right: 35px;"></div>
+	   	
+	   	<div id="infobox">
+	   	<label for="g_name" style="display: block; margin-top: 10px;">그룹명  <input type="text" id="g_name"></label>
+	   	<br><br>
+	   	<label for="startdate">학습 시작날짜 <input type="text" id="startdate" readonly></label>
 	   	<br>
-		학습 종료날짜<input type="text" id="enddate">
+	   	<label for="enddate">학습 종료날짜 <input type="text" id="enddate" readonly></label>
 	   	</div>
+	   	
 	   	<br>
-		<div class="btn">
-			<button class="btn btn-primary" onclick="groupinsert()">만들기</button>
-		    <button><a class="btn modal_close_btn">닫기</a></button>
-    	</div>
+	   	<button class="btn btn-point btn-mg" style="margin-top: 20px;" onclick="groupinsert()">만들기</button>
+
     	
 </div>
 <%-- --------------------------------------------------------------  --%>
 
 <%-- 모달창2 --%>
-<div id="my_modal2">
-	<hr>
+<div id="my_modal2" style="width: 360px; padding: 20px 35px;">
+<button class="modal_close_btn"></button>
+
 	<h2>그룹명 수정</h2>
-		<input type="hidden" id="g_no" readonly><br>
-		<label for="name">현재 그룹명  <input type="text" id="name" readonly><br>
+	<br>
+		
+		<input type="hidden" id="g_no" readonly>
+		
+		<label for="name">현재 그룹명  <input type="text" id="name" style="margin-left: 32px;" readonly></label><br>
 	
 	   	 <label for="up_name">변경 할 그룹명  </label>
-	   	 <input type="text" id="up_name"><br>
+	   	 <input type="text" id="up_name">
 	   	
-		<div class="btn">
-			<button class="btn btn-primary" onclick="updateName()">변경하기</button>
-		    <button><a class="btn modal_close_btn">닫기</a></button>
-    	</div>
+		
+		<div style="text-align: center;"><button class="btn btn-point btn-mg" onclick="updateName()" style="margin-top: 15px;">변경하기</button></div>
+
     	
     	
 </div>
@@ -184,17 +224,14 @@ input:read-only {
 							</c:choose>
                             
                             <td align="center"><button onclick="updateGrp(${status.index})">그룹명 변경</button></td>
-                            
-                           
+    
                         </tr>
-						
-						
-						</c:forEach>
+				</c:forEach>
 							    
 					</c:when>
 				<c:otherwise>
 					<tr>
-				 		<td>존재하지 않습니다.</td>
+				 		<td colspan="6" align="center">존재하지 않습니다.</td>
 					</tr>
 				</c:otherwise>
 				</c:choose>
@@ -205,7 +242,6 @@ input:read-only {
 </div>
 <!-- //content close -->
 
-</div>
 </div>
 </div>
 
@@ -244,6 +280,23 @@ $('#test').datepicker({
     }
 	
 });
+
+document.searchForm.addEventListener('submit', function (event) {
+    event.preventDefault(); // 기본 서브밋 동작 방지
+
+    // 선택된 searchField 값을 URL에 업데이트
+    const selectedValue = document.getElementById('searchFieldSelect').value;
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set('searchField', selectedValue);
+
+    // searchWord의 값을 가져와서 URL에 추가
+    const searchWordValue = document.querySelector('input[name="searchWord"]').value;
+    currentUrl.searchParams.set('searchWord', searchWordValue);
+
+    // 업데이트된 URL로 페이지 이동
+    window.location.href = currentUrl.toString();
+    
+})
 
 function updateGrp(index) {
 	var g_no = $('input[data-g_no="'+index+'"]').val();
@@ -416,6 +469,9 @@ function resultList(map){
 		var sub_date = date.substr(0,10);
 		
 		var sub_month = vo.sub_month;
+		
+		var sub_cntcon = (sub_month/3);
+		
 		var sub_connection = vo.sub_connection;
 		
 		var sub_able = vo.sub_able;
@@ -437,10 +493,10 @@ function resultList(map){
 		console.log(sub_able);
 		
 		main.innerHTML = ''
-		    +			'<input type="text" id="sub_no" value="'
+		    +			'<input type="hidden" id="sub_no" value="'
 		    +			sub_no
 		    +			'" readonly>'
-		    +			'<input type="text" id="sub_connection" value="'
+		    +			'<input type="hidden" id="sub_connection" value="'
 		    +			sub_connection
 		    +			'" readonly>'
 			+ '<table class="table table-bordered">'
@@ -455,28 +511,29 @@ function resultList(map){
 		    + 	'</tr>'
 			+ '</thead>'
 			+	'<tbody>'
-			+		'<tr>'
-		    +			'<td align="left" class="row"><input type="text" id="sid" style="width:60px" value="'
+			+		'<tr>'			
+		    +			'<td align="left" class="row">'+ sid +'<input type="hidden" id="sid" style="width:60px" value="'
 		    +			sid
-		    +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_name" style="width:275px" value="'
+		    +			'"></td>'
+            +			'<td align="center">'+ sub_name +'<input type="hidden" id="sub_name" style="width:275px" value="'
             +			sub_name
-            +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_lv" style="width:80px" value="'
+            +			'"></td>'
+            +			'<td align="center">'+ sub_lv +'<input type="hidden" id="sub_lv" style="width:80px" value="'
             +			sub_lv
-            +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_date" style="width:72px" value="'
+            +			'"></td>'
+            +			'<td align="center">'+ sub_date +'<input type="hidden" id="sub_date" style="width:72px" value="'
             +			sub_date
-            +			'" readonly></td>'
-		    +			'<td align="left" class="row"><input type="text" id="sub_month" style="width:55px" value="'
+            +			'"></td>'
+		    +			'<td align="center" class="row">'+ sub_month +'개월 <input type="hidden" id="sub_month" style="width:55px" value="'
 		    +			sub_month
-		    +			'" readonly></td>'
-            +			'<td align="center"><input type="text" id="sub_able" style="width:35px" value="'
+		    +			'"></td>'
+            +			'<td align="center">'+ sub_able +'명 <input type="hidden" id="sub_able" style="width:35px" value="'
             +			sub_able
-            +			'" readonly></td>'
+            +			'"></td>'
 			+ 		'</tr>'
 			+	'</tbody>'
 		    +'</table>' 
+            +		'<div style="font-size: smaller; color: #0746919c; float: right;">연결 가능 그룹 : '+ sub_connection +'개 </div>'
 
 
     	    }
@@ -540,15 +597,9 @@ function groupinsert() { //그룹생성
 				fetchPost('/alpha/group/insert/'+t_m_id, obj, result)	
 			}else {
 				alert('그룹 등록이 취소되었습니다.')
-			}
-			
-			
-			
-			
-		}
-
-			
-	   }
+			}			
+		}			
+ }
 	
 
 
@@ -558,6 +609,26 @@ function go(page){
 	document.searchForm.pageNo.value=page;
 	document.searchForm.action = "/alpha/group?t_m_id="+$('#m_id').val();
 	document.searchForm.submit();
+}
+
+
+
+// 학습지도자일 경우에만 버튼 보이기
+var btnclass = document.getElementById("btnclass");
+var m_division = $('#m_division').val();
+var t_m_id_check = $('#m_id').val();
+console.log(t_m_id_check);
+console.log(m_division);
+
+if (t_m_id_check === undefined) {
+	btnclass.style.display = "none";
+} else {
+	
+	if(m_division == 1) {
+		btnclass.style.display = "block";
+	} else {
+		btnclass.style.display = "none";			
+	}
 }
 
 </script>

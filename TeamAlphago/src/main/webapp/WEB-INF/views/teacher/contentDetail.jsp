@@ -16,9 +16,18 @@
 
 </head>
 <style>
-#my_modal, #cartList, #payList, #no_content {
+
+#my_modal {
     display: none;
-    width: 600px;
+    width: 360px;
+    padding: 20px 35px;
+    background-color: #fefefe;
+    border: 1px solid #888;
+    border-radius: 3px;
+}
+
+#cartList, #payList, #no_content {
+    display: none;
     height: 300px;
     padding: 30px 60px;
     background-color: #fefefe;
@@ -26,7 +35,7 @@
     border-radius: 3px;
     text-align: center;
 }
-#my_modal .modal_close_btn, #cartList .modal_close_btn, #payPopUp .modal_close_btn, #no_content .modal_close_btn{
+#cartList .modal_close_btn, #payPopUp .modal_close_btn, #no_content .modal_close_btn{
 
     border: 1px solid black;
     padding: 10px;
@@ -305,12 +314,12 @@
 			<%-- 모달창 --%>
 			<div id="my_modal">
 				<hr>
-				<h2>결제 완료</h2>
+				<h2 style="text-align: center;">결제 완료</h2><br>
 			
-					<div class="btn">
-					    <button><a class="modal_close_btn" onClick="location.href='/alpha/mysubList?t_m_id=${memberVO.m_id }'">구독내역으로 가기</a></button>
-					    <button><a class="modal_close_btn" onClick="location.href='/alpha/teacher'">리스트로 돌아가기</a></button>
-			    	</div>
+				<div style="width: 100%; text-align: center;">
+				    <button class="btn btn-primary" style="margin: 10px;" onClick="location.href='/alpha/mysubList?t_m_id=${memberVO.m_id }'">구독내역으로 가기</button>
+				    <button class="btn btn-primary" style="margin: 10px;" onClick="location.href='/alpha/teacher'">리스트로 돌아가기</button>
+			    </div>
 			</div>
 			</div>
 			</div>

@@ -26,12 +26,6 @@
     border-radius: 3px;
 }
 
-#my_modal .modal_close_btn {
-	text-align: center;
-    border: 1px solid black;
-    padding: 2px 15px;
-    border-radius: 5px;
-}
 
 #my_modal2 {
     display: none;
@@ -62,14 +56,6 @@ table td, table th {
     text-align: center;
 }
 
-.btns{
-	padding: 20px;
-	justify-content: center;
-	width: 100%;
-    height: 100%;
-    text-align: center;	
-}
-
 #modalmenu td {
 	padding: 0;
 	border: none;
@@ -77,10 +63,13 @@ table td, table th {
 }
 
 .topMenu {
-    width: 100%;
+    width: 20%;
+    float: left;
     border: 2px solid #dddddd;
     border-radius: 5px 5px 0 0;
     height: 45px;
+    position: relative;
+    z-index: -1;
     border-bottom: none;
     color: darkgrey;
 }
@@ -94,6 +83,42 @@ table td, table th {
 	color: #074691;
 }
 
+#g_name {
+	width: 210px;
+	border-bottom: 1px solid #dadada;
+}
+
+#startdate, #enddate {
+	border: none;
+    outline: none;
+    border-bottom: 1px solid #dadada;
+}
+
+#infobox {
+	display: inline-block;
+	font-size: 17px;
+}
+.modal_close_btn {
+	display: inline-block;
+	float: right;
+}
+
+.modal_close_btn:after {
+	display: inline-block;
+	content: "\00d7";
+	font-size: 25px;
+	color: #a7a7a7;
+	width: 25px;
+
+}
+
+#date1, #date2 {
+	border: none;
+    outline: none;
+    margin: 5px;
+}
+
+
 </style>
 <body>
 
@@ -101,6 +126,7 @@ table td, table th {
 
 <%-- 모달창 --%>
 <div id="my_modal">
+	<button class="modal_close_btn"></button>
 
 	<table id="modalmenu" style="width: 100%;">
 		<colgroup>
@@ -108,19 +134,14 @@ table td, table th {
 			<col width="33%" />
 			<col width="33%" />
 		</colgroup>
-	<tr>
-	<td><button class="topMenu" id="getContent" onclick="getContent()">콘텐츠 정보</button></td>
-	<td><button class="topMenu" id="conGrp" onclick="conGrp()">연결 그룹 관리</button></td>
-	<td><button class="topMenu" id="createGrp" onclick="createGrp()">그룹 생성</button></td>
+	<tr style="border-bottom: 2px solid #074691; position: relative; z-index: 9;">
+	<button class="topMenu" id="getContent" onclick="getContent()">콘텐츠 정보</button>
+	<button class="topMenu" id="conGrp" onclick="conGrp()">연결 그룹 정보</button>
+	<button class="topMenu" id="createGrp" onclick="createGrp()">그룹 생성</button>
 	</tr>
 	</table>
 
 		<div id="getSub"></div>
-		<hr>
-	   	<br>
-		<div class="btns">
-		    <button class="modal_close_btn"><a>닫기</a></button>
-    	</div>
     	
     	
 </div>
@@ -144,32 +165,28 @@ table td, table th {
 <div id="container">
     <div class="wrap">
 
-             <form  method="get" name="searchForm" class="content_wrap">
-			총 ${totalCnt } 건
-			<input name="t_m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
-			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
-            <div class="titleBox">
-                <h2 class="t_title">구독 내역</h2>
-            </div>
+            <form  method="get" name="searchForm" class="content_wrap">
+    총 ${totalCnt } 건
+    <input name="t_m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
+    <input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
+    <div class="titleBox">
+        <h2 class="t_title">구독 내역</h2>
+    </div>
             
-            <div class="searchWrap searchWrap_wide searchWrap_normal">
-                    <div class="searchBox searchBox-mid searchBox-center">
-                        <fieldset>
-                            <input type="hidden" name="p" value="1">
-                            <legend>전체 검색</legend>
-                            <select title="검색 분류" name="searchField" value="${pageDto.cri.searchField }" onchange="searchChange()" id="search">
-                                <option value="content.c_name">콘텐츠명</option>
-                                <option value="sub_date">구독일자</option>
-                            </select>
-                            <div id="getsearch">
-                            <input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요."
-							name="searchWord" value=""${pageDto.cri.searchWord }">
-							<input type="submit" class="btn btn-primary" value="검색" />
-							</div>
-                        </fieldset>
-                    </div>
-            </div>           
-        </form>
+    <div class="searchWrap searchWrap_wide searchWrap_normal">
+        <div class="searchBox searchBox-mid searchBox-center">
+            <fieldset style="width: 500px;">
+                <input type="hidden" name="p" value="1">
+                <legend>전체 검색</legend>
+                <select title="검색 분류" name="searchField" onchange="searchChange()" id="search">
+                    <option value="content.c_name" selected>콘텐츠명</option>
+                    <option value="sub_date">구독일자</option>
+                </select>
+                    <div id="getsearch" style="display: inline-block;"></div>
+            </fieldset>
+        </div>
+    </div>           
+</form>
 
 
 <div class="entry">
@@ -185,11 +202,11 @@ table td, table th {
 			</colgroup>
 			<thead>
     			<tr style="height: 60px; border-bottom: 1px solid #dadada; line-height: 60px;">
-			        <th style="width:150px;">구독ID</th>
-			        <th style="width:400px;">패키지명</th>
-			        <th style="width:125px;">구독일</th>
-			        <th style="width:125px;">구독료</th>
-			        <th style="width:35px;">인원</th>
+			        <th>구독ID</th>
+			        <th>패키지명</th>
+			        <th>구독일</th>
+			        <th>구독료</th>
+			        <th>인원</th>
 			        <th></th>
     			</tr>
 			</thead>
@@ -198,17 +215,13 @@ table td, table th {
 					<c:when test="${subList != null && fn:length(subList) > 0 }">
 						<c:forEach  var="sub" items="${subList }" varStatus="status">
 						
-						<tr>
-						<%--
-                            	<c:if test="${fn:length(sub.sub_no) > 1}">
-									<td><input type="text" class="index" id="sub_no" data-subuid="${status.index}" value="${fn:substring(sub.sub_no,4,16)}" readonly></td>
-								</c:if>
-						 --%>
-						 
-                   			<input type="hidden" class="index" id="sub_month" style="width: 100%;" data-sub_month="${status.index}" value="${sub.sub_month}" readonly>
+                   			<input type="hidden" class="index" id="sub_month" style="width: 100%;" data-sub_month="${status.index}" value="${sub.sub_month}">
                    			<input type="hidden" class="index" id="sub_connection" style="width: 100%;" data-sub_con="${status.index}" value="${sub.sub_connection}">
-                   		
-                   			<td align="center">${sub.sub_no}<input type="hidden" class="index" id="sub_no" style="width: 100%;" data-subuid="${status.index}" value="${sub.sub_no}"></td>
+						<tr>
+                            	<c:if test="${fn:length(sub.sub_no) > 1}">
+									<td>${fn:substring(sub.sub_no,4,16)}<input type="hidden" class="index" id="sub_no" data-subuid="${status.index}" value="${sub.sub_no}"></td>
+								</c:if>         		
+        
                             <td align="center">${sub.c_name }<input type="hidden" id="c_name" style="width: 90%;" value="${sub.c_name }"></td>
                             
                             <c:choose>
@@ -231,7 +244,7 @@ table td, table th {
 					</c:when>
 				<c:otherwise>
 					<tr>
-				 		<td>존재하지 않습니다.</td>
+				 		<td colspan="6">존재하지 않습니다.</td>
 					</tr>
 				</c:otherwise>
 				</c:choose>
@@ -288,30 +301,52 @@ function getCalendal(){
 
 var search = document.getElementById('getsearch');
 
+//페이지 로드 시 실행될 초기화 함수
+function initializeSearchField() {
+    var searchFieldParam = getParameterByName('searchField');
+    var selectBox = document.getElementById('search');
+
+    // select box를 업데이트하고 searchChange 함수를 호출합니다.
+    selectBox.value = searchFieldParam || 'content.c_name'; // 파라미터 값이 없으면 기본값 "content.c_name" 설정
+    searchChange();
+}
+
+// 페이지 로드 시 초기화 함수를 호출합니다.
+initializeSearchField();
+
+// URL에서 파라미터 값을 추출하는 함수
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+// select box가 변경될 때마다 실행되는 함수
 function searchChange() {
-var v = $( '#search' ).val();
-console.log(v);
+    var v = $('#search').val();
+    console.log(v);
 
+    var search = document.getElementById('getsearch');
 
-
-if(v === 'content.c_name') {
-	
-	search.innerHTML = ''
-	search.innerHTML += ''
-	+ '<input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." '
-	+ 'name="searchWord" value=""${pageDto.cri.searchWord }" />'
-	+ '<input type="submit" class="btn btn-primary" value="검색" />'
-
-} else if(v == 'sub_date') {
-	search.innerHTML = ''
-	search.innerHTML += ''
-	+ '<input type="date" name="searchDate1" id="date1" value=""${pageDto.cri.searchDate1 }>'
-	+ '<input type="date" name="searchDate2" id="date2" value=""${pageDto.cri.searchDate2 }>'
-	+ '<input type="submit" class="btn btn-primary" value="검색" id="searchBtn"/>'
-	
+    if (v === 'content.c_name') {
+        search.innerHTML = '';
+        search.innerHTML +=
+            '<input type="text" class="inputSrch" title="검색어를 입력해주세요." placeholder="검색어를 입력해주세요." ' +
+            'name="searchWord" value="${pageDto.cri.searchWord }" />';
+        search.innerHTML += '<input type="submit" class="btn btn-primary" value="검색" />'
+    } else if (v === 'sub_date') {
+        search.innerHTML = '';
+        search.innerHTML +=
+            '<input type="date" name="searchDate1" id="date1" value="${pageDto.cri.searchDate1 }">' +
+            '<input type="date" name="searchDate2" id="date2" value="${pageDto.cri.searchDate2 }">';
+        search.innerHTML += '<input type="submit" class="btn btn-primary" value="검색" />'
+    }
 }
 
-}
 
 
 function modal(id) { //모달창 띄우기
@@ -492,6 +527,9 @@ function resultList(map){
 	console.log(vo);
 	
 	var sub_no = vo.sub_no;
+	var idx = sub_no.indexOf("_"); 
+	var sid = sub_no.substring(idx+1);
+	
 	var sub_date = vo.sub_date;
 	
 	var date = sub_date.substr(0,10);
@@ -513,16 +551,14 @@ function resultList(map){
 	}
 
 	main.innerHTML += ''
-	      + '<input type="text"'
-	      + 'style="text-align: center; background-color: #ececec; border-bottom: 1px solid #dadada;' 
-	      + 'color: black;'
-	      + 'width: 730px; padding: 10px; font-size: 16px;"'
-	      + 'value="구독 콘텐츠 정보">'
 	      + '<table class="table table-bordered">'
 	      + '<thead>'
+			+ '<th colspan="6" style="background-color: #f1f1f1;">'
+		    + '구독 콘텐츠 정보'
+			+ '</th>'
 	       +    '<tr>'
 	      +       '<th style="padding: 10px 5px; background-color: #f6f7f9;">구독ID</th>'
-	       +         '<td align="left" class="row">'+sub_no+'<input type="hidden" id="sub_no" style="width:100%" value="'
+	       +         '<td align="left" class="row">'+sid+'<input type="hidden" id="sub_no" style="width:100%" value="'
 	       +         sub_no
 	       +         '" readonly></td>'
 	      +       '<th style="padding: 10px 5px; width: 60px; background-color: #f6f7f9;">구독일</th>'
@@ -530,7 +566,7 @@ function resultList(map){
 	        +         date
 	        +         '" readonly></td>'
 	      +       '<th style="padding: 10px 5px; background-color: #f6f7f9;">구독료</th>'
-	        +         '<td>'+sub_price+'<input type="hidden" id="sub_price" style="width:100%" value="'
+	        +         '<td>'+sub_price+'원 <input type="hidden" id="sub_price" style="width:100%" value="'
 	        +         sub_price
 	        +         ' 원" readonly></td>'
 	       +    '</tr>'
@@ -548,9 +584,9 @@ function resultList(map){
 	        +         sub_month
 	        +         ' 개월" readonly></td>'
 	      +       '<th style="padding: 10px 5px; background-color: #f6f7f9;">정원</th>'
-	        +         '<td>'+sub_able+'<input type="hidden" id="sub_able" style="width:100%" value="'
+	        +         '<td>'+sub_able+'명 <input type="hidden" id="sub_able" style="width:100%" value="'
 	        +         sub_able
-	        +         ' 명" readonly></td>'
+	        +         '" readonly></td>'
 	      +       '<th style="padding: 10px 5px; width: 80px; background-color: #f6f7f9;">콘텐츠레벨</th>'
 	        +         '<td>'+sub_lv+'<input type="hidden" id="sub_lv" style="width:100%" value="'
 	        +         sub_lv
@@ -563,26 +599,37 @@ function resultList(map){
 function GrpList(list){
 	
 	main.innerHTML = '';
+	
+	console.log(list.length);
+	
+	if(list.length > 0) {
+		var tableHTML = '';
+	    tableHTML += '<table class="table table-bordered">';
+	    tableHTML += '<thead><th>그룹ID</th><th>그룹명</th><th>학습시작일</th><th>학습종료일</th><th>정원</th><th>학습인원</th></thead>';
+	    tableHTML += '<tbody>';
 
-    var tableHTML = '';
-    tableHTML += '<table class="table table-bordered">';
-    tableHTML += '<thead><th>그룹ID</th><th>그룹명</th><th>학습시작일</th><th>학습종료일</th><th>정원</th><th>학습인원</th></thead>';
-    tableHTML += '<tbody>';
+	    list.forEach(function(member) {
+	        tableHTML += '<tr>';
+	        tableHTML += '<td>' + member.g_no + '</td>';
+	        tableHTML += '<td>' + member.g_name + '</td>';
+	        tableHTML += '<td>' + member.g_start.substr(0,10); + '</td>';
+	        tableHTML += '<td>' + member.g_end.substr(0,10); + '</td>';
+	        tableHTML += '<td>' + member.sub_able + '명</td>';
+	        tableHTML += '<td>' + member.g_cnt + '명</td>';
+	        tableHTML += '</tr>';
+	    });
 
-    list.forEach(function(member) {
-        tableHTML += '<tr>';
-        tableHTML += '<td>' + member.g_no + '</td>';
-        tableHTML += '<td>' + member.g_name + '</td>';
-        tableHTML += '<td>' + member.g_start.substr(0,10); + '</td>';
-        tableHTML += '<td>' + member.g_end.substr(0,10); + '</td>';
-        tableHTML += '<td>' + member.sub_able + '명</td>';
-        tableHTML += '<td>' + member.g_cnt + '명</td>';
-        tableHTML += '</tr>';
-    });
+	    tableHTML += '</tbody></table>';
+	    
+	    main.innerHTML += tableHTML; // main 요소에 테이블 추가
+	    
+	} else{
+        main.innerHTML += '<div style="text-align: center; padding: 20px 5px;">연결된 그룹이 없습니다.</div>';
+	}
 
-    tableHTML += '</tbody></table>';
+    
 
-    main.innerHTML += tableHTML; // main 요소에 테이블 추가
+
 }
 	
 	
@@ -621,13 +668,11 @@ function createGroup(map) {
     if (sub_connection > 0) {
     
 	main.innerHTML += ''
-		+ '<input type="text"'
-		+ 'style="text-align: center; background-color: #ececec; border-bottom: 1px solid #dadada;' 
-		+ 'border-top: 1px solid #074691; color: black;'
-		+ 'width: 100%; padding: 10px; font-size: 16px;"'
-		+ 'value="구독 콘텐츠 정보">'
 		+ '<table class="table table-bordered">'
 		+ '<thead>'
+		+ '<th colspan="6" style="background-color: #f1f1f1;">'
+	    + '구독 콘텐츠 정보'
+		+ '</th>'
 	    + 	'<tr>'
 	    +			'<input type="hidden" id="sub_connection" value="'
 	    +			sub_connection
@@ -671,24 +716,29 @@ function createGroup(map) {
         +			'" readonly></td>'
 	    +	'</tr>'
 		+	'</tbody>'
-	    + '</table>';
+	    + '</table>'
+        +		'<div style="font-size: smaller; color: #0746919c; float: right;">연결 가능 그룹 : '+ sub_connection +'개 </div>'
     	
     	
-        main.innerHTML += '<h2>그룹 정보</h2>'
-            + '<h3>그룹명<input type="text" id="g_name"></h3>'
-            + '<div id="test"></div>'
-            + '<div style="display: inline-block;">'
-            + '학습 시작날짜<input type="text" id="startdate">'
+        main.innerHTML += '<br><h2>그룹 정보</h2><br>'
+            + '<div id="test" style="display: inline-block; float: left; margin-right: 35px;"></div>'
+            + '<div id="infobox"><label for="g_name" style="display: block; margin-top: 10px;">그룹명  <input type="text" id="g_name"></label>'
             + '<br>'
-            + '학습 종료날짜<input type="text" id="enddate">'
+            + '<br>'
+            + '<label for="startdate">학습 시작날짜 <input type="text" id="startdate" readonly></label>'
+            + '<br>'
+            + '<label for="enddate">학습 종료날짜 <input type="text" id="enddate" readonly></label>'
             + '</div>'
-            + '<button class="btn btn-primary" style="float: right;" onclick="insertGrp()">만들기</button>'
+            + '<br>'
+            + '<button class="btn btn-point btn-mg" style="margin-top: 20px;" onclick="insertGrp()">만들기</button>'
+           
             
             getCalendal();
             
             
     } else {
-        main.innerHTML += '더 이상 그룹을 만들 수 없습니다';
+        main.innerHTML += '<div style="text-align: center; padding: 20px 5px;">더 이상 그룹을 만들 수 없습니다.</div>';
+        
     }
 }
 

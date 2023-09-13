@@ -51,6 +51,7 @@ function result(map){
 		
 }
 
+
 //내용 입력 버튼 클릭 시 이벤트
 $('#writebtn').on('click', function() {
     // 모달창 띄우기
@@ -228,6 +229,25 @@ function displayLearnerList(map) {
 						+'</tr>';
 	}
 			learnerInfo.innerHTML += pageBlock;
+			
+			// 학습자 목록을 업데이트한 후 학습자의 존재 여부 확인
+		    checkLearnerExistence();
+		    
+		    
+		    
+		    function checkLearnerExistence(map) {
+		    	
+		        var writeButton = $('#writebtn');
+
+		        if (LearnerList != null && LearnerList.length > 0) {
+		            // 학습자가 있을 경우 버튼 활성화
+		            writeButton.prop('disabled', false);
+		        } else {
+		            // 학습자가 없을 경우 버튼 비활성화
+		            writeButton.prop('disabled', true);
+		        }
+		    }
+
 }
 
 // 체크 박스 전체 선택 이벤트
@@ -238,6 +258,8 @@ function selectAll(selectAll)  {
 	    checkbox.checked = selectAll.checked;
 	  })
 }
+
+
 
 
 
