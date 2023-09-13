@@ -141,8 +141,8 @@
 				<table
 					style="border: 1px solid #000, border-collapse: collapse; width: 100%;">
 					<tr>
-						<td align="center" style="border: 1px solid #000;"><textarea
-								name="h_content" id="hContent" placeholder="학습 내용을 입력하세요."></textarea></td>
+						<td align="center" style="border: 1px solid #000;">
+						<textarea name="h_content" id="hContent" placeholder="학습 내용을 입력하세요."></textarea></td>
 					<tr>
 				</table>
 			</div>
