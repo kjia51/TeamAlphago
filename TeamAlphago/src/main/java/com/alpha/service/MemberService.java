@@ -12,6 +12,8 @@ public interface MemberService {
 
 	public MemberVO login(MemberVO memberVO);
 	
+	public MemberVO memberOne(String m_id);
+	
 	public int insert(MemberVO memberVO);
 
 	public int checkDuplicate(MemberVO memberVO);

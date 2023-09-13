@@ -7,6 +7,10 @@
 	SELECT * FROM member WHERE m_id = #{m_id}
 </select>
 
+<select id="memberOne" resultType="com.alpha.vo.MemberVO">
+	SELECT * FROM member WHERE m_id = #{m_id}
+</select>
+
 
 <insert id="insert">
 	Insert into member (M_ID,M_NAME,M_PASSWORD,M_DIVISION,M_PHONE,M_EMAIL,M_ADDRESS,M_BIRTH)

@@ -9,6 +9,8 @@ import com.alpha.vo.MemberVO;
 public interface MemberMapper {
 
 	public MemberVO login(MemberVO memberVO);
+
+	public MemberVO memberOne(String m_id);
 	
 	public int insert(MemberVO memberVO);
 	

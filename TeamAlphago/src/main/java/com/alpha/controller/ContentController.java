@@ -285,13 +285,13 @@ public class ContentController extends CommonRestController {
 		   
 		 //멤버 조회
 		   @GetMapping("/member/list")
-		   public Map<String, Object> memberList(MemberVO memberVO, HttpSession session) {
+		   public Map<String, Object> memberList(HttpSession session) {
 		      
 				try {
 					String m_id = (String)session.getAttribute("m_id");
-					memberVO.setM_id(m_id);
-					MemberVO vo = memberService.login(memberVO);
-					System.out.println("====================================================="+vo);
+					MemberVO vo = memberService.memberOne(m_id);
+					
+					System.out.println("====================================================="+m_id);
 					Map<String, Object> map = responseVo(vo);
 					map.put("vo", vo);
 					return map;
