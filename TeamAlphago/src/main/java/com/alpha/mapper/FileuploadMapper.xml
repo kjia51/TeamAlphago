@@ -5,5 +5,12 @@
 	<insert id="insert">
 		insert into c_img values(#{c_no}, #{uploadpath}, #{filename}, #{filetype})
 	</insert>
-
+	
+	<update id="update">
+		update c_img set filename=#{filename} where c_no=#{c_no}
+	</update>
+	
+	<select id="selectOne" resultType="com.alpha.vo.FileuploadVO">
+		select * from c_img where c_no=#{c_no}
+	</select>
 </mapper>

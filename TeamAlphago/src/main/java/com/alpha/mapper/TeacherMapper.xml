@@ -6,45 +6,37 @@
 <!-- 콘텐츠  -->
 	<!-- 조회  -->
 <select id="getContentList" resultType="com.alpha.vo.ContentVO">
-	select c.*,if(c_level=1,'초급', if(c_level=2, '중급', '고급')) level, savepath from content c
-	left join
-	( select c_no, concat(uploadpath,c_no,filename) savepath from c_img) i
-	on c.c_no = i.c_no
-    <where>
-        <choose>
-            <when test="searchField == 'c_name'">
-                AND c_name LIKE CONCAT('%', #{searchWord}, '%')
-            </when>
-        </choose>
-        <choose>
-             <when test="c_level == 1">
-                 AND c_level = 1
-            </when>
-            <when test="c_level == 2">
-                 AND c_level = 2
-            </when>
-            <when test="c_level == 3">
-                 AND c_level = 3
-            </when>
-        </choose>
-       
-        <choose>
-
-            <when test="order == 'price1'">
-                ORDER BY c_price DESC
-            </when>
-            <when test="order == 'price2'">
-                ORDER BY c_price ASC
-            </when>
-            <when test="order == 'level1'">
-                ORDER BY c_level DESC
-            </when>
-            <when test="order == 'level2'">
-                ORDER BY c_level ASC
-            </when>
-        </choose>
-    </where>
-        ORDER BY c_no DESC
+    SELECT c.*, IF(c_level=1, '초급', IF(c_level=2, '중급', '고급')) AS level, savepath
+    FROM content c
+    LEFT JOIN (
+        SELECT c_no, CONCAT(uploadpath, c_no, filename) AS savepath
+        FROM c_img
+    ) i ON c.c_no = i.c_no
+    WHERE 1=1
+    <if test="searchField == 'c_name'">
+        AND c_name LIKE CONCAT('%', #{searchWord}, '%')
+    </if>
+    <if test="c_level != null">
+        AND c_level = #{c_level}
+    </if>
+    ORDER BY
+    <choose>
+        <when test="order == 'price1'">
+            c_price DESC
+        </when>
+        <when test="order == 'price2'">
+            c_price ASC
+        </when>
+        <when test="order == 'level1'">
+            c_level DESC
+        </when>
+        <when test="order == 'level2'">
+            c_level ASC
+        </when>
+        <otherwise>
+            c_no DESC
+        </otherwise>
+    </choose>
     LIMIT #{startNo}, #{amount}
 </select>
 
@@ -124,7 +116,7 @@
       AND s.sub_date BETWEEN #{cri.searchDate1} AND #{cri.searchDate2}
     </when>
   </choose>
-  ORDER BY s.SUB_DATE
+  ORDER BY s.SUB_DATE DESC
   LIMIT #{cri.startNo}, #{cri.amount}
 </select>
 		

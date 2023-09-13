@@ -75,6 +75,8 @@ div .InfoBox .info {
 <%@ include file="../common/header.jsp" %>
 
 <div id="container">
+
+
     <div class="wrap">
 
 <form id="searchForm" method="get" name="searchForm" class="content_wrap">
@@ -109,7 +111,6 @@ div .InfoBox .info {
 
 	        </div>
     </div>  
-</form>
 	    <div class="business-srch" style="margin-bottom:0px; margin-left:40px">
 		총 ${totalCnt } 건
 	        <select title="정렬" name="order" id="orderSelect" style="width: 120px; margin-left:725px;">
@@ -121,6 +122,7 @@ div .InfoBox .info {
 	            <option value="level2">레벨낮은순</option>
 	        </select>
 	    </div>
+</form>
 	<c:set var="i" value="0" />
 	<c:set var="j" value="3" />
 	
@@ -162,11 +164,10 @@ div .InfoBox .info {
   </c:otherwise>
   </c:choose>                                               
         </div>
+        </div>
         <!-- //content close -->
 
 
-    </div>
-</div>
 <script>
 function truncateText(text, maxLength) {
 	  if (text.length > maxLength) {
