@@ -137,10 +137,10 @@ div .InfoBox .info {
 	  
 	    <c:if test="${i%j == 0 }">
                          </c:if>
-                         <li style="margin:0px; text-align:center">
+                         <li style="text-align:center; height:270px; width:220px;  ">
                          	
-                            <a  onclick="godetail(${status.index})" class="img">
-                                <img src="/alpha/display?fileName=${con.savepath}" class="card-img-top" alt="..." style="height:150px; width:200px;     background-size: contain; padding:10px">
+                            <a  onclick="godetail(${status.index})" class="img" style="height:210px; width:210px; ">
+                                <img src="/alpha/display?fileName=${con.savepath}" class="card-img-top" alt="..." style="height:200px; width:200px;     background-size: contain; padding:10px">
                                 <span class="text"><em>${status.index}</em></span></a>
                             <p class="desc">
                             <c:if test="${fn:length(con.c_name)>=15}" var="len">

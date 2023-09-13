@@ -38,32 +38,35 @@
 
     <div id="header">
         <div class="topHead">
-            <div class="top_wrap">
+            <div class="top_wrap" style="heigth:120px">
                 <div class='logo_top'>
                     <a href="/"><img src="/resources/images/logo_top.png" alt="게임으로 배우는 바둑" /></a>
                 </div>
                 <div class='subject'>
                     <a href='/alpha/main'>게임으로 배우는 바둑 교실</a>
                 </div>
-                <div class="topMenuBar">
+                <div class="topMenuBar" style="right:0;">
                     <h2 class="blind">서비스 바로가기</h2>
-                    <div class="util">
-                        <div class="service">
-                            <ul>
-                                <li><a href="/alpha/main" ><em>홈</em></a></li>
-                                <c:if test="${memberVO == null }">
-	                                <li><a href="/alpha/login"><em>로그인</em></a></li>
-                                </c:if>
-                                <c:if test="${memberVO != null }">
-	                                <li><a href="/alpha/logout"><em>로그아웃</em></a></li>
-                                </c:if>
-                                <c:if test="${memberVO == null }">
-                                	<li><a href="/alpha/signup_step1/"><em>회원가입</em></a></li>
-                                </c:if>
-                            </ul>
-
-                        </div><!-- // service -->               
-                    </div><!-- // util -->
+					<div class="util" style="height: 60px; width: 250px; display: flex; flex-direction: column; align-items: flex-end;">
+					    <div class="service">
+					        <ul>
+					            <li><a href="/alpha/main"><em>홈</em></a></li>
+					            <c:if test="${memberVO == null}">
+					                <li><a href="/alpha/login"><em>로그인</em></a></li>
+					            </c:if>
+					            <c:if test="${memberVO != null}">
+					                <li><a href="/alpha/mypage"><em>마이페이지</em></a></li>
+					                <li><a href="/alpha/logout"><em>로그아웃</em></a></li>
+					            </c:if>
+					            <c:if test="${memberVO == null}">
+					                <li><a href="/alpha/signup_step1/"><em>회원가입</em></a></li>
+					            </c:if>
+					        </ul>
+					    </div><!-- // service -->
+					    <c:if test="${memberVO != null}">
+					        <div style="height: 30px; font-size: 1em; display: flex; justify-content: flex-end; align-items: center;">${memberVO.m_name}님 환영합니다🎉🎉✨🎊</div>
+					    </c:if>
+					</div><!-- // util -->
                 </div>
                 <!-- // topMenuBar -->
              

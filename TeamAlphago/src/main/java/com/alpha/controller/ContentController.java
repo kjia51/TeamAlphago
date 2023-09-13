@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.service.ContentService;
 import com.alpha.service.FileuploadService;
+import com.alpha.service.MemberService;
 import com.alpha.vo.CartVO;
 import com.alpha.vo.ContentVO;
 import com.alpha.vo.MemberVO;
@@ -34,6 +36,10 @@ public class ContentController extends CommonRestController {
 	   
 	   @Autowired
 	   FileuploadService service;
+	   
+	   @Autowired
+	   MemberService memberService;
+	   
 	   	
 	   @GetMapping("/")
 	   public ModelAndView main() {
@@ -50,6 +56,14 @@ public class ContentController extends CommonRestController {
 		
 			return mav;
 		}
+	   
+	   @GetMapping("/mypage")
+	   public ModelAndView mypage() {
+		   
+		   ModelAndView mav = new ModelAndView("/member/myPage");
+		   
+		   return mav;
+	   }
 	   
 	   @GetMapping("/saleList") 
 	   public ModelAndView salesLIST() {
@@ -269,6 +283,25 @@ public class ContentController extends CommonRestController {
 		   }
 
 		   
+		 //멤버 조회
+		   @GetMapping("/member/list")
+		   public Map<String, Object> memberList(MemberVO memberVO, HttpSession session) {
+		      
+				try {
+					String m_id = (String)session.getAttribute("m_id");
+					memberVO.setM_id(m_id);
+					MemberVO vo = memberService.login(memberVO);
+					System.out.println("====================================================="+vo);
+					Map<String, Object> map = responseVo(vo);
+					map.put("vo", vo);
+					return map;
 
+				} catch (Exception e) {
+					e.printStackTrace();
+					return responseResultMap(REST_FAIL, "조회 중 오류 발생");
+				}
+		   }
+		   
+		   
 
 }
