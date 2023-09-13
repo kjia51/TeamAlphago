@@ -1,3 +1,4 @@
+
 // post방식 요청
 function fetchPost(url,obj,callback){
 	console.log(url);
@@ -133,3 +134,8 @@ function modal(id) {
             modal.hide();
         });
 }
+
+
+
+
+
