@@ -40,7 +40,7 @@
         <div class="topHead">
             <div class="top_wrap">
                 <div class='logo_top'>
-                    <a href="/"><img src="/resources/images/logo_top.png" alt="대한바둑협회" /></a>
+                    <a href="/"><img src="/resources/images/logo_top.png" alt="게임으로 배우는 바둑" /></a>
                 </div>
                 <div class='subject'>
                     <a href='/alpha/main'>게임으로 배우는 바둑 교실</a>
@@ -57,9 +57,12 @@
                                 <c:if test="${memberVO != null }">
 	                                <li><a href="/alpha/logout"><em>로그아웃</em></a></li>
                                 </c:if>
-                                <li><a href="/alpha/signup_step1/"><em>회원가입</em></a></li>
+                                <c:if test="${memberVO == null }">
+                                	<li><a href="/alpha/signup_step1/"><em>회원가입</em></a></li>
+                                </c:if>
                             </ul>
-                        </div><!-- // service -->
+
+                        </div><!-- // service -->               
                     </div><!-- // util -->
                 </div>
                 <!-- // topMenuBar -->
