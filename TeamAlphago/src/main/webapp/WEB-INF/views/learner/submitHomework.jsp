@@ -77,33 +77,31 @@
 
 						</c:if>
 						<!-- m_division이 2이고 homeworkList가 null이 아닌 경우 숙제 리스트를 출력 -->
-						<c:if
-							test="${memberVO.m_division == 2 and not empty homeworkList}">
+						<c:if test="${memberVO.m_division == 2 and not empty homeworkList}">
 							<tbody>
-
 								<c:forEach items="${homeworkList}" var="list">
-
 									<tr>
-										<th align="center"><input type="checkbox" id="checkbox"
-											name="myCheckbox" value="${list.h_no}"
+										<th align="center">
+										<input type="checkbox" id="checkbox" name="myCheckbox" value="${list.h_no}"
 											data-hno="${list.h_no}"></th>
-										<td align="center" class="row">${list.c_name}<input
-											type="hidden" name="c_name" id="contentNo"
+										<td align="center" class="row">${list.c_name}
+										<input type="hidden" name="c_name" id="contentNo"
 											value="${list.c_name}">
 										</td>
-										<td align="center">${list.m_name}<input type="hidden"
-											name="m_name" id="memberName" value="${list.m_name}">
+										<td align="center">${list.m_name}
+										<input type="hidden" name="m_name" id="memberName" value="${list.m_name}">
 										</td>
-										<td align="center">${list.h_homework}<input type="hidden"
-											name="h_homework" id="homework" value="${list.h_homework}">
+										<td align="center">${list.h_homework}
+										<input type="hidden" name="h_homework" id="homework" value="${list.h_homework}">
 										</td>
-										<td align="center">${fn:substring(list.h_limit, 0, 10)}<input
-											type="hidden" name="h_limit" id="deadline"
+										<td align="center">${fn:substring(list.h_limit, 0, 10)}
+										<input type="hidden" name="h_limit" id="deadline"
 											value="${list.h_limit}">
 										</td>
 										<td align="center">
 											<input type="hidden" id="subStatus" value="">
-											<span id="submissionStatus_${list.h_no}"> ${list.h_content == null || list.h_content == '' ? '미제출' : '제출'}</span>
+											<span id="submissionStatus_${list.h_no}"> 
+											${list.h_content == null || list.h_content == '' ? '미제출' : '제출'}</span>
 										</td>
 									</tr>
 
@@ -114,8 +112,15 @@
 
 					<!-- 제출버튼 -->
 	                <div class="btnArea-center" style="margin-top:0" id="submitBtns">
-	                    <span class="btn btn-point btn-lg">
-	                    	<button type="button" id="writebtn" data-route="one/add/user/">학습내용 입력</button>
+	                    <span class="btn btn-primary" >
+	                        <c:choose>
+						        <c:when test="${empty homeworkList}">
+						            <button type="button" id="writebtn" data-route="one/add/user/" disabled="disabled">학습내용 입력</button>
+						        </c:when>
+						        <c:otherwise>
+						            <button type="button" id="writebtn" data-route="one/add/user/">학습내용 입력</button>
+						        </c:otherwise>
+						    </c:choose>
 	                    </span>
                     </div>
 				</div>

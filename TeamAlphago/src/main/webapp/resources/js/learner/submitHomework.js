@@ -1,3 +1,4 @@
+
 // post방식 요청
 function fetchPost(url,obj,callback){
 	console.log(url);
@@ -44,8 +45,12 @@ $('#writebtn').on('click', function() {
     // 선택된 체크박스 확인
     $('input[name="myCheckbox"]:checked').each(function() {
         var hno = $(this).data('hno');
-        selectedHnos.push(hno);
+        selectedHnos.push(hno);    
     });
+    // 기 제출된 숙제에 대해 학습내용 입력 버튼 비활성화
+	if(hContent != null){
+		 $('#writebtn').prop('disabled', true);
+	}
 
     // 모달창 띄우기
     modal('assign_modal');
@@ -59,6 +64,7 @@ function submitHomework() {
         alert('숙제를 선택하세요.');
         return;
     }
+
 
     // 선택된 각 h_no에 대해 hContent 전송
     selectedHnos.forEach(function(hno) {
@@ -133,3 +139,8 @@ function modal(id) {
             modal.hide();
         });
 }
+
+
+
+
+

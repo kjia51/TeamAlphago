@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게임으로 배우는 바둑</title>
 <style>
   img {
         width: 100%;

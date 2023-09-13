@@ -45,11 +45,8 @@ text-align: center;
 	
 }
 
- 
-
-
-
 </style>
+
 <body>
 	<%@ include file="../common/header.jsp"%>
 
@@ -57,7 +54,7 @@ text-align: center;
 		<div class="wrap">
 			<div class="content_wrap">
 				<div class="titleBox">
-					<h2 class="t_title">숙제 평가(학습지도자)</h2>
+					<h2 class="t_title">숙제 평가</h2>
 					<input name="l_m_id" id="memberId" type="hidden" value="${memberVO.m_id}"> 
 					<input name="m_division" id="division" type="hidden" value="${memberVO.m_division}">
 				</div>
@@ -116,21 +113,27 @@ text-align: center;
 								<c:set var="isMember" value="${memberVO.m_id}" />
 								<c:if test="${isMember == null}">
 									<tr>
-										<td colspan="7" style="text-align: center;">
+										<td colspan="6" style="text-align: center;">
 										로그인 후 이용해주세요.</td>
 									</tr>
 								</c:if>
 								<c:set var="isTeacher" value="${memberVO.m_division}" />
 								<c:if test="${listCheck != null && isTeacher == 1}">
 									<tr>
-										<td colspan="7" style="text-align: center;">
+										<td colspan="6" style="text-align: center;">
 										그룹을 선택하여 주세요.</td>
+									</tr>
+								</c:if>
+								<c:if test="${memberVO.m_id != null && isTeacher != 1}">
+									<tr>
+										<td colspan="6" style="text-align: center;">
+										학습관리자만 이용 가능합니다.</td>
 									</tr>
 								</c:if>
 								<c:set var="listCheck" value="${submittedList}" />
 								<c:if test="${listCheck == null && isTeacher == 1}">
 									<tr>
-										<td colspan="7" style="text-align: center;">
+										<td colspan="6" style="text-align: center;">
 										제출된 숙제가 없습니다.</td>
 									</tr>
 								</c:if>

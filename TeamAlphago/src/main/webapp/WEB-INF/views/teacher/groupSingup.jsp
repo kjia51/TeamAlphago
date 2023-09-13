@@ -388,13 +388,46 @@ function groupMemList(g_no) {
 
 function delMemberAll() { //모두 내보내기
 	
-
+	var res = confirm('모두 탈퇴시키겠습니까?');
+	
+	if(res) {
+		
     var checkboxes = document.querySelectorAll('input[name="item"]:checked');
     var selectedValues = [];
 
     checkboxes.forEach(function (checkbox) {
         selectedValues.push(checkbox.value);
     });
+    
+    selectedValues.forEach(function (value) {
+    	
+        var l_no = $('input[data-l_no="'+value+'"]').val();
+    	var g_no = $('#g_no').val();
+    	
+    	console.log('======')
+    	console.log(l_no)
+    	console.log(g_no)
+    	
+
+				//삭제 성공 시 MemberList 리로드
+			    fetchDelete('/alpha/group/getGroupOne/delAction/'+g_no+'/'+l_no, function(data) { 
+			    	fetch('/alpha/group/getGroupOne/list/' + g_no)
+			        .then(response => response.json())
+			        .then(data => {
+			            const LearnerCnt = data.LearnerCnt;
+			            const list = data.list;
+			            MemberList(list, LearnerCnt);
+			        })
+			        .catch(error => {
+			            console.error('Error:', error);
+			        });
+			    });	
+    })
+    alert('수정되었습니다.')
+    
+	}else {
+		alert('취소되었습니다.')
+	}
 	
 }
 
@@ -437,10 +470,10 @@ function MemberList(list, LearnerCnt){
 
     var tableHTML ='<table class="table table-bordered">';
     tableHTML += '<div style="font-size: smaller; margin-left: 5px;">총 ' + LearnerCnt + ' 명</div>'; // LearnerCnt 변수 삽입
-    tableHTML += '<button onclick="">모두 내보내기</button>';
+    tableHTML += '<button onclick="delMemberAll()">모두 내보내기</button>';
     
     tableHTML += '<thead><tr>';
-    tableHTML += '<th></th>';
+    tableHTML += '<th><input type="checkbox" name="item  value="selectall" onclick="selectAll(this)"></th>';
     tableHTML += '<th style="background-color: #f1f1f1;">학생ID</th>';
     tableHTML += '<th style="background-color: #f1f1f1;">이름</th>';
     tableHTML += '<th style="background-color: #f1f1f1;"></th>';
@@ -453,7 +486,7 @@ function MemberList(list, LearnerCnt){
         tableHTML += '<tr>';
         tableHTML +='<input type="hidden" id="l_g_no" value="'+ member.l_g_no +'" readonly>'
         tableHTML +='<input type="hidden" id="index" value="'+ index +'" readonly>'
-        tableHTML += '<td align="center"><input type="checkbox" name="item" value="'+ index +'></td>';
+        tableHTML += '<td align="center"><input type="checkbox" name="item" value="'+ index +'"></td>';
         tableHTML += '<td align="center">' + member.l_no + '<input type="hidden" data-l_no="'+index+'" value="'+ member.l_no +'" readonly>' + '</td>';
         tableHTML += '<td align="center">' + member.m_name + '<input type="hidden" value="'+ member.m_name +'" readonly>' + '</td>';
         tableHTML += '<td align="center">' + '<button onclick="delMember(' + index + ')">내보내기</button>' + '</td>';
@@ -523,16 +556,20 @@ function joinGroup() {
         console.error('Error:', error);
     });
 }
-
+///////////////////////////////////////////////////////////////////////
+    
 function JoinList(list, JoinCnt, grpVO){
 
 	main.innerHTML = '';
 
     var tableHTML = '';
     tableHTML += '<div style="font-size: smaller; margin-left: 5px;">총 ' + JoinCnt + ' 명</div>'; // JoinCnt 변수 삽입
+    tableHTML += '<button onclick="JoinMemberAll()">전체 승인</button>';
+    tableHTML += '<button onclick="RefuserMemberAll()">전체 거절</button>';
+    
     tableHTML += '<table class="table table-bordered">';
     tableHTML += '<thead><tr>';
-    tableHTML += '<th></th>';
+    tableHTML += '<th><input type="checkbox" name="item  value="selectall" onclick="selectAll(this)"></th>';
     tableHTML += '<th style="background-color: #f1f1f1;">학생ID</th>';
     tableHTML += '<th style="background-color: #f1f1f1;">이름</th>';
     tableHTML += '<th style="background-color: #f1f1f1;">신청일자</th>';
@@ -545,7 +582,7 @@ function JoinList(list, JoinCnt, grpVO){
         tableHTML += '<tr>';
         tableHTML +='<input type="hidden" id="l_g_no" value="'+ member.l_g_no +'" readonly>'
         tableHTML +='<input type="hidden" id="index" value="'+ index +'" readonly>'
-        tableHTML += '<td align="center"><input type="checkbox" data-num="'+index+'">' + '</td>';
+        tableHTML += '<td align="center"><input type="checkbox" name="item" value="'+ index +'"></td>';
         tableHTML += '<td align="center">' + member.l_no + '<input type="hidden" data-l_no="'+index+'" value="'+ member.l_no +'" readonly>' + '</td>';
         tableHTML += '<td align="center">' + member.m_name + '<input type="hidden" value="'+ member.m_name +'" readonly>' + '</td>';
         tableHTML += '<td align="center">' + member.l_register + '<input type="hidden" value="'+ member.l_register +'" readonly>' + '</td>';
@@ -567,6 +604,15 @@ function JoinList(list, JoinCnt, grpVO){
 
 }
 
+function selectAll(selectAll)  {
+	  const checkboxes 
+	       = document.getElementsByName('item');
+	  
+	  checkboxes.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked;
+	  })
+	}
+/////////////////////////////////////////////////////////////////////////////////////////////////
 //put방식 요청
 function fetchPut(url,obj,callback){
 	console.log(url);
@@ -586,6 +632,56 @@ function fetchPut(url,obj,callback){
 	} catch (e) {
 		console.log(e);
 		
+	}
+	
+}
+
+function JoinMemberAll() { //모두 승인하기
+	
+	var res = confirm('모두 승인하겠습니까?');
+	
+	if(res) {
+		
+    var checkboxes = document.querySelectorAll('input[name="item"]:checked');
+    var selectedValues = [];
+
+    checkboxes.forEach(function (checkbox) {
+        selectedValues.push(checkbox.value);
+    });
+    
+    selectedValues.forEach(function (value) {
+    	
+        var l_no = $('input[data-l_no="'+value+'"]').val();
+    	var g_no = $('#g_no').val();
+    	
+    	console.log('======')
+    	console.log(l_no)
+    	console.log(g_no)
+    	
+    	//전달할 객체로 생성
+		let obj = {
+				g_no : g_no,
+				l_no : l_no
+		};
+
+    	//업데이트 성공 시 MemberList 리로드
+		fetchPut('/alpha/group/getGroupOne/updateAction/'+g_no+'/'+l_no, obj, function(data) {
+	    	fetch('/alpha/group/getJoin/list/' + g_no)
+	        .then(response => response.json())
+	        .then(data => {
+	            const JoinCnt = data.JoinCnt;
+	            const list = data.list;
+	            JoinList(list, JoinCnt);
+	        })
+	        .catch(error => {
+	            console.error('Error:', error);
+	        });
+	    });
+    })
+    alert('수정되었습니다.')
+    
+	}else {
+		alert('취소되었습니다.')
 	}
 	
 }
@@ -638,6 +734,49 @@ function JoinMember(index) { //가입 승인
 
 	}
 
+}
+
+function RefuserMemberAll() { //모두 거절하기
+	
+	var res = confirm('모두 거절하겠습니까?');
+	
+	if(res) {
+		
+    var checkboxes = document.querySelectorAll('input[name="item"]:checked');
+    var selectedValues = [];
+
+    checkboxes.forEach(function (checkbox) {
+        selectedValues.push(checkbox.value);
+    });
+    
+    selectedValues.forEach(function (value) {
+    	
+        var l_no = $('input[data-l_no="'+value+'"]').val();
+    	var g_no = $('#g_no').val();
+    	
+    	console.log('======')
+    	console.log(l_no)
+    	console.log(g_no)
+
+    	fetchDelete('/alpha/group/getGroupOne/delAction/'+g_no+'/'+l_no, function(data) {
+	    	fetch('/alpha/group/getJoin/list/' + g_no)
+	        .then(response => response.json())
+	        .then(data => {
+	            const JoinCnt = data.JoinCnt;
+	            const list = data.list;
+	            JoinList(list, JoinCnt);
+	        })
+	        .catch(error => {
+	            console.error('Error:', error);
+	        });
+	    });
+    })
+    alert('수정되었습니다.')
+    
+	}else {
+		alert('취소되었습니다.')
+	}
+	
 }
 
 function RefuserMember(index) { //가입 거절
@@ -705,7 +844,6 @@ document.searchForm.addEventListener('submit', function (event) {
     // 업데이트된 URL로 페이지 이동
     window.location.href = currentUrl.toString();
 });
-
 
 function go(page){
 	//alert(page);
