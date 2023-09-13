@@ -49,7 +49,7 @@
 									</div>
 								</td>
 								<td style="border-left: none;">
-									<button class="btn btn-default" id="writebtn" >내용입력</button>
+									<button class="btn btn-default" id="writebtn" disabled >내용입력</button>
 								</td>
 							
 							</tr>

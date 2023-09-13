@@ -113,21 +113,27 @@ text-align: center;
 								<c:set var="isMember" value="${memberVO.m_id}" />
 								<c:if test="${isMember == null}">
 									<tr>
-										<td colspan="7" style="text-align: center;">
+										<td colspan="6" style="text-align: center;">
 										로그인 후 이용해주세요.</td>
 									</tr>
 								</c:if>
 								<c:set var="isTeacher" value="${memberVO.m_division}" />
 								<c:if test="${listCheck != null && isTeacher == 1}">
 									<tr>
-										<td colspan="7" style="text-align: center;">
+										<td colspan="6" style="text-align: center;">
 										그룹을 선택하여 주세요.</td>
+									</tr>
+								</c:if>
+								<c:if test="${memberVO.m_id != null && isTeacher != 1}">
+									<tr>
+										<td colspan="6" style="text-align: center;">
+										학습관리자만 이용 가능합니다.</td>
 									</tr>
 								</c:if>
 								<c:set var="listCheck" value="${submittedList}" />
 								<c:if test="${listCheck == null && isTeacher == 1}">
 									<tr>
-										<td colspan="7" style="text-align: center;">
+										<td colspan="6" style="text-align: center;">
 										제출된 숙제가 없습니다.</td>
 									</tr>
 								</c:if>
