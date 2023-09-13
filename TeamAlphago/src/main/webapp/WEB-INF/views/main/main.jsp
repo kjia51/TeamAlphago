@@ -29,7 +29,7 @@
 	<c:set var="i" value="0" />
 	<c:set var="j" value="3" />
 
-	 <div class="atcBox atcBox-notice">
+	 <div class="atcBox atcBox-notice" style="text-algin:center; padding-right:10px; width:955px" >
               <h3><i class="ico ico-rally"></i>이 달의 콘텐츠</h3>
 <c:choose>
 <c:when test="${contentList != null && fn:length(contentList) > 0 }">
@@ -41,16 +41,17 @@
 	  
 	    <c:if test="${i%j == 0 }">
         </c:if>
-             <li style="width:222px; height:170px;">
+             <li style="width:200px; height:220px; margin-right:20px;">
              	
-                <a href="#" onclick="godetail(${status.index})" class="img">
-                    <img src="/alpha/display?fileName=${con.savepath}" alt="">
+                <a href="#" onclick="godetail(${status.index})" class="img" style="width:200px; height:200px">
+                    <img src="/alpha/display?fileName=${con.savepath}" alt="" style="width:200px; height:200px">
                     <span class="text"><em>${status.index}</em></span>
                 </a>
+            
                 <p class="desc">
                     <a href="#" onclick="godetail(${status.index})"><strong class="tit">${con.c_name }</strong></a>
-                    <em>|</em><span class="hit">학습수준 : ${con.c_level }</span>
-                </p>
+                   <!--  <em>|</em><span class="hit">학습수준 : ${con.c_level }</span> -->
+                </p> 
            </li>
   	    <c:if test="${i%j == j-1 }">
    	    </c:if>
@@ -67,7 +68,7 @@
 	
 	<a href="/alpha/teacher"><img src="/resources/images/main_banner2.png"></a>
 	
-        <div class="atcBox atcBox-notice">
+        <div class="atcBox atcBox-notice" >
               <h3><i class="ico ico-notice"></i>공지사항</h3>
               <ul>
                    <c:forEach var="noticeVO" items="${noticeVOList}">
