@@ -12,7 +12,12 @@ import com.alpha.vo.FileuploadVO;
 public interface FileuploadService {
 
 	public int insert(FileuploadVO vo);
+
+	public int update(FileuploadVO vo);
+	
+	public int fileEdit(List<MultipartFile> files, String c_no) throws Exception;
 	
 	public int fileupload(List<MultipartFile> files, String c_no) throws Exception;
 
+	public FileuploadVO selectOne(String c_no);
 }

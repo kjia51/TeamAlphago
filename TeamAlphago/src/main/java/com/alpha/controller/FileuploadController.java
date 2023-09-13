@@ -46,6 +46,19 @@ public class FileuploadController extends CommonRestController{
 		}
 		return responseMap("success", "사진 등록이 완료되었습니다");
 	}
+	@PostMapping("/fileEdit")
+	public @ResponseBody Map<String, Object> fileEdit(@RequestParam List<MultipartFile> files,@RequestParam String c_no) throws Exception {
+		System.out.println("fileupload");
+		System.out.println(files);
+		System.out.println(c_no);
+		int insertRes = service.fileEdit(files, c_no);
+		System.out.println(insertRes);
+		if(insertRes>1) {
+			
+			log.info("업로드 건수 ====================================" + insertRes);
+		}
+		return responseMap("success", "사진 등록이 완료되었습니다");
+	}
 	
 	@GetMapping("/display")
 	// 이미지를 화면에 보여줍니다

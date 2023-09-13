@@ -108,6 +108,79 @@ public class FileuploadServiceImpl implements FileuploadService {
 	}
 		return insertRes;
 	}
+	@Override
+	public int fileEdit(List<MultipartFile> files, String c_no) throws Exception {
+		// TODO Auto-generated method stub
+		int insertRes = 0;
+		for(MultipartFile file : files) {
+			if(file.isEmpty()) {
+				continue;
+			}
+			log.info("=====================================");
+			log.info("oFileName : "+file.getOriginalFilename());
+			log.info("name : "+file.getName());
+			log.info("size : "+file.getSize());
+			
+			try {
+				/**
+				 * 소프트웨어 구축에 쓰이는 식별자 표준
+				 * 파일이름이 중복되어 파일이 소실되지 않도록 uuid를 붙여서 저장
+				 */
+				String saveFileName = c_no+file.getOriginalFilename();
+				String uploadPath = getContent();
+				
+				File sFile = new File(FileuploadController.ATTACHES_DIR
+						+uploadPath
+						+saveFileName);
+				
+				// file(원본파일)을 sFile(저장 대상 파일)에 저장
+				file.transferTo(sFile);
+				
+				//주어진 파일의 Mine유형
+				String contentType = Files.probeContentType(sFile.toPath());
+				FileuploadVO Fileuploadvo = mapper.selectOne(c_no);
+				
+				if(contentType.startsWith("image")) {
+					Fileuploadvo.setFiletype("I");
+					
+				}else {
+					Fileuploadvo.setFiletype("F");
+				}
+				
+				Fileuploadvo.setFilename(file.getOriginalFilename());
+				
+				int res = update(Fileuploadvo);
+				
+				if(res>0) {
+					insertRes++;
+				}
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+				throw new Exception("첨부파일 등록중 예외사항이 발생 하였습니다.(IllegalStateException)");
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new Exception("첨부파일 등록중 예외사항이 발생 하였습니다.(IOException)");
+			} catch(Exception e) {
+				e.printStackTrace();
+				throw new Exception("첨부파일 등록중 예외사항이 발생 하였습니다.(Exception)");
+			}
+		}
+		return insertRes;
+	}
+
+
+	@Override
+	public int update(FileuploadVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.update(vo);
+	}
+
+
+	@Override
+	public FileuploadVO selectOne(String c_no) {
+		// TODO Auto-generated method stub
+		return mapper.selectOne(c_no);
+	}
 
 
 }

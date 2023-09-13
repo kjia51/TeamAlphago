@@ -129,6 +129,7 @@ public class ContentController extends CommonRestController {
 					int res = contentService.updateContent(contentVO);
 					System.out.println(res);
 					Map<String, Object> map = responseEditMap(res);
+					map.put("c_no", contentVO.getC_no());
 					return map;
 
 				} catch (Exception e) {

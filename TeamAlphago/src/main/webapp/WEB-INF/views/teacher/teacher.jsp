@@ -75,6 +75,8 @@ div .InfoBox .info {
 <%@ include file="../common/header.jsp" %>
 
 <div id="container">
+
+
     <div class="wrap">
 
 <form id="searchForm" method="get" name="searchForm" class="content_wrap">

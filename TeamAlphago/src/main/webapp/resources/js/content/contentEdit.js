@@ -250,7 +250,7 @@ function resultList(map){
     		+'                     <th scope="row">첨부파일</th>'
     		+'                     <td>'
     		+						vo.filename
-    		+'						<span id="deletefile">삭제</span>'		
+    		+'						<span onclick="deletefile(this)">삭제</span>'		
     		+'                     </td>'
     		+'                     </tr>'
     		+'                     <tr>'
@@ -286,10 +286,9 @@ function resultList(map){
     	        item.innerHTML = options;
 
     	    })
-    				$('#deletefile').click(function () {
-						let c_no = $('#c_no').val();
-						fetchDelete('/alpha/content/DeleteFile/' + c_no, result);
-					})	
+
+					
+
     		
 		    	$('#c_name').blur(function () {
 			    	let c_name = $('#c_name').val();
@@ -392,14 +391,41 @@ function resultList(map){
     
 			
 			$('#editBtn').click(function () {
+			
 			let c_name = $('#c_name').val();
 			let c_level = $('#c_level').val();
 			let c_able = $('#poss_able').val();
 			let c_price = $('#c_price').val();
 			let c_content = $('#c_content').val();
 			let c_no = $('#c_no').val();
-			  
-
+			let files = $('#files')[0].files;
+			
+			if(c_name==null ||c_name==''){
+				alert('컨텐츠명을 입력하세요');
+				$('#c_name').focus();
+				return;
+			}
+			if(c_able==null ||c_able==''){
+				alert('수강인원을 입력하세요');
+				$('#p_ableTd').focus();
+				return;
+			}
+			if(c_price==null ||c_price==''){
+				alert('정가를 입력하세요');
+				$('#c_price').focus();
+				return;
+			}
+			if(c_content==null ||c_content==''){
+				alert('내용을 입력하세요');
+				$('#c_content').focus();
+				return;
+			}
+			
+			if(files==null ||files==''){
+				alert('첨부파일을 입력하세요');
+				$('#files').focus();
+				return;
+			}	
 			//전달할 객체로 생성
 			let obj = {
 					c_name : c_name
@@ -410,13 +436,54 @@ function resultList(map){
 					, c_no : c_no
 					}
 			
-			fetchPut('/alpha/content/EditAction', obj, result)
+			fetchPut('/alpha/content/EditAction', obj, file)
 		
 		})
 
+	function file(map){
+	  let formData = new FormData(); // FormData 객체를 생성합니다.
+
+	  // 파일 업로드 필드에 파일 추가
+	  let files = $('#files')[0].files;
+	  formData.append('files', files[0]);
+	  console.log("files", files);
+	  // 다른 필드에 데이터 추가
+	  document.querySelector('#c_no').value = map['c_no'];
+	  let c_no = $('#c_no').val();
+	  formData.append('c_no', $('#c_no').val());
+	  console.log($('#c_no').val())
+	  if(map.result == 'success'){
+			alert(map.msg);
+			fetch('/alpha/fileEdit'
+					,{ 
+						method : 'post'
+						, body : formData
+			})
+			.then(response=>response.json())
+			.then(map => {
+	                // 페이지 리디렉션 실행
+	             window.location.href = '/alpha/teacher/detail?c_no='+c_no; // 원하는 페이지 URL로 변경
+			});
+		} else {
+			alert(map.msg);
+		}
 	
+}
 		
 
+}
+
+function deletefile(buttonElement) {
+    // 버튼을 클릭한 경우, 해당 버튼이 속한 <tr> 요소를 찾습니다.
+    var trElement = buttonElement.closest("tr");
+
+    if (trElement) {
+        // <tr> 안에 있는 모든 <td> 요소를 제거합니다.
+        var tdElements = trElement.querySelectorAll("td");
+        tdElements.forEach(function (tdElement) {
+            tdElement.textContent = "";
+        });
+    }
 }
 
 
