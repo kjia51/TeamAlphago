@@ -26,6 +26,7 @@
     border-radius: 5px;
     margin: 20px;
 }
+
 </style>
 <body>
 <div id="payList">

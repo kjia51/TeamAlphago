@@ -30,6 +30,13 @@
 	line-height: 15px;
 	margin-left: 20px;
 }
+
+                .total_order {width:171px}
+                .sale_price {width:171px}
+                .sale_pay{overflow:hidden;margin-bottom:20px;}
+                .sale_pay dd ul {background:url('../img/payment/sum_bg_.gif') no-repeat;}
+                div.total_price {margin:10px 0 0 70px}
+                div.total_price dl.benefit{margin:17px 0 0}
 </style>
 </head>
 <body>
