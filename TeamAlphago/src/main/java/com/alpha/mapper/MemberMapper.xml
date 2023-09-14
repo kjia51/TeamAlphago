@@ -41,7 +41,7 @@
 </update>
 
 <delete id="deleteMember">
-	delete from member m_id=#{m_id}
+	delete from member where m_id=#{m_id}
 </delete>
 
 

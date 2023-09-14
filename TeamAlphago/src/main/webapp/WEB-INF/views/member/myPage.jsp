@@ -21,6 +21,15 @@
 .topMenu:hover {
     color: #074691;
 }
+
+.alert-div{
+	display: flex;
+	width: 185px;
+	font-size: 12px;
+	color: red;
+	line-height: 15px;
+	margin-left: 20px;
+}
 </style>
 </head>
 <body>
@@ -38,8 +47,16 @@
 			</colgroup>
 				<tr style="border-bottom: 2px solid #074691; ">
 					<button class="topMenu" id="getGroup" >정보 수정</button>
+                    <c:choose>    
+                    <c:when test="${sessionScope.memberVO.m_division==2}">
 					<button class="topMenu" id="groupMemList" >나의 수강내역</button>
+					</c:when>
+                    <c:when test="${sessionScope.memberVO.m_division==1}">
 					<button class="topMenu" id="myCartList">장바구니</button>
+					</c:when>
+                                <c:otherwise>
+			   					</c:otherwise>
+							</c:choose>
 				</tr>
 			</table>
 			<div id="submain"></div>

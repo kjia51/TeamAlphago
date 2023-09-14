@@ -129,9 +129,7 @@
                                 <li><a href="/alpha/content"> 학습콘텐츠 등록 </a></li>
                                 <li><a href="/alpha/saleList"> 매출 조회 </a></li>
                                 </c:when>
-                                <c:when test="${sessionScope.memberVO.m_division==1}">
-                                <li><a href="/alpha/mycart"> 장바구니 보기 </a></li>
-                                </c:when>
+
                                 <c:otherwise>
 			   					</c:otherwise>
 							</c:choose>
