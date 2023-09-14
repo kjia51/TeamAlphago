@@ -95,6 +95,20 @@ public class CommonRestController {
 		
 		return map;
 	}
+	public Map<String, Object> responseMemberList(int res){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(res > 0) {
+			map.put("msg", " 정보를 수정하셨습니다.\r\n" + 
+					"다시 로그인해 주세요.");
+		}else {
+			map.put("msg", "");
+			
+		}
+		
+		return map;
+	}
 	
 	public Map<String, Object> responseVo(Object vo) {
 	    int res = vo != null ? 1 : 0;

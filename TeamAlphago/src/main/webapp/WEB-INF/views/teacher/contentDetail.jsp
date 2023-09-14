@@ -61,7 +61,13 @@
     border-radius: 50%; /* 동그라미(원) 모양으로 만듭니다. */
     display: inline-block; /* 다른 내용과 나란히 표시하기 위해 inline-block을 사용합니다. */
   }
-  
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: none; /* 화살표 이미지 없애기 */
+    background-color: transparent; /* 배경색 없애기 */
+}
 </style>
 
 <body>

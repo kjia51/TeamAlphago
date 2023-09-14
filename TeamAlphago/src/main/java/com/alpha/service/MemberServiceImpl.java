@@ -96,5 +96,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	@Override
+	public int deleteMember(String m_id) {
+		// TODO Auto-generated method stub
+		return memberMapper.deleteMember(m_id);
+	}
+
+
 
 }

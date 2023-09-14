@@ -426,7 +426,29 @@ public class TeacherController extends CommonRestController {
 	           return responseMap(REST_FAIL, "등록 중 오류 발생");
 	       }
 	   }
+	   
+	   @GetMapping("/homeworkAlert/{l_m_id}")
+	   public ModelAndView homeworkAlert(@PathVariable("l_m_id") String l_m_id) {
+			
+			System.out.println("숙제내역연결=================");
+			
+			ModelAndView mav = new ModelAndView("/teacher/homeworkAlert");
+			
+			 List<LearnerVO> homeworkAlertList = service.homeworkAlert(l_m_id);
+			
+			System.out.println(homeworkAlertList);
+			System.out.println(l_m_id);
+			
+			mav.addObject("homeworkalert", homeworkAlertList);
 
+			return mav;
+		}
+	   
+	   @GetMapping("/homeworkable/{l_m_id}")
+	    public ResponseEntity<List<LearnerVO>> homeworkable(@PathVariable("l_m_id") String l_m_id) {
+	        List<LearnerVO> homeworkAlertList = service.homeworkAlert(l_m_id);
+	        return ResponseEntity.ok(homeworkAlertList);
+	    }
 
 
 }

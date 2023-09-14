@@ -37,7 +37,7 @@
     border-radius: 3px;
     text-align: center;
 }
-#my_modal2 .modal_close_btn{
+#my_modal2 .modal_close_btn1{
 	text-align: center;
     padding: 20px 0;
     border-radius: 5px;
@@ -98,12 +98,12 @@ table td, table th {
 	display: inline-block;
 	font-size: 17px;
 }
-.modal_close_btn {
+.modal_close_btn1 {
 	display: inline-block;
 	float: right;
 }
 
-.modal_close_btn:after {
+.modal_close_btn1:after {
 	display: inline-block;
 	content: "\00d7";
 	font-size: 25px;
@@ -126,7 +126,7 @@ table td, table th {
 
 <%-- 모달창 --%>
 <div id="my_modal">
-	<button class="modal_close_btn"></button>
+	<button class="modal_close_btn1"></button>
 
 	<table id="modalmenu" style="width: 100%;">
 		<colgroup>
@@ -387,7 +387,7 @@ function modal(id) { //모달창 띄우기
         })
         .show()
         // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-        .find('.modal_close_btn')
+        .find('.modal_close_btn1')
         .on('click', function() {
             bg.remove();
             modal.hide();

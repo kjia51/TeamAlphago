@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -305,12 +306,14 @@ public class ContentController extends CommonRestController {
 
 		   //멤버 수정
 		   @PutMapping("/member/edit")
-			public Map<String, Object> memberEdit(@RequestBody MemberVO memberVO) {
+			public Map<String, Object> memberEdit(@RequestBody MemberVO memberVO, HttpServletRequest request) {
 
 				try {
 					int res = memberService.updateMember(memberVO);
 					System.out.println(res);
-					Map<String, Object> map = responseEditMap(res);
+					Map<String, Object> map = responseMemberList(res);
+			        HttpSession session = request.getSession();
+			        session.invalidate();
 					return map;
 
 				} catch (Exception e) {
@@ -318,6 +321,23 @@ public class ContentController extends CommonRestController {
 					return responseResultMap(REST_FAIL, "수정 중 오류 발생");
 				}
 			}
+		   //멤버 수정
+		   @DeleteMapping("/member/delete/{m_id}")
+		   public Map<String, Object> memberDelete(@PathVariable("m_id") String m_id, HttpServletRequest request) {
+			   
+			   try {
+				   int res = memberService.deleteMember(m_id);
+			       HttpSession session = request.getSession();
+			       session.invalidate();
+				   System.out.println(res);
+				   Map<String, Object> map = responseDeleteMap(res);
+				   return map;
+				   
+			   } catch (Exception e) {
+				   e.printStackTrace();
+				   return responseResultMap(REST_FAIL, "삭제 중 오류 발생");
+			   }
+		   }
 		   
 
 }
