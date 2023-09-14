@@ -147,6 +147,11 @@ public class TeacherServiceImpl implements TeacherService {
 	public int updateMemCnt(String g_no) {
 		return mapper.updateMemCnt(g_no);
 	}
+
+	@Override
+	public List<LearnerVO> homeworkAlert(String l_m_id) {
+		return mapper.homeworkAlert(l_m_id);
+	}
 	
 
 }

@@ -32,12 +32,12 @@
     vertical-align: middle;
 }
 
-.modal_close_btn {
+.modal_close_btn1 {
 	display: inline-block;
 	float: right;
 }
 
-.modal_close_btn:after {
+.modal_close_btn1:after {
 	display: inline-block;
 	content: "\00d7";
 	font-size: 25px;
@@ -114,7 +114,7 @@
 
 <%-- 모달창 --%>
 <div id="my_modal">
-	<button class="modal_close_btn"></button>
+	<button class="modal_close_btn1"></button>
 	
 	<input type="hidden" id="g_no" readonly>
 	
@@ -235,7 +235,7 @@ function modal(id) { //모달창 띄우기
         })
         .show()
         // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-        .find('.modal_close_btn')
+        .find('.modal_close_btn1')
         .on('click', function() {
             bg.remove();
             modal.hide();
@@ -473,11 +473,12 @@ function MemberList(list, LearnerCnt){
     tableHTML += '<button class="btn btn-default" style="float:right; margin: 5px;" onclick="delMemberAll()">선택 삭제</button>';
     tableHTML += '<table class="table table-bordered">';
 
+
     
     tableHTML += '<thead><tr>';
-    tableHTML += '<th style="background-color: #f1f1f1;><input type="checkbox" name="item  value="selectall" onclick="selectAll(this)"></th>';
-    tableHTML += '<th style="background-color: #f1f1f1;">학생ID</th>';
-    tableHTML += '<th style="background-color: #f1f1f1;">이름</th>';
+    tableHTML += '<th style="background-color: #f1f1f1; width: 80px;"><input type="checkbox" name="item  value="selectall" onclick="selectAll(this)"></th>';
+    tableHTML += '<th style="background-color: #f1f1f1; width: 149px;">학생ID</th>';
+    tableHTML += '<th style="background-color: #f1f1f1; width: 190px;">이름</th>';
     tableHTML += '<th style="background-color: #f1f1f1;"></th>';
     tableHTML += '</tr></thead></table>';
     
@@ -576,9 +577,10 @@ tableHTML += '<table class="table table-bordered">';
 
     
     tableHTML += '<thead><tr>';
-    tableHTML += '<th style="background-color: #f1f1f1;><input type="checkbox" name="item  value="selectall" onclick="selectAll(this)"></th>';
-    tableHTML += '<th style="background-color: #f1f1f1;">학생ID</th>';
-    tableHTML += '<th style="background-color: #f1f1f1;">이름</th>';
+    tableHTML += '<th style="background-color: #f1f1f1; width: 39px;"><input type="checkbox" name="item  value="selectall" onclick="selectAll(this)"></th>';
+    tableHTML += '<th style="background-color: #f1f1f1; width: 83px;">학생ID</th>';
+    tableHTML += '<th style="background-color: #f1f1f1; width: 96px;">이름</th>';
+    tableHTML += '<th style="background-color: #f1f1f1; width: 241px;">신청날짜</th>';
     tableHTML += '<th style="background-color: #f1f1f1;"></th>';
     tableHTML += '</tr></thead></table>';
     

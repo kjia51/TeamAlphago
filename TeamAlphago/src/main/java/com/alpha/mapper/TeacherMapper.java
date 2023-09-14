@@ -39,6 +39,7 @@ public interface TeacherMapper {
 	public int totalCntJoin(String g_no);//그룹가입신청인원수
 	public int totalCntGrp(@Param("t_m_id") String t_m_id, @Param("cri") Criteria cri);//그룹갯수
 	public int updateGrpName(@Param("g_no") String g_no, @Param("g_name") String g_name); //그룹명 바꾸기
+	public List<LearnerVO> homeworkAlert(String l_m_id); //학습자 숙제 리스트 알림
 
 	
 }

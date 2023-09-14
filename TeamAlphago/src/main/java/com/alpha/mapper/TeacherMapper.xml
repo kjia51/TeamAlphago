@@ -305,5 +305,10 @@
 	where g_no=#{g_no}
 	</update>
 	
+	<select id="homeworkAlert" resultType="com.alpha.vo.LearnerVO">
+	select * from homework
+	where l_m_id = #{l_m_id}
+	</select>
+	
 
 </mapper>
