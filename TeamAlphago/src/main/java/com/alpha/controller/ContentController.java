@@ -302,6 +302,22 @@ public class ContentController extends CommonRestController {
 				}
 		   }
 		   
+
+		   //멤버 수정
+		   @PutMapping("/member/edit")
+			public Map<String, Object> memberEdit(@RequestBody MemberVO memberVO) {
+
+				try {
+					int res = memberService.updateMember(memberVO);
+					System.out.println(res);
+					Map<String, Object> map = responseEditMap(res);
+					return map;
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					return responseResultMap(REST_FAIL, "수정 중 오류 발생");
+				}
+			}
 		   
 
 }

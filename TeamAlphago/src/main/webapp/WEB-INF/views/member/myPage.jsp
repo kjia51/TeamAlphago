@@ -28,7 +28,8 @@
 	<div class="main-box">
 		<div id="container">
 		    <div class="wrap">
-		    <input type="text" id="m_id" value=${memberVO.m_id }>
+		    <input type="hidden" id="m_id" value=${memberVO.m_id }>
+		    <input type="hidden" id=m_password value=${memberVO.m_password }>
 		    <table style="width: 100%;">
 			<colgroup>
 				<col width="33%" />
@@ -47,6 +48,6 @@
 		</div>
     
 		<%@ include file="../common/footer.jsp" %>
-</body>
 <script src="/resources/js/member/myPage.js"></script>
+</body>
 </html>

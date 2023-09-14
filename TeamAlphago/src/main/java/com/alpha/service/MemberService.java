@@ -26,5 +26,5 @@ public interface MemberService {
 	
 	public int updatePw(MemberVO memberVO);
 	
-	
+	public int updateMember(MemberVO memberVO);
 }

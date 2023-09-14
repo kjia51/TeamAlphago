@@ -24,5 +24,8 @@ public interface MemberMapper {
 	
 	public int checkEmail(MemberVO memberVO);
 	
+	public int updateMember(MemberVO memberVO);
+
+	public int deleteMember(String m_id);
 	
 }

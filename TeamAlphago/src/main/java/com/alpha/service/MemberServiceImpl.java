@@ -89,5 +89,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	@Override
+	public int updateMember(MemberVO memberVO) {
+		// TODO Auto-generated method stub
+		return memberMapper.updateMember(memberVO);
+	}
+
+
 
 }

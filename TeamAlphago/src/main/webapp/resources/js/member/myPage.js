@@ -82,6 +82,21 @@ function fetchDelete(url, callback) {
     }
 }
 
+//컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
+function result(map){
+	let m_id = $('#m_id').val();
+	if(map.result == 'success'){
+		const userConfirmation = confirm(map.msg);
+		if(userConfirmation){
+	    	submain.innerHTML = '';
+	    	fetchGet('/alpha/member/list', resultEditList)	
+		}
+	} else {
+		alert(map.msg);
+	}
+		
+}
+
 window.addEventListener('load', function(){
 	console.log("Get")
     const userConfirmation = confirm('마이페이지로 이동하시겠습니까?');
@@ -116,7 +131,7 @@ function resultEditList(map){
 		submain.innerHTML += ''
 			+'<div class="titleBox">'
 			+'    <h2 class="t_title">정보 수정</h2>'
-			+'   <p>입력하신 정보는 본인 확인용으로 사용되며, 회원 가입이 완료되면 사용자 확인을 위해 회원정보에 저장됩니다.</p>'
+			+'   <p>입력하신 정보는 본인 확인용으로 사용되며, 개인 정보 수정이 완료되면 사용자 확인을 위해 회원정보에 저장됩니다.</p>'
 			+'</div>'
 			+'<div class="memberBox memberBox_nmg">'
 			+'                    <div class="joinWrap">'
@@ -138,21 +153,21 @@ function resultEditList(map){
 			+'                                <tr>'
 			+'                                    <th scope="row">기존 비밀번호 <span class="t_red">&#42;</span></th>'
 			+'                                    <td>'
-			+'                                        <input type="password" class="input-default" value="" maxlength="20" name="pwd" id="signup_pwd"/>'
-			+'                                        <div class="alert-div" id="pwd_div"></div>'
+			+'                                        <input type="password" class="input-default" value="" maxlength="20" name="orgin_pwd" id="orgin_pwd"/>'
+			+'                                        <div class="alert-div" id="pwd_org"></div>'
 			+'                                    </td>'
 			+'                                </tr>'
 			+'                                <tr>'
 			+'                                    <th scope="row">변경될 비밀번호</th>'
 			+'                                    <td>'
-			+'                                        <input type="password" class="input-default" placeholder="비밀번호 변경 하실때만 입력하세요" value="" maxlength="20" name="pwd" id="signup_pwd"/>'
-			+'                                        <div class="alert-div" id="pwd_div"></div>'
+			+'                                        <input type="password" class="input-default" placeholder="비밀번호 변경 하실때만 입력하세요" value="" maxlength="20" name="new_pwd" id="new_pwd" disabled/>'
+			+'                                        <div class="alert-div" id="pwd_chg" style="display:inline"></div>'
 			+'                                    </td>'
 			+'                                </tr>'
 			+'                                <tr>'
 			+'                                    <th scope="row">비밀번호 확인</th>'
 			+'                                    <td>'
-			+'                                        <input type="password" class="input-default" placeholder="비밀번호 변경 하실때만 입력하세요" value="" maxlength="20" name="pwdChk" id="signup_pwdChk"/>'
+			+'                                        <input type="password" class="input-default" placeholder="비밀번호 변경 하실때만 입력하세요" value="" maxlength="20" name="pwdChk" id="pwdChk" disabled/>'
 			+'                                        <div class="alert-div" id="pwdChk_div"></div>'
 			+'                                    </td>'
 			+'                                </tr>'
@@ -178,7 +193,7 @@ function resultEditList(map){
 			+'                                <tr>'
 			+'                                    <th scope="row">이메일 주소<span class="t_red">&#42;</span></th>'
 			+'                                    <td>'
-			+'                                        <input type="text" class="signup_email" id="signup_email" value="'+vo.m_email+'" disabled />'
+			+'                                        <input type="text" class="input-default input-lg" value="'+vo.m_email+'" maxlength="100" id="signup_email" name="signup_email" disabled/>'
 			+'                                         '
 			+'                                    </td>'
 			+'                                </tr>'
@@ -194,6 +209,7 @@ function resultEditList(map){
 			+'                                    <th scope="row">회원 구분 <span class="t_red">&#42;</span></th>'
 			+'                                    <td>'
 			+'           							 <select id="signup_division" disabled>'
+			+'                                        <input type="text" class="input-default" value="'+vo.m_phone+'" id="signup_phone" disabled/>'
 			+'        									<option value="1"'+(vo.m_division == 1 ? "selected" : "")+'>학습관리자</option>'
 			+'        									<option value="2"'+(vo.m_division == 2 ? "selected" : "")+'>학습자</option>'
 			+'       									<option value="3"'+(vo.m_division == 3 ? "selected" : "")+'>운영관리자</option>'
@@ -205,7 +221,7 @@ function resultEditList(map){
 			+'                    </div><!-- // logWrap-->'
 			+' 			<ul class="list_info list_info_center">'
 			+'             <li>'
-			+'                 한기원을 더 이상 이용하지 않습니까? <a href="https://www.kbaduk.or.kr/member/withdrawal/" class="link_info">회원 탈퇴하기</a>'
+			+'                 한기원을 더 이상 이용하지 않습니까? <a class="link_info" id=">회원 탈퇴하기</a>'
 			+'             </li>'
 			+'         </ul>'
 			+'                </div><!-- // memberBox-->'
@@ -213,63 +229,67 @@ function resultEditList(map){
 			+'                    <span class="btn btn-point btn-lg"><button type="submit" id="signupBtn">정보수정</button></span>'
 			+'                    <span class="btn btn-grayline btn-lg"><button type="button" onclick="history.back(-1);">취소</button></span>'
 			+'                </div>'
+			
+			
+			var pwd_chg = document.getElementById('pwd_chg');
+			var pwdChk_div = document.getElementById('pwdChk_div');
+			const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+		$('#orgin_pwd').blur(function () {
+			var orgin_input = $('#orgin_pwd').val();
+			var orgin_pwd =  $('#m_password').val();
+			if(orgin_input==orgin_pwd){
+				$('#new_pwd').prop('disabled', false);
+				$('#pwdChk').prop('disabled', false);
+				$('#new_pwd').focus();
+			} else{
+				$('#new_pwd').prop('disabled', true);
+				$('#pwdChk').prop('disabled', true);
+			}
+		});
+		
+	    // 비밀번호 유효성 검사
+		$('#new_pwd').blur(function () {
+	        if (!pwRegex.test($('#new_pwd').val())) {
+	        	pwd_chg.innerHTML = "비밀번호는 영문자와 숫자로 구성되며 최소 6자리 이상이어야 합니다.";
+		  		  $('#new_pwd').focus();
+	        } else {
+	        	pwd_chg.innerHTML = ""; // 유효한 경우 메시지 제거
+	        }
+	        
+	        // 비밀번호 확인 검사
+	    });
+		// 비밀번호 일치 검사
+		$('#pwdChk').blur(function () {
+	        var new_pwd = $('#new_pwd').val();
+	        var pwdChk = $('#pwdChk').val();
 
-			// '출생 연도' 셀렉트 박스 option 목록 동적 생성
-			var birthYearEl = document.querySelector('#birth-year')
-			// option 목록 생성 여부 확인
-			isYearOptionExisted = false;
-			birthYearEl.addEventListener('focus', function () {
-			  // year 목록 생성되지 않았을 때 (최초 클릭 시)
-			  if(!isYearOptionExisted) {
-			    isYearOptionExisted = true
-			    for(var i = 1940; i <= 2023; i++) {
-			      // option element 생성
-			      const YearOption = document.createElement('option')
-			      YearOption.setAttribute('value', i)
-			      YearOption.innerText = i
-			      // birthYearEl의 자식 요소로 추가
-			      this.appendChild(YearOption);
-			    }
-			  }
-			});
-			
-			// '출생 월' 셀렉트 박스 option 목록 동적 생성
-			var birthMonthEl = document.querySelector('#birth-month')
-			// option 목록 생성 여부 확인
-			isMonthOptionExisted = false;
-			birthMonthEl.addEventListener('focus', function () {
-			  // month 목록 생성되지 않았을 때 (최초 클릭 시)
-			  if(!isMonthOptionExisted) {
-			    isMonthOptionExisted = true
-			    for(var i = 1; i <= 12; i++) {
-			      // option element 생성
-			      const MonthOption = document.createElement('option')
-			      MonthOption.setAttribute('value', i)
-			      MonthOption.innerText = i
-			      // birthYearEl의 자식 요소로 추가
-			      this.appendChild(MonthOption);
-			    }
-			  }
-			});
-			
-			// '출생 일' 셀렉트 박스 option 목록 동적 생성
-			var birthDayEl = document.querySelector('#birth-day')
-			// option 목록 생성 여부 확인
-			isDayOptionExisted = false;
-			birthDayEl.addEventListener('focus', function () {
-			  // day 목록 생성되지 않았을 때 (최초 클릭 시)
-			  if(!isDayOptionExisted) {
-			    isDayOptionExisted = true
-			    for(var i = 1; i <= 31; i++) {
-			      // option element 생성
-			      const DayOption = document.createElement('option')
-			      DayOption.setAttribute('value', i)
-			      DayOption.innerText = i
-			      // birthYearEl의 자식 요소로 추가
-			      this.appendChild(DayOption);
-			    }
-			  }
-			});
+	        if (new_pwd !== pwdChk) {
+	        	pwdChk_div.innerHTML = "비밀번호가 일치하지 않습니다.";
+	        	$('#pwdChk').focus();
+	        } else {
+	        	pwdChk_div.innerHTML = "비밀번호가 일치합니다"; // 일치하는 경우 메시지 제거
+	        }
+		});
+		
+			$('#signupBtn').click(function () {
+				const userConfirmation = confirm('정보를 수정 하시겠습니까?');
+				if (userConfirmation) {
+					let m_id = $('#m_id').val();
+					let m_password = $('#new_pwd').val();
+					let m_address = $('#signup_addr').val();
+	                let obj = {
+	                		m_id: m_id,
+	                		m_password: m_password,
+	                		m_address: m_address
+	                    };
+					fetchPut('/alpha/member/edit',obj, result);
+					
+				} else {
+					// 사용자가 "취소"를 선택한 경우
+					// 아무 작업도 수행하지 않음
+				}
+				
+			})
 			
 }
 
@@ -287,6 +307,7 @@ $('#myCartList').click(function () {
     }
 
 })
+
 
 function resultList(map){
 		let cartList = map.cartList;
