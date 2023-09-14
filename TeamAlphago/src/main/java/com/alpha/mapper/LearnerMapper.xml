@@ -187,5 +187,10 @@
 		h_review is null 
 	AND 
 		h_content is not null 		
-</update>	
+</update>
+
+<!-- 마이페이지 수강 내역 -->	
+<select id="myClassList" resultType="com.alpha.vo.LearnerVO">
+
+</select>
 </mapper>

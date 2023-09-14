@@ -42,11 +42,33 @@ $('#writebtn').on('click', function() {
     // 초기화: 선택된 h_no 배열 비우기
     selectedHnos = [];
 
+
+    
     // 선택된 체크박스 확인
     $('input[name="myCheckbox"]:checked').each(function() {
-        var hno = $(this).data('hno');
+    	var hno = $(this).data('hno');
         selectedHnos.push(hno);   
+        
+		var hContents = $('input[data-cno="'+hno+'"]').val();
+		console.log(hContents);
+	if (hContents.length > 0) {
+		$('#writebtn').prop('disabled', true);
+	    alert('이미 제출하신 숙제입니다.');
+		var memberId = $('#memberId').val();
+	    // 현재 페이지의 URL을 가져와서 리로드
+	    var currentPageURL = "/alpha/submitHomework/?l_m_id="+memberId;
+	    window.location.href = currentPageURL;
+	
+	    return;
+	}else{
+		  
+    	$('#writebtn').prop('disabled', false);
+    	// 모달창 띄우기
+    	modal('assign_modal');
+	}
+
     });
+
     // 체크 박스 선택 안된 경우
     if (selectedHnos.length === 0) {
     	$('#writebtn').prop('disabled', true);
@@ -57,22 +79,9 @@ $('#writebtn').on('click', function() {
         window.location.href = currentPageURL;
     	return;
     }
-    var hContent = $('#hContent').val();
-    console.log(hContent);
-    if (hContent != null) {
-    	$('#writebtn').prop('disabled', true);
-        alert('이미 제출하신 숙제입니다.');
-		var memberId = $('#memberId').val();
-        // 현재 페이지의 URL을 가져와서 리로드
-        var currentPageURL = "/alpha/submitHomework/?l_m_id="+memberId;
-        window.location.href = currentPageURL;
 
-        return;
-    }else{
-    	$('#writebtn').prop('disabled', false);
-    	// 모달창 띄우기
-    	modal('assign_modal');
-    }
+
+    
 
 });
 
@@ -80,6 +89,9 @@ $('#writebtn').on('click', function() {
 function submitHomework() {
 	var hContent = $('#hContent').val();
 	console.log('hContent',hContent)
+	
+
+	
 
     // 선택된 각 h_no에 대해 hContent 전송
     selectedHnos.forEach(function(hno) {

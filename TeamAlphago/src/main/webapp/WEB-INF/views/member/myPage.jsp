@@ -38,7 +38,7 @@
 			</colgroup>
 				<tr style="border-bottom: 2px solid #074691; ">
 					<button class="topMenu" id="getGroup" >정보 수정</button>
-					<button class="topMenu" id="groupMemList" >나의 수강내역</button>
+					<button class="topMenu" id="myClassList" >나의 수강내역</button>
 					<button class="topMenu" id="myCartList">장바구니</button>
 				</tr>
 			</table>
