@@ -357,7 +357,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		let phone = document.getElementById('signup_phone').value;
 		let email = document.getElementById('signup_email').value;
 		let division = document.getElementById('signup_division').value;
-		let emailCheck = document.getElementById('emailCheckDiv').innerText;
 		
 		// 입력값 확인
 		if (!id || !pwd || !pwdChk || !name || !birth || !addr || !phone ||!email ||!division){
@@ -395,10 +394,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	        return false;
 		}
 		
-		if (emailCheck !== '인증이 완료되었습니다.') {
-	        alert('이메일을 인증해주세요.');
-	        return false;
-	    }
 		
 		let data = {
 		    m_id: id,
