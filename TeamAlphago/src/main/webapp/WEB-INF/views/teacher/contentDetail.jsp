@@ -68,6 +68,7 @@
     background-image: none; /* 화살표 이미지 없애기 */
     background-color: transparent; /* 배경색 없애기 */
 }
+
 </style>
 
 <body>

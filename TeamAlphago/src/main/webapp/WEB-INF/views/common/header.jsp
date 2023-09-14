@@ -222,7 +222,7 @@ window.onload = function()  {
     });	
 }
 
-function modal(id) { //모달창 띄우기
+function modal_main(id) { //모달창 띄우기
     var zIndex = 9999;
     var modal = $('#' + id);
 
@@ -271,7 +271,7 @@ function alertMoldal() {
     console.log(l_m_id);
 
     // 모달 열기
-    modal('my_modal_main');
+    modal_main('my_modal_main');
 
     // AJAX 요청을 통해 데이터 가져오기
     $.ajax({
@@ -280,7 +280,6 @@ function alertMoldal() {
         success: function(data) {
             // 가져온 데이터를 모달 내부에 표시
             $('#alertList').html(data);
-            console.log(data.h_no);
         },
         error: function() {
             console.error('데이터를 가져오지 못했습니다.');
