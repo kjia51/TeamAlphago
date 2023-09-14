@@ -166,7 +166,7 @@
 						<tr>
                             <th align="center" class="row">${group.g_no }<input type="hidden" class="index" value="${group.g_no }" data-g_no="${status.index}" id="g_no"></th>
                             <td align="center">${group.g_name }<input type="hidden" id="g_name" value="${group.g_name }"></td>
-                             <td align="center">${group.g_cnt }/${group.sub_able }<input type="hidden" class="index" id="sub_able" data-sub_able="${status.index}" value="${group.g_cnt }/${group.sub_able }"></td>
+                             <td align="center">${group.g_cnt }/${group.sub_able }<input type="hidden" class="index" id="sub_able" data-sub_able="${status.index}" value="${group.sub_able }"></td>
                             
                              <c:choose>
 								<c:when test="${fn:length(group.g_start) > 1}">
@@ -388,7 +388,7 @@ function groupMemList(g_no) {
 
 function delMemberAll() { //모두 내보내기
 	
-	var res = confirm('모두 탈퇴시키겠습니까?');
+	var res = confirm('체크한 인원을 모두 탈퇴시키겠습니까?');
 	
 	if(res) {
 		
@@ -468,16 +468,21 @@ function MemberList(list, LearnerCnt){
 
 	main.innerHTML = '';
 
-    var tableHTML ='<table class="table table-bordered">';
-    tableHTML += '<div style="font-size: smaller; margin-left: 5px;">총 ' + LearnerCnt + ' 명</div>'; // LearnerCnt 변수 삽입
-    tableHTML += '<button onclick="delMemberAll()">모두 내보내기</button>';
+    var tableHTML = '';
+    tableHTML += '<div style="display: inline-block; font-size: smaller; margin: 5px; ">총 ' + LearnerCnt + ' 명</div>'; // LearnerCnt 변수 삽입
+    tableHTML += '<button class="btn btn-default" style="float:right; margin: 5px;" onclick="delMemberAll()">선택 삭제</button>';
+    tableHTML += '<table class="table table-bordered">';
+
     
     tableHTML += '<thead><tr>';
-    tableHTML += '<th><input type="checkbox" name="item  value="selectall" onclick="selectAll(this)"></th>';
+    tableHTML += '<th style="background-color: #f1f1f1;><input type="checkbox" name="item  value="selectall" onclick="selectAll(this)"></th>';
     tableHTML += '<th style="background-color: #f1f1f1;">학생ID</th>';
     tableHTML += '<th style="background-color: #f1f1f1;">이름</th>';
     tableHTML += '<th style="background-color: #f1f1f1;"></th>';
-    tableHTML += '</tr></thead>';
+    tableHTML += '</tr></thead></table>';
+    
+    tableHTML += '<div style="height: 300px; overflow: scroll;">'
+    tableHTML += '<table class="table table-bordered">';
     tableHTML += '<tbody>';
     
     if(LearnerCnt > 0) {
@@ -489,11 +494,11 @@ function MemberList(list, LearnerCnt){
         tableHTML += '<td align="center"><input type="checkbox" name="item" value="'+ index +'"></td>';
         tableHTML += '<td align="center">' + member.l_no + '<input type="hidden" data-l_no="'+index+'" value="'+ member.l_no +'" readonly>' + '</td>';
         tableHTML += '<td align="center">' + member.m_name + '<input type="hidden" value="'+ member.m_name +'" readonly>' + '</td>';
-        tableHTML += '<td align="center">' + '<button onclick="delMember(' + index + ')">내보내기</button>' + '</td>';
+        tableHTML += '<td align="center">' + '<button onclick="delMember(' + index + ')">멤버 삭제</button>' + '</td>';
         tableHTML += '</tr>';
     });
     
-        tableHTML += '</tbody></table>';
+        tableHTML += '</tbody></table></div>';
         main.innerHTML += tableHTML; // main 요소에 테이블 추가
     
 	} else {
@@ -563,18 +568,22 @@ function JoinList(list, JoinCnt, grpVO){
 	main.innerHTML = '';
 
     var tableHTML = '';
-    tableHTML += '<div style="font-size: smaller; margin-left: 5px;">총 ' + JoinCnt + ' 명</div>'; // JoinCnt 변수 삽입
-    tableHTML += '<button onclick="JoinMemberAll()">전체 승인</button>';
-    tableHTML += '<button onclick="RefuserMemberAll()">전체 거절</button>';
+    tableHTML += '<div style="display: inline-block; font-size: smaller; margin: 5px; ">총 ' + JoinCnt + ' 명</div>'; // JoinCnt 변수 삽입
+    tableHTML += '<button class="btn btn-default" style="float:right; margin: 5px;" onclick="RefuserMemberAll()">선택 거절</button>';
+    tableHTML += '<button class="btn btn-primary" style="float:right; margin: 5px;" onclick="JoinMemberAll()">선택 승인</button>';
     
-    tableHTML += '<table class="table table-bordered">';
+tableHTML += '<table class="table table-bordered">';
+
+    
     tableHTML += '<thead><tr>';
-    tableHTML += '<th><input type="checkbox" name="item  value="selectall" onclick="selectAll(this)"></th>';
+    tableHTML += '<th style="background-color: #f1f1f1;><input type="checkbox" name="item  value="selectall" onclick="selectAll(this)"></th>';
     tableHTML += '<th style="background-color: #f1f1f1;">학생ID</th>';
     tableHTML += '<th style="background-color: #f1f1f1;">이름</th>';
-    tableHTML += '<th style="background-color: #f1f1f1;">신청일자</th>';
     tableHTML += '<th style="background-color: #f1f1f1;"></th>';
-    tableHTML += '</tr></thead>';
+    tableHTML += '</tr></thead></table>';
+    
+    tableHTML += '<div style="height: 300px; overflow: scroll;">'
+    tableHTML += '<table class="table table-bordered">';
     tableHTML += '<tbody>';
     
     if(JoinCnt > 0) {
@@ -591,7 +600,7 @@ function JoinList(list, JoinCnt, grpVO){
         tableHTML += '</tr>';
     });
     
-        tableHTML += '</tbody></table>';        
+        tableHTML += '</tbody></table></div>';        
         main.innerHTML += tableHTML; // main 요소에 테이블 추가
     	
     } else {
@@ -638,47 +647,59 @@ function fetchPut(url,obj,callback){
 
 function JoinMemberAll() { //모두 승인하기
 	
-	var res = confirm('모두 승인하겠습니까?');
+	var res = confirm('체크한 인원을 모두 승인하겠습니까?');
 	
 	if(res) {
 		
-    var checkboxes = document.querySelectorAll('input[name="item"]:checked');
-    var selectedValues = [];
-
-    checkboxes.forEach(function (checkbox) {
-        selectedValues.push(checkbox.value);
-    });
-    
-    selectedValues.forEach(function (value) {
-    	
-        var l_no = $('input[data-l_no="'+value+'"]').val();
-    	var g_no = $('#g_no').val();
-    	
-    	console.log('======')
-    	console.log(l_no)
-    	console.log(g_no)
-    	
-    	//전달할 객체로 생성
-		let obj = {
-				g_no : g_no,
-				l_no : l_no
-		};
-
-    	//업데이트 성공 시 MemberList 리로드
-		fetchPut('/alpha/group/getGroupOne/updateAction/'+g_no+'/'+l_no, obj, function(data) {
-	    	fetch('/alpha/group/getJoin/list/' + g_no)
-	        .then(response => response.json())
-	        .then(data => {
-	            const JoinCnt = data.JoinCnt;
-	            const list = data.list;
-	            JoinList(list, JoinCnt);
-	        })
-	        .catch(error => {
-	            console.error('Error:', error);
-	        });
-	    });
-    })
-    alert('수정되었습니다.')
+		var able = $('#sub_able').val(); //가입가능인원
+		var cnt = $('#g_cnt').val(); //현재 가입된 인원
+		
+		console.log(able)
+		console.log(cnt)
+		
+		if(able<=cnt) {
+			alert('최대 수강가능인원은 '+ able +'명입니다. 더이상 승인할 수 없습니다.');
+		} else {
+		
+		
+		    var checkboxes = document.querySelectorAll('input[name="item"]:checked');
+		    var selectedValues = [];
+		
+		    checkboxes.forEach(function (checkbox) {
+		        selectedValues.push(checkbox.value);
+		    });
+		    
+		    selectedValues.forEach(function (value) {
+		    	
+		        var l_no = $('input[data-l_no="'+value+'"]').val();
+		    	var g_no = $('#g_no').val();
+		    	
+		    	console.log('======')
+		    	console.log(l_no)
+		    	console.log(g_no)
+		    	
+		    	//전달할 객체로 생성
+				let obj = {
+						g_no : g_no,
+						l_no : l_no
+				};
+		
+		    	//업데이트 성공 시 MemberList 리로드
+				fetchPut('/alpha/group/getGroupOne/updateAction/'+g_no+'/'+l_no, obj, function(data) {
+			    	fetch('/alpha/group/getJoin/list/' + g_no)
+			        .then(response => response.json())
+			        .then(data => {
+			            const JoinCnt = data.JoinCnt;
+			            const list = data.list;
+			            JoinList(list, JoinCnt);
+			        })
+			        .catch(error => {
+			            console.error('Error:', error);
+			        });
+			    });
+		    })
+		    alert('수정되었습니다.')
+		}
     
 	}else {
 		alert('취소되었습니다.')
@@ -738,7 +759,7 @@ function JoinMember(index) { //가입 승인
 
 function RefuserMemberAll() { //모두 거절하기
 	
-	var res = confirm('모두 거절하겠습니까?');
+	var res = confirm('체크한 인원을 모두 거절하겠습니까?');
 	
 	if(res) {
 		

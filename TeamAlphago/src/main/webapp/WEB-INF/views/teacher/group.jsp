@@ -476,6 +476,8 @@ function resultList(map){
 		
 		var sub_able = vo.sub_able;
 		
+		var sub_price = vo.sub_price;
+		
 		var c_level = vo.c_level;
 		var sub_lv = "";
 		
@@ -493,50 +495,52 @@ function resultList(map){
 		console.log(sub_able);
 		
 		main.innerHTML = ''
-		    +			'<input type="hidden" id="sub_no" value="'
-		    +			sub_no
-		    +			'" readonly>'
-		    +			'<input type="hidden" id="sub_connection" value="'
-		    +			sub_connection
-		    +			'" readonly>'
-			+ '<table class="table table-bordered">'
-			+ '<thead>'
-		    + 	'<tr>'
-			+ 		'<th>구독ID</th>'
-			+ 		'<th>콘텐츠명</th>'
-			+ 		'<th>수업 난이도</th>'
-			+ 		'<th>구독일</th>'
-			+ 		'<th>구독개월</th>'
-			+ 		'<th>수강가능인원</th>'
-		    + 	'</tr>'
-			+ '</thead>'
-			+	'<tbody>'
-			+		'<tr>'			
-		    +			'<td align="left" class="row">'+ sid +'<input type="hidden" id="sid" style="width:60px" value="'
-		    +			sid
-		    +			'"></td>'
-            +			'<td align="center">'+ sub_name +'<input type="hidden" id="sub_name" style="width:275px" value="'
-            +			sub_name
-            +			'"></td>'
-            +			'<td align="center">'+ sub_lv +'<input type="hidden" id="sub_lv" style="width:80px" value="'
-            +			sub_lv
-            +			'"></td>'
-            +			'<td align="center">'+ sub_date +'<input type="hidden" id="sub_date" style="width:72px" value="'
-            +			sub_date
-            +			'"></td>'
-		    +			'<td align="center" class="row">'+ sub_month +'개월 <input type="hidden" id="sub_month" style="width:55px" value="'
-		    +			sub_month
-		    +			'"></td>'
-            +			'<td align="center">'+ sub_able +'명 <input type="hidden" id="sub_able" style="width:35px" value="'
-            +			sub_able
-            +			'"></td>'
-			+ 		'</tr>'
-			+	'</tbody>'
-		    +'</table>' 
-            +		'<div style="font-size: smaller; color: #0746919c; float: right;">연결 가능 그룹 : '+ sub_connection +'개 </div>'
+		+ '<table class="table table-bordered">'
+		+ '<thead>'
+	    + 	'<tr>'
+	    +			'<input type="hidden" id="sub_connection" value="'
+	    +			sub_connection
+	    +			'">'
+		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독ID</th>'
+	    +			'<td align="center" class="row">'+sid+'<input type="hidden" id="sub_no" style="width:100%" value="'
+	    +			sub_no
+	    +			'"></td>'
+		+ 		'<th style="padding: 10px 5px; width: 60px; background-color: #f6f7f9;">구독일</th>'
+        +			'<td align="center">'+sub_date+'<input type="hidden" id="sub_date" style="width:100%" value="'
+        +			sub_date
+        +			'"></td>'
+		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독료</th>'
+        +			'<td align="center">'+sub_price+'원 <input type="hidden" id="sub_price" style="width:100%" value="'
+        +			sub_price
+        +			' 원"></td>'
+	    + 	'</tr>'
+		+ '</thead>'
+		+	'<tbody>'
+	    + 	'<tr>'
+		+ 		'<th style="padding: 10px 5px; width: 70px; background-color: #f6f7f9;" >콘텐츠명</th>'
+        +			'<td align="left" colspan="5" >'+sub_name+'<input type="hidden" id="c_name" style="width:100%" value="'
+        +			sub_name
+        +			'"></td>'
+	    + 	'</tr>'
+	    +	'<tr>'
+		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독개월</th>'
+        +			'<td align="center">'+sub_month+'개월 <input type="hidden" id="sub_month" style="width:100%" value="'
+        +			sub_month
+        +			'"></td>'
+		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">정원</th>'
+        +			'<td align="center">'+sub_able+'명 <input type="hidden" id="sub_able" style="width:100%" value="'
+        +			sub_able
+        +			'"></td>'
+		+ 		'<th style="padding: 10px 5px; width: 80px; background-color: #f6f7f9;">콘텐츠레벨</th>'
+        +			'<td align="center">'+sub_lv+'<input type="hidden" id="sub_lv" style="width:100%" value="'
+        +			sub_lv
+        +			'"></td>'
+	    +	'</tr>'
+		+	'</tbody>'
+	    + '</table>'
+        +		'<div style="font-size: smaller; color: #0746919c; float: right;">연결 가능 그룹 : '+ sub_connection +'개 </div>'
 
-
-    	    }
+ }
 
 ////////////////그룹생성///////////////////////////////////////////////////////
 function getsys() {

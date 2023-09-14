@@ -149,15 +149,17 @@ table td, table th {
 
 
 <%-- 모달창2 --%>
+
 <div id="my_modal2">
 	<hr>
-	<h2>등록 완료</h2>
+	<h2 style="text-align: center;">등록 완료</h2><br>
 
-		<div class="btn">
-		    <button><a class="modal_close_btn" onClick="location.href='/alpha/groupSingup?t_m_id=${memberVO.m_id }'">학습그룹으로 가기</a></button>
-		    <button><a class="modal_close_btn" onClick="location.reload()">머무르기</a></button>
-    	</div>
+	<div style="width: 100%; text-align: center;">
+		<button class="btn btn-default" style="margin: 10px;" onClick="location.href='/alpha/groupSingup?t_m_id=${memberVO.m_id }'">학습그룹으로 가기</button>
+		<button class="btn btn-default" style="margin: 10px;" onClick="location.reload()">머무르기</button>
+    </div>
 </div>
+<%-- --------------------------------------------------------------  --%>
 
 
 <div class="main-box">
@@ -641,7 +643,11 @@ function createGroup(map) {
 	console.log(vo);
 	
 	var t_m_id = vo.t_m_id;
+	
 	var sub_no = vo.sub_no;
+	var idx = sub_no.indexOf("_"); 
+	var sid = sub_no.substring(idx+1);
+	
 	var sub_date = vo.sub_date;
 	
 	var date = sub_date.substr(0,10);
@@ -676,48 +682,48 @@ function createGroup(map) {
 	    + 	'<tr>'
 	    +			'<input type="hidden" id="sub_connection" value="'
 	    +			sub_connection
-	    +			'" readonly>'
+	    +			'">'
 	    +			'<input type="hidden" id="t_m_id" value="'
 	    +			t_m_id
-	    +			'" readonly>'
+	    +			'">'
 		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독ID</th>'
-	    +			'<td align="left" class="row"><input type="text" id="sub_no" style="width:100%" value="'
+	    +			'<td align="center" class="row">'+sid+'<input type="hidden" id="sub_no" style="width:100%" value="'
 	    +			sub_no
-	    +			'" readonly></td>'
+	    +			'"></td>'
 		+ 		'<th style="padding: 10px 5px; width: 60px; background-color: #f6f7f9;">구독일</th>'
-        +			'<td align="center"><input type="text" id="sub_date" style="width:100%" value="'
+        +			'<td align="center">'+date+'<input type="hidden" id="sub_date" style="width:100%" value="'
         +			date
-        +			'" readonly></td>'
+        +			'"></td>'
 		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독료</th>'
-        +			'<td align="center"><input type="text" id="sub_price" style="width:100%" value="'
+        +			'<td align="center">'+sub_price+'원 <input type="hidden" id="sub_price" style="width:100%" value="'
         +			sub_price
-        +			' 원" readonly></td>'
+        +			'"></td>'
 	    + 	'</tr>'
 		+ '</thead>'
 		+	'<tbody>'
 	    + 	'<tr>'
 		+ 		'<th style="padding: 10px 5px; width: 70px; background-color: #f6f7f9;" >콘텐츠명</th>'
-        +			'<td align="center" colspan="5" ><input type="text" id="c_name" style="width:100%" value="'
+        +			'<td align="left" colspan="5" >'+c_name+'<input type="hidden" id="c_name" style="width:100%" value="'
         +			c_name
-        +			'" readonly></td>'
+        +			'"></td>'
 	    + 	'</tr>'
 	    +	'<tr>'
 		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">구독개월</th>'
-        +			'<td align="center"><input type="text" id="sub_month" style="width:100%" value="'
+        +			'<td align="center">'+sub_month+'개월 <input type="hidden" id="sub_month" style="width:100%" value="'
         +			sub_month
-        +			' 개월" readonly></td>'
+        +			'"></td>'
 		+ 		'<th style="padding: 10px 5px; background-color: #f6f7f9;">정원</th>'
-        +			'<td align="center"><input type="text" id="sub_able" style="width:100%" value="'
+        +			'<td align="center">'+sub_able+'명 <input type="hidden" id="sub_able" style="width:100%" value="'
         +			sub_able
-        +			' 명" readonly></td>'
+        +			'"></td>'
 		+ 		'<th style="padding: 10px 5px; width: 80px; background-color: #f6f7f9;">콘텐츠레벨</th>'
-        +			'<td align="center"><input type="text" id="sub_lv" style="width:100%" value="'
+        +			'<td align="center">'+sub_lv+'<input type="hidden" id="sub_lv" style="width:100%" value="'
         +			sub_lv
-        +			'" readonly></td>'
+        +			'"></td>'
 	    +	'</tr>'
 		+	'</tbody>'
 	    + '</table>'
-        +		'<div style="font-size: smaller; color: #0746919c; float: right;">연결 가능 그룹 : '+ sub_connection +'개 </div>'
+        + '<div style="font-size: smaller; color: #0746919c; float: right;">연결 가능 그룹 : '+ sub_connection +'개 </div>'
     	
     	
         main.innerHTML += '<br><h2>그룹 정보</h2><br>'

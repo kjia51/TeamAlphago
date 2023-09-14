@@ -317,8 +317,8 @@
 				<h2 style="text-align: center;">결제 완료</h2><br>
 			
 				<div style="width: 100%; text-align: center;">
-				    <button class="btn btn-primary" style="margin: 10px;" onClick="location.href='/alpha/mysubList?t_m_id=${memberVO.m_id }'">구독내역으로 가기</button>
-				    <button class="btn btn-primary" style="margin: 10px;" onClick="location.href='/alpha/teacher'">리스트로 돌아가기</button>
+				    <button class="btn btn-default" style="margin: 10px;" onClick="location.href='/alpha/mysubList?t_m_id=${memberVO.m_id }'">구독내역으로 가기</button>
+				    <button class="btn btn-default" style="margin: 10px;" onClick="location.href='/alpha/teacher'">리스트로 돌아가기</button>
 			    </div>
 			</div>
 			</div>
