@@ -20,7 +20,7 @@
 		<div class="wrap">
 			<div class="content_wrap">
 				<div class="titleBox">
-					<h2 class="t_title">학습자 숙제 내역</h2>
+					<h2 class="t_title">숙제 내역</h2>
 					<input name="t_m_id" id="memberId" type="hidden"
 						value="${memberVO.m_id}"> <input name="m_division"
 						id="division" type="hidden" value="${memberVO.m_division}">
@@ -100,6 +100,7 @@
 										</td>
 										<td align="center">
 											<input type="hidden" id="subStatus" value="">
+											<input type="hidden" name="h_content" value="${list.h_content}" data-cno="${list.h_no}" >
 											<span id="submissionStatus_${list.h_no}"> 
 											${list.h_content == null || list.h_content == '' ? '미제출' : '제출'}</span>
 										</td>
@@ -109,6 +110,7 @@
 							</tbody>
 						</c:if>
 					</table>
+					
 
 					<!-- 제출버튼 -->
 	                <div class="btnArea-center" style="margin-top:0" id="submitBtns">
