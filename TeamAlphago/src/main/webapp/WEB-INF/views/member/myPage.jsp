@@ -43,11 +43,13 @@
 				</tr>
 			</table>
 			<div id="submain"></div>
+			<div id="classList"></div>
 		    </div>
 		  </div>
 		</div>
     
 		<%@ include file="../common/footer.jsp" %>
 <script src="/resources/js/member/myPage.js"></script>
+<script src="/resources/js/member/myClassList.js"></script>
 </body>
 </html>

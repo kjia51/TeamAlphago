@@ -197,6 +197,7 @@ public class LearnerController extends CommonRestController {
 		}
 		return mav; 
 	}
+	
 	// 그룹별 학습자 리스트 조회
 	@GetMapping("/homeworkAssess/{g_no}")
 	public Map<String, Object> homeworkAssess(@PathVariable("g_no") String g_no, HttpSession session){
@@ -219,6 +220,7 @@ public class LearnerController extends CommonRestController {
 		}
 		return map;
 	}
+	
 	// 숙제  평가(update)
 	@PostMapping("/homeworkAssess/Assess")
 	public Map<String, Object> submitAssess(@RequestBody LearnerVO learnerVO) {
@@ -234,5 +236,25 @@ public class LearnerController extends CommonRestController {
 			return responseResultMap(REST_FAIL, "요청 중 오류 발생");
 		}
 	}
+	
+	// myClassList 마이페이지 학습 내역 
+	@PostMapping("/myClassList")
+	public Map<String, Object> myClassList(@RequestBody LearnerVO learnerVO, String l_m_id) {
+		System.out.println("===학습 내역 ===");
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		try {
+			List<LearnerVO> classList = learnerService.myClassList(learnerVO);
+			System.out.println("classList:"+classList);
+			map.put("classList", classList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return responseResultMap(REST_FAIL, "요청 중 오류 발생");
+		}
+		return map;
+	}
+	
+	
+	
 		
 }

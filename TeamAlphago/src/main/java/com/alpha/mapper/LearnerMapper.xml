@@ -191,6 +191,22 @@
 
 <!-- 마이페이지 수강 내역 -->	
 <select id="myClassList" resultType="com.alpha.vo.LearnerVO">
-
+	SELECT
+		h_no, 
+        h_homework,
+        h_content,
+        m_name,
+        g_name,
+        l.l_m_id,
+        g_end  
+	FROM 
+	    learner l
+	LEFT JOIN grp g ON (l.l_g_no = g.g_no)
+	LEFT JOIN member m ON (l.t_m_id = m.m_id)
+    LEFT JOIN content c on (l.l_c_no = c.c_no)
+    LEFT JOIN homework h on (c.c_no = h.h_c_no)
+	WHERE 
+	    l.l_m_id = #{m_id}
+	order by g_end    
 </select>
 </mapper>
