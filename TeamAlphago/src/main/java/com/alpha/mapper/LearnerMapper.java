@@ -47,5 +47,5 @@ public interface LearnerMapper {
 	public int updateAssess(@Param("h_no") String h_no, @Param("h_review") String h_review);
 	
 	// 마이페이지 학습 내역
-	public List<LearnerVO> myClassList(LearnerVO learnerVO);
+	public List<LearnerVO> myClassList(String l_m_id);
 }

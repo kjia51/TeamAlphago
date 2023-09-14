@@ -195,10 +195,11 @@
 		h_no, 
         h_homework,
         h_content,
+        c_name,
         m_name,
         g_name,
         l.l_m_id,
-        g_end  
+        DATE_FORMAT(g_end, '%Y-%m-%d') AS g_end
 	FROM 
 	    learner l
 	LEFT JOIN grp g ON (l.l_g_no = g.g_no)

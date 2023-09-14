@@ -238,13 +238,13 @@ public class LearnerController extends CommonRestController {
 	}
 	
 	// myClassList 마이페이지 학습 내역 
-	@PostMapping("/myClassList")
-	public Map<String, Object> myClassList(@RequestBody LearnerVO learnerVO, String l_m_id) {
+	@GetMapping("/myClassList")
+	public Map<String, Object> myClassList(HttpSession session) {
 		System.out.println("===학습 내역 ===");
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+		String l_m_id = session.getAttribute("m_id") == null? "":session.getAttribute("m_id").toString();
 		try {
-			List<LearnerVO> classList = learnerService.myClassList(learnerVO);
+			List<LearnerVO> classList = learnerService.myClassList(l_m_id);
 			System.out.println("classList:"+classList);
 			map.put("classList", classList);
 		} catch (Exception e) {
