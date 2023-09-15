@@ -131,8 +131,10 @@ $('#payment').click(function () { //결제버튼
     console.log('총가격 '+price);
     console.log('정원 '+sub_able);
     console.log('구독개월 '+sub_month);
-
-	
+    
+    if(sub_month <= 0) {
+    	alert('구독기간을 선택해주세요');
+    } else {
                   
     IMP.request_pay({
         //카카오페이 결제시 사용할 정보 입력
@@ -199,7 +201,8 @@ $('#payment').click(function () { //결제버튼
 	                   	        });
 
     })
- 
+  }
+    
 });  
 
 
