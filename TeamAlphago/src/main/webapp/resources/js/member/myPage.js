@@ -385,10 +385,10 @@ function resultCart(map){
 function resultList(map){
 		let cartList = map.cartList;
 		console.log("cartList",cartList);
-		classList.innerHTML = ''
+		classListDiv.innerHTML = ''
 		submain.innerHTML = ''
 		submain.innerHTML += ''
-			+'<div class="titleBox">'
+			+'<div class="titleBox" style="padding: 30px 0px 30px">'
 			+'					<h2 style="text-align:left">장바구니</h2>'
 			+'				</div>'
 			+'				<div id="groupInfoDiv" style="text-align:center">'
