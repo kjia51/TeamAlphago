@@ -59,7 +59,6 @@ public class MemberController {
 	        if (memberVO != null) {
 	            session.setAttribute("memberVO", memberVO);
 	            session.setAttribute("m_id", memberVO.getM_id());
-	            session.setMaxInactiveInterval(-1);
 
 	            // 학습자가 로그인 시 그룹 가입되어 있지 않으면 그룹 가입 화면 이동
 	            int res = learnerService.searchJoinGrp(memberVO.getM_id());

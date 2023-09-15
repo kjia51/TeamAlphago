@@ -284,18 +284,22 @@ function getLearner(selectedIndexes) {
          var g_end = row.find('td:eq(4)').text(); // 학습종료일
          var l_m_id = $('input[data-lno="' + l_no + '"]').val(); // 학습자 아이디
     	console.log("l_no", l_no);
-
-         var item = {
-             l_no: l_no, // 체크박스의 l_no 값
-             m_name: m_name,
-             c_name: c_name,
-             g_start: g_start,
-             g_end: g_end,
-             l_m_id : l_m_id
-         };
-
-         listArray.push(item);
-     });
+    
+    	// 전체 선택 버튼 클릭 시 오류 처리  	
+	    if(l_m_id != null){
+	    	
+	    	var item = {
+	    			l_no: l_no, // 체크박스의 l_no 값
+	    			m_name: m_name,
+	    			c_name: c_name,
+	    			g_start: g_start,
+	    			g_end: g_end,
+	    			l_m_id : l_m_id
+	    	};
+	    	
+	    	listArray.push(item);
+	    }
+    });
  		// 모든 선택 항목의 데이터를 배열로 반환
 	    return listArray;
 }

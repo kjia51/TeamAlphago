@@ -95,10 +95,19 @@ function resultMain(map){
 }
 
 window.addEventListener('load', function(){
+	let m_division = $('#m_division').val();
+	let cr_m_no = $('#m_id').val();
 	console.log("Get")
         // 사용자가 "확인"을 선택한 경우
     	submain.innerHTML = '';
-    	fetchGet('/alpha/member/list', resultEditList)
+		classListDiv.innerHTML = '';
+		if(m_division==1){
+	    	fetchGet('/alpha/mycart/list/'+cr_m_no, resultCartList);
+		} else{
+	    	submain.innerHTML = '';
+			fetchGet('/alpha/member/list', resultEditList);			
+			
+		}
         // 사용자가 "취소"를 선택한 경우
         // 아무 작업도 수행하지 않음
     
@@ -109,12 +118,12 @@ $('#getGroup').click(function () {
     if (userConfirmation) {
         // 사용자가 "확인"을 선택한 경우
     	submain.innerHTML = '';
-    	fetchGet('/alpha/member/list', resultEditList)
+    	fetchGet('/alpha/member/list', resultEditList);
+    
     } else {
         // 사용자가 "취소"를 선택한 경우
         // 아무 작업도 수행하지 않음
     }
-
 })
 function resultEditList(map){
 		let vo = map.vo;
@@ -362,7 +371,7 @@ $('#myCartList').click(function () {
     	let cr_m_no = $('#m_id').val();
     	console.log("cr_m_no",cr_m_no);
 		submain.innerHTML = '';
-    	fetchGet('/alpha/mycart/list/'+cr_m_no, resultList);
+    	fetchGet('/alpha/mycart/list/'+cr_m_no, resultCartList);
         
     } else {
         // 사용자가 "취소"를 선택한 경우
@@ -373,16 +382,20 @@ $('#myCartList').click(function () {
 
 //컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
 function resultCart(map){
-	console.log(map);
-	if(map.result == 'success'){
+	let cr_m_no = $('#m_id').val();
+	if(map.msg != ""){
+		submain.innerHTML = '';
+		classListDiv.innerHTML = '';
 		alert(map.msg);
-		window.location.href = "/alpha/mycart";
+		fetchGet('/alpha/mycart/list/'+cr_m_no, resultCartList);
 	} else {
-		alert(map.msg);
 	}
 		
 }
-function resultList(map){
+
+
+function resultCartList(map){
+		console.log("resultCartList")
 		let cartList = map.cartList;
 		console.log("cartList",cartList);
 		classListDiv.innerHTML = ''
@@ -423,6 +436,7 @@ function resultList(map){
 			+'						</table>'
 			+'					</div>'
 			+'						<input type="button" class="btn btn-primary" id="deleteOption" value="선택삭제" style="margin-left:10px; color:#074691; background-color:white">'
+			+'						<input type="button" class="btn btn-primary" id="paymentOption" value="선택결제" style="margin-left:10px; color:#074691; background-color:white">'
 			+'					<h2 style="text-align:left">할인/결제금액</h2>'
 			+'					<br>'			
 			+'					<div class="entry" id="grouppay">'
@@ -491,34 +505,45 @@ function resultList(map){
 	        tbdy.appendChild(row);
 		})
 		
-		$('#deleteOption').on('click', function() {
-	let cr_m_no = $('#m_id').val();
-	console.log(cr_m_no);
-	var selectedIndexes = [];
-	
-	$('input:checkbox[name=chkbox]').each(function() {
-	        if (this.checked) {
-	            selectedIndexes.push($('input:checkbox[name=chkbox]').index(this));
-	        }
-	    })
+			$('#paymentOption').on('click', function() {
+				if($('input:checkbox[name=chkbox]:checked').length>2){
+					alert('구매는 하나만 가능합니다.')
+				}
+			})
+			$('#deleteOption').on('click', function() {
+			let cr_m_no = $('#m_id').val();
+			console.log(cr_m_no);
+			var selectedIndexes = [];
+			
+			$('input:checkbox[name=chkbox]').each(function() {
+			        if (this.checked) {
+			            selectedIndexes.push($('input:checkbox[name=chkbox]').index(this));
+			        }
+			    })
 	        console.log(selectedIndexes);
-	        selectedIndexes.forEach(function(index) {
-	    	let cr_c_no = $('input[data-cno="'+index+'"]').val();
-	    	let cnt = $('input[data-cnt="'+index+'"]').val();
-	    	console.log(cr_c_no);
-	    	// 확인과 취소를 묻는 알림창 표시
-	        const userConfirmation = confirm('정말로 삭제하시겠습니까?');
+
+	// 모든 상품에 대한 삭제 여부를 묻는 확인 대화상자를 한 번만 표시
+	const userConfirmation = confirm('정말로 선택한 상품들을 삭제하시겠습니까?');
+
+	if (userConfirmation) {
+	    // 사용자가 "확인"을 선택한 경우
+		let isLastIteration = false;
+	    selectedIndexes.forEach(function(index, currentIndex) {
+	        let cr_c_no = $('input[data-cno="'+index+'"]').val();
+	        let cnt = $('input[data-cnt="'+index+'"]').val();
+	        console.log(cr_c_no);
+
+	        if (currentIndex === selectedIndexes.length - 1) {
+	            // 현재 반복이 마지막 반복인 경우
+	            isLastIteration = true;
+	        } 
+	        	console.log(isLastIteration)
+	        	fetchDelete('/alpha/content/DeleteCart/' + cr_c_no + '/' + cr_m_no + '/' + cnt + '/' + isLastIteration, resultCart);
 	        
-	        if (userConfirmation) {
-	            // 사용자가 "확인"을 선택한 경우
-	            fetchDelete('/alpha/content/DeleteCart/' + cr_c_no + '/' + cr_m_no + '/' + cnt, resultList);
-	            
-	        } else {
-	            // 사용자가 "취소"를 선택한 경우
-	            // 아무 작업도 수행하지 않음
-	        }
-	
-	
-		})
+	    });
+	} else {
+	    // 사용자가 "취소"를 선택한 경우
+	    // 아무 작업도 수행하지 않음
+	}
 		})
 		}
