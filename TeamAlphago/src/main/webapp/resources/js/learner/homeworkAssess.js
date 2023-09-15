@@ -114,7 +114,10 @@ function displayHomeworkList(map) {
 	
 	learnerInfoDiv.innerHTML='';
 	let pageBlock = ''; // 기존 내용 초기화
-	         pageBlock += ''                                                                        
+	         pageBlock += ''
+			 			+'<form id="searchForm" method="get" name="searchForm" class="content_wrap">'
+				    	+'   <input type="hidden" name="pageNo" value="'+map.pageDto.cri.pageNo+'">'
+				    	+'</form>'	
 						+'	<div class="entry" id="learnerInfo">     '
 						+'		<table class="table table-bordered"> '
 						+'			<caption>그룹 정보</caption>        '
@@ -240,7 +243,16 @@ function homeworkAssess(g_no) {
     $('.modal_bg').remove();
 }
 
+//서치폼 요소 저장
+const searchForm = document.getElementById('searchForm');
 
+// 페이징
+function go(page){
+	//alert(page);
+	document.searchForm.pageNo.value=page;
+	document.searchForm.action = "/alpha/homeworkAssess";
+	document.searchForm.submit();
+}
 
 
 
