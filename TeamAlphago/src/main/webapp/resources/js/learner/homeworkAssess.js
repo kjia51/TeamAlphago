@@ -115,9 +115,6 @@ function displayHomeworkList(map) {
 	learnerInfoDiv.innerHTML='';
 	let pageBlock = ''; // 기존 내용 초기화
 	         pageBlock += ''
-			 			+'<form id="searchForm" method="get" name="searchForm" class="content_wrap">'
-				    	+'   <input type="hidden" name="pageNo" value="'+map.pageDto.cri.pageNo+'">'
-				    	+'</form>'	
 						+'	<div class="entry" id="learnerInfo">     '
 						+'		<table class="table table-bordered"> '
 						+'			<caption>그룹 정보</caption>        '
@@ -181,7 +178,6 @@ function displayHomeworkList(map) {
 // 평가하기 버튼 클릭 시 이벤트
 $('#writebtn').on('click', function() {
 	
-	
     // 초기화: 선택된 h_no 배열 비우기
     selectedHnos = [];
 	
@@ -211,7 +207,7 @@ $('#writebtn').on('click', function() {
 //특정 숙제 데이터를 저장하기 위한 배열
 var selectedHnos = [];
 
-function homeworkAssess(g_no) {
+function homeworkAssess() {
 	  // 선택된 평가 값을 가져옵니다.
 	  var hReview = $("#evaluationSelect").val(); // 숙제 평가 값
 	  console.log("hReview:", hReview);
@@ -242,19 +238,6 @@ function homeworkAssess(g_no) {
     $('#assign_modal').hide();
     $('.modal_bg').remove();
 }
-
-//서치폼 요소 저장
-const searchForm = document.getElementById('searchForm');
-
-// 페이징
-function go(page){
-	//alert(page);
-	document.searchForm.pageNo.value=page;
-	document.searchForm.action = "/alpha/homeworkAssess";
-	document.searchForm.submit();
-}
-
-
 
 
  

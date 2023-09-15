@@ -52,7 +52,6 @@ text-align: center;
 
 	<div id="container">
 		<div class="wrap">
-
 			<div class="content_wrap">
 				<div class="titleBox">
 					<h2 class="t_title">숙제 평가</h2>
@@ -197,7 +196,7 @@ text-align: center;
 	<%----모달창 끝---%>
 
 </body>
-<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
+
 <script src="/resources/js/learner/homeworkAssess.js"></script>
 <%@ include file="../common/footer.jsp"%>
 </html>
