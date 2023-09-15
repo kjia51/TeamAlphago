@@ -23,22 +23,28 @@ function fetchPost(url,obj,callback){
 	
 	try {
 		//url 요청
-		fetch(url,{method : 'post'
-					,headers : {'Content-Type' : 'application/json'} 
-					,body  : JSON.stringify(obj)
+		fetch(url,{
+			method : 'post'
+			,headers : {'Content-Type' : 'application/json'} 
+			,body  : JSON.stringify(obj)
 			  })
 			//요청 결과json 문자열을 javascript 객체로 반환
 			.then(response => response.json())
 			//매개로 받은 콜백함수 실행
 			.then(map => callback(map))
+	        .catch(error => {
+	            console.log(error);
+	            callback({ result: 'error', msg: '요청 실패' }); // 요청 실패 시 콜백 호출
+	        });
 			
 		} catch (e) {
 			console.log(e);
+			callback({ result: 'error', msg: '요청 실패' }); // 요청 실패 시 콜백 호출
 		}
 }
 
 
-// 등록, 수정, 삭제의 결과를 처리하는 함수
+// 결과를 처리하는 함수(등록, 수정, 삭제) 
 function result(map){
 	console.log(map);
 	if(map.result == 'success'){
@@ -235,18 +241,18 @@ function displayLearnerList(map) {
 		    
 		    
 		    
-		    function checkLearnerExistence(map) {
-		    	
-		        var writeButton = $('#writebtn');
+function checkLearnerExistence(map) {
+	
+    var writeButton = $('#writebtn');
 
-		        if (LearnerList != null && LearnerList.length > 0) {
-		            // 학습자가 있을 경우 버튼 활성화
-		            writeButton.prop('disabled', false);
-		        } else {
-		            // 학습자가 없을 경우 버튼 비활성화
-		            writeButton.prop('disabled', true);
-		        }
-		    }
+    if (LearnerList != null && LearnerList.length > 0) {
+        // 학습자가 있을 경우 버튼 활성화
+        writeButton.prop('disabled', false);
+    } else {
+        // 학습자가 없을 경우 버튼 비활성화
+        writeButton.prop('disabled', true);
+    }
+}
 
 }
 
@@ -256,14 +262,8 @@ function selectAll(selectAll)  {
 	  
 	  checkboxes.forEach((checkbox) => {
 	    checkbox.checked = selectAll.checked;
-	  })
+	  });
 }
-
-
-
-
-
-
 
 // 회원 정보 리스트 l_no로 받아오기 
 function getLearner(selectedIndexes) {
@@ -284,18 +284,22 @@ function getLearner(selectedIndexes) {
          var g_end = row.find('td:eq(4)').text(); // 학습종료일
          var l_m_id = $('input[data-lno="' + l_no + '"]').val(); // 학습자 아이디
     	console.log("l_no", l_no);
-
-         var item = {
-             l_no: l_no, // 체크박스의 l_no 값
-             m_name: m_name,
-             c_name: c_name,
-             g_start: g_start,
-             g_end: g_end,
-             l_m_id : l_m_id
-         };
-
-         listArray.push(item);
-     });
+    
+    	// 전체 선택 버튼 클릭 시 오류 처리  	
+	    if(l_m_id != null){
+	    	
+	    	var item = {
+	    			l_no: l_no, // 체크박스의 l_no 값
+	    			m_name: m_name,
+	    			c_name: c_name,
+	    			g_start: g_start,
+	    			g_end: g_end,
+	    			l_m_id : l_m_id
+	    	};
+	    	
+	    	listArray.push(item);
+	    }
+    });
  		// 모든 선택 항목의 데이터를 배열로 반환
 	    return listArray;
 }
@@ -316,7 +320,9 @@ function insertHomework(){
    		if($('input:checkbox[name=myCheckbox]:checked').length==0){
    			alert('학습자를 선택하세요');
    			// 입력 버튼 비활성화 처리 
-   		} else{
+   			return;
+   		}
+   
    				var learnerInfo  = getLearner(selectedIndexes);
    	    	    console.log("selectedIndexes",selectedIndexes[0]);
    	    	    console.log("selectedIndexes",selectedIndexes);
@@ -335,6 +341,10 @@ function insertHomework(){
    			    console.log("h_g_no : ", h_g_no);
    			    console.log("h_limit :", h_limit);
    			    console.log("h_homework : ", h_homework);
+   			    
+   			    // 추적할 요청 수와 완료된 요청 수를 초기화
+   			    var totalRequests = learnerInfo.length;
+   			    var completedRequests = 0;
    			    
    			    learnerInfo.forEach(list => {
    			       let m_name = list.m_name;
@@ -356,12 +366,21 @@ function insertHomework(){
    					console.log("obj:", obj.l_m_id);
    					console.log("result",result);
 
-	   				fetchPost('/alpha/giveHomework/save', obj, result);
-	  
+   			        fetchPost('/alpha/giveHomework/save', obj, function (map) {
+   			            // 각 요청이 완료될 때마다 호출되는 콜백
+   			            console.log("obj:", obj.l_m_id);
+   			            console.log("result", result);
+
+   			            completedRequests++;
+
+   			            if (completedRequests === totalRequests) {
+   			                // 모든 요청이 완료되면 한 번만 알림 표시
+   			                result(map);
+   			            }
+   			        });
 					
    				});
-	}
-	   				console.error('오류:', error);
+	
 }
 
 

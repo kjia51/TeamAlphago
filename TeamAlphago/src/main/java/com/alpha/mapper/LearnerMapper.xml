@@ -191,7 +191,7 @@
 
 <!-- 마이페이지 수강 내역 -->	
 <select id="myClassList" resultType="com.alpha.vo.LearnerVO">
-	SELECT
+   SELECT
 		h_no, 
         h_homework,
         h_content,
@@ -200,14 +200,13 @@
         g_name,
         l.l_m_id,
         DATE_FORMAT(g_end, '%Y-%m-%d') AS g_end
-	FROM 
-	    learner l
+   FROM 
+       learner l
 	LEFT JOIN grp g ON (l.l_g_no = g.g_no)
 	LEFT JOIN member m ON (l.t_m_id = m.m_id)
     LEFT JOIN content c on (l.l_c_no = c.c_no)
-    LEFT JOIN homework h on (c.c_no = h.h_c_no)
-	WHERE 
-	    l.l_m_id = #{m_id}
+    LEFT JOIN homework h on (c.c_no = h.h_c_no and l.l_m_id=h.l_m_id) 
+    where l.l_m_id = #{m_id} and l.l_checkyn= 'Y'
 	order by g_end    
 </select>
 </mapper>

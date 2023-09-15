@@ -4,7 +4,7 @@
 <mapper namespace="com.alpha.mapper.TeacherMapper">
 
 <!-- 콘텐츠  -->
-	<!-- 조회  -->
+<!-- 조회  -->
 <select id="getContentList" resultType="com.alpha.vo.ContentVO">
     SELECT c.*, IF(c_level=1, '초급', IF(c_level=2, '중급', '고급')) AS level, savepath
     FROM content c
@@ -17,7 +17,14 @@
         AND c_name LIKE CONCAT('%', #{searchWord}, '%')
     </if>
     <if test="c_level != null">
-        AND c_level = #{c_level}
+        <choose>
+            <when test="c_level == 0">
+                <!-- c_level이 0이면 추가 조건 없이 전체를 조회 -->
+            </when>
+            <otherwise>
+                AND c_level = #{c_level}
+            </otherwise>
+        </choose>
     </if>
     ORDER BY
     <choose>
