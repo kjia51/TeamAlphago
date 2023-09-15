@@ -45,7 +45,8 @@
 		<div id="container">
 		    <div class="wrap">
 		    <input type="hidden" id="m_id" value=${memberVO.m_id }>
-		    <input type="hidden" id=m_password value=${memberVO.m_password }>
+		    <input type="hidden" id="m_password" value=${memberVO.m_password }>
+		    <input type="hidden" id="m_division" value=${memberVO.m_division }>
 		    <table style="width: 100%;">
 			<colgroup>
 				<col width="33%" />
@@ -74,6 +75,7 @@
     
 		<%@ include file="../common/footer.jsp" %>
 <script src="/resources/js/member/myPage.js"></script>
+<script src="/resources/js/member/contentEdit.js"></script>
 <script src="/resources/js/member/myClassList.js"></script>
 </body>
 </html>

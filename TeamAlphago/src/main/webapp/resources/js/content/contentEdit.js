@@ -124,12 +124,13 @@ function cartresult(map){
 	console.log(map);
 	let cr_m_no = $('#m_id').val();
 	if(map.result == 'success'){
-	    const userConfirmation = confirm('장바구니로 이동 하시겠습니까?');
-		if(userConfirmation){
-	    	fetchGet('/alpha/mycart/list/'+cr_m_no, resultList);
-		}
+			alert(map.msg);
+			window.location.href = "/alpha/mypage";
 	} else {
-		alert(map.msg);
+		if(map.msg==null || map.msg==""){
+		} else{
+			alert(map.msg);
+		}
 	}
 	
 }
@@ -638,7 +639,9 @@ $('#cartPopUp').on('click', function() {
         var selectedData = listIndex;
         console.log(selectedData);
         // 행들을 순회하면서 선택된 행들의 데이터를 추출
-        
+        const userConfirmation = confirm('장바구니에 상품을 넣으시겠습니까?');
+        if(userConfirmation){
+		let isLastIteration = false;
         for (var i = 1; i < table.rows.length; i++) { // 첫 번째 행은 헤더이므로 인덱스 1부터 시작
             var checkbox = table.rows[i].cells[0].querySelector('input[type="checkbox"]');
             
@@ -654,11 +657,16 @@ $('#cartPopUp').on('click', function() {
                         cr_c_no: cr_c_no,
                         cnt: cnt
                     };
-
-                    fetchPost('/alpha/cart/insert', obj, cartresult);
+                if (i === table.rows.length - 1) {
+                    // 현재 반복이 마지막 행인 경우
+                    isLastIteration = true;
+                }
+                    fetchPost('/alpha/cart/insert/'+isLastIteration, obj, cartresult);
             }
 
 
+        }
+        } else{
         }
     });
     

@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -184,12 +185,18 @@ public class ContentController extends CommonRestController {
 		   }
 		   
 		   //장바구니 삭제 action
-		   @DeleteMapping("/content/DeleteCart/{cr_c_no}/{cr_m_no}/{cnt}")
-		   public Map<String, Object> delete(@PathVariable("cr_c_no") String cr_c_no, @PathVariable("cr_m_no") String cr_m_no, @PathVariable("cnt") String cnt) {
+		   @DeleteMapping("/content/DeleteCart/{cr_c_no}/{cr_m_no}/{cnt}/{isLastIteration}")
+		   public Map<String, Object> delete(@PathVariable("cr_c_no") String cr_c_no, @PathVariable("cr_m_no") String cr_m_no, @PathVariable("cnt") String cnt, @PathVariable("isLastIteration") Boolean isLastIteration) {
 			   
 			   try {
+				   Map<String, Object> map = new HashMap<String, Object>();
 				   int res = contentService.deleteCart(cr_m_no, cr_c_no, cnt);
-				   Map<String, Object> map = responseDeleteMap(res);
+				   System.out.println(isLastIteration);
+				   if(isLastIteration){
+					   map = responseDeleteMap(res);
+				   } else {
+					   map = responseNo(res);
+				   }
 				   return map;
 				   
 			   } catch (Exception e) {
@@ -199,18 +206,26 @@ public class ContentController extends CommonRestController {
 		   }
 		   
 		   //장바구니 담기
-		   @PostMapping("/cart/insert")
-		   public Map<String, Object> cartList(@RequestBody CartVO cartVO ) {
+		   @PostMapping("/cart/insert/{isLastIteration}")
+		   public Map<String, Object> cartList(@RequestBody CartVO cartVO, @PathVariable("isLastIteration") boolean isLastIteration) {
 		      System.out.println("===================================================================================================================================");
 				try {
-						int res = contentService.addCartListCnt(cartVO);
+					Map<String, Object> map = new HashMap<String, Object>();	
+					int res = contentService.addCartListCnt(cartVO);
 						if(res<1) {
 							contentService.addCart(cartVO);
-							Map<String, Object> map = responseResultMap(REST_SUCCESS, "장바구니에 상품이 담겼습니다\r\n"+
-																					"장바구니로 이동하시겠습니까?");
+							System.out.println(isLastIteration);
+							if(isLastIteration){
+							   map = responseResultMap(REST_SUCCESS, "장바구니에 상품이 담겼습니다\r\n"+
+						   													"장바구니로 이동하시겠습니까?");
+							   return map;
+						   } else {
+							   map = responseNo(res);
 							return map;
-						} else {
+						}} else {
+							if(isLastIteration){
 							return responseResultMap(REST_FAIL, "장바구니에 이미 동일한 상품이 존재합니다.");
+							} return map;
 						}
 					//}
 				} catch (Exception e) {
