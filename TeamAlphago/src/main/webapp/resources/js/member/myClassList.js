@@ -89,11 +89,88 @@ function result(map){
 		const userConfirmation = confirm(map.msg);
 		if(userConfirmation){
 	    	submain.innerHTML = '';
-	    	fetchGet('/alpha/member/list', resultEditList)	
+	    	fetchGet('/alpha/myClassList', resultEditList)	
 		}
 	} else {
 		alert(map.msg);
 	}
 		
+}
+
+$('#myClassList').click(function () {
+    const userConfirmation = confirm('학습 내역을 조회하시겠습니까?');
+    if (userConfirmation) {
+        // 사용자가 "확인"을 선택한 경우
+    	submain.innerHTML = '';
+    	classListDiv.innerHTML = '';
+    	fetchGet('/alpha/myClassList', resMyClassList)
+    } else {
+        // 사용자가 "취소"를 선택한 경우
+        // 아무 작업도 수행하지 않음
+    }
+
+})
+
+function resMyClassList(map){
+	console.log("map", map);
+	let myList = map.classList;
+	
+	console.log("myList", myList);
+	
+	classListDiv.innerHTML = '';
+	let pageBlock = ''; // 기존 내용 초기화
+	    pageBlock += ''                                                                        
+					+'	<div class="entry">                                                     '
+					+'	<table class="table table-bordered">                                    '
+					+'		<caption>학습 내역 조회</caption>                                         '
+					+'		<colgroup>                                                          '
+					+'			<col width="5%" />                                             '
+					+'			<col width="25%" />                                             '
+					+'			<col width="15%" />                                             '
+					+'			<col width="40%" />                                             '
+					+'			<col width="20%" />                                             '
+					+'		</colgroup>                                                         '
+					+'		<thead>                                                             '
+					+'			<tr>                                                            '
+					+'				<th>No</th>                                                 '
+					+'				<th>수강 중인 콘텐츠</th>                                           '
+					+'				<th>그룹</th>                                                 '
+					+'				<th>숙제 현황</th>                                               '
+					+'				<th>학습종료일</th>                                              '
+					+'			</tr>                                                           '
+					+'		</thead>                                                            '
+					+'		<tbody>';
+	if(myList != null && myList.length > 0){
+		myList.forEach((list, index)=>{
+		console.log('list', list.g_name);
+		pageBlock += ''					
+					+'				<tr>                                                        '
+					+'					<th align="center">'+ (index+1) +'</th>                 '
+					+'					<td align="center" class="row">'+list.c_name+'</td>     '
+					+'					<td align="center">'+list.g_name+'</td>                 '
+					+'					<td align="center">'
+					if (list.h_homework !== null) {
+			                // h_homework가 null이 아닌 경우, 페이지 이동 링크 추가
+		pageBlock += '<a href="/alpha/submitHomework?l_m_id=' + list.l_m_id + '">' + list.h_homework + '</a>';
+					} else {
+			                // h_homework가 null인 경우, "숙제가 없습니다" 출력
+		pageBlock += '숙제가 없습니다';
+					}		
+		pageBlock += '</td>'
+
+					+'					<td align="center">'+list.g_end+'</td>'
+					+'             </tr>';
+	});
+		pageBlock += ''			
+					+'		</tbody>'
+					+'	</table>'
+					+'</div>';
+	} else {
+		pageBlock +='<tr>'
+					+'<td colspan="5" style="text-align: center;">학습 내역이 존재하지 않습니다.</td>'
+					+'</tr>';
+	}
+		classListDiv.innerHTML += pageBlock;
+	
 }
 

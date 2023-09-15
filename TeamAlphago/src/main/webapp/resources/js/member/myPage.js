@@ -392,9 +392,53 @@ function resultList(map){
 			+'							</thead>'
 			+'						</table>'
 			+'					</div>'
-			+'						<input type="button" class="btn btn-primary" id="payOption" value="결제하기">'
 			+'						<input type="button" class="btn btn-primary" id="deleteOption" value="선택삭제" style="margin-left:10px; color:#074691; background-color:white">'
-			+'				</div>';
+			+'					<h2 style="text-align:left">할인/결제금액</h2>'
+			+'					<br>'			
+			+'					<div class="entry" id="grouppay">'
+			+'						<table class="table table-bordered" style="border:0px; font-weight:900; font-size:1.2em">'
+			+'							<caption>결제정보</caption>'
+			+'							<colgroup>'
+			+'								<col width="35%" />'
+			+'								<col width="30%" />'
+			+'								<col width="35%" />'
+			+'							</colgroup>'
+			+'							<thead>'
+			+'								<tr>'
+			+'									<th>총 주문금액</th>'
+			+'									<th>할인금액</th>'
+			+'									<th style="background-color:red; color:white">총 결제금액</th>'
+			+'								</tr>'
+			+'							</thead>'
+			+'							<tbody id="tbdy2">'
+			+'								<tr>'
+			+'									<td>0원</td>'
+			+'									<td>0원</td>'
+			+'									<td style="color:red; font-weight:900; font-size:1.5em">0원</td>'
+			+'								</tr>'
+			+'</tbody>'
+			+'						</table>'
+			+'					</div>'
+			+'					<h2 style="text-align:left">취소/환불 안내</h2>'
+			+'					<h4 style="text-align:left">유의사항 및 환급조건을 확인하였으며, 이에 동의합니다 <input type="checkbox"></h4>	'
+			+'					<div class="entry" id="grouppay" style="border:1px solid black">'
+			+'					3년 100% 환급 평생수강반 이용안내<br>'
+
+			+'			* [30일 수강료 환불보장제]는 이벤트 기간 내 구매(결제완료)한 상품에 한하여, 아래의 환불정책이 적용됩니다.<br>'
+
+			+'			* [30일 수강료 환불보장제] 적용 상품: 평생보장반 프리미엄, 3년 100% 환급반<br>'
+			+'			* 사이트에서 결제한 상품에 한하여 해당 이벤트 적용 가능하며, 설명회/네이버쇼핑라이브/시크릿핵딜 등을 통해<br>'
+			+'			결제한 상품은 적용되지 않습니다.<br>'
+			+'			* 8/23(수) 09:00~9/27(수) 23:59:59 이벤트 기간 동안 [30일 환불보장제도]에 해당하는 상품 구매자에 한하여, 구매 시점으로부터 구매일 포함 30일 이내에<br>'
+			+'			환불 가능합니다.<br>'
+			+'			* 교재 포함된 상품의 경우, 사용한 교재에 대해서는 교재비 차감 후 환불 됩니다.	<br>'
+			+'					</div><br>'
+
+			
+			+'						<input type="button" class="btn btn-primary" id="payOption" value="결제하기" style="margin-bottom:30px">'
+			+'				</div>'
+			
+			;
 		cartList.forEach((cart,index) => {
 			let c_no = cart.c_no;
 	    	let c_name = cart.c_name;

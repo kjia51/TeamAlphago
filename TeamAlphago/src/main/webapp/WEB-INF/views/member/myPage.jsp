@@ -30,6 +30,13 @@
 	line-height: 15px;
 	margin-left: 20px;
 }
+
+                .total_order {width:171px}
+                .sale_price {width:171px}
+                .sale_pay{overflow:hidden;margin-bottom:20px;}
+                .sale_pay dd ul {background:url('../img/payment/sum_bg_.gif') no-repeat;}
+                div.total_price {margin:10px 0 0 70px}
+                div.total_price dl.benefit{margin:17px 0 0}
 </style>
 </head>
 <body>
@@ -49,7 +56,7 @@
 					<button class="topMenu" id="getGroup" >정보 수정</button>
                     <c:choose>    
                     <c:when test="${sessionScope.memberVO.m_division==2}">
-					<button class="topMenu" id="myClassList" >나의 수강내역</button>
+					<button class="topMenu" id="myClassList" >나의 학습내역</button>
 					</c:when>
                     <c:when test="${sessionScope.memberVO.m_division==1}">
 					<button class="topMenu" id="myCartList">장바구니</button>
@@ -60,11 +67,13 @@
 				</tr>
 			</table>
 			<div id="submain"></div>
+			<div id="classListDiv"></div>
 		    </div>
 		  </div>
 		</div>
     
 		<%@ include file="../common/footer.jsp" %>
 <script src="/resources/js/member/myPage.js"></script>
+<script src="/resources/js/member/myClassList.js"></script>
 </body>
 </html>

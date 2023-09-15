@@ -7,6 +7,7 @@ import com.alpha.vo.Criteria;
 import com.alpha.vo.LearnerVO;
 @Service
 public class LearnerServiceImpl implements LearnerService {
+	
 	@Autowired
 	private LearnerMapper learnerMapper;
 	
@@ -60,6 +61,7 @@ public class LearnerServiceImpl implements LearnerService {
 	public List<LearnerVO> homeworkList(String l_m_id) {
 		return learnerMapper.homeworkList(l_m_id);
 	}
+	
 	// 학습자 숙제 제출
 	@Override
 	public int subitHomework(String h_no, String h_content) {
@@ -76,10 +78,17 @@ public class LearnerServiceImpl implements LearnerService {
 	public List<LearnerVO> submittedList(String g_no, String t_m_id) {
 		return learnerMapper.submittedList(g_no, t_m_id);
 	}
-
+	
+	// 숙제 평가 내역 저장
 	@Override
 	public int updateAssess(String h_no, String h_review) {
 		return learnerMapper.updateAssess(h_no, h_review);
+	}
+
+	// 마이페이지 학습 내역
+	@Override
+	public List<LearnerVO> myClassList(String l_m_id) {
+		return learnerMapper.myClassList(l_m_id);
 	}
 
 	
