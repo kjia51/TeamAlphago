@@ -12,7 +12,7 @@
 
 </style>
 <body>
-<input name="m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
+
 		
 		
 

@@ -298,7 +298,6 @@ function getLearner(selectedIndexes) {
 	    	};
 	    	
 	    	listArray.push(item);
-	    	
 	    }
     });
  		// 모든 선택 항목의 데이터를 배열로 반환

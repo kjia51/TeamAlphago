@@ -189,7 +189,7 @@
 <%-- --------------------------------------------------------------  --%>
     
 <script>
-window.onload = function()  {
+/*  window.onload = function()  {
 	
     var l_m_id = $('#m_id').val();
     console.log(l_m_id);
@@ -220,7 +220,7 @@ window.onload = function()  {
             console.error('데이터를 가져오지 못했습니다.');
         }
     });	
-}
+}  */
 
 function modal_main(id) { //모달창 띄우기
     var zIndex = 9999;
