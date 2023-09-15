@@ -82,30 +82,25 @@ function fetchDelete(url, callback) {
     }
 }
 
-function result(map){
+function resultMain(map){
 	let m_id = $('#m_id').val();
 	console.log(m_id);
 		const userConfirmation = confirm(map.msg);
-		console.log(userConfirmation);
+		console.log("userConfirmation", userConfirmation);
 		if(userConfirmation){
 			window.location.href = "/alpha/main";		
 			} else {
-				alert(map.msg);
 			}
 		
 }
 
 window.addEventListener('load', function(){
 	console.log("Get")
-    const userConfirmation = confirm('마이페이지로 이동하시겠습니까?');
-    if (userConfirmation) {
         // 사용자가 "확인"을 선택한 경우
     	submain.innerHTML = '';
     	fetchGet('/alpha/member/list', resultEditList)
-    } else {
         // 사용자가 "취소"를 선택한 경우
         // 아무 작업도 수행하지 않음
-    }
     
 })
 
@@ -229,8 +224,10 @@ function resultEditList(map){
 			var pwdChk_div = document.getElementById('pwdChk_div');
 			const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
 		$('#orgin_pwd').blur(function () {
+			
 			var orgin_input = $('#orgin_pwd').val();
 			var orgin_pwd =  $('#m_password').val();
+			var length = orgin_input.length;
 			if(orgin_input==orgin_pwd){
 				$('#new_pwd').prop('disabled', false);
 				
@@ -239,34 +236,36 @@ function resultEditList(map){
 			} else{
 				$('#new_pwd').prop('disabled', true);
 				$('#pwdChk').prop('disabled', true);
-				pwd_org.innerHTML='';
+				if(length==0){
+					pwd_org.innerHTML='';					
+				} else{
+					pwd_org.innerHTML='비밀번호가 일치하지 않습니다.';
+			}
 			}
 		});
-		$('#deleteMember').click(function () {
-			let m_id = $('#m_id').val();
-			// 확인과 취소를 묻는 알림창 표시
-		    const userConfirmation = confirm('정말로 삭제하시겠습니까?');
-		    
-		    if (userConfirmation) {
-		        // 사용자가 "확인"을 선택한 경우
-		        fetchDelete('/alpha/member/delete/' + m_id, result);
-		        
-		    } else {
-		        // 사용자가 "취소"를 선택한 경우
-		        // 아무 작업도 수행하지 않음
-		    }
-		});
-		
+
 	    // 비밀번호 유효성 검사
 		$('#new_pwd').on('input', function () {
+			let orgin_pwd = $('#orgin_pwd').val();
+			let new_pwd = $('#new_pwd').val();
+			let length = new_pwd.length;
+        	if(length==0){
+        		pwd_chg.innerHTML = ""; // 일치하는 경우 메시지 제거
+        	} else{
 	        if (!pwRegex.test($('#new_pwd').val())) {
 	        	pwd_chg.innerHTML = "비밀번호는 영문자와 숫자로 구성되며 최소 6자리 이상이어야 합니다.";
 		  		  $('#new_pwd').focus();
 	        } else {
-	        	pwd_chg.innerHTML = ""; // 유효한 경우 메시지 제거
-	        	$('#pwdChk').prop('disabled', false);
+	        	if(orgin_pwd==new_pwd){
+	        		pwd_chg.innerHTML = "기존 비밀번호는 사용하실 수 없습니다";
+	        		$('#new_pwd').val('');
+	        		
+	        	}else{
+	        		pwd_chg.innerHTML = ""; // 유효한 경우 메시지 제거
+	        		$('#pwdChk').prop('disabled', false);
+	        	}
 	        }
-	        
+        	}
 	        // 비밀번호 확인 검사
 	    });
 		// 비밀번호 일치 검사
@@ -274,12 +273,17 @@ function resultEditList(map){
 	        var new_pwd = $('#new_pwd').val();
 	        var pwdChk = $('#pwdChk').val();
 
-	        if (new_pwd !== pwdChk) {
+        	if(pwdChk==null){
+        		pwdChk_div.innerHTML = ""; // 일치하는 경우 메시지 제거
+        	} else{
+	        
+	        if (new_pwd !== pwdChk ) {
 	        	pwdChk_div.innerHTML = "비밀번호가 일치하지 않습니다.";
 	        	$('#pwdChk').focus();
 	        } else {
 	        	pwdChk_div.innerHTML = "비밀번호가 일치합니다"; // 일치하는 경우 메시지 제거
 	        }
+        	}
 		});
 		
 		
@@ -290,22 +294,34 @@ function resultEditList(map){
 		        var new_pwd = $('#new_pwd').val();
 		        console.log(new_pwd);
 		        var pwdChk = $('#pwdChk').val();
+		        var m_password = $('#m_password').val();
 		        console.log(pwdChk);
 		        const userConfirmation = confirm('정보를 수정 하시겠습니까?');
 		        if (userConfirmation) {
 		        
-				if(orgin_pwd==null ||orgin_pwd==''){
-					alert('정보수정을 위해선 기존 비밀번호를 확인해주셔야 합니다.');
-					console.log(1);
-					$('#orgin_pwd').focus();
-					return;
-				}
+	
+	        	if(orgin_pwd==null ||orgin_pwd==''){
+	        		alert('정보수정을 위해선 기존 비밀번호를 확인해주셔야 합니다.');
+	        		$('#orgin_pwd').focus();
+	        		return;
+	        	}
+		        if(orgin_pwd!=m_password){
+		        	alert('기존 비밀번호가 일치하지 않습니다');
+		        	console.log(1);
+		        	$('#orgin_pwd').focus();
+		        	return;
+		        }
+		        // 비밀번호 유효성검사 확인
+		        if (!pwRegex.test(new_pwd)) {
+		        	alert('비밀번호는 영문자와 숫자로 구성되며 최소 6자리 이상이어야 합니다.');
+		        	return false;
+		        }
 				if(new_pwd!=null && new_pwd!=''){
 					if(pwdChk==null ||pwdChk==''){
 						console.log(2);
 						alert('비밀번호 확인란이 일치하지 않습니다.');
 						$('#pwdChk').focus();
-						return;
+						return false;
 					}
 				}
 				if(new_pwd==null ||new_pwd==''){
@@ -313,6 +329,8 @@ function resultEditList(map){
 					pwdChk = $('#orgin_pwd').val();
 					console.log(pwdChk);
 				}
+				
+
 
 					let m_id = $('#m_id').val();
 					console.log(m_id)
@@ -325,7 +343,7 @@ function resultEditList(map){
 	                		m_password: pwdChk,
 	                		m_address: m_address
 	                    };
-					fetchPut('/alpha/member/edit',obj, result);
+					fetchPut('/alpha/member/edit',obj, resultMain);
 					
 				} else {
 					// 사용자가 "취소"를 선택한 경우
@@ -353,13 +371,25 @@ $('#myCartList').click(function () {
 
 })
 
-
+//컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
+function resultCart(map){
+	console.log(map);
+	if(map.result == 'success'){
+		alert(map.msg);
+		window.location.href = "/alpha/mycart";
+	} else {
+		alert(map.msg);
+	}
+		
+}
 function resultList(map){
 		let cartList = map.cartList;
 		console.log("cartList",cartList);
+		classList.innerHTML = ''
+		submain.innerHTML = ''
 		submain.innerHTML += ''
 			+'<div class="titleBox">'
-			+'					<h2 class="t_title">장바구니</h2>'
+			+'					<h2 style="text-align:left">장바구니</h2>'
 			+'				</div>'
 			+'				<div id="groupInfoDiv" style="text-align:center">'
 			+'					<div class="entry" id="groupInfo">'
@@ -460,5 +490,36 @@ function resultList(map){
 	        	<input type="hidden" data-cprice=${index} value=${c_price}>
 	        `;
 	        tbdy.appendChild(row);
+		})
+		
+		$('#deleteOption').on('click', function() {
+	let cr_m_no = $('#m_id').val();
+	console.log(cr_m_no);
+	var selectedIndexes = [];
+	
+	$('input:checkbox[name=chkbox]').each(function() {
+	        if (this.checked) {
+	            selectedIndexes.push($('input:checkbox[name=chkbox]').index(this));
+	        }
+	    })
+	        console.log(selectedIndexes);
+	        selectedIndexes.forEach(function(index) {
+	    	let cr_c_no = $('input[data-cno="'+index+'"]').val();
+	    	let cnt = $('input[data-cnt="'+index+'"]').val();
+	    	console.log(cr_c_no);
+	    	// 확인과 취소를 묻는 알림창 표시
+	        const userConfirmation = confirm('정말로 삭제하시겠습니까?');
+	        
+	        if (userConfirmation) {
+	            // 사용자가 "확인"을 선택한 경우
+	            fetchDelete('/alpha/content/DeleteCart/' + cr_c_no + '/' + cr_m_no + '/' + cnt, resultList);
+	            
+	        } else {
+	            // 사용자가 "취소"를 선택한 경우
+	            // 아무 작업도 수행하지 않음
+	        }
+	
+	
+		})
 		})
 		}

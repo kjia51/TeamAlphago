@@ -216,7 +216,7 @@
 																	<div class="inline-blocked float_l">
 																					<span class="text-brand _unit" style="right-margin:500px" >${con.level }반  ${getContentCnt }</span>
 																								<div class="down-btn" style="display: inline-block;">
-										<select class="form-control" name="deliv_option_type" onchange="document.location.href = encodeURI('/24/?sort='+$(this).val())" title="정렬 바꾸기" >
+										<!-- <select class="form-control" name="deliv_option_type" onchange="document.location.href = encodeURI('/24/?sort='+$(this).val())" title="정렬 바꾸기" >
 											<option value="recent">등록순</option>
 											<option value="like">인기순</option>
 											<option value="min_price">낮은가격순</option>
@@ -224,7 +224,7 @@
 											<option value="comment">상품평 많은순</option>
 											<option value="abc">이름순</option>
 											<option value="descabc">이름역순</option>
-										</select>
+										</select> -->
 									</div>
 											</div>
 																				
@@ -257,9 +257,7 @@
 							</c:choose>
 						<a href="" class="_fade_link shop-item-thumb hover_img_none" style="position:relative">
 							<img data-prodcode="s2023081114659ed573520" alt="" src="/alpha/display?fileName=${con.savepath}" class="_org_img org_img _lazy_img" data-original="" data-src="" style="display: inline; width:200px;height:200px;">
-							<c:if test="${discountWithoutDecimal!=0}">
-							<span style="position:absolute; top: -30px; left: 130px; display: block; font-size:2em; color:red; font-weight:bold">${discountWithoutDecimal}%</span>
-							</c:if>
+
 						</a>
 			
 			
@@ -280,13 +278,7 @@
 								<div class="ns-icon clearfix">
 									<!--<span class="new bg-brand">NEW</span>-->
 									<div class="item-icon _unit_list unit-list">
-							                                        <span class="im-icon-wrap">
-			                       <i class="fa-regular fa-comment"></i> 0</span>
-			                    </span>
-							                    <span class="im-icon-wrap">
-			                        <i id="wish-icon-s20210713f943dd02f7efe" class="wish-icon-s20210713f943dd02f7efe im-icon im-ico-like"></i>
-			                        <i class="fa-regular fa-heart"></i> 0</span>
-			                    </span>
+
 											</div>
 										</div>
 									</div>
@@ -336,6 +328,7 @@
 
 
 </body>
+<script src="/resources/js/content/myPage.js"></script>
 <script src="/resources/js/content/contentEdit.js"></script>
 <script src="/resources/js/content/payment.js"></script>
 </html>

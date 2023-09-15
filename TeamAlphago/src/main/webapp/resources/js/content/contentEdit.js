@@ -122,10 +122,11 @@ function dresult(map){
 //장바구니 등록
 function cartresult(map){
 	console.log(map);
+	let cr_m_no = $('#m_id').val();
 	if(map.result == 'success'){
-		const userConfirmation = confirm(map.msg);
+	    const userConfirmation = confirm('장바구니로 이동 하시겠습니까?');
 		if(userConfirmation){
-			window.location.href = "/alpha/mycart";			
+	    	fetchGet('/alpha/mycart/list/'+cr_m_no, resultList);
 		}
 	} else {
 		alert(map.msg);
