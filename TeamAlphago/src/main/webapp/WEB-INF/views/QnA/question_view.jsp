@@ -164,26 +164,26 @@
 	        }
 
 	        var commentContent = answerVO.a_content
-	                            + '<form class="comment-form comment-bb" data-process="edit">'
-	                            + '<textarea style="display:none" class="comment-bb" maxlength="500" title="댓글수정" data-index="${index}" name="new_a_content">' + answerVO.a_content + '</textarea>'
-	                            + '<button style="display:none" class="eve-comment-submit answer-edit-btn" data-index="${index}" data-a_no="' + answerVO.a_no + '"> 댓글수정 </button>'
-	                            + '<input type="hidden" name="a_no" value="' + answerVO.a_no + '"'
-	                            + '</form>';
+	        + '<form class="comment-form comment-bb" data-process="edit">'
+	        + '<textarea style="display:none" class="comment-bb" maxlength="500" title="댓글수정" data-index="' + index + '" name="new_a_content">' + answerVO.a_content + '</textarea>'
+	        + '<button style="display:none" class="eve-comment-submit answer-edit-btn" data-index="' + index + '" data-a_no="' + answerVO.a_no + '"> 댓글수정 </button>'
+	        + '<input type="hidden" name="a_no" value="' + answerVO.a_no + '"'
+	        + '</form>';
 
 	        document.querySelector('.comment-list-info-' + index).innerHTML = commentInfo;
 	        document.querySelector('.comment-list-content-' + index).innerHTML = commentContent;
 	        
 	        $('.answer-edit-btn').on('click', function (e) {
-	           e.preventDefault();
-	        	var index = $(this).data('index'); // data-index 값을 가져옴
-	        	var a_no = $(this).data('a_no');
-	        	var q_no = $('input[name="q_no"]').val();
+	            e.preventDefault();
+	            var index = $(this).data('index'); // data-index 값을 가져옴
+	            var a_no = $(this).data('a_no');
+	            var q_no = $('input[name="q_no"]').val();
 	            var formData = new FormData(); // 폼 데이터 생성
 
 	            // 폼 데이터에 필요한 데이터 추가
 	            formData.append('q_no', q_no);
 	            formData.append('a_no', a_no);
-	            formData.append('a_content', $('textarea[name="new_a_content"]').eq(index).val()); // 해당 인덱스의 텍스트 에어리어 값 가져옴
+	            formData.append('a_content', $('textarea[name="new_a_content"]').eq(index).val());
 
 	            fetch('/alpha/QnA/answer_edit?a_no=' + a_no, {
 	                method: 'POST',
