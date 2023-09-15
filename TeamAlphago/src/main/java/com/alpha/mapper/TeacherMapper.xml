@@ -313,7 +313,12 @@
 	</update>
 	
 	<select id="homeworkAlert" resultType="com.alpha.vo.LearnerVO">
-	select * from homework
+	SELECT * FROM homework
+	where l_m_id = #{l_m_id}
+	</select>
+	
+	<select id="homework" resultType="com.alpha.vo.LearnerVO">
+	SELECT h_homework FROM homework
 	where l_m_id = #{l_m_id}
 	</select>
 	

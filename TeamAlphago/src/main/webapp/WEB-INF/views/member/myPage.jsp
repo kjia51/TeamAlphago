@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>마이페이지</title>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script><!-- 결제api -->
 <style>
 .topMenu {
     width: 20%;
@@ -75,7 +78,7 @@
     
 		<%@ include file="../common/footer.jsp" %>
 <script src="/resources/js/member/myPage.js"></script>
-<script src="/resources/js/member/contentEdit.js"></script>
+<script src="/resources/js/content/contentEdit.js"></script>
 <script src="/resources/js/member/myClassList.js"></script>
 </body>
 </html>

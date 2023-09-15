@@ -12,10 +12,13 @@
 
 </style>
 <body>
+<<<<<<< HEAD
+=======
 
 		
 		
 
+>>>>>>> refs/remotes/origin/main
 
     <h3>숙제 알림</h3>
     <div style="display: inline-block; float:right;"><a href="/alpha/submitHomework?l_m_id=${memberVO.m_id}">숙제 제출 바로가기 ></a></div>

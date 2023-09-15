@@ -443,28 +443,42 @@ function resultCartList(map){
 			+'						<table class="table table-bordered" style="border:0px; font-weight:900; font-size:1.2em">'
 			+'							<caption>결제정보</caption>'
 			+'							<colgroup>'
-			+'								<col width="35%" />'
 			+'								<col width="30%" />'
-			+'								<col width="35%" />'
+			+'								<col width="10%" />'
+			+'								<col width="30%" />'
+			+'								<col width="30%" />'
 			+'							</colgroup>'
 			+'							<thead>'
 			+'								<tr>'
 			+'									<th>총 주문금액</th>'
+			+'									<th>기간선택</th>'
 			+'									<th>할인금액</th>'
 			+'									<th style="background-color:red; color:white">총 결제금액</th>'
 			+'								</tr>'
 			+'							</thead>'
 			+'							<tbody id="tbdy2">'
 			+'								<tr>'
-			+'									<td>0원</td>'
-			+'									<td>0원</td>'
-			+'									<td style="color:red; font-weight:900; font-size:1.5em">0원</td>'
+			+'									<td ><input id="c-no-td" value="0원" style="text-align:center"></td>'
+			+'									<td >'
+			+'   								<select title="기간 선택" name="c_period" id="c_period" style="font-size:1em" disabled>'
+			+'           							<option value="1">3개월</option>'
+			+'           							<option value="2">6개월</option>'
+			+'            							<option value="3">9개월</option>'
+			+'										<option value="4">12개월</option>'
+			+'   								</select>'
+			+' 									</td>'
+			+'									<td><input id="cnt-td" value="0원" style="text-align:center"></td>'
+			+'									<td><input value="0원" style="text-align:center; color:red; font-weight:900; font-size:1.5em" id="c-price-td"></td>'
+			+'									<td style="display:none"><input type="text" value="" id="sub_able"></td>'
+			+'									<td style="display:none"><input type="text" value="" id="c_name"></td>'
+			+'									<td style="display:none"><input type="text" value="" id="c_no"></td>'
+			+'									<td style="display:none"><input type="text" value="" id="cnt"></td>'
 			+'								</tr>'
 			+'</tbody>'
 			+'						</table>'
 			+'					</div>'
 			+'					<h2 style="text-align:left">취소/환불 안내</h2>'
-			+'					<h4 style="text-align:left">유의사항 및 환급조건을 확인하였으며, 이에 동의합니다 <input type="checkbox" style="margin-top: 6px;"></h4>	'
+			+'					<h4 style="text-align:left">유의사항 및 환급조건을 확인하였으며, 이에 동의합니다 <input type="checkbox" id="agree" style="margin-top: 6px;"></h4>	'
 			+'					<div class="entry" id="grouppay" style="border:1px solid black; text-align: left;">'
 			+'<ul style="margin-top: 15px;">'
 			+'<li style="list-style: square; margin-left: 25px;">결제 후 미사용시 7일 이내 전액 환불이 가능하며, 7일이 경과한 경우 문의를 통해 수수료를 공제한 부분 환불이 가능합니다.</li>'
@@ -478,7 +492,7 @@ function resultCartList(map){
 			+'					</div><br>'
 
 			
-			+'						<input type="button" class="btn btn-primary" id="payOption" value="결제하기" style="margin-bottom:30px">'
+			+'						<input type="button" class="btn btn-primary" id="payment" value="결제하기" style="margin-bottom:30px">'
 			+'				</div>'
 			
 			;
@@ -492,7 +506,7 @@ function resultCartList(map){
 	    	let c_sellprice = cart.c_sellprice;
 	        var row = document.createElement('tr');
 	        row.innerHTML = `
-	        	<td><input type="checkbox" name="chkbox" value=${index}></td>
+	        	<td><input type="checkbox" name="chkbox" value="${index}"></td>
 	        	<td>${index+1}</td>
 	        	<td>${c_name}</td>
 	        	<td>${c_level}</td>
@@ -503,13 +517,147 @@ function resultCartList(map){
 	        	<input type="hidden" data-cprice=${index} value=${c_price}>
 	        `;
 	        tbdy.appendChild(row);
+	        // 각 체크박스에 이벤트 핸들러 추가
 		})
 		
-			$('#paymentOption').on('click', function() {
-				if($('input:checkbox[name=chkbox]:checked').length>2){
-					alert('구매는 하나만 가능합니다.')
+		$('#paymentOption').on('click', function() {
+			if($('input[type="checkbox"]:checked').length==1){
+				// 체크박스가 클릭되면 해당 체크박스의 값을 추출
+				$('#c_period').prop('disabled', false);
+				let checkboxIndex = $('input[type="checkbox"]:checked').val(); // 선택된 체크박스의 인덱스
+				let c_no = cartList[checkboxIndex].c_no; // 선택된 체크박스의 c_no 값
+				let cnt = cartList[checkboxIndex].cnt; // 선택된 체크박스의 cnt 값
+				let c_price = cartList[checkboxIndex].c_price; // 선택된 체크박스의 c_price 값
+				let c_name = cartList[checkboxIndex].c_name; // 선택된 체크박스의 c_price 값
+				
+				if(cnt-30>=0){
+					cnt = (cnt-30)/100;
+				} else{
+					cnt = 0;
 				}
-			})
+				
+				console.log('checkbox clicked - Index:', checkboxIndex);
+				console.log('c_no:', c_no);
+				console.log('cnt:', cnt);
+				console.log('c_price:', c_price);
+				
+				// 여기에서 선택된 체크박스의 값에 대한 동작을 추가할 수 있습니다.
+				$('#c-no-td').val(c_price+'원'); // c_no를 표시할 td 요소
+				$('#cnt-td').val(c_price*cnt+'원'); // cnt를 표시할 td 요소
+				$('#c-price-td').val(c_price*(1-cnt)+'원'); // cnt를 표시할 td 요소
+				$('#c_no').val(c_no); // 
+				$('#c_name').val(c_name); // 
+				$('#cnt').val(cnt); // 
+				$('#c_period').on('click', function() {
+					let c_period = $('#c_period').val();
+					$('#c-no-td').val(c_price*c_period+'원'); // c_no를 표시할 td 요소
+					$('#cnt-td').val(c_price*c_period*cnt+'원'); // cnt를 표시할 td 요소
+					$('#c-price-td').val(c_price*c_period*(1-cnt)+'원'); 
+				})
+			} else{
+				alert('최대 1개까지 구매 가능합니다');
+			}
+			
+		});
+		
+		
+		$('#payment').click(function () { //결제버튼
+			console.log('payment');
+			
+
+			var IMP = window.IMP;
+			IMP.init('imp07586387');
+			
+			var c_no = $('#c_no').val(); 
+		    var m_id = $('#m_id').val(); 
+		    var c_name = $('#c_name').val(); 
+		    var today = getsys();
+		    var price = $('#c-price-td').val(); 
+		    var trimmedPrice = price.slice(0, -1);
+		    var sub_able =  $('#cnt').val(); 
+		    var sub_month = $('#c_period').val()*3;
+		    
+		    console.log('콘텐츠번호 '+c_no);
+		    console.log('회원ID '+m_id);
+		    console.log('콘텐츠명 '+c_name);
+		    console.log('구독일 '+today);
+		    console.log('총가격 '+price);
+		    console.log('정원 '+sub_able);
+		    console.log('구독개월 '+sub_month);
+		    
+		    if(sub_month <= 0) {
+		    	alert('구독기간을 선택해주세요');
+		    } else {
+		                  
+		    IMP.request_pay({
+		        //카카오페이 결제시 사용할 정보 입력
+		       pg: 'kakaopay',
+		       pay_method: "card",
+		       name: c_name,
+		       amount: price,
+		   }, function (rsp) {
+		                 
+		   		console.log(rsp);
+				// 결제검증
+				$.ajax({
+		        	type : "POST",
+		        	url : "/payment/verifyIamport/" + rsp.imp_uid 
+		        }).done(function(data) {
+		    	        	
+		    		console.log(data);
+		    	        	
+			       	// 결제 유효성 검증
+			       	// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
+			       	if(rsp.paid_amount == data.response.amount){
+			       		var msg = "결제 및 결제검증완료";
+			        	msg += '\n고유ID : ' + rsp.imp_uid;
+		               	msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+		               	msg += '\n결제 금액 : ' + rsp.paid_amount+'원';
+		                     
+		                if(rsp.apply_num === null || rsp.apply_num === undefined || rsp.apply_num === '') {
+		                	rsp.apply_num = '카카오페이머니';
+		                }
+		                msg += '\n카드 승인번호 : ' + rsp.apply_num;                                    	
+		    		        	
+		                     $.ajax({
+		                         url: "/alpha/teacher/insertContent",
+		                         type: 'post',
+		                         data: {
+		                        	sub_no: rsp.imp_uid, //거래번호(구독ID)
+		                        	sub_c_no: c_no, //콘텐츠id
+		                           	t_m_id: m_id, //회원id
+		                           	sub_date: today, //구독날짜
+		                           	sub_price: trimmedPrice, //가격
+		                           	sub_able: sub_able, //정원
+		                           	sub_month: sub_month, //구독개월수
+
+		                           	
+		                         }    
+		                       });
+		                     
+		                     console.log('토큰생성');
+		                     $.ajax({
+		                     	type : "POST",
+		            	        url : "/payment/complete"
+		                     })
+		                     console.log('토큰생성완료');
+
+			                                    $('#resForm').submit(); 
+			                           			alert(msg);
+			                       				console.log(m_id);
+			                       			 	modal('my_modal');
+			                   	        	} else {
+			                   	        		var msg = '결제에 실패하였습니다.';
+			                                    msg += '에러내용 : ' + rsp.error_msg;
+			                           			alert(msg);
+			                   	        	}     		
+			                   	        });
+
+		    })
+		  }
+		    
+		});  
+		    // 각 체크박스에 이벤트 핸들러 추가
 			$('#deleteOption').on('click', function() {
 			let cr_m_no = $('#m_id').val();
 			console.log(cr_m_no);
@@ -547,3 +695,17 @@ function resultCartList(map){
 	}
 		})
 		}
+function getsys() {
+
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth() + 1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2);
+
+	var dateString = year + '-' + month  + '-' + day;
+	
+	console.log(dateString);
+
+	return dateString;
+	
+}
