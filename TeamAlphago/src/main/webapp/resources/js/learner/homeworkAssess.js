@@ -208,7 +208,7 @@ $('#writebtn').on('click', function() {
 //특정 숙제 데이터를 저장하기 위한 배열
 var selectedHnos = [];
 
-function homeworkAssess() {
+function homeworkAssess(g_no) {
 	  // 선택된 평가 값을 가져옵니다.
 	  var hReview = $("#evaluationSelect").val(); // 숙제 평가 값
 	  console.log("hReview:", hReview);
@@ -224,9 +224,9 @@ function homeworkAssess() {
 		fetchPost('/alpha/homeworkAssess/Assess', obj, function(map) {
 		    if (map.result === 'success') {
 		        alert('저장되었습니다.');
-				
 		        // 현재 페이지의 URL을 가져와서 리로드
-		        var currentPageURL = "/alpha/homeworkAssess";
+		        var memberId = $('#memberId').val();
+		        var currentPageURL = '/alpha/homeworkAssess?t_m_id=' + memberId;
 		        window.location.href = currentPageURL;
 		        
 		    } else {

@@ -20,7 +20,7 @@
 		<div class="wrap">
 			<div class="content_wrap">
 				<div class="titleBox">
-					<h2 class="t_title">숙제 내역</h2>
+					<h2 class="t_title">숙제 제출</h2>
 					<input name="t_m_id" id="memberId" type="hidden"
 						value="${memberVO.m_id}"> <input name="m_division"
 						id="division" type="hidden" value="${memberVO.m_division}">
@@ -35,7 +35,7 @@
 					</c:if>
 				<div class="entry" Style="">
 					<table class="table table-bordered">
-						<caption>숙제 내역</caption>
+						<caption>숙제 제출</caption>
 						<colgroup>
 							<col width="5%" />
 							<col width="25%" />
