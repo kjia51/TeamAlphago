@@ -152,6 +152,11 @@ public class TeacherServiceImpl implements TeacherService {
 	public List<LearnerVO> homeworkAlert(String l_m_id) {
 		return mapper.homeworkAlert(l_m_id);
 	}
+
+	@Override
+	public LearnerVO homework(String l_m_id) {
+		return mapper.homework(l_m_id);
+	}
 	
 
 }

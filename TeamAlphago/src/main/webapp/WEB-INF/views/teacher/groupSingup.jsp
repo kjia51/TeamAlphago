@@ -423,7 +423,6 @@ function delMemberAll() { //모두 내보내기
 			        });
 			    });	
     })
-    alert('수정되었습니다.')
     
 	}else {
 		alert('취소되었습니다.')

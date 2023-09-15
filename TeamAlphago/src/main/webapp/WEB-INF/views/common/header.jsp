@@ -176,50 +176,50 @@
     </div>
     <!-- // header -->
     
-    <input name="m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
+<input name="m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
     
 <!-- 모달창 -->
 <div id="my_modal_main">
 
 	<button class="modal_close_btn1"></button>
 
-	<div id="alertList"><%@include file="../teacher/homeworkAlert.jsp"%></div>
+	<div id="alertList"></div>
 	
 </div>
 <%-- --------------------------------------------------------------  --%>
     
 <script>
 window.onload = function()  {
-	
-    var l_m_id = $('#m_id').val();
-    console.log(l_m_id);
-    
-    $.ajax({
-        url: '/alpha/homeworkable/' + l_m_id,
-        method: 'GET',
-        dataType: 'json', // 데이터 타입을 JSON으로 설정
-        success: function(data) {
-            // JSON 데이터에서 객체 추출
-            var homeworkData = data; 
+
+var l_m_id = $('#m_id').val();
+console.log(l_m_id);
+
+$.ajax({
+    url: '/alpha/homeworkable/' + l_m_id,
+    method: 'GET',
+    dataType: 'json', // 데이터 타입을 JSON으로 설정
+    success: function(data) {
+        // JSON 데이터에서 객체 추출
+        var homeworkData = data; 
+        console.log(homeworkData);
+        
+        // homeworkData 배열의 각 객체에 접근하기 위한 반복문
+        for (var i = 0; i < homeworkData.length; i++) {
+            var item = homeworkData[i];
             
-            // homeworkData 배열의 각 객체에 접근하기 위한 반복문
-            for (var i = 0; i < homeworkData.length; i++) {
-                var item = homeworkData[i];
-                
-                // 여기에서 item 객체의 필드에 접근할 수 있습니다.
-                console.log("h_content: " + item.h_content);
-                if(item.h_content == null) {  
-                	  var iconElement = document.querySelector(".fa-bell");
-                      iconElement.className = "fa-solid fa-bell";
-                	return false;
-                }
-                // 이렇게 필요한 필드에 접근하면 됩니다.
+            console.log(item)
+            
+            if(item == null) {
+          	  var iconElement = document.querySelector(".fa-bell");
+              iconElement.className = "fa-solid fa-bell";
+        		return false;
             }
-        },
-        error: function() {
-            console.error('데이터를 가져오지 못했습니다.');
         }
-    });	
+    },
+    error: function() {
+        console.error('데이터를 가져오지 못했습니다.');
+    }
+});	
 }
 
 function modal_main(id) { //모달창 띄우기
@@ -278,7 +278,6 @@ function alertMoldal() {
         url: '/alpha/homeworkAlert/' + l_m_id,
         method: 'GET',
         success: function(data) {
-            // 가져온 데이터를 모달 내부에 표시
             $('#alertList').html(data);
         },
         error: function() {

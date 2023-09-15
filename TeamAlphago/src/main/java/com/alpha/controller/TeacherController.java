@@ -1,5 +1,6 @@
 package com.alpha.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -445,9 +446,23 @@ public class TeacherController extends CommonRestController {
 		}
 	   
 	   @GetMapping("/homeworkable/{l_m_id}")
-	    public ResponseEntity<List<LearnerVO>> homeworkable(@PathVariable("l_m_id") String l_m_id) {
-	        List<LearnerVO> homeworkAlertList = service.homeworkAlert(l_m_id);
-	        return ResponseEntity.ok(homeworkAlertList);
+	    public ResponseEntity<List<String>> homeworkable(@PathVariable("l_m_id") String l_m_id) {
+		   List<LearnerVO> homeworkAlertList = service.homeworkAlert(l_m_id);
+		    List<String> hHomeworkList = new ArrayList<>();
+
+		    for (LearnerVO learnerVO : homeworkAlertList) {
+		        String hHomework = learnerVO.getH_content();
+		        hHomeworkList.add(hHomework);
+		    }
+
+		    if (!hHomeworkList.isEmpty()) {
+		        System.out.println("a=========================");
+		        System.out.println("h_homework 값 리스트: " + hHomeworkList);
+		        return ResponseEntity.ok(hHomeworkList);
+		    } else {
+		    	
+		        return ResponseEntity.notFound().build();
+		    }
 	    }
 
 
