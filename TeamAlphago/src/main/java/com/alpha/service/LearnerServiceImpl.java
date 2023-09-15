@@ -87,8 +87,8 @@ public class LearnerServiceImpl implements LearnerService {
 
 	// 마이페이지 학습 내역
 	@Override
-	public List<LearnerVO> myClassList(LearnerVO learnerVO) {
-		return learnerMapper.myClassList(learnerVO);
+	public List<LearnerVO> myClassList(String l_m_id) {
+		return learnerMapper.myClassList(l_m_id);
 	}
 
 	

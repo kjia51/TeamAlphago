@@ -450,18 +450,17 @@ function resultList(map){
 			+'						</table>'
 			+'					</div>'
 			+'					<h2 style="text-align:left">취소/환불 안내</h2>'
-			+'					<h4 style="text-align:left">유의사항 및 환급조건을 확인하였으며, 이에 동의합니다 <input type="checkbox"></h4>	'
-			+'					<div class="entry" id="grouppay" style="border:1px solid black">'
-			+'					3년 100% 환급 평생수강반 이용안내<br>'
-
-			+'			* [30일 수강료 환불보장제]는 이벤트 기간 내 구매(결제완료)한 상품에 한하여, 아래의 환불정책이 적용됩니다.<br>'
-
-			+'			* [30일 수강료 환불보장제] 적용 상품: 평생보장반 프리미엄, 3년 100% 환급반<br>'
-			+'			* 해커스 공인중개사 사이트에서 결제한 상품에 한하여 해당 이벤트 적용 가능하며, 설명회/네이버쇼핑라이브/시크릿핵딜 등을 통해<br>'
-			+'			결제한 상품은 적용되지 않습니다.<br>'
-			+'			* 8/23(수) 09:00~9/27(수) 23:59:59 이벤트 기간 동안 [30일 환불보장제도]에 해당하는 상품 구매자에 한하여, 구매 시점으로부터 구매일 포함 30일 이내에<br>'
-			+'			환불 가능합니다.<br>'
-			+'			* 교재 포함된 상품의 경우, 사용한 교재에 대해서는 교재비 차감 후 환불 됩니다.	<br>'
+			+'					<h4 style="text-align:left">유의사항 및 환급조건을 확인하였으며, 이에 동의합니다 <input type="checkbox" style="margin-top: 6px;"></h4>	'
+			+'					<div class="entry" id="grouppay" style="border:1px solid black; text-align: left;">'
+			+'<ul style="margin-top: 15px;">'
+			+'<li style="list-style: square; margin-left: 25px;">결제 후 미사용시 7일 이내 전액 환불이 가능하며, 7일이 경과한 경우 문의를 통해 수수료를 공제한 부분 환불이 가능합니다.</li>'
+			+'<li style="list-style: square; margin-left: 25px;">그룹 연결 이력이 없고 결제일로부터 7일이 지나지 않은 경우 별도의 문의 없이 전액 환불이 가능합니다.</li>'
+			+'<li style="list-style: square; margin-left: 25px;">교재포함 상품의 경우, 교재의 반품 규정에 따라 교재비가 차감된 금액이 환불됩니다.</li>'
+			+'<li style="list-style: square; margin-left: 25px;">할인 적용 상품의 경우 할인 받은 금액을 제외하고 환불됩니다.</li>'
+			+'<li style="list-style: square; margin-left: 25px;">환불 요청 시 결제한 결제수단으로 환불됩니다.</li>'					
+			+'</ul>'
+			
+			
 			+'					</div><br>'
 
 			

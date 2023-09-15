@@ -56,7 +56,7 @@
 					<button class="topMenu" id="getGroup" >정보 수정</button>
                     <c:choose>    
                     <c:when test="${sessionScope.memberVO.m_division==2}">
-					<button class="topMenu" id="myClassList" >나의 수강내역</button>
+					<button class="topMenu" id="myClassList" >나의 학습내역</button>
 					</c:when>
                     <c:when test="${sessionScope.memberVO.m_division==1}">
 					<button class="topMenu" id="myCartList">장바구니</button>
@@ -67,7 +67,7 @@
 				</tr>
 			</table>
 			<div id="submain"></div>
-			<div id="classList"></div>
+			<div id="classListDiv"></div>
 		    </div>
 		  </div>
 		</div>

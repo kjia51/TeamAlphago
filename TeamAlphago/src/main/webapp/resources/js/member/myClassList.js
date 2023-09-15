@@ -98,10 +98,11 @@ function result(map){
 }
 
 $('#myClassList').click(function () {
-    const userConfirmation = confirm('학습 내역?');
+    const userConfirmation = confirm('학습 내역을 조회하시겠습니까?');
     if (userConfirmation) {
         // 사용자가 "확인"을 선택한 경우
     	submain.innerHTML = '';
+    	classListDiv.innerHTML = '';
     	fetchGet('/alpha/myClassList', resMyClassList)
     } else {
         // 사용자가 "취소"를 선택한 경우
@@ -111,63 +112,65 @@ $('#myClassList').click(function () {
 })
 
 function resMyClassList(map){
-	let myList =map.classList
+	console.log("map", map);
+	let myList = map.classList;
 	
-	classList.innerHTML += '';
+	console.log("myList", myList);
+	
+	classListDiv.innerHTML = '';
 	let pageBlock = ''; // 기존 내용 초기화
-    pageBlock += ''                                                                        
-				+'	<div class="entry">                                                     '
-				+'	<table class="table table-bordered">                                    '
-				+'		<caption>학습자 정보</caption>                                         '
-				+'		<colgroup>                                                          '
-				+'			<col width="10%" />                                             '
-				+'			<col width="20%" />                                             '
-				+'			<col width="40%" />                                             '
-				+'			<col width="15%" />                                             '
-				+'			<col width="15%" />                                             '
-				+'		</colgroup>                                                         '
-				+'		<thead>                                                             '
-				+'			<tr>                                                            '
-				+'				<th align="center"><input type="checkbox" id="checkboxAll"  '
-				+'				name="myCheckbox" onclick="selectAll(this)" value="checked"></th> '
-				+'				<th>학습자 이름</th>                                           '
-				+'				<th>학습콘텐츠</th>                                             '
-				+'				<th>학습시작일</th>                                            '
-				+'				<th>학습종료일</th>                                            '
-				+'			</tr>                                                           '
-				+'		</thead>                                                            '
-				+'		<tbody>';
-if(LearnerList != null && LearnerList.length > 0){
-LearnerList.forEach((Learner)=>{
-	console.log('Learner', Learner.m_name);
-	pageBlock += ''					
-				+'				<tr>                                                        '
-				+'					<th align="center"><input type="checkbox" id="checkbox" '
-				+'						name="myCheckbox" value="'+Learner.l_no+'"></th>    '
-				+'					<td align="center" class="row">'+Learner.m_name+'</td>  '
-				+'					<td align="center">'+Learner.c_name+'</td>              '
-				+'					<td align="center">'+Learner.g_start+'</td>             '
-				+'					<td align="center">'+Learner.g_end+'</td>'
-				+'<td style="display: none">'
-				+'<input type="hidden" name="h_c_no" id="contentNo" value="'+ Learner.h_c_no +'">'
-				+'</td>'
-				+'<td style="display: none">'
-				+'<input type="hidden" name="l_m_id" id="learnerId" data-lno="'+Learner.l_no+'" value="'+ Learner.l_m_id +'">'
-				+'</td>'
-				+'<td style="display: none">'
-				+'<input type="hidden" name="h_g_no" id="groupNo" value="'+ Learner.h_g_no +'">'
-				+'</td>'
-				+'</tr>';
-});
-	pageBlock += ''			
-				+'		</tbody>'
-				+'	</table>'
-				+'</div>';
-} else {
-	pageBlock +='<tr>'
-				+'<td colspan="5" style="text-align: center;">학습자가 존재하지 않습니다.</td>'
-				+'</tr>';
-}
-	learnerInfo.innerHTML += pageBlock;
+	    pageBlock += ''                                                                        
+					+'	<div class="entry">                                                     '
+					+'	<table class="table table-bordered">                                    '
+					+'		<caption>학습 내역 조회</caption>                                         '
+					+'		<colgroup>                                                          '
+					+'			<col width="5%" />                                             '
+					+'			<col width="25%" />                                             '
+					+'			<col width="15%" />                                             '
+					+'			<col width="40%" />                                             '
+					+'			<col width="20%" />                                             '
+					+'		</colgroup>                                                         '
+					+'		<thead>                                                             '
+					+'			<tr>                                                            '
+					+'				<th>No</th>                                                 '
+					+'				<th>수강 중인 콘텐츠</th>                                           '
+					+'				<th>그룹</th>                                                 '
+					+'				<th>숙제 현황</th>                                               '
+					+'				<th>학습종료일</th>                                              '
+					+'			</tr>                                                           '
+					+'		</thead>                                                            '
+					+'		<tbody>';
+	if(myList != null && myList.length > 0){
+		myList.forEach((list, index)=>{
+		console.log('list', list.g_name);
+		pageBlock += ''					
+					+'				<tr>                                                        '
+					+'					<th align="center">'+ (index+1) +'</th>                 '
+					+'					<td align="center" class="row">'+list.c_name+'</td>     '
+					+'					<td align="center">'+list.g_name+'</td>                 '
+					+'					<td align="center">'
+					if (list.h_homework !== null) {
+			                // h_homework가 null이 아닌 경우, 페이지 이동 링크 추가
+		pageBlock += '<a href="/alpha/submitHomework?l_m_id=' + list.l_m_id + '">' + list.h_homework + '</a>';
+					} else {
+			                // h_homework가 null인 경우, "숙제가 없습니다" 출력
+		pageBlock += '숙제가 없습니다';
+					}		
+		pageBlock += '</td>'
+
+					+'					<td align="center">'+list.g_end+'</td>'
+					+'             </tr>';
+	});
+		pageBlock += ''			
+					+'		</tbody>'
+					+'	</table>'
+					+'</div>';
+	} else {
+		pageBlock +='<tr>'
+					+'<td colspan="5" style="text-align: center;">학습 내역이 존재하지 않습니다.</td>'
+					+'</tr>';
+	}
+		classListDiv.innerHTML += pageBlock;
 	
 }
+
