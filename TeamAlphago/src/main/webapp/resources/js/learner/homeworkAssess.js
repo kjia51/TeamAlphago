@@ -109,13 +109,13 @@ function selectGroup(g_no) {
 //선택 그룹에 따른 학습자 리스트 출력
 function displayHomeworkList(map) {
 	console.log("map", map)
-	let g_no = map.g_no;
 	let submittedList = map.submittedList;
 	console.log("submittedList", submittedList)
 	
 	learnerInfoDiv.innerHTML='';
 	let pageBlock = ''; // 기존 내용 초기화
 	         pageBlock += ''
+
 						+'	<div class="entry" id="learnerInfo">     '
 						+'		<table class="table table-bordered"> '
 						+'			<caption>그룹 정보</caption>        '
@@ -144,6 +144,7 @@ function displayHomeworkList(map) {
  		pageBlock += ''					
 						+'<tr>'
 						+'<th align="center">'+ (index+1) +''
+						+'<input type="hidden" name="h_no" id="h_no" value="'+ homework.h_no +'">'
 						+'</th>'
 						+'<td align="center" class="row">'+homework.m_name+''
 						+'<input type="hidden" name="m_name" id="m_name" value="'+ homework.m_name +'">'
@@ -158,9 +159,7 @@ function displayHomeworkList(map) {
 						+'<input type="hidden" name="h_content" id="h_content" value="'+ homework.h_content +'">'
 						+'</td>'
 						+'		<td align="center">'
-						+'		<button class="btn btn-default" id="writebtn">평가하기'
-						+'<input type="text" name="h_no" id="h_no" value="'+ homework.h_no +'">'
-						+'</button>'
+						+'		<button class="btn btn-default" id="writebtn">평가하기</button>'
 						+'		</td>'
 						+'</tr>';
 		})
@@ -178,15 +177,14 @@ function displayHomeworkList(map) {
 
 
 // 평가하기 버튼 클릭 시 이벤트
-	$(document).on('click', '#writebtn', function() {
-	$('#g_no').val(g_no);
+$('#writebtn').on('click', function() {
+	
+	
     // 초기화: 선택된 h_no 배열 비우기
     selectedHnos = [];
 	
     // 선택한 숙제 데이터를 배열에 추가
     var hno = $(this).closest('tr').find('input[name="h_no"]').val();
-    console.log("hno",hno);
-    
     selectedHnos.push(hno);
     
     // 숙제 내용과 학습내용을 모달에 표시
@@ -208,10 +206,10 @@ function displayHomeworkList(map) {
 } // displayHomeworkList 끝
 
 
-// 숙제 데이터를 저장하기 위한 배열
+//특정 숙제 데이터를 저장하기 위한 배열
 var selectedHnos = [];
 
-function homeworkAssess() {
+function homeworkAssess(g_no) {
 	  // 선택된 평가 값을 가져옵니다.
 	  var hReview = $("#evaluationSelect").val(); // 숙제 평가 값
 	  console.log("hReview:", hReview);
@@ -242,6 +240,19 @@ function homeworkAssess() {
     $('#assign_modal').hide();
     $('.modal_bg').remove();
 }
+
+//서치폼 요소 저장
+const searchForm = document.getElementById('searchForm');
+
+// 페이징
+function go(page){
+	//alert(page);
+	document.searchForm.pageNo.value=page;
+	document.searchForm.action = "/alpha/homeworkAssess";
+	document.searchForm.submit();
+}
+
+
 
 
  

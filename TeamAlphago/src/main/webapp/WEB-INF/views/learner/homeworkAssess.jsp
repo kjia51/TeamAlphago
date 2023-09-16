@@ -52,6 +52,7 @@ text-align: center;
 
 	<div id="container">
 		<div class="wrap">
+
 			<div class="content_wrap">
 				<div class="titleBox">
 					<h2 class="t_title">숙제 평가</h2>
@@ -62,7 +63,6 @@ text-align: center;
 				<!--그룹명-->
 				<form class="searchWrap searchWrap_wide" onSubmit="return false;">
 					<table class="table table-bordered">
-					<input type="text" id="g_no">
 						<caption>그룹명</caption>
 						<colgroup>
 							<col width="20%"/>
@@ -76,7 +76,7 @@ text-align: center;
 											onchange="selectGroup(this.value);" value="">
 											<option value="selectop">선택</option>
 											<c:forEach items="${grpNameList}" var="group">
-												<option value="${group.g_no}" >${group.g_name}</option>
+												<option value="${group.g_no}">${group.g_name}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -158,9 +158,9 @@ text-align: center;
 			학습평가 :
 				<select id="evaluationSelect" name="h_review" value="">
 					<option value="selectop">선택</option>
-					<option value="우수">우수</option>
-					<option value="보통">보통</option>
-					<option value="미흡">미흡</option>
+					<option value="Excellent">우수</option>
+					<option value="Good">보통</option>
+					<option value="Poor">미흡</option>
 				</select>
 			</div>
 		
@@ -197,7 +197,7 @@ text-align: center;
 	<%----모달창 끝---%>
 
 </body>
-
+<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
 <script src="/resources/js/learner/homeworkAssess.js"></script>
 <%@ include file="../common/footer.jsp"%>
 </html>
