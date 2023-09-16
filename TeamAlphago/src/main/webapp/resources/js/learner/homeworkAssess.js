@@ -86,8 +86,6 @@ function modal(id) {
         });
 }
 
-
-
 //그룹 선택시 이벤트 발생 
 function selectGroup(g_no) {
 	console.log("g_no", g_no);
@@ -117,7 +115,6 @@ function displayHomeworkList(map) {
 	learnerInfoDiv.innerHTML='';
 	let pageBlock = ''; // 기존 내용 초기화
 	         pageBlock += ''
-
 						+'	<div class="entry" id="learnerInfo">     '
 						+'		<table class="table table-bordered"> '
 						+'			<caption>그룹 정보</caption>        '

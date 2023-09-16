@@ -533,10 +533,7 @@ function getCart(index) {
 
 
 
-function resultCart(map) {
-    let cr_c_no = $('#c_no').val();
-    fetchGet('/alpha/cart/list/'+cr_c_no, result);
-}
+
 
 function modal(id) { //모달창 띄우기
     var zIndex = 9999;
