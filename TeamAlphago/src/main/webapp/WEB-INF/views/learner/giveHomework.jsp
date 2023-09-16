@@ -40,7 +40,9 @@
 								<td>
 									<div class="searchBox">
 										<select title="groupNameList" name="g_name" id="grpSelectBox"
-											onchange="selectGroup(this.value);" value="">
+											onchange="selectGroup(this.value);" value=""
+											<c:set var="isTeacher" value="${memberVO.m_division}" />
+											<c:if test="${isTeacher != 1 }">disabled="disabled"</c:if>>
 											<option value="selectop">선택</option>
 											<c:forEach items="${grpNameList}" var="group">
 												<option value="${group.g_no}">${group.g_name}</option>
