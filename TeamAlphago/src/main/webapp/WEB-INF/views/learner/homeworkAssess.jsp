@@ -73,7 +73,10 @@ text-align: center;
 								<td>
 									<div class="searchBox">
 										<select title="grpNameList" name="g_name" id="grpSelectBox"
-											onchange="selectGroup(this.value);" value="">
+											onchange="selectGroup(this.value);" value=""
+											onchange="selectGroup(this.value);" value=""
+ 											<c:set var="isTeacher" value="${memberVO.m_division}" />
+ 											<c:if test="${isTeacher != 1 }">disabled="disabled"</c:if>>
 											<option value="selectop">선택</option>
 											<c:forEach items="${grpNameList}" var="group">
 												<option value="${group.g_no}">${group.g_name}</option>
@@ -144,6 +147,10 @@ text-align: center;
 				</div>
 			</div>
 			<!-- //content close -->
+			<div class="paging" style="align-content: center;">
+			<a href='http://localhost:8090/alpha/homeworkAssess?t_m_id=${memberVO.m_id}' class="current" >1</a>
+			</div>
+			
 		</div>
 	</div>
 	<!-- container close -->
@@ -197,7 +204,6 @@ text-align: center;
 	<%----모달창 끝---%>
 
 </body>
-<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>
 <script src="/resources/js/learner/homeworkAssess.js"></script>
 <%@ include file="../common/footer.jsp"%>
 </html>
