@@ -221,6 +221,7 @@ public class LearnerController extends CommonRestController {
 			System.out.println("submittedList:"+ learnerService.submittedList(g_no, t_m_id, cri));
 			
 			map.put("submittedList", submittedList);
+			map.put("g_no", g_no);
 			System.out.println("submittedList :"+submittedList);
 
 		} catch (Exception e) {

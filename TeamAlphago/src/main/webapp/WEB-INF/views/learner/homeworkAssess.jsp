@@ -63,6 +63,7 @@ text-align: center;
 				<!--그룹명-->
 				<form class="searchWrap searchWrap_wide" onSubmit="return false;">
 					<table class="table table-bordered">
+					<input type="text" id="g_no">
 						<caption>그룹명</caption>
 						<colgroup>
 							<col width="20%"/>
@@ -76,7 +77,7 @@ text-align: center;
 											onchange="selectGroup(this.value);" value="">
 											<option value="selectop">선택</option>
 											<c:forEach items="${grpNameList}" var="group">
-												<option value="${group.g_no}">${group.g_name}</option>
+												<option value="${group.g_no}" ${group.g_no == g_no ? 'selected' : ''}>${group.g_name}</option>
 											</c:forEach>
 										</select>
 									</div>

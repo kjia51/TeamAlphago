@@ -89,6 +89,7 @@ function modal(id) {
 //그룹 선택시 이벤트 발생 
 function selectGroup(g_no) {
 	console.log("g_no", g_no);
+
 	
 	 var url = '';
 		    $.ajax({
@@ -109,6 +110,7 @@ function selectGroup(g_no) {
 //선택 그룹에 따른 학습자 리스트 출력
 function displayHomeworkList(map) {
 	console.log("map", map)
+	let g_no = map.g_no;
 	let submittedList = map.submittedList;
 	console.log("submittedList", submittedList)
 	
@@ -181,7 +183,7 @@ function displayHomeworkList(map) {
 // 평가하기 버튼 클릭 시 이벤트
 $('#writebtn').on('click', function() {
 	
-	
+	$('#g_no').val(g_no);
     // 초기화: 선택된 h_no 배열 비우기
     selectedHnos = [];
 	
@@ -229,7 +231,7 @@ function homeworkAssess(g_no) {
 		        alert('저장되었습니다.');
 		        // 현재 페이지의 URL을 가져와서 리로드
 		        var memberId = $('#memberId').val();
-		        var currentPageURL = '/alpha/homeworkAssess?t_m_id=' + memberId;
+		        var currentPageURL = '/alpha/homeworkAssess?t_m_id=' + memberId+'&';
 		        window.location.href = currentPageURL;
 		        
 		    } else {

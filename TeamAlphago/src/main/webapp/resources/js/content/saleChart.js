@@ -379,6 +379,7 @@ function saleDate(){
 			let cnt = contentList.c_able;
 			var row = document.createElement('tr');
 			row.innerHTML = `
+				<td>${chart.c_no}</td>
 				<td>${chart.level}</td>
 				<td>${chart.s_sales}원</td>
 				<td>${chart.s_count}건</td>

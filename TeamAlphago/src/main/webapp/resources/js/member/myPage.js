@@ -529,11 +529,11 @@ function resultCartList(map){
 				let cnt = cartList[checkboxIndex].cnt; // 선택된 체크박스의 cnt 값
 				let c_price = cartList[checkboxIndex].c_price; // 선택된 체크박스의 c_price 값
 				let c_name = cartList[checkboxIndex].c_name; // 선택된 체크박스의 c_price 값
-				
-				if(cnt-30>=0){
-					cnt = (cnt-30)/100;
+				let cnt_per = cartList[checkboxIndex].cnt-30;
+				if(cnt_per>=0){
+					cnt_per = (cnt_per)/100;
 				} else{
-					cnt = 0;
+					cnt_per = 0;
 				}
 				
 				console.log('checkbox clicked - Index:', checkboxIndex);
@@ -543,16 +543,16 @@ function resultCartList(map){
 				
 				// 여기에서 선택된 체크박스의 값에 대한 동작을 추가할 수 있습니다.
 				$('#c-no-td').val(c_price+'원'); // c_no를 표시할 td 요소
-				$('#cnt-td').val(c_price*cnt+'원'); // cnt를 표시할 td 요소
-				$('#c-price-td').val(c_price*(1-cnt)+'원'); // cnt를 표시할 td 요소
+				$('#cnt-td').val(c_price*cnt_per+'원'); // cnt를 표시할 td 요소
+				$('#c-price-td').val(c_price*(1-cnt_per)+'원'); // cnt를 표시할 td 요소
 				$('#c_no').val(c_no); // 
 				$('#c_name').val(c_name); // 
 				$('#cnt').val(cnt); // 
 				$('#c_period').on('click', function() {
 					let c_period = $('#c_period').val();
 					$('#c-no-td').val(c_price*c_period+'원'); // c_no를 표시할 td 요소
-					$('#cnt-td').val(c_price*c_period*cnt+'원'); // cnt를 표시할 td 요소
-					$('#c-price-td').val(c_price*c_period*(1-cnt)+'원'); 
+					$('#cnt-td').val(c_price*c_period*cnt_per+'원'); // cnt를 표시할 td 요소
+					$('#c-price-td').val(c_price*c_period*(1-cnt_per)+'원'); 
 				})
 			} else{
 				alert('최대 1개까지 구매 가능합니다');

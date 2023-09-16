@@ -40,9 +40,30 @@
                 .sale_pay dd ul {background:url('../img/payment/sum_bg_.gif') no-repeat;}
                 div.total_price {margin:10px 0 0 70px}
                 div.total_price dl.benefit{margin:17px 0 0}
+                
+#my_modal {
+    display: none;
+    width: 360px;
+    padding: 20px 35px;
+    background-color: #fefefe;
+    border: 1px solid #888;
+    border-radius: 3px;
+}
 </style>
 </head>
 <body>
+			<%-- 모달창 --%>
+			<div id="my_modal">
+				<hr>
+				<h2 style="text-align: center;">결제 완료</h2><br>
+			
+				<div style="width: 100%; text-align: center;">
+				    <button class="btn btn-default" style="margin: 10px;" onClick="location.href='/alpha/mysubList?t_m_id=${memberVO.m_id }'">구독내역으로 가기</button>
+				    <button class="btn btn-default" style="margin: 10px;" onClick="location.href='/alpha/mypage'">장바구니로 돌아가기</button>
+			    </div>
+			</div>
+			</div>
+			</div>
 	<%@ include file="../common/header.jsp" %>
 	<div class="main-box">
 		<div id="container">
