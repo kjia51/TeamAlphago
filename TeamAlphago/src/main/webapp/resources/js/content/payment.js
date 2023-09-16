@@ -70,13 +70,16 @@ function checkLogin() {
 
 function getContent(idx) {
 	
+	var index = idx;
+	console.log(index)
+	
 	var c_no = $('#c_no').val();
     var m_id = $('#m_id').val();
     var c_name = $('#c_name').val();
     var today = getsys();
     var price =  $('td:eq(5)').text();
     var sub_month = ($('#c_period').val()*3); //구독개월수
-    var sub_able = $('#cnt').val(); 
+    var sub_able = $('input[data-cnt="'+index+'"]').val();
     
     let list = {
     		c_no : c_no
