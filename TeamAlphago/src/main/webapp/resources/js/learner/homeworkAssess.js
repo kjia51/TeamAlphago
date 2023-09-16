@@ -109,6 +109,7 @@ function selectGroup(g_no) {
 //선택 그룹에 따른 학습자 리스트 출력
 function displayHomeworkList(map) {
 	console.log("map", map)
+	let g_no = map.g_no;
 	let submittedList = map.submittedList;
 	console.log("submittedList", submittedList)
 	
@@ -178,7 +179,7 @@ function displayHomeworkList(map) {
 
 // 평가하기 버튼 클릭 시 이벤트
 	$(document).on('click', '#writebtn', function() {
-	
+	$('#g_no').val(g_no);
     // 초기화: 선택된 h_no 배열 비우기
     selectedHnos = [];
 	

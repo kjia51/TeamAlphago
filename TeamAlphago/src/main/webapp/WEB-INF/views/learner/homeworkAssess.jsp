@@ -62,6 +62,7 @@ text-align: center;
 				<!--그룹명-->
 				<form class="searchWrap searchWrap_wide" onSubmit="return false;">
 					<table class="table table-bordered">
+					<input type="text" id="g_no">
 						<caption>그룹명</caption>
 						<colgroup>
 							<col width="20%"/>
