@@ -195,7 +195,7 @@ window.onload = function()  {
 var l_m_id = $('#m_id').val();
 console.log(l_m_id);
 
-$.ajax({
+/* $.ajax({
     url: '/alpha/homeworkable/' + l_m_id,
     method: 'GET',
     dataType: 'json', // 데이터 타입을 JSON으로 설정
@@ -230,16 +230,15 @@ $.ajax({
         		return false;
             }
         }
-<<<<<<< HEAD
     },
     error: function() {
         console.error('데이터를 가져오지 못했습니다.');
     }
-});	
-}
-=======
-    });	
-}  */
+});	*/
+//}
+    //}
+    //});	
+//})  
 
 
 function modal_main(id) { //모달창 띄우기
@@ -304,6 +303,7 @@ function alertMoldal() {
             console.error('데이터를 가져오지 못했습니다.');
         }
     });
+}
 }
 
 
