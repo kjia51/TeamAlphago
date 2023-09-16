@@ -86,6 +86,8 @@ function modal(id) {
         });
 }
 
+
+
 //그룹 선택시 이벤트 발생 
 function selectGroup(g_no) {
 	console.log("g_no", g_no);
