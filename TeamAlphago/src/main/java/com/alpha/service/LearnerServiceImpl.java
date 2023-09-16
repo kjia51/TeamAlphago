@@ -1,7 +1,6 @@
 package com.alpha.service;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.alpha.mapper.LearnerMapper;
@@ -77,8 +76,8 @@ public class LearnerServiceImpl implements LearnerService {
 	
 	// 학습지도자별 숙제 제출 리스트 조회
 	@Override
-	public List<LearnerVO> submittedList(String g_no, String t_m_id, Criteria cri) {
-		return learnerMapper.submittedList(g_no, t_m_id, cri);
+	public List<LearnerVO> submittedList(String g_no, String t_m_id) {
+		return learnerMapper.submittedList(g_no, t_m_id);
 	}
 	
 	// 숙제 평가 내역 저장

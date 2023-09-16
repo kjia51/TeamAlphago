@@ -189,7 +189,7 @@
 <%-- --------------------------------------------------------------  --%>
     
 <script>
-<<<<<<< HEAD
+
 window.onload = function()  {
 
 var l_m_id = $('#m_id').val();
@@ -207,7 +207,7 @@ $.ajax({
         // homeworkData 배열의 각 객체에 접근하기 위한 반복문
         for (var i = 0; i < homeworkData.length; i++) {
             var item = homeworkData[i];
-=======
+
 /*  window.onload = function()  {
 	
     var l_m_id = $('#m_id').val();
@@ -240,7 +240,7 @@ $.ajax({
 =======
     });	
 }  */
->>>>>>> refs/remotes/origin/main
+
 
 function modal_main(id) { //모달창 띄우기
     var zIndex = 9999;
