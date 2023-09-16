@@ -83,7 +83,11 @@
     <div class="wrap">
 
             <form  method="get" name="searchForm" class="content_wrap">
-          	  총 ${totalCnt } 건
+          	 
+          	<c:if test="${totalCnt gt 0}"> 
+  			총 ${totalCnt } 건
+			</c:if>	
+          	 
 			<input name="t_m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
 			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
             <div class="titleBox">
@@ -142,8 +146,8 @@
 	<table class="table table-bordered">
 		<caption>학습자 관리</caption>
 		<colgroup>
-			<col width="5%" />
-			<col width="20%" />
+			<col width="10%" />
+			<col width="15%" />
 			<col width="10%" />
 			<col width="50%" />
 			<col width="15%" />
