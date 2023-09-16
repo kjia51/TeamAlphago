@@ -28,7 +28,7 @@
                                 <input type="text" class="input-default" title="아이디를 입력해주세요." placeholder="아이디를 입력해주세요." name="signin_id" id="signin_id"/>
                             </div>
                             <div class="inp_wrap">
-                                <input type="password" class="input-default" title="비밀번호를 입력해주세요." placeholder="비밀번호를 입력해주세요." name="signin_pwd" id="signin_pwd"/>
+                                <input type="password" class="input-default" title="비밀번호를 입력해주세요." placeholder="비밀번호를 입력해주세요." name="signin_pwd" id="signin_pwd" value="a123456"/>
                             </div>
                         </div>
                         <ul class="list_info">
