@@ -98,16 +98,16 @@ function result(map){
 }
 
 $('#myClassList').click(function () {
-    const userConfirmation = confirm('학습 내역을 조회하시겠습니까?');
-    if (userConfirmation) {
+ 
+
         // 사용자가 "확인"을 선택한 경우
     	submain.innerHTML = '';
     	classListDiv.innerHTML = '';
     	fetchGet('/alpha/myClassList', resMyClassList)
-    } else {
+
         // 사용자가 "취소"를 선택한 경우
         // 아무 작업도 수행하지 않음
-    }
+    
 
 })
 
@@ -117,9 +117,12 @@ function resMyClassList(map){
 	
 	console.log("myList", myList);
 	
-	classListDiv.innerHTML = '';
+
 	let pageBlock = ''; // 기존 내용 초기화
-	    pageBlock += ''                                                                        
+	    pageBlock += ''
+					+'<div class="titlebox">'
+					+'    <h2 class="t_titlet">학습 내역</h2>'
+					+'</div>'
 					+'	<div class="entry">                                                     '
 					+'	<table class="table table-bordered">                                    '
 					+'		<caption>학습 내역 조회</caption>                                         '

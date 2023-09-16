@@ -143,7 +143,6 @@ function displayHomeworkList(map) {
  		pageBlock += ''					
 						+'<tr>'
 						+'<th align="center">'+ (index+1) +''
-						+'<input type="hidden" name="h_no" id="h_no" value="'+ homework.h_no +'">'
 						+'</th>'
 						+'<td align="center" class="row">'+homework.m_name+''
 						+'<input type="hidden" name="m_name" id="m_name" value="'+ homework.m_name +'">'
@@ -158,7 +157,9 @@ function displayHomeworkList(map) {
 						+'<input type="hidden" name="h_content" id="h_content" value="'+ homework.h_content +'">'
 						+'</td>'
 						+'		<td align="center">'
-						+'		<button class="btn btn-default" id="writebtn">평가하기</button>'
+						+'		<button class="btn btn-default" id="writebtn">평가하기'
+						+'<input type="text" name="h_no" id="h_no" value="'+ homework.h_no +'">'
+						+'</button>'
 						+'		</td>'
 						+'</tr>';
 		})
@@ -176,13 +177,15 @@ function displayHomeworkList(map) {
 
 
 // 평가하기 버튼 클릭 시 이벤트
-$('#writebtn').on('click', function() {
+	$(document).on('click', '#writebtn', function() {
 	
     // 초기화: 선택된 h_no 배열 비우기
     selectedHnos = [];
 	
     // 선택한 숙제 데이터를 배열에 추가
     var hno = $(this).closest('tr').find('input[name="h_no"]').val();
+    console.log("hno",hno);
+    
     selectedHnos.push(hno);
     
     // 숙제 내용과 학습내용을 모달에 표시
@@ -204,7 +207,7 @@ $('#writebtn').on('click', function() {
 } // displayHomeworkList 끝
 
 
-//특정 숙제 데이터를 저장하기 위한 배열
+// 숙제 데이터를 저장하기 위한 배열
 var selectedHnos = [];
 
 function homeworkAssess() {
