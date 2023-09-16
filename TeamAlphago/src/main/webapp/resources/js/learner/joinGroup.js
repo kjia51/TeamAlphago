@@ -179,7 +179,7 @@ function applyButton() {
 	            	// fetch 요청이 성공한 경우의 처리
 	            	console.log("data", data);
 	            	alert('신청되었습니다.');
-	            	var currentPageURL = "/alpha/main";
+	            	var currentPageURL = '/alpha/joinGroup';
 	            	window.location.href = currentPageURL;
 		                })
 		                .catch(error => {
