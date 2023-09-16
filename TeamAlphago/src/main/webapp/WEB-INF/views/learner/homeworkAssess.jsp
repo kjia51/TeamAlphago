@@ -75,7 +75,7 @@ text-align: center;
 											onchange="selectGroup(this.value);" value="">
 											<option value="selectop">선택</option>
 											<c:forEach items="${grpNameList}" var="group">
-												<option value="${group.g_no}">${group.g_name}</option>
+												<option value="${group.g_no}" >${group.g_name}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -157,9 +157,9 @@ text-align: center;
 			학습평가 :
 				<select id="evaluationSelect" name="h_review" value="">
 					<option value="selectop">선택</option>
-					<option value="Excellent">우수</option>
-					<option value="Good">보통</option>
-					<option value="Poor">미흡</option>
+					<option value="우수">우수</option>
+					<option value="보통">보통</option>
+					<option value="미흡">미흡</option>
 				</select>
 			</div>
 		

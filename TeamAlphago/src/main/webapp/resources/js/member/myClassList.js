@@ -120,8 +120,8 @@ function resMyClassList(map){
 
 	let pageBlock = ''; // 기존 내용 초기화
 	    pageBlock += ''
-					+'<div class="titlebox">'
-					+'    <h2 class="t_titlet">학습 내역</h2>'
+					+'<div class="titleBox">'
+					+'    <h1 class="t_titlet">학습 내역</h1>'
 					+'</div>'
 					+'	<div class="entry">                                                     '
 					+'	<table class="table table-bordered">                                    '
@@ -129,9 +129,10 @@ function resMyClassList(map){
 					+'		<colgroup>                                                          '
 					+'			<col width="5%" />                                             '
 					+'			<col width="25%" />                                             '
+					+'			<col width="10%" />                                             '
+					+'			<col width="30%" />                                             '
 					+'			<col width="15%" />                                             '
-					+'			<col width="40%" />                                             '
-					+'			<col width="20%" />                                             '
+					+'			<col width="15%" />                                             '
 					+'		</colgroup>                                                         '
 					+'		<thead>                                                             '
 					+'			<tr>                                                            '
@@ -140,6 +141,7 @@ function resMyClassList(map){
 					+'				<th>그룹</th>                                                 '
 					+'				<th>숙제 현황</th>                                               '
 					+'				<th>학습종료일</th>                                              '
+					+'				<th>평가</th>                                              '
 					+'			</tr>                                                           '
 					+'		</thead>                                                            '
 					+'		<tbody>';
@@ -162,6 +164,8 @@ function resMyClassList(map){
 		pageBlock += '</td>'
 
 					+'					<td align="center">'+list.g_end+'</td>'
+					+'    <td align="center">'+ (list.h_review !== null ? list.h_review : '') +'</td>'
+
 					+'             </tr>';
 	});
 		pageBlock += ''			
@@ -170,7 +174,7 @@ function resMyClassList(map){
 					+'</div>';
 	} else {
 		pageBlock +='<tr>'
-					+'<td colspan="5" style="text-align: center;">학습 내역이 존재하지 않습니다.</td>'
+					+'<td colspan="6" style="text-align: center;">학습 내역이 존재하지 않습니다.</td>'
 					+'</tr>';
 	}
 		classListDiv.innerHTML += pageBlock;
