@@ -19,6 +19,8 @@ public interface QnAMapper {
 	
 	public int deleteQ(String q_no);
 	
+	public int updateAnswerYN(String q_no);
+	
 	
 	public List<QnAVO> getAList(String a_q_no);
 	

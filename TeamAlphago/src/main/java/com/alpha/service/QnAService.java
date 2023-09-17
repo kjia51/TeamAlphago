@@ -24,6 +24,8 @@ public interface QnAService {
 	
 	public int deleteQ(String q_no);
 	
+	public int updateAnswerYN(String q_no);
+	
 	
 	public Map<String, Object> getAList(String a_q_no);
 	

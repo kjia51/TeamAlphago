@@ -107,6 +107,7 @@ public class QnAController extends CommonRestController {
 	
 	@PostMapping("/answer_write")
 	public Map<String, Object> insertAAction(QnAVO qnAVO) {
+		qnAService.updateAnswerYN(qnAVO.getQ_no());
 		
 		int res = qnAService.insertA(qnAVO);
 		

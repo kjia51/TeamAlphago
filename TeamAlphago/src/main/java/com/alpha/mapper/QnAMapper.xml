@@ -35,7 +35,10 @@
 		DELETE FROM question WHERE Q_NO = #{q_no}
 	</delete>
 	
-	
+	<update id="updateAnswerYN">
+		UPDATE question SET Q_ANSWERYN = 'Y'
+		WHERE Q_NO = #{q_no}
+	</update>
 	
 	<select id="getAList" resultType="com.alpha.vo.QnAVO">
 		SELECT A_NO, A_M_ID, A_Q_NO, A_CONTENT, DATE_FORMAT(A_REGDATE, '%Y-%m-%d') AS A_REGDATE 

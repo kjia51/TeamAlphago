@@ -83,4 +83,9 @@ public class QnAServiceImpl implements QnAService {
 		return qnAMapper.deleteA(a_no);
 	}
 
+	@Override
+	public int updateAnswerYN(String q_no) {
+		return qnAMapper.updateAnswerYN(q_no);
+	}
+
 }
