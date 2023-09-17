@@ -88,7 +88,7 @@
 			</colgroup>
 		<thead>
 		<tr>
-			<th></th>
+			<th><input type="checkbox" style="margin-top: 5px;" onclick="selectAll(this)"/></th>
 			<th>No</th>
 			<th>강의명</th>
 			<th>정원</th>

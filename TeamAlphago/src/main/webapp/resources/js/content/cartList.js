@@ -99,6 +99,7 @@ window.addEventListener('load', function(){
 	fetchGet('/alpha/mycart/list/'+cr_m_no, resultList);
 	
 })
+
 function resultList(map){
 		let cartList = map.cartList;
 		console.log("cartList",cartList);

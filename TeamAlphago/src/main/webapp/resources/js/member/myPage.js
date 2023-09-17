@@ -382,14 +382,15 @@ $('#myCartList').click(function () {
 
 //컨텐츠 등록, 수정, 삭제의 결과를 처리하는 함수
 function resultCart(map){
+	console.log("resultCart");
 	let cr_m_no = $('#m_id').val();
+	console.log(cr_m_no);
+	submain.innerHTML = '';
+	classListDiv.innerHTML = '';
 	if(map.msg != ""){
-		submain.innerHTML = '';
-		classListDiv.innerHTML = '';
-		alert(map.msg);
-		fetchGet('/alpha/mycart/list/'+cr_m_no, resultCartList);
-	} else {
+			alert(map.msg);
 	}
+			fetchGet('/alpha/mycart/list/'+cr_m_no, resultCartList);
 		
 }
 
@@ -427,7 +428,8 @@ function resultCartList(map){
 			+'								</tr>'
 			+'							</thead>'
 			+'							<tbody id="tbdy">'
-			+'</tbody>'
+			
+			+							'</tbody>'
 			+'							<thead id="tbdy1">'
 			+'								<tr>'
 			+'									<th colspan="6"></th>'
@@ -496,6 +498,11 @@ function resultCartList(map){
 			+'				</div>'
 			
 			;
+		if (cartList.length === 0) {
+			  var emptyRow = document.createElement('tr');
+			  emptyRow.innerHTML = '<td colspan="7">장바구니에 담긴 상품이 없습니다.</td>';
+			  tbdy.appendChild(emptyRow);
+			} else {
 		cartList.forEach((cart,index) => {
 			let c_no = cart.c_no;
 	    	let c_name = cart.c_name;
@@ -506,7 +513,7 @@ function resultCartList(map){
 	    	let c_sellprice = cart.c_sellprice;
 	        var row = document.createElement('tr');
 	        row.innerHTML = `
-	        	<td><input type="checkbox" name="myCheckbox" value="${index}"></td>
+	        	<td><input type="checkbox" name="myCheckbox" value="${index}" style="margin-top: 5px;" ></td>
 	        	<td>${index+1}</td>
 	        	<td>${c_name}</td>
 	        	<td>${c_level}</td>
@@ -519,6 +526,7 @@ function resultCartList(map){
 	        tbdy.appendChild(row);
 	        // 각 체크박스에 이벤트 핸들러 추가
 		})
+			}
 		
 		$('#paymentOption').on('click', function() {
 			if($('input[type="checkbox"]:checked').length==1){
@@ -561,100 +569,112 @@ function resultCartList(map){
 		});
 		
 		
-		$('#payment').click(function () { //결제버튼
-			console.log('payment');
-			
-
-			var IMP = window.IMP;
-			IMP.init('imp07586387');
-			
-			var c_no = $('#c_no').val(); 
-		    var m_id = $('#m_id').val(); 
-		    var c_name = $('#c_name').val(); 
-		    var today = getsys();
-		    var price = $('#c-price-td').val(); 
-		    var trimmedPrice = price.slice(0, -1);
-		    var sub_able =  $('#cnt').val(); 
-		    var sub_month = $('#c_period').val()*3;
+		$('#payment').click(function () { //결제버튼 $('#c-no-td').val()=='0원'
+			  if ($('#c-no-td').val()=='0원') { // 체크된 체크박스가 없는 경우
+				  alert('결제할 상품을 선택해주세요');
+				    return false; // 결제를 중지합니다.
+				  } else if($('input[id="agree"]:checked').length === 0){
+					  alert('주문 내용 확인 및 결제에 동의해주세요');
+					  return false; // 결제를 중지합니다.
+				  } else{
+							console.log('payment');
+							
+				
+							var IMP = window.IMP;
+							IMP.init('imp07586387');
+							
+							var c_no = $('#c_no').val(); 
+							var cr_c_no = $('#c_no').val(); 
+						    var m_id = $('#m_id').val(); 
+						    var cr_m_no = $('#m_id').val(); 
+						    var c_name = $('#c_name').val(); 
+						    var today = getsys();
+						    var price = $('#c-price-td').val(); 
+						    var trimmedPrice = price.slice(0, -1);
+						    var sub_able =  $('#cnt').val(); 
+						    var cnt =  $('#cnt').val(); 
+						    var sub_month = $('#c_period').val()*3;
+						    
+						    console.log('콘텐츠번호 '+c_no);
+						    console.log('회원ID '+m_id);
+						    console.log('콘텐츠명 '+c_name);
+						    console.log('구독일 '+today);
+						    console.log('총가격 '+price);
+						    console.log('정원 '+sub_able);
+						    console.log('구독개월 '+sub_month);
+						    
+						    if(sub_month <= 0) {
+						    	alert('구독기간을 선택해주세요');
+						    } else {
+						                  
+						    IMP.request_pay({
+						        //카카오페이 결제시 사용할 정보 입력
+						       pg: 'kakaopay',
+						       pay_method: "card",
+						       name: c_name,
+						       amount: price,
+						   }, function (rsp) {
+						                 
+						   		console.log(rsp);
+								// 결제검증
+								$.ajax({
+						        	type : "POST",
+						        	url : "/payment/verifyIamport/" + rsp.imp_uid 
+						        }).done(function(data) {
+						    	        	
+						    		console.log(data);
+						    	        	
+							       	// 결제 유효성 검증
+							       	// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
+							       	if(rsp.paid_amount == data.response.amount){
+							       		var msg = "결제 및 결제검증완료";
+							        	msg += '\n고유ID : ' + rsp.imp_uid;
+						               	msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+						               	msg += '\n결제 금액 : ' + rsp.paid_amount+'원';
+						                     
+						                if(rsp.apply_num === null || rsp.apply_num === undefined || rsp.apply_num === '') {
+						                	rsp.apply_num = '카카오페이머니';
+						                }
+						                msg += '\n카드 승인번호 : ' + rsp.apply_num;                                    	
+						    		        	
+						                     $.ajax({
+						                         url: "/alpha/teacher/insertContent",
+						                         type: 'post',
+						                         data: {
+						                        	sub_no: rsp.imp_uid, //거래번호(구독ID)
+						                        	sub_c_no: c_no, //콘텐츠id
+						                           	t_m_id: m_id, //회원id
+						                           	sub_date: today, //구독날짜
+						                           	sub_price: trimmedPrice, //가격
+						                           	sub_able: sub_able, //정원
+						                           	sub_month: sub_month, //구독개월수
+				
+						                           	
+						                         }    
+						                       });
+						                     
+						                     console.log('토큰생성');
+						                     $.ajax({
+						                     	type : "POST",
+						            	        url : "/payment/complete"
+						                     })
+						                     console.log('토큰생성완료');
+				
+							                                    $('#resForm').submit(); 
+							                           			alert(msg);
+							                       				console.log(m_id);
+							                       				fetchDelete('/alpha/content/DeleteCart/' + cr_c_no + '/' + cr_m_no + '/' + cnt + '/' + false, resultCart);
+							                   	        	} else {
+							                   	        		var msg = '결제에 실패하였습니다.';
+							                                    msg += '에러내용 : ' + rsp.error_msg;
+							                           			alert(msg);
+							                   	        	}     		
+							                   	        });
+				
+						    })
+						  }
+		}
 		    
-		    console.log('콘텐츠번호 '+c_no);
-		    console.log('회원ID '+m_id);
-		    console.log('콘텐츠명 '+c_name);
-		    console.log('구독일 '+today);
-		    console.log('총가격 '+price);
-		    console.log('정원 '+sub_able);
-		    console.log('구독개월 '+sub_month);
-		    
-		    if(sub_month <= 0) {
-		    	alert('구독기간을 선택해주세요');
-		    } else {
-		                  
-		    IMP.request_pay({
-		        //카카오페이 결제시 사용할 정보 입력
-		       pg: 'kakaopay',
-		       pay_method: "card",
-		       name: c_name,
-		       amount: price,
-		   }, function (rsp) {
-		                 
-		   		console.log(rsp);
-				// 결제검증
-				$.ajax({
-		        	type : "POST",
-		        	url : "/payment/verifyIamport/" + rsp.imp_uid 
-		        }).done(function(data) {
-		    	        	
-		    		console.log(data);
-		    	        	
-			       	// 결제 유효성 검증
-			       	// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (import 서버검증)
-			       	if(rsp.paid_amount == data.response.amount){
-			       		var msg = "결제 및 결제검증완료";
-			        	msg += '\n고유ID : ' + rsp.imp_uid;
-		               	msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-		               	msg += '\n결제 금액 : ' + rsp.paid_amount+'원';
-		                     
-		                if(rsp.apply_num === null || rsp.apply_num === undefined || rsp.apply_num === '') {
-		                	rsp.apply_num = '카카오페이머니';
-		                }
-		                msg += '\n카드 승인번호 : ' + rsp.apply_num;                                    	
-		    		        	
-		                     $.ajax({
-		                         url: "/alpha/teacher/insertContent",
-		                         type: 'post',
-		                         data: {
-		                        	sub_no: rsp.imp_uid, //거래번호(구독ID)
-		                        	sub_c_no: c_no, //콘텐츠id
-		                           	t_m_id: m_id, //회원id
-		                           	sub_date: today, //구독날짜
-		                           	sub_price: trimmedPrice, //가격
-		                           	sub_able: sub_able, //정원
-		                           	sub_month: sub_month, //구독개월수
-
-		                           	
-		                         }    
-		                       });
-		                     
-		                     console.log('토큰생성');
-		                     $.ajax({
-		                     	type : "POST",
-		            	        url : "/payment/complete"
-		                     })
-		                     console.log('토큰생성완료');
-
-			                                    $('#resForm').submit(); 
-			                           			alert(msg);
-			                       				console.log(m_id);
-			                       			 	modal('my_modal');
-			                   	        	} else {
-			                   	        		var msg = '결제에 실패하였습니다.';
-			                                    msg += '에러내용 : ' + rsp.error_msg;
-			                           			alert(msg);
-			                   	        	}     		
-			                   	        });
-
-		    })
-		  }
 		    
 		});  
 		    // 각 체크박스에 이벤트 핸들러 추가

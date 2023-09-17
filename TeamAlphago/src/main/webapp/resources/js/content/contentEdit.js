@@ -606,7 +606,7 @@ $('#cartPopUp').on('click', function() {
 	    	let mid = list.m_id;
 	        var row = document.createElement('tr');
 	        row.innerHTML = `
-	            <td><input type="checkbox" name="selectedItem" data-index="${index}" style="margin-top: 5px;" /></td>
+	            <td><input type="checkbox" name="myCheckbox" data-index="${index}" style="margin-top: 5px;" /></td>
 	            <td>${index+1}</td>
 	            <td>${cname}..</td>
 	            <td>${cnt}</td>
@@ -738,4 +738,11 @@ $('#payPopUp').on('click', function() {
 		modal('no_content');
 	});
 	
-	
+	//체크 박스 전체 선택 이벤트
+	function selectAll(selectAll)  {
+		  const checkboxes = document.getElementsByName('myCheckbox');
+		  
+		  checkboxes.forEach((checkbox) => {
+		    checkbox.checked = selectAll.checked;
+		  });
+	}	
