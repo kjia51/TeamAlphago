@@ -179,7 +179,7 @@ $('#payment').click(function () { //결제버튼
                            	sub_date: today, //구독날짜
                            	sub_price: price, //가격
                            	sub_able: sub_able, //정원
-                           	sub_month: sub_month, //구독개월수
+                           	sub_month: sub_month, //구독개월수  
 
                            	
                          }    
