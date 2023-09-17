@@ -196,7 +196,7 @@ function resultList(map){
 			+'                <h2 class="t_title">학습콘텐츠 수정</h2>'
 			+'            </div>'
 			+'            <form class="content" id="content">'
-    		+'             <input type="text" class="input-default" id="c_no" style="width: 97%" maxlength="100" name="c_no" value="'+vo.c_no+'">'
+    		+'             <input type="hidden" class="input-default" id="c_no" style="width: 97%" maxlength="100" name="c_no" value="'+vo.c_no+'">'
 			+'                <div class="writeForm1">'
 			+'			       <div id="titleInfo">'
     		+'             <table class="table table-bordered table-form">'
@@ -205,6 +205,7 @@ function resultList(map){
     		+'                     <col width="25%">'
     		+'                     <col width="75%">'
     		+'                 </colgroup>'
+    		
     		+'                 <tbody>'
     		+'                     <tr>'
     		+'                         <th scope="row">패키지명</th>'

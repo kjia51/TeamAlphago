@@ -418,7 +418,7 @@ function resultCartList(map){
 			+'							</colgroup>'
 			+'							<thead>'
 			+'								<tr>'
-			+'									<th><input type="checkbox" onclick="chkboxAll()"></th>'
+			+'									<th><input type="checkbox" onclick="selectAll(this)"></th>'
 			+'									<th>No</th>'
 			+'									<th>콘텐츠명</th>'
 			+'									<th>수준</th>'
@@ -506,7 +506,7 @@ function resultCartList(map){
 	    	let c_sellprice = cart.c_sellprice;
 	        var row = document.createElement('tr');
 	        row.innerHTML = `
-	        	<td><input type="checkbox" name="chkbox" value="${index}"></td>
+	        	<td><input type="checkbox" name="myCheckbox" value="${index}"></td>
 	        	<td>${index+1}</td>
 	        	<td>${c_name}</td>
 	        	<td>${c_level}</td>
@@ -663,9 +663,9 @@ function resultCartList(map){
 			console.log(cr_m_no);
 			var selectedIndexes = [];
 			
-			$('input:checkbox[name=chkbox]').each(function() {
+			$('input:checkbox[name=myCheckbox]').each(function() {
 			        if (this.checked) {
-			            selectedIndexes.push($('input:checkbox[name=chkbox]').index(this));
+			            selectedIndexes.push($('input:checkbox[name=myCheckbox]').index(this));
 			        }
 			    })
 	        console.log(selectedIndexes);
@@ -708,4 +708,13 @@ function getsys() {
 
 	return dateString;
 	
+}
+
+//체크 박스 전체 선택 이벤트
+function selectAll(selectAll)  {
+	  const checkboxes = document.getElementsByName('myCheckbox');
+	  
+	  checkboxes.forEach((checkbox) => {
+	    checkbox.checked = selectAll.checked;
+	  });
 }
