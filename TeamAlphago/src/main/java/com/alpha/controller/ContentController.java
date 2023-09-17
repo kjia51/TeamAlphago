@@ -166,6 +166,21 @@ public class ContentController extends CommonRestController {
 			   }
 		   }
 		   
+		   //파일이미지 삭제 action
+		   @DeleteMapping("/img/DeleteAction/{c_no}")
+		   public Map<String, Object> deleteImg(@PathVariable("c_no") String c_no) {
+			   
+			   try {
+				   int res = service.delete(c_no);
+				   Map<String, Object> map = responseDeleteMap(res);
+				   return map;
+				   
+			   } catch (Exception e) {
+				   e.printStackTrace();
+				   return responseResultMap(REST_FAIL, "구매된 상품이 존재합니다.");
+			   }
+		   }
+		   
 		   //콘텐츠 삭제 action
 		   @DeleteMapping("/content/DeleteFile/{c_no}")
 		   public Map<String, Object> deleteFile(@PathVariable("c_no") String c_no) {

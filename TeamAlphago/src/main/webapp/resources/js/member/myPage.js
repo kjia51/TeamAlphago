@@ -437,6 +437,7 @@ function resultCartList(map){
 			+'							</thead>'
 			+'						</table>'
 			+'					</div>'
+			+'						<input type="button" class="btn btn-primary" id="deleteAll" value="전체삭제" style="margin-left:10px; color:#074691; background-color:white">'
 			+'						<input type="button" class="btn btn-primary" id="deleteOption" value="선택삭제" style="margin-left:10px; color:#074691; background-color:white">'
 			+'						<input type="button" class="btn btn-primary" id="paymentOption" value="선택결제" style="margin-left:10px; color:#074691; background-color:white">'
 			+'					<h2 style="text-align:left">할인/결제금액</h2>'
@@ -713,6 +714,41 @@ function resultCartList(map){
 	    // 사용자가 "취소"를 선택한 경우
 	    // 아무 작업도 수행하지 않음
 	}
+		})
+		// 각 체크박스에 이벤트 핸들러 추가
+		$('#deleteAll').on('click', function() {
+			let cr_m_no = $('#m_id').val();
+			console.log(cr_m_no);
+			var selectedIndexes = [];
+			
+			$('input:checkbox[name=myCheckbox]').each(function() {
+					selectedIndexes.push($('input:checkbox[name=myCheckbox]').index(this));
+			})
+			console.log(selectedIndexes);
+			
+			// 모든 상품에 대한 삭제 여부를 묻는 확인 대화상자를 한 번만 표시
+			const userConfirmation = confirm('전체 삭제하시겠습니까?');
+			
+			if (userConfirmation) {
+				// 사용자가 "확인"을 선택한 경우
+				let isLastIteration = false;
+				selectedIndexes.forEach(function(index, currentIndex) {
+					let cr_c_no = $('input[data-cno="'+index+'"]').val();
+					let cnt = $('input[data-cnt="'+index+'"]').val();
+					console.log(cr_c_no);
+					
+					if (currentIndex === selectedIndexes.length - 1) {
+						// 현재 반복이 마지막 반복인 경우
+						isLastIteration = true;
+					} 
+					console.log(isLastIteration)
+					fetchDelete('/alpha/content/DeleteCart/' + cr_c_no + '/' + cr_m_no + '/' + cnt + '/' + isLastIteration, resultCart);
+					
+				});
+			} else {
+				// 사용자가 "취소"를 선택한 경우
+				// 아무 작업도 수행하지 않음
+			}
 		})
 		}
 function getsys() {

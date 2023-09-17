@@ -74,37 +74,7 @@
 <body>
 <%@ include file="../common/header.jsp" %>
 
-<div id="cartList">
-	<hr>
-	<h2 style="height:50px;">장바구니<i class="fa-solid fa-cart-shopping"></i> </h2>
-		<table border="1" style="width:100%;" id="cartTable">
-			<colgroup>
-				<col style="width:5%">
-				<col style="width:10%">
-				<col style="width:40%">
-				<col style="width:10%">
-				<col style="width:20%">
-				<col style="width:20%">
-			</colgroup>
-		<thead>
-		<tr>
-			<th><input type="checkbox" style="margin-top: 5px;" onclick="selectAll(this)"/></th>
-			<th>No</th>
-			<th>강의명</th>
-			<th>정원</th>
-			<th>가격</th>
-			<th>소계</th>
-		</tr>
-		</thead>
-		<tbody id="tbdy">
-		</tbody>
-		</table>
-		<br>
-			<div>
-				<input type="submit" class="btnTopSrch btn btn-primary" value="장바구니" id="cartContent"> 
-		    	<button><a class="modal_close_btn">닫기</a></button>
-			</div>
-</div>
+
 <div id="payList">
 	<hr>
 	<h2 style="height:50px;">결제<i class="fa-solid fa-cart-shopping"></i> </h2>
@@ -323,7 +293,37 @@
 			</div>
 			</div>
 
-
+<div id="cartList">
+	<hr>
+	<h2 style="height:50px;">장바구니<i class="fa-solid fa-cart-shopping"></i> </h2>
+		<table border="1" style="width:100%;" id="cartTable">
+			<colgroup>
+				<col style="width:5%">
+				<col style="width:10%">
+				<col style="width:40%">
+				<col style="width:10%">
+				<col style="width:20%">
+				<col style="width:20%">
+			</colgroup>
+		<thead>
+		<tr>
+			<th><input type="checkbox" style="margin-top: 5px;" onclick="selectAll(this)"/></th>
+			<th>No</th>
+			<th>강의명</th>
+			<th>정원</th>
+			<th>가격</th>
+			<th>소계</th>
+		</tr>
+		</thead>
+		<tbody id="tbdy">
+		</tbody>
+		</table>
+		<br>
+			<div>
+				<input type="submit" class="btnTopSrch btn btn-primary" value="장바구니" id="cartContent"> 
+		    	<button><a class="modal_close_btn">닫기</a></button>
+			</div>
+</div>
 <%@ include file="../common/footer.jsp" %>
 
 

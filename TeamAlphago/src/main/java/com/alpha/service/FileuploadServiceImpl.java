@@ -183,4 +183,11 @@ public class FileuploadServiceImpl implements FileuploadService {
 	}
 
 
+	@Override
+	public int delete(String c_no) {
+		// TODO Auto-generated method stub
+		return mapper.delete(c_no);
+	}
+
+
 }

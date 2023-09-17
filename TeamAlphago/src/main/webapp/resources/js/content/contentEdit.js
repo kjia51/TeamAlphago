@@ -96,11 +96,9 @@ function fileresult(map){
 function result(map){
 	console.log(map);
 	let c_no = $('#c_no').val();
+	console.log(c_no);
 	if(map.result == 'success'){
-		const userConfirmation = confirm(map.msg);
-		if(userConfirmation){
 			window.location.href = "/alpha/teacher/detail?c_no="+c_no;			
-		}
 	} else {
 		alert(map.msg);
 	}
@@ -402,7 +400,9 @@ function resultList(map){
 			let c_content = $('#c_content').val();
 			let c_no = $('#c_no').val();
 			let files = $('#files')[0].files;
-			
+			var text = $('td').eq(6).text();
+			var matches = text.match(/([^\\]*\.png)/i);
+			console.log(matches);
 			if(c_name==null ||c_name==''){
 				alert('컨텐츠명을 입력하세요');
 				$('#c_name').focus();
@@ -423,12 +423,15 @@ function resultList(map){
 				$('#c_content').focus();
 				return;
 			}
+			if(matches==null ||matches==''){
+				console.log("matches");
+				if(files.length==0){
+					alert('첨부파일을 선택하세요');
+					return;
+				}
+			}
+
 			
-			if(files==null ||files==''){
-				alert('첨부파일을 입력하세요');
-				$('#files').focus();
-				return;
-			}	
 			//전달할 객체로 생성
 			let obj = {
 					c_name : c_name
@@ -465,7 +468,13 @@ function resultList(map){
 			.then(response=>response.json())
 			.then(map => {
 	                // 페이지 리디렉션 실행
-	             window.location.href = '/alpha/teacher/detail?c_no='+c_no; // 원하는 페이지 URL로 변경
+	            // window.location.href = '/alpha/teacher/detail?c_no='+c_no; // 원하는 페이지 URL로 변경
+				  if (map.result == 'success') {
+					    // fetchDelete 함수 호출
+					    fetchDelete('/alpha/img/DeleteAction/' + c_no, result);
+					  } else {
+					    alert(map.msg);
+					  }
 			});
 		} else {
 			alert(map.msg);
@@ -637,9 +646,12 @@ $('#cartPopUp').on('click', function() {
         var selectedData = listIndex;
         console.log(selectedData);
         // 행들을 순회하면서 선택된 행들의 데이터를 추출
+        // 테이블에 행이 하나도 없는 경우 알림 처리
         const userConfirmation = confirm('장바구니에 상품을 넣으시겠습니까?');
         if(userConfirmation){
 		let isLastIteration = false;
+		let hasSelected = false;
+		
         for (var i = 1; i < table.rows.length; i++) { // 첫 번째 행은 헤더이므로 인덱스 1부터 시작
             var checkbox = table.rows[i].cells[0].querySelector('input[type="checkbox"]');
             
@@ -660,9 +672,14 @@ $('#cartPopUp').on('click', function() {
                     isLastIteration = true;
                 }
                     fetchPost('/alpha/cart/insert/'+isLastIteration, obj, cartresult);
+                    hasSelected = true; 
             }
 
 
+        }
+        // 선택된 셀렉트 박스가 없는 경우 알림 처리
+        if (!hasSelected) {
+            alert('장바구니에 넣을 상품을 선택해주세요.');
         }
         } else{
         }

@@ -15,6 +15,8 @@ public interface FileuploadService {
 
 	public int update(FileuploadVO vo);
 	
+	public int delete(String c_no);
+	
 	public int fileEdit(List<MultipartFile> files, String c_no) throws Exception;
 	
 	public int fileupload(List<MultipartFile> files, String c_no) throws Exception;
