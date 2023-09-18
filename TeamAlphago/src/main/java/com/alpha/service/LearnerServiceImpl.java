@@ -48,8 +48,8 @@ public class LearnerServiceImpl implements LearnerService {
 	}
 	// 그룹별 학습자 리스트 조회
 	@Override
-	public List<LearnerVO> grpLearnerList(String g_no, String t_m_id) {
-		return learnerMapper.grpLearnerList(g_no);
+	public List<LearnerVO> grpLearnerList(String g_no, String t_m_id, Criteria cri) {
+		return learnerMapper.grpLearnerList(g_no, cri);
 	}
 	
 	// 숙제 요청 내역 저장
@@ -72,6 +72,12 @@ public class LearnerServiceImpl implements LearnerService {
 	@Override
 	public int grpTotalCnt(Criteria cri) {
 		return learnerMapper.grpTotalCnt(cri);
+	}
+	
+	// 그룹별 학습자 인원 수 
+	@Override
+	public int totalCnt() {
+		return learnerMapper.totalCnt();
 	}
 	
 	// 학습지도자별 숙제 제출 리스트 조회

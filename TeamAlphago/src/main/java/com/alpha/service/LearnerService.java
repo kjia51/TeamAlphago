@@ -25,11 +25,14 @@ public interface LearnerService {
 	// 그룹 가입 전체 갯수
 	public int grpTotalCnt(Criteria cri);
 	
+	// 그룹별 학습자 인원 수 
+	public int totalCnt();
+	
 	// 그룹 가입 신청
 	public int insertGrp(LearnerVO learnerVO);
 	
 	// 그룹별 학습자 리스트
-	public List<LearnerVO> grpLearnerList(@Param("g_no") String g_no, @Param("t_m_id") String t_m_id);
+	public List<LearnerVO> grpLearnerList(@Param("g_no") String g_no, @Param("t_m_id") String t_m_id, @Param("cri") Criteria cri);
 	
 	// 숙제 요청 내역 저장
 	public int insertHomework(LearnerVO learnerVO);

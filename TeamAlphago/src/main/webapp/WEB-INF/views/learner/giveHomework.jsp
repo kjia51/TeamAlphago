@@ -95,7 +95,6 @@
 			</div>
 			<!-- //content close -->
 
-
 		</div>
 	</div>
 	<!-- container close -->
@@ -152,6 +151,7 @@
 		</div>
 	</div>
 	<%-----------------------------모달창 끝----------------------------------%>
+<div style="text-align:center"><%@include file = "pageNavi.jsp" %></div>	
 </body>
 
 <script src="/resources/js/learner/giveHomework.js"></script>

@@ -177,7 +177,10 @@ function selectGroup(g_no) {
 function displayLearnerList(map) {
 	console.log("map", map)
 	let LearnerList = map.LearnerList;
-	console.log("LearnerList", LearnerList)
+	let pageDto = map.pageDto;
+	let totalCnt =map.totalCnt
+	console.log("LearnerList", LearnerList);
+	console.log("pageDto=>", pageDto);
 	
 	learnerInfo.innerHTML='';
 	let pageBlock = ''; // 기존 내용 초기화
