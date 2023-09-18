@@ -199,7 +199,8 @@
         m_name,
         g_name,
         l.l_m_id,
-        DATE_FORMAT(g_end, '%Y-%m-%d') AS g_end
+        DATE_FORMAT(g_end, '%Y-%m-%d') AS g_end,
+        h_review
    FROM 
        learner l
 	LEFT JOIN grp g ON (l.l_g_no = g.g_no)

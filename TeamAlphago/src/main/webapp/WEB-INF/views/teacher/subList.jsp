@@ -174,7 +174,7 @@ table td, table th {
         <h2 class="t_title">구독 내역</h2>
     </div>
             
-    <div class="searchWrap searchWrap_wide searchWrap_normal">
+    <div class="searchWrap searchWrap_wide searchWrap_normal" style="display: inline-block; margin-bottom: -10px;">
         <div class="searchBox searchBox-mid searchBox-center">
             <fieldset style="width: 500px;">
                 <input type="hidden" name="p" value="1">
@@ -188,7 +188,14 @@ table td, table th {
         </div>
     </div>          
     
-    <div style="margin-bottom: 10px;">총 ${totalCnt } 건</div>
+    		<c:choose>
+    			<c:when test="${totalCnt gt 0}">
+        			<div style="margin-top: -8px;">총 ${totalCnt } 건</div>
+   				 </c:when>
+    			 <c:otherwise>
+        			<div style="margin-top: 20px;"></div>
+   				 </c:otherwise>
+			</c:choose>
 </form>
 
 
