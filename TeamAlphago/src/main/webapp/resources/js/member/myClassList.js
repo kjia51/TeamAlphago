@@ -141,7 +141,7 @@ function resMyClassList(map){
 					+'				<th>그룹</th>                                                 '
 					+'				<th>숙제 현황</th>                                               '
 					+'				<th>학습종료일</th>                                              '
-					+'				<th>평가</th>                                              '
+					+'				<th>숙제 평가</th>                                              '
 					+'			</tr>                                                           '
 					+'		</thead>                                                            '
 					+'		<tbody>';
