@@ -313,10 +313,13 @@ function saleDate(){
 	function getChartDList(){
         let startdate = $('#startdate').val();
         let enddate = $('#enddate').val();
+        let page = $('#page').val();
+        
         console.log(startdate);
         console.log(enddate);
+        console.log(page);
         replyDiv.innerHTML ='';
-		fetchGet('/alpha/content/chartDate/'+startdate+'/'+enddate, resultChartDate);
+		fetchGet('/alpha/content/chartDate/'+startdate+'/'+enddate+'/'+page, resultChartDate);
 	}
 
 	function resultChartDate(map){
@@ -527,7 +530,8 @@ $('#saleContent').on('click', function() {
 })
 
 function go(page){
-	alert(page);
+	$("#page").val(page);
+	getChartDList();
 //	document.searchForm.pageNo.value=page;
 //	document.searchForm.action = "/alpha/saleList";
 //	document.searchForm.submit();
