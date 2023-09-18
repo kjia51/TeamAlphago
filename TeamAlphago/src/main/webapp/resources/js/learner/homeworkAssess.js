@@ -153,7 +153,7 @@ function displayHomeworkList(map) {
 						+'</td>'
 						+'		<td align="center">'
 						+'		<button class="btn btn-default" id="writebtn">평가하기'
-						+'<input type="text" name="h_no" id="h_no" value="'+ homework.h_no +'">'
+						+'<input type="hidden" name="h_no" id="h_no" value="'+ homework.h_no +'">'
 						+'</button>'
 						+'		</td>'
 						+'</tr>';
