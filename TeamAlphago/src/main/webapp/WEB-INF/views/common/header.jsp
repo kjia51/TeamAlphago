@@ -189,7 +189,7 @@
 <%-- --------------------------------------------------------------  --%>
     
 <script>
-/*
+
 window.onload = function()  {
 
 var l_m_id = $('#m_id').val();
@@ -219,7 +219,6 @@ $.ajax({
     }
     });	
 }  
-*/
 
 function modal_main(id) { //모달창 띄우기
     var zIndex = 9999;
