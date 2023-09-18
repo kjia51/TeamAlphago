@@ -107,17 +107,19 @@ public class LearnerController extends CommonRestController {
 		return mav; 
 	}
 	// 그룹별 학습자 리스트 조회(숙제 요청)
-	@GetMapping("/giveHomework/{g_no}")
-	public Map<String, Object> grpLearnerList(@PathVariable("g_no") String g_no, HttpSession session, Criteria cri){
+	@GetMapping("/giveHomework/{g_no}/{page}")
+	public Map<String, Object> grpLearnerList(@PathVariable("g_no") String g_no, HttpSession session, Criteria cri, @PathVariable("page") int page){
 		System.out.println("숙제 전송 --그룹별 학습자 리스트 연결");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		String t_m_id = session.getAttribute("m_id") == null? "":session.getAttribute("m_id").toString();
 		try {
 			System.out.println("학습지도자 아이디 : "+ t_m_id);
+			System.out.println("학습지도자 아이디 : "+ g_no);
+			cri.setPageNo(page);
 			List<LearnerVO> LearnerList = learnerService.grpLearnerList(g_no, t_m_id, cri);
 			System.out.println("LearnerList : "+LearnerList);
-			 int totalCnt = learnerService.totalCnt();
+			 int totalCnt = learnerService.totalCnt(g_no);
 			 System.out.println("totalCnt : "+totalCnt);
 		    // 페이지 블럭 생성
 		    PageDto pageDto = new PageDto(cri, totalCnt);

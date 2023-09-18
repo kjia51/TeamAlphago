@@ -76,8 +76,8 @@ public class LearnerServiceImpl implements LearnerService {
 	
 	// 그룹별 학습자 인원 수 
 	@Override
-	public int totalCnt() {
-		return learnerMapper.totalCnt();
+	public int totalCnt(String g_no) {
+		return learnerMapper.totalCnt(g_no);
 	}
 	
 	// 학습지도자별 숙제 제출 리스트 조회

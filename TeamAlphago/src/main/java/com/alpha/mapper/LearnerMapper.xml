@@ -127,7 +127,7 @@
     left join content on(l_c_no = c_no)
     where 
     	l_g_no = #{g_no} and l_checkyn = 'Y'
-    ORDER BY m_name
+    ORDER BY m_name asc
     LIMIT #{cri.startNo}, #{cri.amount}		
 </select>
 

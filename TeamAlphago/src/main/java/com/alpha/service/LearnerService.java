@@ -26,7 +26,7 @@ public interface LearnerService {
 	public int grpTotalCnt(Criteria cri);
 	
 	// 그룹별 학습자 인원 수 
-	public int totalCnt();
+	public int totalCnt(String g_no);
 	
 	// 그룹 가입 신청
 	public int insertGrp(LearnerVO learnerVO);
