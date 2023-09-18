@@ -112,10 +112,6 @@
         </form>
 
 
-
-
-
-
 <%-- 모달창 --%>
 <div id="my_modal">
 	<button class="modal_close_btn1"></button>
