@@ -116,13 +116,14 @@ public class LearnerController extends CommonRestController {
 		try {
 			System.out.println("학습지도자 아이디 : "+ t_m_id);
 			System.out.println("학습지도자 아이디 : "+ g_no);
-			cri.setPageNo(page);
+			
 			List<LearnerVO> LearnerList = learnerService.grpLearnerList(g_no, t_m_id, cri);
+			int totalCnt = learnerService.totalCnt(g_no);
+			PageDto pageDto = new PageDto(cri, totalCnt);
+			cri.setPageNo(page);
+			
 			System.out.println("LearnerList : "+LearnerList);
-			 int totalCnt = learnerService.totalCnt(g_no);
-			 System.out.println("totalCnt : "+totalCnt);
-		    // 페이지 블럭 생성
-		    PageDto pageDto = new PageDto(cri, totalCnt);
+			System.out.println("totalCnt : "+totalCnt);
 		    
 			System.out.println("LearnerList : "+LearnerList);
 			map.put("LearnerList", LearnerList);
