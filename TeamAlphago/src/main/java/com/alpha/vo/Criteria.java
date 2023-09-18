@@ -11,6 +11,8 @@ public class Criteria{
 	private String searchDate2; //날짜검색
 	private String order; //정렬 조건
 	private String c_level; //정렬 조건
+	private String startdate; //정렬 조건
+	private String enddate; //정렬 조건
 
 
 	

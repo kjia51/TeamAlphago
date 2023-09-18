@@ -690,7 +690,11 @@ function resultCartList(map){
 			        }
 			    })
 	        console.log(selectedIndexes);
-
+		    // 체크된 항목이 하나도 없는 경우 알림을 표시
+		    if (selectedIndexes.length === 0) {
+		        alert('삭제할 항목을 선택해주세요.');
+		        return; // 함수를 종료하고 추가 작업을 하지 않음
+		    }
 	// 모든 상품에 대한 삭제 여부를 묻는 확인 대화상자를 한 번만 표시
 	const userConfirmation = confirm('정말로 선택한 상품들을 삭제하시겠습니까?');
 

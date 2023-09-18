@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.alpha.mapper.ContentMapper;
 import com.alpha.vo.CartVO;
 import com.alpha.vo.ContentVO;
+import com.alpha.vo.Criteria;
 import com.alpha.vo.SalesVO;
 
 @Service
@@ -110,6 +111,18 @@ public class ContentServiceImpl implements ContentService {
 	public int deleteFile(String c_id) {
 		// TODO Auto-generated method stub
 		return contentMapper.deleteFile(c_id);
+	}
+
+	@Override
+	public int salesCount(Criteria cri) {
+		// TODO Auto-generated method stub
+		return contentMapper.salesCount(cri);
+	}
+
+	@Override
+	public List<SalesVO> salesDateReverse(String startdate, String enddate, Criteria cri) {
+		// TODO Auto-generated method stub
+		return contentMapper.salesDateReverse(startdate, enddate, cri);
 	}
 
 

@@ -23,7 +23,9 @@ import com.alpha.service.FileuploadService;
 import com.alpha.service.MemberService;
 import com.alpha.vo.CartVO;
 import com.alpha.vo.ContentVO;
+import com.alpha.vo.Criteria;
 import com.alpha.vo.MemberVO;
+import com.alpha.vo.PageDto;
 import com.alpha.vo.SalesVO;
 
 @RestController
@@ -280,12 +282,19 @@ public class ContentController extends CommonRestController {
 		   }
 		   
 		   @GetMapping("/content/chartDate/{startdate}/{enddate}") 
-		   public Map<String, Object> chartDView(@PathVariable("startdate") String startdate, @PathVariable("enddate") String enddate) {
+		   public Map<String, Object> chartDView(@PathVariable("startdate") String startdate, @PathVariable("enddate") String enddate, Criteria cri) {
 				try {
 					Map<String, Object> map = new HashMap<String, Object>();
 					List<SalesVO> dateList = contentService.salesDate(startdate, enddate);
+					List<SalesVO> dateListReverse = contentService.salesDateReverse(startdate, enddate, cri);
+					int totalCnt = contentService.salesCount(cri);
+					PageDto pageDto = new PageDto(cri, totalCnt);
+					
 					System.out.println(dateList);
 					map.put("dateList", dateList);
+					map.put("pageDto", pageDto);
+					map.put("totalCnt", totalCnt);
+					map.put("dateListReverse", dateListReverse);
 					return map;
 	
 				} catch (Exception e) {
