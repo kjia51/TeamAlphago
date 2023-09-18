@@ -189,13 +189,13 @@
 <%-- --------------------------------------------------------------  --%>
     
 <script>
-
+/*
 window.onload = function()  {
 
 var l_m_id = $('#m_id').val();
 console.log(l_m_id);
 
-/* $.ajax({
+$.ajax({
     url: '/alpha/homeworkable/' + l_m_id,
     method: 'GET',
     dataType: 'json', // 데이터 타입을 JSON으로 설정
@@ -207,39 +207,19 @@ console.log(l_m_id);
         // homeworkData 배열의 각 객체에 접근하기 위한 반복문
         for (var i = 0; i < homeworkData.length; i++) {
             var item = homeworkData[i];
-
-/*  window.onload = function()  {
-	
-    var l_m_id = $('#m_id').val();
-    console.log(l_m_id);
-    
-    $.ajax({
-        url: '/alpha/homeworkable/' + l_m_id,
-        method: 'GET',
-        dataType: 'json', // 데이터 타입을 JSON으로 설정
-        success: function(data) {
-            // JSON 데이터에서 객체 추출
-            var homeworkData = data; 
->>>>>>> refs/remotes/origin/main
             
-            console.log(item)
+			console.log(item)
             
             if(item == null) {
           	  var iconElement = document.querySelector(".fa-bell");
               iconElement.className = "fa-solid fa-bell";
         		return false;
             }
-        }
-    },
-    error: function() {
-        console.error('데이터를 가져오지 못했습니다.');
+		}
     }
-});	*/
-//}
-    //}
-    //});	
-//})  
-
+    });	
+}  
+*/
 
 function modal_main(id) { //모달창 띄우기
     var zIndex = 9999;
@@ -303,7 +283,6 @@ function alertMoldal() {
             console.error('데이터를 가져오지 못했습니다.');
         }
     });
-}
 }
 
 
