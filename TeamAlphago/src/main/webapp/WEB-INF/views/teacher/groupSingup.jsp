@@ -109,6 +109,10 @@
                         </fieldset>
                     </div>
             </div>           
+            
+            <c:if test="${totalCnt gt 0}"> 
+  			<div style="margin-bottom: 10px;">총 ${totalCnt } 건</div>
+			</c:if>	
         </form>
 
 

@@ -91,10 +91,6 @@ select {
     <div class="wrap">
 
  		<form  method="get" name="searchForm" class="content_wrap">
-                    
-			<c:if test="${totalCnt gt 0}"> 
-  			총 ${totalCnt } 건
-			</c:if>	
  		
 			<input name="t_m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
 			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
@@ -117,11 +113,17 @@ select {
                         </fieldset>
                     </div>
                     
+                                                    
+			<c:if test="${totalCnt gt 0}"> 
+  			<div style="margin-top: -24px;">총 ${totalCnt } 건</div>
+			</c:if>	
+                    
                     <div class="btnArea topbtnWrap" id="btnclass">
     					<span class="btn btn-point btn-mg"><button type="button" id="popup_open_btn">그룹 생성</button></span>
 					</div>
             </div>
             
+
    
         </form>
 
@@ -185,7 +187,7 @@ select {
 </div>
 <%-- --------------------------------------------------------------  --%>
 
-<div class="entry">
+<div class="entry" style="margin-top: -10px;">
 	<table class="table table-bordered">
 		<caption>그룹 관리</caption>
 		<colgroup>

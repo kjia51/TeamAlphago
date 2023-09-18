@@ -167,8 +167,7 @@ table td, table th {
 <div id="container">
     <div class="wrap">
 
-            <form  method="get" name="searchForm" class="content_wrap">
-    총 ${totalCnt } 건
+    <form  method="get" name="searchForm" class="content_wrap">
     <input name="t_m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
     <input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
     <div class="titleBox">
@@ -187,7 +186,9 @@ table td, table th {
                     <div id="getsearch" style="display: inline-block;"></div>
             </fieldset>
         </div>
-    </div>           
+    </div>          
+    
+    <div style="margin-bottom: 10px;">총 ${totalCnt } 건</div>
 </form>
 
 

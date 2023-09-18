@@ -274,7 +274,8 @@ public class TeacherController extends CommonRestController {
 			
 			System.out.println(LearnerCnt);
 
-			List<LearnerVO> list = service.getGroupLearner(g_no, cri);
+			List<LearnerVO> list = service.getGroupLearner(g_no);
+			
 
 		    Map<String, Object> responseData = new HashMap<>();
 		    responseData.put("LearnerCnt", LearnerCnt);
@@ -299,7 +300,7 @@ public class TeacherController extends CommonRestController {
 			model.addAttribute("JoinCnt", JoinCnt);
 			model.addAttribute("JoinpageDto", JoinpageDto);
 
-			List<LearnerVO> list = service.JoinGroupLearner(g_no, cri);
+			List<LearnerVO> list = service.JoinGroupLearner(g_no);
 		   
 			Map<String, Object> responseData = new HashMap<>();
 		    responseData.put("JoinCnt", JoinCnt);
