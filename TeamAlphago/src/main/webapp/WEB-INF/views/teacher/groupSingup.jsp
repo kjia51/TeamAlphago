@@ -106,14 +106,15 @@
                     </div>
             </div>           
             
-            <c:if test="${totalCnt gt 0}"> 
-  			<div style="margin-bottom: 10px;">총 ${totalCnt } 건</div>
-			</c:if>	
+            <c:choose>
+    			<c:when test="${totalCnt gt 0}">
+        			<div style="margin-top: -8px;">총 ${totalCnt } 건</div>
+   				 </c:when>
+    			 <c:otherwise>
+        			<div style="margin-top: 20px;"></div>
+   				 </c:otherwise>
+			</c:choose>
         </form>
-
-
-
-
 
 
 <%-- 모달창 --%>
