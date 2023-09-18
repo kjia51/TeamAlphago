@@ -21,6 +21,10 @@
     margin-top:30px;
 }
 
+input:focus {
+ 	outline: none;
+}
+
 .topMenu:hover {
     color: #074691;
 }
