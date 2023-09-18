@@ -69,11 +69,6 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public List<LearnerVO> getGroupLearner(String g_no, Criteria cri) {
-		return mapper.getGroupLearner(g_no, cri);
-	}
-
-	@Override
 	public int getContentCnt(String c_no) {
 		return mapper.getContentCnt(c_no);
 	}
@@ -84,8 +79,8 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public List<LearnerVO> JoinGroupLearner(String g_no, Criteria cri) {
-		return mapper.JoinGroupLearner(g_no, cri);
+	public List<LearnerVO> JoinGroupLearner(String g_no) {
+		return mapper.JoinGroupLearner(g_no);
 	}
 
 	@Override
@@ -156,6 +151,11 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public LearnerVO homework(String l_m_id) {
 		return mapper.homework(l_m_id);
+	}
+
+	@Override
+	public List<LearnerVO> getGroupLearner(String g_no) {
+		return mapper.getGroupLearner(g_no);
 	}
 	
 

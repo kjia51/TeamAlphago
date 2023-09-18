@@ -28,8 +28,8 @@ public interface TeacherService {
 	public SubscribeVO getSubOne(String sub_no); //선택된 패키지 구독 정보 출력
 	public List<SubscribeVO> subContent(String t_m_id); //패키지랑 연결되지 않은 구독 리스트
 	public GrpVO getGroupOne(String g_no); //선택된 그룹 정보 출력
-	public List<LearnerVO> getGroupLearner(@Param("g_no") String g_no, @Param("cri") Criteria cri); //그룹에 속한 학습자 정보 출력
-	public List<LearnerVO> JoinGroupLearner(@Param("g_no") String g_no, @Param("cri") Criteria cri); //그룹 가입 신청자 정보 출력
+	public List<LearnerVO> getGroupLearner(@Param("g_no") String g_no); //그룹에 속한 학습자 정보 출력
+	public List<LearnerVO> JoinGroupLearner(@Param("g_no") String g_no); //그룹 가입 신청자 정보 출력
 	public int deleteGroupLearner(@Param("g_no") String g_no, @Param("l_no") String l_no); //그룹에서 학습자 탈퇴
 	public int updateGroupLearner(@Param("g_no") String g_no, @Param("l_no") String l_no); //그룹 가입 신청자 승인
 	public int updateMemCnt(String g_no); //그룹 학습자 인원 업데이트

@@ -185,7 +185,7 @@
 	and l.l_m_id = member.m_id
 	and grp.g_no = #{g_no}
     and l_checkyn = 'Y'
-	ORDER BY m_name DESC LIMIT #{cri.startNo}, #{cri.amount}
+	ORDER BY m_name DESC
 	</select>
 	
 	<!-- c_id로 콘텐츠 상세 내용 갯수-->
@@ -221,7 +221,7 @@
 	and l.l_m_id = member.m_id
 	and grp.g_no = #{g_no}
     and l_checkyn = 'N'
-    ORDER BY m_name DESC LIMIT #{cri.startNo}, #{cri.amount}
+    ORDER BY m_name DESC
 	</select>
 	
 	<update id="updateGroupLearner" >

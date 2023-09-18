@@ -84,17 +84,13 @@
 
             <form  method="get" name="searchForm" class="content_wrap">
           	 
-          	<c:if test="${totalCnt gt 0}"> 
-  			총 ${totalCnt } 건
-			</c:if>	
-          	 
 			<input name="t_m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
 			<input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
             <div class="titleBox">
                 <h2 class="t_title">그룹 가입 승인</h2>
             </div>
             
-            <div class="searchWrap searchWrap_wide searchWrap_normal">
+            <div class="searchWrap searchWrap_wide searchWrap_normal" style="display: inline-block; margin-bottom: -10px;">
                     <div class="searchBox searchBox-mid searchBox-center">
                         <fieldset>
                             <input type="hidden" name="p" value="1">
@@ -109,6 +105,10 @@
                         </fieldset>
                     </div>
             </div>           
+            
+            <c:if test="${totalCnt gt 0}"> 
+  			<div style="margin-bottom: 10px;">총 ${totalCnt } 건</div>
+			</c:if>	
         </form>
 
 

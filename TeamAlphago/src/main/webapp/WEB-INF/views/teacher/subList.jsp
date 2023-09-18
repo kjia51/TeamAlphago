@@ -167,15 +167,14 @@ table td, table th {
 <div id="container">
     <div class="wrap">
 
-            <form  method="get" name="searchForm" class="content_wrap">
-    총 ${totalCnt } 건
+    <form  method="get" name="searchForm" class="content_wrap">
     <input name="t_m_id" id="m_id" type="hidden" value="${memberVO.m_id }">
     <input type="hidden" name="pageNo" value="${pageDto.cri.pageNo}">
     <div class="titleBox">
         <h2 class="t_title">구독 내역</h2>
     </div>
             
-    <div class="searchWrap searchWrap_wide searchWrap_normal">
+    <div class="searchWrap searchWrap_wide searchWrap_normal" style="display: inline-block; margin-bottom: -10px;">
         <div class="searchBox searchBox-mid searchBox-center">
             <fieldset style="width: 500px;">
                 <input type="hidden" name="p" value="1">
@@ -187,7 +186,11 @@ table td, table th {
                     <div id="getsearch" style="display: inline-block;"></div>
             </fieldset>
         </div>
-    </div>           
+    </div>          
+    
+    	<c:if test="${totalCnt gt 0}"> 
+			<div style="margin-bottom: 10px;">총 ${totalCnt } 건</div>
+		</c:if>
 </form>
 
 
