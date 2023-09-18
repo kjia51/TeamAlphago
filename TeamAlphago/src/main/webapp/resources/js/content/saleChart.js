@@ -125,9 +125,9 @@ function saleDate(){
                     +'<th scope="col" style="width:20%;">조회기간</th>'
                     +'<td style="width:80%;">'
                     +'<div class="searchBox" style="display:inline-block;">'
-                    +'<input type="text" class="input" name="startdate" id="startdate" value="" maxlength="8" style="width:120px; text-align:center">'
+                    +'<input type="text" class="input" name="startdate" id="startdate" value="" maxlength="10" style="width:120px; text-align:center" oninput="formatDate(this)">'
                     +'<span style="margin-left:10px; margin-right:10px">~</span>'
-                    +'<input type="text" class="input" name="enddate" id="enddate" value="" maxlength="8" style="width:120px; text-align:center">'
+                    +'<input type="text" class="input" name="enddate" id="enddate" value="" maxlength="10" style="width:120px; text-align:center" oninput="formatDate(this)">'
                     +'<button type="button" id="cal" class="cal-btn-open" data-calendar-module="true" data-calendar-display="false" style="margin-top:5px; margin-left:10px; margin-right:10px"><i class="fa-regular fa-calendar" style="font-size:30px"></i></button>'
                     +'</div>'
                     +'<div class="searchBox" style="display:inline-block; margin-left:30px">'
@@ -155,6 +155,8 @@ function saleDate(){
     	+'</tr>';
     chartBdy.appendChild(row2);
     var now = nowDate();
+    
+    
     $('#startdate').val(now);
 	$('#enddate').val(now);
 	
@@ -262,7 +264,15 @@ function saleDate(){
 	})
 	
 }
-
+	function formatDate(input) {
+	    const value = input.value;
+	    
+	    // 사용자가 입력한 값에서 숫자와 '-'만 남기고 나머지 문자 제거
+	    const formattedValue = value.replace(/[^\d-]/g, '');
+	    
+	    // 'yyyy-mm-dd' 형식으로 입력값을 다시 설정
+	    input.value = formattedValue;
+	}
 	function nowDate() {
 	    // Get the current date
 	    var currentDate = new Date();
@@ -305,6 +315,7 @@ function saleDate(){
         let enddate = $('#enddate').val();
         console.log(startdate);
         console.log(enddate);
+        replyDiv.innerHTML ='';
 		fetchGet('/alpha/content/chartDate/'+startdate+'/'+enddate, resultChartDate);
 	}
 
@@ -312,30 +323,37 @@ function saleDate(){
 		let s_date = [];
 		let date_sales = [];
 		let dateList = map.dateList;
+		let dateListReverse = map.dateListReverse;
 		let contentList = map.contentList;
+		let totalCnt = map.totalCnt;
+		let pageDto = map.pageDto;
+		console.log(pageDto);
+		console.log(totalCnt);
 		$('#myChart').remove();
 		$('#myChartView').append('<canvas id="myChart"></canvas>');
 		const ctx = document.getElementById('myChart');
 		console.log(dateList);
 		chartBdy.innerHTML='';
-		dateList.forEach(function(chart) {
-			console.log(chart.s_sales)
-			s_date.push(chart.s_date);
-			date_sales.push(chart.s_sales);
-			
+		dateListReverse.forEach(function(chart) {
+
 			if(chart.s_sales!=0){
 	    	let cprice = dateList.price;
 	    	let cnt = dateList.c_able;
 	        var row = document.createElement('tr');
 	        row.innerHTML = `
-	            <td>${chart.s_date}</td>
-	            <td>${chart.s_sales}원</td>
-	        	<td>${chart.s_count}건</td>
+	            <td style="text-align:center">${chart.s_date}</td>
+	            <td style="text-align:center">${chart.s_sales}원</td>
+	        	<td style="text-align:center">${chart.s_count}건</td>
 	        `;
 	        chartBdy.appendChild(row);
 			}
 		});
-		
+		dateList.forEach(function(chart) {
+			console.log(chart.s_sales)
+			s_date.push(chart.s_date);
+			date_sales.push(chart.s_sales);
+
+		});
 
 		new Chart(ctx, {
 			type: 'line',
@@ -355,6 +373,31 @@ function saleDate(){
 		    }
 		  });
 		
+		let pageBlock='';
+		//페이지 블럭 생성
+		pageBlock += '<nav aria-label="Page navigation example">'
+			+'<ul class="pagination justify-content-center">';
+		
+		if(pageDto.prev){
+			pageBlock += '<li class="page-item" onclick="go('+ (pageDto.startNo-1) +')">'
+			+'<a class="page-link">&lt;</a>'
+			+'</li>';
+		};
+		
+		
+		for(i=pageDto.startNo; i<=pageDto.endNo; i++){
+			let activeStr = (pageDto.cri.pageNo==i)?'active':'';
+			pageBlock += '<li class="page-item'+activeStr+'" onclick="go('+i+')">'
+			+'<a class="page-link" href="#">'+i+'</a></li>';		    	
+		} 
+		if(pageDto.next){
+			pageBlock += '<li class="page-item" onclick="go('+ (pageDto.endNo+1) +')">'
+			+'<a class="page-link" href="#">&gt;</a>'
+			+'</li>';
+		}
+		pageBlock += '</ul>'
+			+'</nav>';
+		replyDiv.innerHTML += pageBlock;
 
 	}
 	//덧글 조회 및 출력
@@ -379,9 +422,9 @@ function saleDate(){
 			let cnt = contentList.c_able;
 			var row = document.createElement('tr');
 			row.innerHTML = `
-				<td>${chart.level}</td>
-				<td>${chart.s_sales}원</td>
-				<td>${chart.s_count}건</td>
+				<td style="text-align:center">${chart.level}</td>
+				<td style="text-align:center">${chart.s_sales}원</td>
+				<td style="text-align:center">${chart.s_count}건</td>
 				`;
 			chartBdy.appendChild(row);
 			
@@ -423,6 +466,12 @@ function saleDate(){
 		console.log(levelList);
 		let level_cno = [];
 		let level_cprice = [];
+		
+	    // 첫 번째 테이블 헤더를 변경
+	    const chartTable = document.getElementById('eve_academyTable');
+	    const firstTableHead = chartTable.querySelector('thead th:first-child');
+	    firstTableHead.textContent = '콘텐츠명(콘텐츠번호)';
+		
 		$('#myChart').remove();
 		$('#myChartView').append('<canvas id="myChart"></canvas>');
 		const ctx = document.getElementById('myChart');
@@ -437,9 +486,9 @@ function saleDate(){
 			level_cno.push(cno);
 			var row = document.createElement('tr');
 			row.innerHTML = `
-				<td>${cname}</td>
-				<td>${cprice}원</td>
-				<td>${s_count}</td>
+				<td style="text-align:center">${cname}(${cno})</td>
+				<td style="text-align:center">${cprice}원</td>
+				<td style="text-align:center">${s_count}건</td>
 				`;
 			chartBdy.appendChild(row);
 
@@ -477,6 +526,11 @@ $('#saleContent').on('click', function() {
 	saleContent();
 })
 
-
+function go(page){
+	alert(page);
+//	document.searchForm.pageNo.value=page;
+//	document.searchForm.action = "/alpha/saleList";
+//	document.searchForm.submit();
+}
 
 

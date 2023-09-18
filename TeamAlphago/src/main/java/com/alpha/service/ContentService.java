@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.alpha.vo.CartVO;
 import com.alpha.vo.ContentVO;
+import com.alpha.vo.Criteria;
 import com.alpha.vo.SalesVO;
 
 @Service
@@ -27,6 +28,8 @@ public interface ContentService {
 	
 	public int cartCnt(String cr_m_no);
 	
+	public int salesCount(Criteria cri);
+	
 	public int deleteCart(String cr_m_no, String cr_c_no, String cnt);
 	
 	public List<SalesVO> salesContent(String c_level);
@@ -34,6 +37,8 @@ public interface ContentService {
 	public List<SalesVO> salesLevel(String c_level);
 	
 	public List<SalesVO> salesDate(String startdate, String enddate);
+	
+	public List<SalesVO> salesDateReverse(String startdate, String enddate, Criteria cri);
 	
 	public int addCart(CartVO cartVO);
 	

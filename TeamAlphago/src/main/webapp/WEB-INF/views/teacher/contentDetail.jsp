@@ -276,8 +276,8 @@
 			
 			
 			<div id="no_content" style="height:100px">
-				<h2>더 이상의 콘텐츠가 없습니다. </h2>
-			<button type="button" class="modal_close_btn">닫기</button>
+				<h3>더 이상의 콘텐츠가 없습니다. </h3>
+			<button type="button" class="modal_close_btn" style="width:60px; height:30px; padding:5px">닫기</button>
 			</div>
 			
 			<%-- 모달창 --%>

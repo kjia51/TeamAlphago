@@ -306,7 +306,7 @@ function resultList(map){
 
 			    $('#c_content').blur(function () {
 			    	let c_content = $('#c_content').val();
-			    	const isValidcontent = /^[ㄱ-ㅎㅏ-ㅣ가-힣0-9 ]{10,}$/.test(c_content);
+			    	const isValidcontent = (c_content.length >= 10);
 			    	// 결과에 따라 메시지 출력
 			    	if (!isValidcontent) {
 			    		signContent.innerHTML = "10자리 이상 입력하세요";
@@ -468,13 +468,13 @@ function resultList(map){
 			.then(response=>response.json())
 			.then(map => {
 	                // 페이지 리디렉션 실행
-	            // window.location.href = '/alpha/teacher/detail?c_no='+c_no; // 원하는 페이지 URL로 변경
-				  if (map.result == 'success') {
-					    // fetchDelete 함수 호출
-					    fetchDelete('/alpha/img/DeleteAction/' + c_no, result);
-					  } else {
-					    alert(map.msg);
-					  }
+	             window.location.href = '/alpha/teacher/detail?c_no='+c_no; // 원하는 페이지 URL로 변경
+//				  if (map.result == 'success') {
+//					    // fetchDelete 함수 호출
+//					    fetchDelete('/alpha/img/DeleteAction/' + c_no, result);
+//					  } else {
+//					    alert(map.msg);
+//					  }
 			});
 		} else {
 			alert(map.msg);

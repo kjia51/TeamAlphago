@@ -11,6 +11,19 @@
 <title>매출 조회</title>
 <link rel="icon" href="/resources/images/favicon.ico"/>
 <style>
+nav > ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 13px;
+}
+
+nav > ul > li {
+margin-left: 10px;
+list-style: none;
+cursor: pointer;
+}
+
 #calendarList {
     display: none;
     width: 540px;
@@ -47,6 +60,7 @@
   color : white;
   cursor: not-allowed;
 }
+
 </style>
 </head>
 <body>
@@ -102,6 +116,10 @@
 
                         </tbody>
                 </table>
+                <form id="searchForm" method="get" name="searchForm" class="content_wrap">
+                <div id="replyDiv">
+                </div>
+                </form>
             </div>
         </div>
         <!-- //content close -->

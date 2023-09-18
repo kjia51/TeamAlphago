@@ -207,7 +207,7 @@ window.addEventListener('load', function(){
 
     $('#c_content').blur(function () {
     	let c_content = $('#c_content').val();
-    	const isValidcontent = /^[ㄱ-ㅎㅏ-ㅣ가-힣0-9\s!@#$%^&*()_+{}\[\]:;<>,.?~\\/'"-]{10,}$/.test(c_content);
+    	const isValidcontent = (c_content.length >= 10);
 
 
     	// 결과에 따라 메시지 출력

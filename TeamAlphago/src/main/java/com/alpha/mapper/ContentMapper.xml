@@ -109,6 +109,82 @@
 		date_range.date_range
 
 	</select>
+	<select id="salesDateReverse" resultType="com.alpha.vo.SalesVO">
+		SELECT date_range.date_range AS s_date,
+		IFNULL(COUNT(subscribe.sub_date), 0) AS s_count,
+		IFNULL(ROUND(SUM(subscribe.sub_price), 0), 0) AS s_sales
+		FROM (
+		SELECT DATE_ADD(#{startdate}, INTERVAL n DAY) AS date_range
+		FROM (
+		SELECT a.N + b.N * 10 + c.N * 100 AS n
+		FROM (
+		SELECT 0 AS N
+		UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+		UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL
+		SELECT 8
+		UNION ALL SELECT 9
+		) AS a
+		CROSS JOIN (
+		SELECT 0 AS N
+		UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+		UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL
+		SELECT 8
+		UNION ALL SELECT 9
+		) AS b
+		CROSS JOIN (
+		SELECT 0 AS N
+		UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+		UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL
+		SELECT 8
+		UNION ALL SELECT 9
+		) AS c
+		) AS numbers
+		WHERE DATE_ADD(#{startdate}, INTERVAL n DAY) BETWEEN #{startdate} AND
+		#{enddate}
+		) AS date_range
+		LEFT JOIN subscribe ON
+		DATE(date_range.date_range) = DATE(subscribe.sub_date)
+		GROUP BY
+		date_range.date_range
+		ORDER BY s_date DESC
+		LIMIT #{cri.startNo}, #{cri.amount}
+	</select>
+	<select id="salesCount" resultType="int">
+        		SELECT count(*)
+		FROM (
+		SELECT DATE_ADD(#{startdate}, INTERVAL n DAY) AS date_range
+		FROM (
+		SELECT a.N + b.N * 10 + c.N * 100 AS n
+		FROM (
+		SELECT 0 AS N
+		UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+		UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL
+		SELECT 8
+		UNION ALL SELECT 9
+		) AS a
+		CROSS JOIN (
+		SELECT 0 AS N
+		UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+		UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL
+		SELECT 8
+		UNION ALL SELECT 9
+		) AS b
+		CROSS JOIN (
+		SELECT 0 AS N
+		UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+		UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL
+		SELECT 8
+		UNION ALL SELECT 9
+		) AS c
+		) AS numbers
+		WHERE DATE_ADD(#{startdate}, INTERVAL n DAY) BETWEEN #{startdate} AND
+		#{enddate}
+		) AS date_range
+		LEFT JOIN subscribe ON
+		DATE(date_range.date_range) = DATE(subscribe.sub_date)
+        where subscribe.sub_no is not null
+
+	</select>
 
 	<insert id="addCart">
 		insert into cart(cr_no, cr_m_no, cr_c_no, cnt) values (#{cr_no}, #{cr_m_no},
