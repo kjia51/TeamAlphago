@@ -118,6 +118,7 @@ $('#getGroup').click(function () {
     if (userConfirmation) {
         // 사용자가 "확인"을 선택한 경우
     	submain.innerHTML = '';
+    	classListDiv.innerHTML = '';
     	fetchGet('/alpha/member/list', resultEditList);
     
     } else {

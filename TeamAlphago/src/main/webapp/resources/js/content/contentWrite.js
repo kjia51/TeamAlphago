@@ -76,7 +76,7 @@ function file(map){
 			.then(response=>response.json())
 			.then(map => {
 	                // 페이지 리디렉션 실행
-	             window.location.href = '/alpha/main'; // 원하는 페이지 URL로 변경
+	             window.location.href = '/alpha/teacher'; // 원하는 페이지 URL로 변경
 			});
 		} else {
 			alert(map.msg);
