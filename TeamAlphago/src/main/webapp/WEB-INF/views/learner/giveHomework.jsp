@@ -17,6 +17,23 @@
 <link rel="icon" href="/resources/images/favicon.ico"/>
 </head>
 <link rel="stylesheet" href="/resources/css/learner.css">
+<style>
+.disabled {
+display: none;
+}
+
+nav > ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+nav > ul > li {
+margin-left: 10px;
+list-style: none;
+cursor: pointer;
+}
+</style>
 <body>
 	<div id="container">
 		<div class="wrap">
@@ -25,6 +42,7 @@
 					<h2 class="t_title">숙제 전송</h2>
 					<input name="t_m_id" id="memberId" type="hidden" value="${memberVO.m_id}"> 
 						<input name="m_division" id="division" type="hidden" value="${memberVO.m_division}">
+						<input id="page" type="hidden" value="1">
 				</div>
 
 				<!--그룹명-->
@@ -94,8 +112,7 @@
 				</div>
 			</div>
 			<!-- //content close -->
-
-
+			<div id="replyDiv"></div>
 		</div>
 	</div>
 	<!-- container close -->
@@ -152,6 +169,7 @@
 		</div>
 	</div>
 	<%-----------------------------모달창 끝----------------------------------%>
+
 </body>
 
 <script src="/resources/js/learner/giveHomework.js"></script>

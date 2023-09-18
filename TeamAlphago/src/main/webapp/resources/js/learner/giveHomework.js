@@ -151,17 +151,19 @@ $(function() {
 });
 
 
-
 // 그룹 선택시 이벤트 발생 
 function selectGroup(g_no) {
-	console.log("g_no", g_no); 
+	console.log("g_no", g_no);
+	let page = $('#page').val();
+	var replyDiv ='';
+	replyDiv.innerHTML='';
     var url = '';
 	    $.ajax({
-	        url: '/alpha/giveHomework/' + g_no,
+	        url: '/alpha/giveHomework/' + g_no +'/' +page,
 	        method: 'GET',
 	        success: function(response) {
 	        	// 성공 시 작업
-				var url = '/alpha/giveHomework/' + g_no;
+				var url = '/alpha/giveHomework/' + g_no +'/' +page;
 	        	fetchGet(url, displayLearnerList)
 	        },
 	        error: function(xhr, status, error) {
@@ -177,8 +179,13 @@ function selectGroup(g_no) {
 function displayLearnerList(map) {
 	console.log("map", map)
 	let LearnerList = map.LearnerList;
-	console.log("LearnerList", LearnerList)
-	
+	let pageDto = map.pageDto;
+	let totalCnt =map.totalCnt
+	replyDiv.innerHTML='';
+	console.log("LearnerList", LearnerList);
+	console.log("pageDto=>", pageDto);
+	console.log("totalCnt=>", totalCnt);
+
 	learnerInfo.innerHTML='';
 	let pageBlock = ''; // 기존 내용 초기화
 	         pageBlock += ''                                                                        
@@ -235,6 +242,36 @@ function displayLearnerList(map) {
 						+'</tr>';
 	}
 			learnerInfo.innerHTML += pageBlock;
+			
+
+	
+			let pageDiv='';
+			//페이지 블럭 생성
+			pageDiv += '<nav aria-label="Page navigation example">'
+				+'<ul class="pagination justify-content-center">';
+			
+			if(pageDto.prev){
+				pageDiv += '<li class="page-item" onclick="go('+ (pageDto.startNo-1) +')">'
+				+'<a class="page-link">&lt;</a>'
+				+'</li>';
+			};
+			
+			
+			for(i=pageDto.startNo; i<=pageDto.endNo; i++){
+				let activeStr = (pageDto.cri.pageNo==i)?'active':'';
+				pageDiv += '<li class="page-item'+activeStr+'" onclick="go('+i+')">'
+				+'<a class="page-link">'+i+'</a></li>';		    	
+			} 
+			if(pageDto.next){
+				pageDiv += '<li class="page-item" onclick="go('+ (pageDto.endNo+1) +')">'
+				+'<a class="page-link">&gt;</a>'
+				+'</li>';
+			}
+			pageDiv += '</ul>'
+				+'</nav>';
+
+			replyDiv.innerHTML += pageDiv;
+			
 			
 			// 학습자 목록을 업데이트한 후 학습자의 존재 여부 확인
 		    checkLearnerExistence();
@@ -381,6 +418,14 @@ function insertHomework(){
 					
    				});
 	
+}
+function go(page){
+	alert(page);
+	$('#page').val(page);
+	displayLearnerList();
+//	document.searchForm.pageNo.value=page;
+//	document.searchForm.action = "/alpha/saleList";
+//	document.searchForm.submit();
 }
 
 

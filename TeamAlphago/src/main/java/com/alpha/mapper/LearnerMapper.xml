@@ -89,6 +89,18 @@
 	WHERE g.g_name is not null    
 </select>
 
+<!-- 그룹별 학습자 인원수 -->
+<select id="totalCnt" resultType="int">
+    SELECT 
+    	count(*) 
+	FROM                
+	    learner 
+	LEFT JOIN 
+	    grp ON (l_g_no = g_no)
+	WHERE
+		 l_g_no = #{g_no} and l_checkyn = 'Y'   
+</select>
+
 <!-- 그룹 가입 신청  -->
 <insert id="insertGrp">
 	INSERT INTO 
@@ -97,8 +109,8 @@
 		(#{l_no},#{t_m_id}, #{l_m_id}, #{l_c_no}, #{l_g_no}, now(), 'N')
 </insert>
 
-<!-- 그룹별 학습자 리스트 조회 (숙제 요청) -->
-<select id= "grpLearnerList" resultType="com.alpha.vo.LearnerVO">
+<!-- 그룹별 학습자 리스트 조회 (숙제 전송) -->
+<select id= "grpLearnerList"  resultType="com.alpha.vo.LearnerVO">
     select 
 		c_no AS h_c_no,
     	m_id AS l_m_id,  
@@ -115,6 +127,8 @@
     left join content on(l_c_no = c_no)
     where 
     	l_g_no = #{g_no} and l_checkyn = 'Y'
+    ORDER BY m_name asc
+    LIMIT #{cri.startNo}, #{cri.amount}		
 </select>
 
 <!-- 숙제 요청 내역 저장 -->
