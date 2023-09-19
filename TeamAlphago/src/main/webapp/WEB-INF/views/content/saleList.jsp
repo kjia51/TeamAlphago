@@ -74,8 +74,8 @@ cursor: pointer;
             </ul>
         </div>
 <div id="container">
+		<input type="hidden" value="1" id="page">
 		<div id="calendarList">
-		<input type="text" value="1" id="page">
 			<div id="test" style="display:inline-block"></div>
 			<div id="test2" style="display:inline-block"></div>
 			<button><a class="modal_close_btn">확인</a></button>

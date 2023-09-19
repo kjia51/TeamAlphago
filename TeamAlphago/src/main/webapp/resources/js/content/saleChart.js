@@ -406,7 +406,8 @@ function saleDate(){
 	//덧글 조회 및 출력
 	function getChartCList(){
 		let c_level = $('#radioValue').val();
-		console.log("c_level",c_level)
+		console.log("c_level",c_level);
+        replyDiv.innerHTML ='';
 		fetchGet('/alpha/content/chartContent/'+c_level, resultChartContent);
 	}
 	
@@ -461,6 +462,7 @@ function saleDate(){
 	}
 	function getChartRList(){
 		let c_level = $('#radioValue').val();
+        replyDiv.innerHTML ='';
 		fetchGet('/alpha/content/chartContent/'+c_level, resultChartLevel);
 	}
 	
