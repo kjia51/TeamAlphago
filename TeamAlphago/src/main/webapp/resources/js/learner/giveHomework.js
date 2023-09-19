@@ -159,12 +159,14 @@ function selectGroup(g_no) {
 	replyDiv.innerHTML='';
     var url = '';
 	    $.ajax({
-	        url: '/alpha/giveHomework/' + g_no +'/' +page,
+	        url: '/alpha/giveHomework/' + g_no +'/' + page,
 	        method: 'GET',
 	        success: function(response) {
+	        	console.log('response',response);
+	        	displayLearnerList(response);
 	        	// 성공 시 작업
-				var url = '/alpha/giveHomework/' + g_no +'/' +page;
-	        	fetchGet(url, displayLearnerList)
+//				var url = '/alpha/giveHomework/' + g_no +'/' + page;
+//	        	fetchGet(url, displayLearnerList)
 	        },
 	        error: function(xhr, status, error) {
 	            // 에러 처리
@@ -173,7 +175,12 @@ function selectGroup(g_no) {
 	    });
 } 
 
-    
+function displayLearnerList1(map) {   
+	let pageDto = map.pageDto;
+	let totalCnt =map.totalCnt;
+	console.log(pageDto);
+	console.log(totalCnt);
+}
     
 // 선택 그룹에 따른 그룹 정보 리스트 출력
 function displayLearnerList(map) {
@@ -203,17 +210,17 @@ function displayLearnerList(map) {
 						+'			<tr>                                                            '
 						+'				<th align="center"><input type="checkbox" id="checkboxAll"  '
 						+'				name="myCheckbox" onclick="selectAll(this)" value="checked"></th> '
-						+'				<th>학습자 이름</th>                                           '
+						+'				<th>학습자 이름</th>                                             '
 						+'				<th>학습콘텐츠</th>                                             '
-						+'				<th>학습시작일</th>                                            '
-						+'				<th>학습종료일</th>                                            '
+						+'				<th>학습시작일</th>                                             '
+						+'				<th>학습종료일</th>                                             '
 						+'			</tr>                                                           '
 						+'		</thead>                                                            '
 						+'		<tbody>';
 	if(LearnerList != null && LearnerList.length > 0){
 		LearnerList.forEach((Learner)=>{
     		console.log('Learner', Learner.m_name);
-    		pageBlock += ''					
+    		pageBlock += ''
 						+'				<tr>                                                        '
 						+'					<th align="center"><input type="checkbox" id="checkbox" '
 						+'						name="myCheckbox" value="'+Learner.l_no+'"></th>    '
@@ -244,7 +251,6 @@ function displayLearnerList(map) {
 			learnerInfo.innerHTML += pageBlock;
 			
 
-	
 			let pageDiv='';
 			//페이지 블럭 생성
 			pageDiv += '<nav aria-label="Page navigation example">'
@@ -422,10 +428,10 @@ function insertHomework(){
 function go(page){
 	alert(page);
 	$('#page').val(page);
-	displayLearnerList();
-//	document.searchForm.pageNo.value=page;
-//	document.searchForm.action = "/alpha/saleList";
-//	document.searchForm.submit();
+	var gName = document.querySelector("#grpSelectBox").value
+	selectGroup(gName);
+	//displayLearnerList();
+
 }
 
 

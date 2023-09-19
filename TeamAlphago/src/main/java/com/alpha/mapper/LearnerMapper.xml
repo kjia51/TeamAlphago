@@ -222,6 +222,6 @@
     LEFT JOIN content c on (l.l_c_no = c.c_no)
     LEFT JOIN homework h on (c.c_no = h.h_c_no and l.l_m_id=h.l_m_id) 
     where l.l_m_id = #{m_id} and l.l_checkyn= 'Y'
-	order by g_end    
+	order by g_name    
 </select>
 </mapper>

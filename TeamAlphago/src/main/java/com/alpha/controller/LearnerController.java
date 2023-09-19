@@ -110,19 +110,23 @@ public class LearnerController extends CommonRestController {
 	@GetMapping("/giveHomework/{g_no}/{page}")
 	public Map<String, Object> grpLearnerList(@PathVariable("g_no") String g_no, HttpSession session, Criteria cri, @PathVariable("page") int page){
 		System.out.println("숙제 전송 --그룹별 학습자 리스트 연결");
+		System.out.println("cri :"+cri);
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		String t_m_id = session.getAttribute("m_id") == null? "":session.getAttribute("m_id").toString();
 		try {
+			
+			cri.setPageNo(page);
+			int totalCnt = learnerService.totalCnt(g_no);
+			PageDto pageDto = new PageDto(cri, totalCnt);
+			List<LearnerVO> LearnerList = learnerService.grpLearnerList(g_no, t_m_id, cri);
+			
 			System.out.println("학습지도자 아이디 : "+ t_m_id);
 			System.out.println("학습지도자 아이디 : "+ g_no);
-			cri.setPageNo(page);
-			List<LearnerVO> LearnerList = learnerService.grpLearnerList(g_no, t_m_id, cri);
+			
+			
 			System.out.println("LearnerList : "+LearnerList);
-			 int totalCnt = learnerService.totalCnt(g_no);
-			 System.out.println("totalCnt : "+totalCnt);
-		    // 페이지 블럭 생성
-		    PageDto pageDto = new PageDto(cri, totalCnt);
+			System.out.println("totalCnt : "+totalCnt);
 		    
 			System.out.println("LearnerList : "+LearnerList);
 			map.put("LearnerList", LearnerList);

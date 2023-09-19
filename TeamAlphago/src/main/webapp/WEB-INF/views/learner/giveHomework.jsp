@@ -112,7 +112,7 @@ cursor: pointer;
 				</div>
 			</div>
 			<!-- //content close -->
-			<div id="replyDiv"></div>
+
 		</div>
 	</div>
 	<!-- container close -->
@@ -169,7 +169,7 @@ cursor: pointer;
 		</div>
 	</div>
 	<%-----------------------------모달창 끝----------------------------------%>
-
+			<div id="replyDiv"></div>
 </body>
 
 <script src="/resources/js/learner/giveHomework.js"></script>
